@@ -19,7 +19,7 @@ console.log(socialLinks)
     <footer
       style={{
         width: "100%",
-        backgroundColor: "rgb(44, 46, 134)",
+        background: "linear-gradient(to right,rgb(40, 0, 38),rgb(74, 0, 79))",
        
 
         padding: "40px 20px",
@@ -206,7 +206,7 @@ const styles = {
   dot: {
     width: "12px",
     height: "12px",
-    background: "linear-gradient(to top right,rgb(22, 14, 111), #180226)",
+    background: "linear-gradient(to top right,rgb(111, 14, 98),rgb(79, 20, 116))",
     borderRadius: "50%",
   },
   iconsContainer: {
@@ -221,7 +221,7 @@ const styles = {
     transition: "transform 0.3s ease-in-out",
   },
   iconContainer: {
-    background: "linear-gradient(to top,#180226, rgba(51, 54, 158, 0.7))",
+    background: "linear-gradient(to top,#180226, rgba(156, 51, 158, 0.7))",
     borderRadius: "50%",
     padding: "15px",
     display: "flex",

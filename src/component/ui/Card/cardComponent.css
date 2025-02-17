@@ -74,7 +74,7 @@
   }
   
   .card-3 .primary {
-    border: 1px solid #170d64;
+    border: 1px solid #640d57;
     background: transparent;
     font-weight: 500;
     color: #f8f8f8;
@@ -89,7 +89,7 @@
   }
   
   .card-3 button.primary {
-    background: linear-gradient(to top right, #2721619c, #090226);
+    background: linear-gradient(to top right, #6121619c, #000000);
     color: #ffffff;
   }
   

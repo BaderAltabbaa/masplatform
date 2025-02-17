@@ -4,7 +4,7 @@
   padding: 10px 20px; 
   font-family: 'Calibri', sans-serif;
   color: rgb(255, 255, 255);
-  background-color: rgba(130, 88, 255, 0.136);
+  background-color: rgba(255, 255, 255, 0.136);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 
 }
@@ -34,13 +34,13 @@
 }
 
 .nav-links1 a {
-  color:  #28289f;
+  color:  #43005e;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .nav-links1 a:hover {
-  color:  #080838; /* لون التمرير */
+  color:  #8602ba; /* لون التمرير */
 }
 
 .auth-buttons1 {

@@ -375,22 +375,22 @@ export const theme = (customization) => {
     },
     typography: themeTypography(themeOption),
       custom: {
-    gradientButton: "linear-gradient(to bottom right,rgb(41, 46, 77),rgb(91, 101, 173))",
+    gradientButton: "linear-gradient(to bottom right,#760072,#2d013a)",
     // gradientButton: "#298a33",
 
-    hoverGradientButton: "linear-gradient(to bottom right, #14207c, #080838)",
-    PageBackGround :"linear-gradient(to right,rgb(110, 104, 181),rgb(79, 91, 180))",
+    hoverGradientButton: "linear-gradient(to bottom right, #2d013a,rgb(211, 0, 204))",
+    PageBackGround :"linear-gradient(to right,#280026,rgb(74, 0, 79))",
     // PageBackGround:"#e7efeb",
     // PageBackGround:"#f7f2c5",
 
 
-    CarBackGround :"linear-gradient(to top right,rgb(79, 91, 180), #180226)",
+    CarBackGround :"linear-gradient(to top right,rgb(144, 0, 152), #180226)",
     BoxBackGround :"linear-gradient(to right, rgba(54, 26, 58, 0.533), #180226)",
     // BoxBackGround :"linear-gradient(to top right,#0bab8f,#a8d1d3)",
     // BoxBackGround :"linear-gradient(to top right,#67554d, #c98a77 , #986b5f ,#f7f2c5)",
 
 
-    BoxBackGroundReseve :"linear-gradient(to right,rgb(79, 91, 180), #14207c )",
+    BoxBackGroundReseve :"linear-gradient(to left,rgb(40, 0, 38),rgb(74, 0, 79))",
 
 
 

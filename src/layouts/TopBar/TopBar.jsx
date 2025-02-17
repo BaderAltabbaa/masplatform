@@ -488,7 +488,7 @@ export default function Header() {
 
               )}
               <FaSearch
-                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #080838' }}
+                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
                 onClick={toggleSearch}
               />
             </div>
@@ -518,7 +518,7 @@ export default function Header() {
                       <Tooltip title="Chat" placement="bottom">
                         <IconButton onClick={() => navigate("/chat/t")}>
                           <Badge badgeContent={Object.keys(auth.unreadChats).length} overlap="rectangular" color="primary">
-                            <BsChat style={{ color: " #080838" }} />
+                            <BsChat style={{ color: " #43005e" }} />
                           </Badge>
                         </IconButton>
                       </Tooltip>
@@ -541,7 +541,7 @@ export default function Header() {
                             color="primary"
                           >
                             <NotificationsIcon
-                              style={{ color: " #080838" }}
+                              style={{ color: " #43005e" }}
                               size="12px"
                             />
                           </Badge>
@@ -558,7 +558,7 @@ export default function Header() {
                         <Avatar onClick={() => navigate("/profile")}
                           alt={auth.userData?.userName}
                           src={auth.userData?.profilePic}
-                          style={{ cursor: 'pointer', border: 'solid 3px  #080838' }} />
+                          style={{ cursor: 'pointer', border: 'solid 3px  #43005e' }} />
                       </Tooltip>
 
                     </> :

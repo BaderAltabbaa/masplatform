@@ -36,7 +36,7 @@
     position: relative;
     overflow: hidden;
     border-radius: 6px;
-    background: #1f1455;
+    background: #581454;
    
     text-align: center;
     width:200px;
@@ -66,7 +66,7 @@
  
   .animatedBackground {
     content: '';
-    background: conic-gradient(transparent 270deg, rgb(0, 208, 255), transparent);
+    background: conic-gradient(transparent 270deg, rgb(196, 1, 218), transparent);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -79,7 +79,7 @@
   
   .innerBlurEffect {
     content: '';
-    background: #2122619c;
+    background: #5121619c;
     border-radius: inherit;
     position: absolute;
     inset: var(--offset);
