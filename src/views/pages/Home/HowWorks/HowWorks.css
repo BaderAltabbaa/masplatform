@@ -9,6 +9,7 @@
     padding-left: 20px;
     padding-bottom: 20px;
     padding-right: 20px;
+
     /* background: linear-gradient(to right, #0008, #640D5F) !important; */
 
   }
@@ -20,13 +21,11 @@
     text-align: center;
   }
   /* back img */
-  .HowWorks-image-container .HowWorks-image{
-    /* width: 400px;
-    height: 570px; */
-    /* border-radius: 50px; */
-    /* object-fit: cover; */
-  }
+ 
 
+  .headTitle{
+    text-shadow: none;
+  }
 
 
   .HowWorks-image-container .HowWorks-image{
@@ -168,10 +167,7 @@
       flex: 1 1 100%;
       max-width: none;
     }
-    .HowWorks-image{
-      /* width: 200px !important;
-      height: 280px!important; */
-    }
+   
   
     .HowWorks-content {
       /* flex: 1 1 100%; */

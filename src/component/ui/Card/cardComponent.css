@@ -74,7 +74,7 @@
   }
   
   .card-3 .primary {
-    border: 1px solid #640D5F;
+    border: 1px solid #170d64;
     background: transparent;
     font-weight: 500;
     color: #f8f8f8;
@@ -89,13 +89,13 @@
   }
   
   .card-3 button.primary {
-    background: linear-gradient(to top right, #640D5F, rgb(199, 113, 338));
+    background: linear-gradient(to top right, #2721619c, #090226);
     color: #ffffff;
   }
   
   .card-3 button:hover {
     transform: scale(1.1); 
-    background: linear-gradient(to top right, rgb(199, 113, 338), #640D5F);
+    background: linear-gradient(to top right, rgb(199, 113, 338), #3d21619c);
   }
   
   .ellipsis {

@@ -36,7 +36,7 @@
     position: relative;
     overflow: hidden;
     border-radius: 6px;
-    background: rgb(55, 21, 90);
+    background: #1f1455;
    
     text-align: center;
     width:200px;
@@ -66,20 +66,20 @@
  
   .animatedBackground {
     content: '';
-    background: conic-gradient(transparent 270deg, rgb(0, 153, 255), transparent);
+    background: conic-gradient(transparent 270deg, rgb(0, 208, 255), transparent);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     aspect-ratio: 1 / 1;
     width: 100%;
-    animation: rotate 2s linear infinite;
+    animation: rotate 3s linear infinite;
     z-index: -1;
   }
   
   .innerBlurEffect {
     content: '';
-    background: rgba(61, 33, 97, 0.61);
+    background: #2122619c;
     border-radius: inherit;
     position: absolute;
     inset: var(--offset);

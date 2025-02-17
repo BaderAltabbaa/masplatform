@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100vh',
+    height: '90vh',
     padding: theme.spacing(2),
   },
   topBar: {

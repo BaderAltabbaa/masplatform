@@ -19,7 +19,7 @@ console.log(socialLinks)
     <footer
       style={{
         width: "100%",
-        backgroundColor: "#640D5F",
+        backgroundColor: "rgb(44, 46, 134)",
        
 
         padding: "40px 20px",
@@ -43,7 +43,7 @@ console.log(socialLinks)
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <Link to="/">
           <img
-            src="../../../public/assets/Images/logo.png"
+            src="../../../public/assets/Images/maslogo.png"
             alt="Logo"
             style={{
               width: "120px",
@@ -184,7 +184,7 @@ const styles = {
     marginBottom: "15px",
     fontSize: "22px",
     fontWeight: "bold",
-    textShadow: "0px 0px 10px #FF80FF, 0px 0px 20px #FF80FF",
+    textShadow: "0px 0px 2px rgb(147, 128, 255), 0px 0px 5px rgb(12, 0, 81)",
   },
   list: {
     listStyle: "none",
@@ -206,7 +206,7 @@ const styles = {
   dot: {
     width: "12px",
     height: "12px",
-    background: "linear-gradient(to top right, #FF80FF, #EAADEA)",
+    background: "linear-gradient(to top right,rgb(22, 14, 111), #180226)",
     borderRadius: "50%",
   },
   iconsContainer: {
@@ -221,7 +221,7 @@ const styles = {
     transition: "transform 0.3s ease-in-out",
   },
   iconContainer: {
-    background: "linear-gradient(to top, #0c0131, rgba(156, 1, 156, 0.7))",
+    background: "linear-gradient(to top,#180226, rgba(51, 54, 158, 0.7))",
     borderRadius: "50%",
     padding: "15px",
     display: "flex",

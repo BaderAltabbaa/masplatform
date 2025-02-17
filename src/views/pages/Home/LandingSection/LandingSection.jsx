@@ -24,7 +24,7 @@ export default function LandingSection({ item, index ,children}) {
        
     sx={{
      
-      background: (theme) => (index % 2 === 0 ?  theme.custom.BoxBackGround :theme.custom.BoxBackGroundReseve ),
+      background: (theme) => theme.custom.BoxBackGroundReseve
      
     }}
      style ={{}}

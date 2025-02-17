@@ -459,7 +459,9 @@ export default function Header() {
 
         <header className="header  " >
           <div className='logo1_contanier '>
-            <img className="logo1" src="assets/Images/logo.png" alt="Logo" />
+            <Link to={"/"}>
+            <img className="logo1" src="assets/Images/maslogo.png" alt="Logo" />
+            </Link>
           </div>
 
           <div className='right'>
@@ -486,7 +488,7 @@ export default function Header() {
 
               )}
               <FaSearch
-                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: 'rgb(80, 3, 95)' }}
+                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #080838' }}
                 onClick={toggleSearch}
               />
             </div>
@@ -516,7 +518,7 @@ export default function Header() {
                       <Tooltip title="Chat" placement="bottom">
                         <IconButton onClick={() => navigate("/chat/t")}>
                           <Badge badgeContent={Object.keys(auth.unreadChats).length} overlap="rectangular" color="primary">
-                            <BsChat style={{ color: "#000" }} />
+                            <BsChat style={{ color: " #080838" }} />
                           </Badge>
                         </IconButton>
                       </Tooltip>
@@ -539,7 +541,7 @@ export default function Header() {
                             color="primary"
                           >
                             <NotificationsIcon
-                              style={{ color: "#000" }}
+                              style={{ color: " #080838" }}
                               size="12px"
                             />
                           </Badge>
@@ -556,12 +558,12 @@ export default function Header() {
                         <Avatar onClick={() => navigate("/profile")}
                           alt={auth.userData?.userName}
                           src={auth.userData?.profilePic}
-                          style={{ cursor: 'pointer', border: 'solid 3px #fff' }} />
+                          style={{ cursor: 'pointer', border: 'solid 3px  #080838' }} />
                       </Tooltip>
 
                     </> :
                       <Button
-                      className="primaryButton"
+                      className="primaryButton "
                  fullWidth
                 variant="contained"
                 size="large"
@@ -599,7 +601,7 @@ export default function Header() {
                     (
                       <Box className="hidden md:flex !bg-slate-700">
                         <Button
-                             className="primaryButton"
+                             className="primaryButton p"
                              
                             variant="contained"
                             size="large"
@@ -613,7 +615,7 @@ export default function Header() {
                         </Button>
                         <Button
                           onClick={() => navigate('/connectWallet')}
-                          className="primaryButton"
+                          className="primaryButton p"
                              
                             variant="contained"
                         >
@@ -634,19 +636,19 @@ export default function Header() {
 
                   <Link style={{ color: "white" }} to="/login">
                     <Button  
-                     className="primaryButton"
+                     className="primaryButton p"
                              fullWidth
                             variant="contained"
                            
                             >LogIn</Button>
 
                   </Link>
-                  <Link style={{ color: "white" }} to="/buymas" className="primaryButton"
+                  <Link style={{ color: "white" }} to="/buymas" className="primaryButton "
                              
-                            variant="contained"><Button className="primaryButton"
+                            variant="contained"><Button className="primaryButton p"
                             
                            variant="contained">Buy A Mas</Button></Link>
-                  <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton"
+                  <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton p"
                              
                             variant="contained">Connect Wallet</Button></Link>
 

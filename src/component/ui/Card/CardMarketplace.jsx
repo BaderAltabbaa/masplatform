@@ -622,6 +622,7 @@ useEffect(() => {
      imgsrc={profilePic}
      AvatarClick={() => {
         navigate("/user-profile/" + userName);
+  
       }}
    />
 

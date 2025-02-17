@@ -24,6 +24,7 @@ import { Pagination } from "@mui/material";
 import ChildTableUser from "../../../component/userRow";
 import { UserContext } from "src/context/User";
 import { isMobile } from 'react-device-detect';
+import theme from "../../../theme";
 
 
 const useStyles = makeStyles(() => ({
@@ -160,7 +161,9 @@ export default function UsersList() {
   }, [page, filterData]);
 
   return (
-    <Container maxWidth='xl'>
+    <Container maxWidth='xl'
+    sx={{background:" rgb(186, 147, 198)"}}
+    >
 <Box className={classes.paddingContainer}>
       <Box className={classes.LoginBox} mb={5}>
         {/* Start Title */}
