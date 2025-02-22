@@ -403,7 +403,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               }}
             >
               <p style={{ margin: 5, width: 50 }}>{item.name}</p>
-            
+              <img src={'/' + item.img} style={{ width: 25 }} />
+
             </MenuItem>
           ))}
         </Select>

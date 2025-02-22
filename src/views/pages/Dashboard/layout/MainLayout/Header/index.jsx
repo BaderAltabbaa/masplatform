@@ -63,7 +63,15 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 }}
               />          
         </Box>
-        <ButtonBase sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+        <ButtonBase sx={{ 
+          borderRadius: '8px', overflow: 'hidden',
+          backgroundColor:"transparent",
+          '&:hover': {
+                background: 'transparent',
+                
+              }
+            
+          }}>
           <Avatar
             variant="rounded"
             sx={{

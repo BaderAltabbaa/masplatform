@@ -342,8 +342,8 @@ function removeImage(index) {
                 gap: 5,
               }}
             >
-              <p style={{ margin: 0, width: 50 }}>{item.name}</p>
-              <img src={item.img} style={{ width: 25 }} />
+              <p style={{ margin: 5, width: 50 }}>{item.name}</p>
+              <img src={'/' +item.img} style={{ width: 25 }} />
             </MenuItem>
           ))}
         </Select>

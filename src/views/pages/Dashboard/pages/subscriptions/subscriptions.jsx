@@ -15,6 +15,8 @@ import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import { Pagination } from '@mui/material';
 import Cardbundle from "../../../../../component/ui/Card/Cardbundle";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
+import MainCard from "../../ui-component/cards/MainCard";
+
 
 
 
@@ -23,6 +25,7 @@ const useStyles = makeStyles(() => ({
   subscriptionBox: {
     overflowX: "auto",
     whiteSpace: "nowrap",
+    backgroundColor:"white"
   },
   input_fild: {
     backgroundColor: "#ffffff6e",
@@ -98,10 +101,9 @@ export default function Subscriptions() {
 
   return (
     <div className={classes.subscriptionBox}>
-      <Box className={classes.LoginBox} mb={5}>
-        <Box className={classes.masBoxFlex}>
-          <Typography variant="h6">Bundles</Typography>
-        </Box>
+    <MainCard title="Bundles">
+
+      
         <Box>
           <Grid container>
             {subscriptions.map((data, i) => {
@@ -128,11 +130,10 @@ export default function Subscriptions() {
             />
           </Box>
         )}
-      </Box>
-      <Box className={classes.LoginBox} mb={5}>
-        <Box className={classes.masBoxFlex}>
-          <Typography variant="h6">Users</Typography>
-        </Box>
+     
+      </MainCard>
+      <MainCard title="Users">
+       
         <Box>
           <Grid container>
             {userList.map((data, i) => {
@@ -159,7 +160,8 @@ export default function Subscriptions() {
             </Box>
           )}
         </Box>
-      </Box>
+      
+      </MainCard>
     </div>
   );
 
