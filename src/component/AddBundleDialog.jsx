@@ -80,9 +80,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
       >
-        {isEdit ? "Edit Bundle" : "Create a bundle"}
+        {isEdit ? "Edit Bundle" : "Create a Bundle"}
       </DialogTitle>
       <DialogContent style={{ padding: 40 }}>
         <Grid container spacing={5}>
@@ -190,6 +190,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
+          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+
         >
           Cancel
         </Button>
@@ -200,6 +202,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           size="large"
           // className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
+          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+
         >
           {isEdit ? "Edit" : "Create"}
         </Button>
@@ -248,7 +252,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             <div className={classes.uploadIcon}>
               <CloudUploadIcon />
             </div>
-            <div style={{ marginTop: 10, textAlign: "center" }}>
+            <div style={{ margin: 15, textAlign: "left" }}>
               <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>
                 Select Image/Video
               </p>
@@ -281,7 +285,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["bundleTitle"] ? "red" : "#ddd" }}
           >
-            <label>Bundle Title</label>
+            <label style={{color:' #2d013a'}}>Bundle Title</label>
             <Input
               {...register("bundleTitle")}
               className={classes.input}
@@ -299,7 +303,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["bundleName"] ? "red" : "#ddd" }}
           >
-            <label>Bundle Name</label>
+            <label style={{color:' #2d013a'}}>Bundle Name</label>
             <Input
               {...register("bundleName")}
               className={classes.input}
@@ -317,7 +321,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["donationAmount"] ? "red" : "#ddd" }}
           >
-            <label>Amount</label>
+            <label style={{color:' #2d013a'}}>Amount</label>
             <Input
               {...register("donationAmount")}
               className={classes.input}
@@ -338,7 +342,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["duration"] ? "red" : "#ddd" }}
           >
-            <label>Duration</label>
+            <label style={{color:' #2d013a'}}>Duration</label>
             <Input
               {...register("duration")}
               className={classes.input}
@@ -361,7 +365,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["details"] ? "red" : "#ddd" }}
           >
-            <label>Details</label>
+            <label style={{color:' #2d013a'}}>Details</label>
             <Input
               {...register("details")}
               className={classes.input}
@@ -398,8 +402,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 gap: 5,
               }}
             >
-              <p style={{ margin: 0, width: 50 }}>{item.name}</p>
-              <img src={item.img} style={{ width: 25 }} />
+              <p style={{ margin: 5, width: 50 }}>{item.name}</p>
+            
             </MenuItem>
           ))}
         </Select>

@@ -7,58 +7,44 @@
   font-family: 'poppins',sans-serif;
 } */
 
-body.SignupStyle {
+.SignupStyle {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-image: url(https://user-images.githubusercontent.com/13468728/233847739-219cb494-c265-4554-820a-bd3424c59065.jpg);
+  min-height: 100vh;
+  background-image: url(assets/Images/logbackground.webp);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
-section {
+.section2 {
     position: relative;
     max-width: 600px;
-    background-color: transparent;
+    background-color: rgba(146, 46, 168, 0.196);
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     backdrop-filter: blur(55px);
     display: flex;
     justify-content: center;
     align-items: center;
-  padding: 0 20px;
-
-
+    padding:2rem 3rem;
 
 }
 
-h1 {
+.reg-header {
     font-size: 2rem;
-
+font-weight: bold;
     text-align: center;
-    color: rgb(80, 3, 95);
+    color: #2d013a;
+    font-family: Arial, Helvetica, sans-serif !important;
 }
 
-.inputbox {
+.mar {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-
-
-
-
-country-button {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    transition: background-color 0.3s;
-  }
   
   .country-button:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -86,7 +72,7 @@ country-button {
     text-decoration: none;
     /* color: #fff; */
     font-weight: 600;
-    color: rgb(80, 3, 95);
+    color: #2d013a;
 }
 
 .register p a:hover {

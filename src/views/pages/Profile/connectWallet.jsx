@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '90vh',
     padding: theme.spacing(2),
+     backgroundColor: 'rgb(211, 182, 220)'
   },
   topBar: {
     marginBottom: theme.spacing(2),

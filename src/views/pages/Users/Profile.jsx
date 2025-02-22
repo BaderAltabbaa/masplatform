@@ -22,7 +22,7 @@ import { FiCopy } from "react-icons/fi";
 const useStyles = makeStyles((theme) => ({
   profilebg: {
     boxShadow: " 0 1.5px 3px 0 rgba(0, 0, 0, 0.16)",
-    backgroundImage: " linear-gradient(to bottom, #c04848, #480048)",
+    backgroundImage: " linear-gradient(to bottom,rgb(79, 8, 105),rgb(60, 0, 60))",
     height: " 143.5px",
     width: "100%",
   },
@@ -380,6 +380,8 @@ export default function Profile({ data, isabout }) {
                     variant="contained"
                     size="large"
                     color="secondary"
+                    style={{ background:"#8c0087",color:'white'}}
+
                     onClick={() => {
                       if (auth?.userData?._id) {
                         if (auth?.userData?._id !== data?._id) {
@@ -404,6 +406,7 @@ export default function Profile({ data, isabout }) {
                     variant="contained"
                     size="large"
                     color="secondary"
+                    style={{ background:"#8c0087",color:'white'}}
                     onClick={() => {
                       if (auth?.userData?._id) {
                         if (auth?.userData?._id !== data?._id) {
@@ -429,6 +432,8 @@ export default function Profile({ data, isabout }) {
                     size="large"
                     color="secondary"
                     onClick={subscribeToUserHandler}
+                    style={{ background:"#8c0087",color:'white'}}
+
                   >
                     {isSubscribed ? 'Subscribed' : 'Subscribe'}
                   </Button>

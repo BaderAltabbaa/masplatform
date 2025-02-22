@@ -375,11 +375,11 @@ export const theme = (customization) => {
     },
     typography: themeTypography(themeOption),
       custom: {
-    gradientButton: "linear-gradient(to bottom right,#760072,#2d013a)",
+    gradientButton: "linear-gradient(to bottom right, #760072, #2d013a)",
     // gradientButton: "#298a33",
 
-    hoverGradientButton: "linear-gradient(to bottom right, #2d013a,rgb(211, 0, 204))",
-    PageBackGround :"linear-gradient(to right,#280026,rgb(74, 0, 79))",
+    hoverGradientButton: "linear-gradient(to bottom right, #2d013a,#d300cc)",
+    PageBackGround :"linear-gradient(to right,#280026,#4a004f)",
     // PageBackGround:"#e7efeb",
     // PageBackGround:"#f7f2c5",
 

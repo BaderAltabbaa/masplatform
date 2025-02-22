@@ -93,35 +93,25 @@ const ProfileSection = () => {
           alignItems: 'center',
           borderRadius: '27px',
           transition: 'all .2s ease-in-out',
-          borderColor: theme.palette.primary.light,
-          backgroundColor: theme.palette.primary.light,
+          borderColor: 'rgb(66, 0, 64)',
+          backgroundColor: 'rgb(155, 79, 193)',
+          '& svg': {
+            stroke: theme.palette.primary.light
+          },
           '&[aria-controls="menu-list-grow"], &:hover': {
-            borderColor: theme.palette.primary.main,
-            background: `${theme.palette.primary.main}!important`,
+            borderColor: '#3d004f',
+            background: `rgb(122, 0, 118) !important`,
             color: theme.palette.primary.light,
             '& svg': {
-              stroke: theme.palette.primary.light
+              stroke: "rgb(197, 164, 206)"
             }
           },
           '& .MuiChip-label': {
             lineHeight: 0
           }
         }}
-        icon={
-          <Avatar
-            // src={User1}
-            sx={{
-              ...theme.typography.mediumAvatar,
-              margin: '8px 0 8px 8px !important',
-              cursor: 'pointer'
-            }}
-            ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            color="inherit"
-          />
-        }
-        label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
+        
+        label={<IconSettings stroke={1.5} size="2rem" color={theme.palette.primary.main} />}
         variant="outlined"
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
@@ -151,21 +141,11 @@ const ProfileSection = () => {
           <Transitions in={open} {...TransitionProps}>
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
                
-                  <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
-                    <Box sx={{ p: 2, pt: 0 }}>
+                    <Box sx={{padding:"5px",backgroundColor:"rgb(255, 255, 255)",borderRadius:"20px" }}>
                       <UpgradePlanCard />
-                      <Divider />
-                      <Card
-                        sx={{
-                          bgcolor: theme.palette.primary.light,
-                          my: 2
-                        }}
-                      >
-                       
-                      </Card>
-                      <Divider />
+                     
+                     
                       <List
                         component="nav"
                         sx={{
@@ -178,7 +158,7 @@ const ProfileSection = () => {
                             minWidth: '100%'
                           },
                           '& .MuiListItemButton-root': {
-                            mt: 0.5
+                            mt: 0
                           }
                         }}
                       >
@@ -196,8 +176,7 @@ const ProfileSection = () => {
                     
                       </List>
                     </Box>
-                  </PerfectScrollbar>
-                </MainCard>
+                  
               </ClickAwayListener>
             </Paper>
           </Transitions>

@@ -88,7 +88,7 @@ export default function sales() {
     }, [state.userPage]);
 
     return (
-        <MainCard title="sales Items" >
+        <MainCard title="Sold Items" >
 
             <div className={classes.subscriptionBox}>
                 <Box className={classes.LoginBox} >
@@ -97,7 +97,7 @@ export default function sales() {
                         <Grid container spacing={2}>
                             {sales.map((data, i) => {
                                 return (
-                                    <Grid item xs={12} sm={6} md={4} lg={3} key={i}  mr={2}>
+                                    <Grid item xs={12} sm={6} md={4} lg={3.5} key={i}  mr={2}>
                                         <CardCreators
                                             data={data}
                                             chat
@@ -134,7 +134,7 @@ export default function sales() {
                         <Grid container spacing={2}>
                             {userList.map((data, i) => {
                                 return (
-                                    <Grid item xs={12} sm={6} md={4} lg={3} key={i} mr={2}>
+                                    <Grid item xs={12} sm={6} md={4} lg={3.5} key={i} mr={2}>
                                         <CardCreators
                                             data={data}
                                             chat

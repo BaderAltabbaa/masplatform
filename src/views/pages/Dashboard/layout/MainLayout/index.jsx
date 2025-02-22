@@ -166,7 +166,7 @@ const MainLayout = () => {
   <>
 
 
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', padding:"0"  }}>
       <CssBaseline />
    
       {/* header */}
@@ -178,7 +178,7 @@ const MainLayout = () => {
         sx={{
           // bgcolor: theme.palette.background.default,
           // background: (theme) => "linear-gradient(to bottom, #640D5F, rgb(199, 113, 238))" ,
-          background: (theme) => "linear-gradient(to top , #640D5F, rgb(1, 15, 78))" ,
+          background: (theme) => "linear-gradient(to top , #640D5F, #38014e)" ,
 
           transition: leftDrawerOpened ? theme.transitions.create('width') : 'none',
           // top :  "80px"
@@ -201,7 +201,7 @@ const MainLayout = () => {
       <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
 
       {/* main content */}
-      <Main  open={leftDrawerOpened}>
+      <Main sx={{padding:"0"}}  open={leftDrawerOpened}>
         
         {/* breadcrumb */}
         {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}

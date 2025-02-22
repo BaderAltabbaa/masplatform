@@ -25,13 +25,14 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 
 const useStyles = makeStyles((theme) => ({
-  root: { padding: "70px 0px" },
+  root: { padding: "70px 0px",background:"linear-gradient(to right,#280026,rgb(142, 82, 146))"
+   },
   bannerimg: {
     overflow: "hidden",
     backgroundPosition: "center !important",
     backgroundSize: "100% !important",
     backgroundRepeat: " no-repeat !important",
-    height: "260px",
+    height: "100px",
     borderRadius: "10px",
     "@media(max-width:1010px)": {
       height: "140px",
@@ -88,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   whitebox: {
-    background: "#FFFFFF",
+    background: "rgb(239, 185, 250)",
     filter: "drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.25))",
     boxShadow: "rgb(99 99 99 / 20%) 0px 2px 8px 0px",
     borderRadius: "10px",
@@ -157,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     paddingTop: "10px",
     "& h4": {
-      color: "#D200A5",
+      color: " #D200A5",
       fontStyle: "normal",
       fontWeight: "bold",
       fontSize: "14px",
@@ -205,9 +206,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     marginRight: "10px",
     padding: "15px 15px",
-    [theme.breakpoints.down("sm")]: {
-      background: "rgb(52 162 240 / 60%)",
-    },
+    
     "@media(max-width:818px)": {
       padding: "6px 16px",
     },
@@ -249,12 +248,12 @@ const useStyles = makeStyles((theme) => ({
   btnhead: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "-100px",
+    marginTop: "-0px",
     "@media(max-width:800px)": { marginTop: "20px", marginBottom: "20px" },
   },
   profileimg: {
     backgroundColor: "#fafafa",
-    marginTop: "-130px",
+    marginTop: "0px",
     overflow: "hidden",
     width: "175px",
     height: "175px",
@@ -262,12 +261,12 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     border: "2px solid #FFFFFF",
     "@media(max-width:1010px)": {
-      marginTop: "-65px",
+      marginTop: "0px",
       width: "110px",
       height: "110px",
     },
     "@media(max-width:800px)": {
-      marginTop: "-65px",
+      marginTop: "0px",
       width: "90px",
       height: "90px",
     },
@@ -581,27 +580,21 @@ export default function BundleDetails() {
                 </Box>
               )}
               <Box className={`${classes.text1} seats`}>
-                <Typography variant="h2">
+                <Typography variant="h2" sx={{color:"white"}}>
                   {bundleDetails?.bundleName ? bundleDetails?.bundleName : ""}
                 </Typography>
-                <Typography
-                  variant="h5"
-                  dangerouslySetInnerHTML={{
-                    __html: bundleDetails?.details,
-                  }}
-                  className={classes.textColor}
-                ></Typography>
-                {/* <Typography variant="h5">
+               
+                <Typography variant="h4" sx={{color:"rgb(153, 108, 164)",fontSize:'0.5rem'}}>
                   {bundleDetails?.details ? bundleDetails?.details : ''}
-                </Typography> */}
+                </Typography> 
                 <Box mt={1}>
                   <Box
                     display="flex"
                     alignItems="center"
                     className={classes.bundleData}
                   >
-                    <Typography variant="h4">Donation Amount:</Typography>&nbsp;
-                    <Typography variant="h4">
+                    <Typography variant="h4"  sx={{color:"white"}}>Donation Amount:</Typography>&nbsp;
+                    <Typography variant="h4"  sx={{color:"rgb(178, 178, 178)"}}>
                       {bundleDetails?.donationAmount
                         ? bundleDetails?.donationAmount
                         : "0"}
@@ -613,8 +606,8 @@ export default function BundleDetails() {
                     alignItems="center"
                     className={classes.bundleData}
                   >
-                    <Typography variant="h4">Time Duration:</Typography>&nbsp;
-                    <Typography variant="h4">
+                    <Typography variant="h4"  sx={{color:"white"}}>Time Duration:</Typography>&nbsp;
+                    <Typography variant="h4" sx={{color:"rgb(178, 178, 178)"}}>
                       {bundleDetails?.duration ? bundleDetails?.duration : "0"}
                     </Typography>
                   </Box>
@@ -653,7 +646,7 @@ export default function BundleDetails() {
                 className={classes.btnfollow2}
                 onClick={() => setOpenBuy(true)}
               >
-                <Typography variant="h2">
+                <Typography variant="h2"  sx={{color:"white"}}>
                   {bundleDetails?.subscribers
                     ? bundleDetails?.subscribers?.length
                     : "0"}
@@ -662,7 +655,7 @@ export default function BundleDetails() {
               </Box>
               <Button
                 onClick={() => setShowSearch((prevState) => !prevState)}
-                style={{ marginTop: 10 }}
+                style={{ marginTop: 10 ,color:"white"}}
               >
                 <SearchIcon fontSize={"large"} />
               </Button>
@@ -758,7 +751,7 @@ export default function BundleDetails() {
                           color="secondary"
                           size="large"
                           variant="contained"
-                          style={{ marginRight: "10px" }}
+                          style={{ marginRight: "10px" ,background:" #8c0087",color:'white'}}
                           onClick={() =>
                             isLogin ? setIsFilterTrue(true) : navigate("/login")
                           }
@@ -769,6 +762,8 @@ export default function BundleDetails() {
                           variant="contained"
                           size="large"
                           color="primary"
+                          style={{ background:"#8c0087",color:'white'}}
+
                           onClick={() =>
                             isLogin ? clearFilterHandler() : navigate("/login")
                           }

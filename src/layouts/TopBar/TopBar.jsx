@@ -413,8 +413,8 @@ export default function Header() {
     return (
       <Box className={classes.searchResults}>
         {/* Start Title */}
-        <Box style={{ height: '54px', marginBottom: "14px", color: '#fafafa', backgroundImage: 'linear-gradient(to bottom, #c04848, #480048)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Typography variant="h4">
+        <Box style={{ height: '54px', marginBottom: "14px", color: '#fafafa', backgroundImage: 'linear-gradient(to bottom,rgb(192, 72, 182), #480048)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Typography variant="h4" style={{color:"white"}}>
             Search Result
           </Typography>
         </Box>
@@ -460,7 +460,7 @@ export default function Header() {
         <header className="header  " >
           <div className='logo1_contanier '>
             <Link to={"/"}>
-            <img className="logo1" src="assets/Images/maslogo.png" alt="Logo" />
+            <img className="logo1" src="\assets\Images\maslogo2.svg" alt="Logo11" />
             </Link>
           </div>
 
@@ -470,7 +470,7 @@ export default function Header() {
 
                 <Box className={classes.searchBox} >
                   <InputBase
-                    placeholder="Search.."
+                    placeholder="  Search.."
                     style={{ color: "#000" }}
                     value={search}
                     onChange={(e) => setsearch(e.target.value)}
@@ -506,6 +506,10 @@ export default function Header() {
               <li><Link to="/items">Marketplace</Link></li>
               <li><Link to="/creators">Creators</Link></li>
               <li><Link to="/user-list">Transfer</Link></li>
+              <li className='test'><Link to="/buymas">Buy a Mas</Link></li>
+              <li className='test'><Link to="/connectWallet">Connect Wallet</Link></li>
+
+              
 
 
 
@@ -601,7 +605,7 @@ export default function Header() {
                     (
                       <Box className="hidden md:flex !bg-slate-700">
                         <Button
-                             className="primaryButton p"
+                             className="primaryButton"
                              
                             variant="contained"
                             size="large"
@@ -615,7 +619,7 @@ export default function Header() {
                         </Button>
                         <Button
                           onClick={() => navigate('/connectWallet')}
-                          className="primaryButton p"
+                          className="primaryButton"
                              
                             variant="contained"
                         >
@@ -645,10 +649,10 @@ export default function Header() {
                   </Link>
                   <Link style={{ color: "white" }} to="/buymas" className="primaryButton "
                              
-                            variant="contained"><Button className="primaryButton p"
+                            variant="contained"><Button className="primaryButton"
                             
                            variant="contained">Buy A Mas</Button></Link>
-                  <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton p"
+                  <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton"
                              
                             variant="contained">Connect Wallet</Button></Link>
 

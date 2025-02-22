@@ -104,7 +104,6 @@ export default function SignUp() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
-  const [splash, setSplash] = useState("");
 
 
   const [username, setusername] = useState("");
@@ -187,22 +186,15 @@ export default function SignUp() {
   };
   const { termsCond, privacyPolicy, riskStatment, kycProgram, all } = state;
 
-  useEffect(() => {
-    const url = 'https://api.unsplash.com/photos/random?client_id=YC94t2S3Nge47lJvxYFndgORX0JUr4Ym7BfrSqfHUzU'
-    const fetchSplash = async () => axios.get(url).then(res => {
-      console.log(res)
-      setSplash(res.data.urls.regular)
-    });
-    fetchSplash();
 
-  }, [])
 
   return (
-    <body className='SignupStyle'>
-      <section>
+    <div className='SignupStyle'>
+      
+      <section className="section2">
         <form>
-          <h1>Create your account</h1>
-          <div className="inputbox">
+          <span className="reg-header">CREATE YOUR ACCOUNT</span>
+          <div className="mar">
 
             <TextField
               className="auth-input"
@@ -222,7 +214,7 @@ export default function SignUp() {
             />
 
           </div>
-          <div className="inputbox">
+          <div className="mar">
             <TextField
               className="auth-input"
               variant="standard"
@@ -242,7 +234,7 @@ export default function SignUp() {
             />
 
           </div>
-          <div className="inputbox">
+          <div className="mar">
 
             <div style={{ display: 'flex' }}>
 
@@ -269,7 +261,7 @@ export default function SignUp() {
 
 
           </div>
-          <div className="inputbox" >
+          <div className="mar" >
 
             <TextField
               variant="standard"
@@ -305,7 +297,7 @@ export default function SignUp() {
             />
 
           </div>
-          <div className="inputbox" >
+          <div className="mar" >
             <TextField
               variant="standard"
               className="auth-input"
@@ -516,7 +508,7 @@ export default function SignUp() {
 
     
       </section>
-    </body>
+    </div>
     // <Box className={classes.root}>
 
     // <Box className={classes.loginBox}>

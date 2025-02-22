@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#e5e5f7",
+    backgroundColor: "transparent",
   },
 
   splash: {
@@ -77,13 +77,14 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiOutlinedInput-root": {
       border: "solid 1px #4441",
       borderRadius: "20px",
-      backgroundColor: "#fafafa",
+      backgroundColor: "transparent",
     },
     "& .MuiOutlinedInput-input": {
       padding: '10px',
       fontSize: "14px",
       fontWeight: "500",
       color: "#000",
+      backgroundColor:"transparent"
     }
   },
   paper: {
@@ -269,19 +270,22 @@ export default function Login() {
     <body className="Loginstyle">
     <section className="section1">
    <form onSubmit={Login}>
-       <h1 className="Loginstyle">Login</h1>
+       <span className="Loginstyle">LOGIN</span>
        <div className="">
           
            <TextField
            className="auth-input"
-           
-
-           fullWidth
-           
+           sx={{width:"300px",
+            '& input:-webkit-autofill': {
+              '-webkit-box-shadow': '0 0 0 30px white inset !important', // Change 'white' to your desired background color
+              backgroundColor: 'transparent !important',
+            },
+            }}
            label="Email"
                 error={!emailvalid}
                 // placeholder={email}  
                 variant="standard"
+                autoComplete="off"
                
                 type="email"
                 helperText={!emailvalid && "Incorrect Email."}
@@ -299,6 +303,7 @@ export default function Login() {
            
            <TextField
            className="auth-input"
+           sx={{width:"300px" }}
              fullWidth
              label="Password"
              variant="standard"

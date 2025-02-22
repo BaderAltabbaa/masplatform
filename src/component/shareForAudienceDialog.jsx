@@ -200,6 +200,8 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
+          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+
         >
           Cancel
         </Button>
@@ -208,6 +210,8 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           variant="contained"
           onClick={onSubmit}
           size="large"
+          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+
           // className={classes.submitButton}
         >
           {isEdit ? "Edit" : "Share"}
@@ -257,7 +261,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             <div className={classes.uploadIcon}>
               <CloudUploadIcon />
             </div>
-            <div style={{ marginTop: 10, textAlign: "center" }}>
+            <div style={{ margin: 15, textAlign: "left" }}>
               <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>
                 Select Image/Video
               </p>
@@ -290,7 +294,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors.title ? "red" : "#ddd" }}
           >
-            <label>Title</label>
+            <label style={{color:' #2d013a'}}>Title</label>
             <Input
               {...register("title")}
               className={classes.input}
@@ -303,7 +307,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           </p>
         </>
         <Grid sm={12} className={classes.inputContainer}>
-          <label>Type</label>
+          <label style={{color:' #2d013a'}}>Type</label>
           <Input
             {...register("type")}
             className={classes.input}
@@ -318,7 +322,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors.details ? "red" : "#ddd" }}
           >
-            <label>Details</label>
+            <label style={{color:' #2d013a'}}>Details</label>
             <Input
               {...register("details")}
               className={classes.input}
@@ -369,7 +373,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
 
     return (
       <div style={{ margin: 10 }}>
-        <p className={classes.selectorTitleStyle}>
+        <p className={classes.selectorTitleStyle} style={{color:' #2d013a'}}>
           Chose Bundles To Share with
         </p>
         <Grid container spacing={2}>
@@ -380,7 +384,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
                 <div
                   className={classes.bundleCardStyle}
                   style={{
-                    borderColor: isChosen ? "rgb(192, 72, 72)" : "#ddd",
+                    borderColor: isChosen ? "rgb(157, 0, 185)" : "#ddd",
                   }}
                   onClick={() => (isEdit ? {} : selectItem(item._id))}
                 >

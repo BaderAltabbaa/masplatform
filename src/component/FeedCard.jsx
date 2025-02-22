@@ -67,7 +67,7 @@ const useStyles = makeStyles(() => ({
     margin: "0 10px",
     position: "relative",
     backgroundImage:
-      "linear-gradient(to top right, #640D5F, rgb(1, 15, 78))",
+      "linear-gradient(to top right,rgb(126, 34, 121), rgb(64, 0, 75))",
     "&:hover": {
       transform: "scale(1.03)",
       transition: "all 0.4s ease-in-out 0s",
@@ -229,9 +229,7 @@ export default function UsersCard({ data, index, updateList }) {
                 <img src="/images/blue-check.png" className={classes.img} />
               </Typography>*/}
               &nbsp;
-              <Typography variant="body" component="small">
-                since {moment(data.createdAt).format("DD-MM-YYYY HH:mm")}
-              </Typography>
+             
             </div>
           </Box>
         </Box>
@@ -328,6 +326,9 @@ export default function UsersCard({ data, index, updateList }) {
           ></Badge>
           &nbsp;<span>Likes</span>
         </Box>
+        <Typography variant="body" component="small">
+                Created At {moment(data.createdAt).format("DD-MM-YYYY HH:mm")}
+              </Typography>
       </Box>
     </Box>
   );

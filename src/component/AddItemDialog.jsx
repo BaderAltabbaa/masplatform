@@ -85,7 +85,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
       <DialogTitle
         style={{ textAlign: "center", color: "black", fontWeight: "bold" }}
       >
-        {isEdit ? "Edit item" : "Create a item"}
+        {isEdit ? "Edit item" : "Create an item"}
       </DialogTitle>
       <DialogContent style={{ padding: 40 }}>
   <Grid container spacing={5}>
@@ -160,6 +160,8 @@ function removeImage(index) {
           onClick={handleClose}
           color="primary"
           size="large"
+          style={{ background:"#8c0087",color:'white'}}
+
         >
           Cancel
         </Button>
@@ -167,6 +169,8 @@ function removeImage(index) {
           variant="contained"
           onClick={onSubmit}
           size="large"
+          style={{ background:"#8c0087",color:'white'}}
+
           className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
         >
@@ -221,7 +225,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["itemTitle"] ? "red" : "#ddd" }}
           >
-            <label>item Title</label>
+            <label style={{color:' #2d013a'}}>item Title</label>
             <Input
               {...register("itemTitle")}
               className={classes.input}
@@ -239,7 +243,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["itemName"] ? "red" : "#ddd" }}
           >
-            <label>item Name</label>
+            <label style={{color:' #2d013a'}}>item Name</label>
             <Input
               {...register("itemName")}
               className={classes.input}
@@ -257,7 +261,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["donationAmount"] ? "red" : "#ddd" }}
           >
-            <label>Amount</label>
+            <label style={{color:' #2d013a'}}>Amount</label>
             <Input
               {...register("donationAmount")}
               className={classes.input}
@@ -278,7 +282,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["duration"] ? "red" : "#ddd" }}
           >
-            <label>Duration</label>
+            <label style={{color:' #2d013a'}}>Duration</label>
             <Input
               {...register("duration")}
               className={classes.input}
@@ -301,7 +305,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["details"] ? "red" : "#ddd" }}
           >
-            <label>Details</label>
+            <label style={{color:' #2d013a'}}>Details</label>
             <Input
               {...register("details")}
               className={classes.input}

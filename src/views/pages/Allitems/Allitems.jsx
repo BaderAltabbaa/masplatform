@@ -147,6 +147,11 @@ const AllItemsPage = () => {
                   count={pages}
                   page={page}
                   onChange={(e, v) => setPage(v)}
+                  sx={{
+                    "& .MuiPaginationItem-root": { color: "white" }, // Change text color
+                    "& .MuiPaginationItem-page.Mui-selected": {  color: "grey" }, // Change selected color
+                    "& .MuiPaginationItem-ellipsis": { color: "white" }, // Change ellipsis color
+                  }}
                 />
               </Box>
             </>

@@ -300,6 +300,8 @@ function ExploreCard(props) {
                 variant="contained"
                 size="large"
                 color="primary"
+                style={{ background:"#8c0087",color:'white'}}
+
                 onClick={() => setViewContent(true)}
               >
                 View
@@ -309,6 +311,8 @@ function ExploreCard(props) {
                   variant="contained"
                   size="large"
                   color="primary"
+                  style={{ background:"#8c0087",color:'white'}}
+
                   onClick={() => setOpenEdit(true)}
                 >
                   Edit
@@ -448,6 +452,8 @@ function ExploreCard(props) {
                   variant="contained"
                   size="large"
                   color="primary"
+                  style={{ background:"#8c0087",color:'white'}}
+
                 >
                   Close
                 </Button>

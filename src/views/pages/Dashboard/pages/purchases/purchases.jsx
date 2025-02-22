@@ -89,7 +89,7 @@ export default function purchases() {
   }, [state.userPage]);
 
   return (
-    <MainCard title="purchases Items" >
+    <MainCard title="Purchased Items" >
  <div className={classes.subscriptionBox}>
       <Box className={classes.LoginBox} >
         <Box className={classes.masBoxFlex}>

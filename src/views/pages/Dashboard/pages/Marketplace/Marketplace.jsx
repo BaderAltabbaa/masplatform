@@ -213,7 +213,7 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="primary"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px",background:"#8c0087",color:'white' }}
             onClick={() => updateState({ openShareAudience: true })}
           >
             add a Photos
@@ -222,6 +222,8 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="secondary"
+            style={{ background:"#8c0087",color:'white'}}
+
             onClick={() => updateState({ OpenAuction: true })}
           >
             add a item
@@ -237,10 +239,10 @@ export default function Marketplace() {
           ""
         )}
 
-        <Grid container spacing={1} className={classes.bunbox}>
+        <Grid container spacing={2} className={classes.bunbox}>
           {itemList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={3.5} md={4} sm={6} xm={12}>
                 <CardMarketplace data={data} />
                 {/* <ItemCard data={data} index={i} isDays={true} /> */}
               </Grid>
@@ -396,7 +398,7 @@ export const AdditemPopup = ({ open, handleClose, callbackFun }) => {
       onClose={() => handleClose()}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle className={classes.dailogTitle}>Create a item</DialogTitle>
+      <DialogTitle className={classes.dailogTitle}>Create an item</DialogTitle>
       <DialogContent>
         <Box>
           <Grid container spacing={2}>
@@ -673,6 +675,8 @@ export const AdditemPopup = ({ open, handleClose, callbackFun }) => {
           onClick={() => handleClose(false)}
           color="primary"
           size="large"
+          style={{ background:"#8c0087",color:'white'}}
+
         >
           cancel
         </Button>

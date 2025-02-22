@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import { UserContext } from "src/context/User";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+
+
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -21,6 +26,11 @@ import Buttons from './Buttons';
 
 const Header = ({ handleLeftDrawerToggle }) => {
   const theme = useTheme();
+ const user = useContext(UserContext);
+   const navigate = useNavigate();
+
+   
+ 
 
   return (
     <>
@@ -38,8 +48,20 @@ const Header = ({ handleLeftDrawerToggle }) => {
       >
         <Box component="span" sx={{ display: { xs: 'none', md: 'block' ,marginBottom : '5px' ,marginTop: '5px' }, flexGrow: 1 }}>
        
-            <img className="logo1" src="../../../../../../../public/assets/Images/logo.png" alt="Logo" />
-          
+        <Avatar
+        onClick={() => navigate("/profile")}
+                src={
+                  user.userData && user.userData?.profilePic
+                    ? user.userData?.profilePic
+                    : `https://avatars.dicebear.com/api/miniavs/${user?.userData?._id}.svg`
+                }
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  border: 'solid 2px rgb(255, 255, 255)',
+                  cursor: "pointer"
+                }}
+              />          
         </Box>
         <ButtonBase sx={{ borderRadius: '8px', overflow: 'hidden' }}>
           <Avatar
@@ -51,7 +73,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
               background: theme.palette.secondary.light,
               color: theme.palette.secondary.dark,
               '&:hover': {
-                background: theme.palette.secondary.dark,
+                background: ' #8c0087',
                 color: theme.palette.secondary.light
               }
             }}

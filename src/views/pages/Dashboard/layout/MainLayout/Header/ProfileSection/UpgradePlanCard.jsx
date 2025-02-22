@@ -439,20 +439,14 @@ const UpgradePlanCard = () => {
   };
 
   const profilePageURL = websiteName + "/user-profile/" + user?.userData?.userName;
-  const cardSX = {
-    content: '""',
-    position: 'absolute',
-    width: 200,
-    height: 200,
-    borderColor: 'warning.main'
-  };
+ 
 
   return (
     <>
     
     <Card
       sx={{
-        bgcolor: 'warning.light',
+        bgcolor: 'white',
         my: 2,
         overflow: 'hidden',
         position: 'relative',
@@ -461,14 +455,14 @@ const UpgradePlanCard = () => {
           borderRadius: '50%',
           top: '65px',
           right: '-150px',
-          ...cardSX
+        
         },
         '&:before': {
           border: '3px solid ',
           borderRadius: '50%',
           top: '145px',
           right: '-70px',
-          ...cardSX
+          
         }
       }}
     >
@@ -587,7 +581,7 @@ const UpgradePlanCard = () => {
                 {/* End refferall */}
 
                 {/* Start Share */}
-                <Button style={{ marginTop: "8px", width: "225px", borderRadius: "15px", background: "linear-gradient(180deg, #c04848 0%, #480048 100%)", color: "#FFF" }} onClick={() => setOpenShare(true)}>
+                <Button style={{ marginTop: "8px", width: "225px", borderRadius: "15px", background: "linear-gradient(180deg, #8c0087 0%,rgb(48, 0, 48) 100%)", color: "#FFF" }} onClick={() => setOpenShare(true)}>
                   Share
                 </Button>
                 {/* End Share */}

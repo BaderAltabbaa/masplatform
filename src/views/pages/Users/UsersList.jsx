@@ -60,9 +60,9 @@ const useStyles = makeStyles(() => ({
     minWidth: 320,
   },
   table: {
-    border: "1px solid #e5e3dd",
+    border: "none",
     "& th": {
-      border: "1px solid #e5e3dd",
+      border: "none",
       padding: "10px!important",
     },
     "& td": {
@@ -162,7 +162,7 @@ export default function UsersList() {
 
   return (
     <Container maxWidth='xl'
-    sx={{background:" rgb(186, 147, 198)"}}
+    sx={{background:" rgb(211, 182, 220)"}}
     >
 <Box className={classes.paddingContainer}>
       <Box className={classes.LoginBox} mb={5}>
@@ -172,14 +172,14 @@ export default function UsersList() {
         >
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}
           <Box variant="h6" style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-            <span style={{  fontSize: "2rem",fontWeight: "700",color: "#640D5F" }}>
+            <span style={{  fontSize: "2rem",fontWeight: "700",color: " #280026" }}>
               Users
             </span>
             <Input
               placeholder="Find User"
               className={classes.input_fild2}
               value={filterData.searchKey}
-              style={{ width: "180px", marginLeft: "110px", border: "1px solid #DDD", borderRadius: "10px", padding: "2px 5px" }}
+              style={{ width: "180px", marginLeft: "110px", border: "1px solid #280026", borderRadius: "10px", padding: "2px 5px" ,background:"rgb(248, 233, 255)"}}
               type="text"
               name="searchKey"
               onChange={_onInputChange}
@@ -231,7 +231,7 @@ export default function UsersList() {
             {/* Start Head */}
             <TableHead
                        style={{
-                        background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))",
+                        background: "linear-gradient(to right, #280026, #4a004f)",
                       }}
             >
               <TableRow>

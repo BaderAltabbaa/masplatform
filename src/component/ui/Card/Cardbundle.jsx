@@ -249,7 +249,7 @@ function Cardbundle({
             url={BundleData.mediaUrl}
             muted
             playing
-            width="100%"
+            width="10%"
             height={"166px"}
           />
         </div>
@@ -679,6 +679,8 @@ function Cardbundle({
                   variant="contained"
                   color="secondary"
                   size="large"
+                  style={{ background:"#8c0087",color:'white'}}
+
                   onClick={() => {
                     handleClose2();
                   }}
@@ -694,6 +696,8 @@ function Cardbundle({
                       variant="contained"
                       color="secondary"
                       size="large"
+                      style={{ background:"#8c0087",color:'white'}}
+
                       onClick={subscribeToBundleHandler}
                       disabled={isLoading}
                     >

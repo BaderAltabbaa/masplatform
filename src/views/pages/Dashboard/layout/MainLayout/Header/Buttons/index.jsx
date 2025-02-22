@@ -394,15 +394,15 @@ const Buttons = () => {
 
                     variant="contained"
                     size="large"
-                    color="primary"
-                    style={{ width: "40%", fontSize: "15px", marginRight: "15px" }}
+                    color=""
+                    style={{ width: "40%", fontSize: "15px", marginRight: "15px",background:"rgb(140, 0, 135)",color:"white" }}
                     onClick={() => setOpenDeposit(true)}
                 >
                     Deposit
                 </Button>
                 <Button
                     variant="contained"
-                    style={{ width: "40%", fontSize: "15px" }}
+                    style={{ width: "40%", fontSize: "15px",background:"#8c0087",color:"white" }}
                     size="large"
                     color="secondary"
                     onClick={() => setOpenWithdraw(true)}
@@ -464,6 +464,7 @@ const Buttons = () => {
                                     size="large"
                                     color="secondary"
                                     onClick={() => setOpenDeposit(false)}
+                                    style={{  fontSize: "15px",background:"#8c0087",color:"white" }}
                                 >
                                     Close
                                 </Button>
@@ -582,7 +583,9 @@ const Buttons = () => {
                                 <Button
                                     variant="contained"
                                     size="large"
-                                    color="secondary"
+                                    color=""
+                                    style={{ marginTop:"15px",fontSize: "15px",background:" #8c0087",color:"white" }}
+
                                     onClick={withdraw}
                                     disabled={loader || !withdrawAmount || !selectedToken}
                                 >

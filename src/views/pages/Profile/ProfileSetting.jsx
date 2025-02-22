@@ -23,7 +23,7 @@ import { UserContext } from "src/context/User";
 import { FiCopy, FiEdit } from "react-icons/fi"; 
 import { toast } from "react-toastify"; 
 import { CopyToClipboard } from "react-copy-to-clipboard"; 
-import { CheckCircleOutline, ErrorOutline, Edit, Save, Cancel } from '@mui/icons-material'; // MUI v5 Icons (Updated)
+import { CheckCircleOutline, ErrorOutline, Edit, Save, Cancel, Grid3x3 } from '@mui/icons-material'; // MUI v5 Icons (Updated)
 import SocialAccounts from "./SocialAccounts"; 
 import { VerifyOtp } from "src/component/Modals/VerifyOtp";
 import { isMobile } from 'react-device-detect';
@@ -76,6 +76,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     paddingBottom: "25px",
+    "@media(max-width:660px)": {
+      display: "grid",
+      
+    }
   },
   ButtonBtn: {
     paddingTop: "30px",
@@ -171,8 +175,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   CoverBox: {
-    background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))",
-   
+    background: "#5d0164",
     display: "flex",
     alignItems: "flex-end",
     flexDirection: "column",
@@ -226,7 +229,7 @@ const useStyles = makeStyles((theme) => ({
   Box: {
     width: "100%",
     height: isMobile ? "80px" : "200px",
-    background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))",
+    background: "linear-gradient(to right , #280026,#5d0164)",
   },
   newsec: {
     display: "flex",
@@ -241,14 +244,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "center",
     display: "block",
-    background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))",
-    width: "20% !important",
+    background: "linear-gradient(to bottom right, #640D5F, rgb(27, 1, 98))",
+    width: "20% ",
     padding: "10px 20px",
-    borderBottom: "1px solid #ddd",
     borderRadius: "10px",
     color: "#fff",
-    "@media(max-width:480px)": {
-      width: "50% !important",
+    "@media(max-width:680px)": {
+      width: "40% !important",
     },
   },
   parentOfInput: {
@@ -292,7 +294,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "14px",
     marginTop: "20px",
     fontSize: "16px",
-    color: "#777",
+    color: " #777",
     border: "1px solid #ddd",
     padding: "12px",
     borderRadius: "15px",
@@ -307,10 +309,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnPro: {
-    background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))  !important",
+    background: "linear-gradient(to bottom right, #640D5F, #1b0162)  !important",
     transition: "background  .6s",
     "&:hover": {
-        background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))!important", 
+        background: "linear-gradient(to bottom right, #640D5F,rgb(76, 55, 131))!important", 
     },
   },
   btnOutPro: {
@@ -318,7 +320,7 @@ const useStyles = makeStyles((theme) => ({
     border: "#6345ED 1px solid !important",
     color: "#6345ED  !important",
     "&:hover": {
-        background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))!important", 
+        background: "linear-gradient(to bottom right, #640D5F, rgb(76, 55, 131))!important", 
       color: "white !important",
       border: "none !important",
     },
@@ -1193,7 +1195,7 @@ export default function ProfileSettings() {
                   alignItems: "center",
                 }}
               >
-                <FiEdit style={{ marginRight: "8px" }} /> Add Picturer
+                <FiEdit style={{ marginRight: "8px" }} /> Edit Picture
               </label>
               <input
                 type="file"
@@ -1214,7 +1216,7 @@ export default function ProfileSettings() {
         <Box mt={0} style={{ marginTop: "-15px" }}>
           <Grid  container spacing={1} alignItems="center" >
             <Grid item xs={12} >
-              <label className={classes.title}>NicName</label>
+              <label className={classes.title}>NickName</label>
             </Grid>
             <Grid item xs={12} className={classes.parentOfInput}>
               <TextField

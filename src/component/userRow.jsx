@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
   createButton: {
     color: '#fff',
-    background: "linear-gradient(to bottom right, #640D5F, rgb(199, 113, 238))",
+    background: "linear-gradient(to bottom right, #760072, #2d013a)",
     margin: '0px 10px',
   },
 }))

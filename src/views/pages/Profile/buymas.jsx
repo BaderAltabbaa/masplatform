@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '75vh',
+    backgroundColor: 'rgb(211, 182, 220)'
   },
   balanceContainer: {
     marginBottom: theme.spacing(2),

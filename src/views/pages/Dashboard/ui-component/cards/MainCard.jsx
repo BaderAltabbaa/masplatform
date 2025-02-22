@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { makeStyles } from "@mui/styles"; 
 
 // material-ui
 import Card from '@mui/material/Card';
@@ -12,8 +13,12 @@ import Typography from '@mui/material/Typography';
 
 // constant
 const headerSX = {
-  '& .MuiCardHeader-action': { mr: 0 }
+  '& .MuiCardHeader-action': { mr: 0 },
+  
 };
+
+
+
 
 // ==============================|| CUSTOM MAIN CARD ||============================== //
 
@@ -42,7 +47,9 @@ const MainCard = React.forwardRef(
         sx={{
           marginTop:"100px",
           border: border ? '1px solid' : 'none',
+          borderRadius:"0",
           borderColor: 'divider',
+          backgroundColor:"white",
           ':hover': {
             boxShadow: boxShadow ? shadow || '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'
           },
@@ -50,7 +57,11 @@ const MainCard = React.forwardRef(
         }}
       >
         {/* card header and action */}
-        {!darkTitle && title && <CardHeader sx={headerSX} title={title} action={secondary} />}
+        {!darkTitle && title && <CardHeader sx={{  '& .MuiCardHeader-title': {
+      fontSize: '1.8rem', // Custom font size
+      fontWeight: 'bold', // Custom font weight
+      color: '#43005e', // Custom color
+    },}}  title={title} action={secondary} />}
         {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
 
         {/* content & header divider */}

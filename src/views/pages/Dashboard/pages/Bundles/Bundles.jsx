@@ -215,7 +215,8 @@ export default function Bundles() {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
+            color=""
+            style={{background:"#8c0087",color:'white'}}
             onClick={() => updateState({ OpenAuction: true })}
           >
             add a bundle
@@ -234,7 +235,7 @@ export default function Bundles() {
         <Grid container spacing={2}  >
           {bundleList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={3.5} md={4} sm={6} xm={12}>
                 <Cardbundle data={data}/>
                 {/* <BundleCard data={data} index={i} isDays={true} /> */}
               </Grid>

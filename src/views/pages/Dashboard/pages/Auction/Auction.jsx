@@ -269,6 +269,8 @@ export default function Login() {
               variant="contained"
               size="large"
               color="secondary"
+              style={{ background:"#8c0087",color:'white'}}
+
               onClick={() => setOpenAuction(true)}
             >
               Make a new auction
@@ -476,6 +478,8 @@ export default function Login() {
                 onClick={() => setOpenAuction(false)}
                 color="primary"
                 size="large"
+                style={{ background:"#8c0087",color:'white'}}
+
                 disabled={process}
               >
                 cancel
@@ -489,6 +493,8 @@ export default function Login() {
                   // placeAuctionOrder
                   // setOpenAuction(false)
                 }
+                style={{ background:"#8c0087",color:'white'}}
+
                 color="secondary"
                 size="large"
                 disabled={process}
