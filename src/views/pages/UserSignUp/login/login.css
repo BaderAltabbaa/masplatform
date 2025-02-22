@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-body.Loginstyle {
+.Loginstyle {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: url('assets/Images/logbackground.webp');
+  background-image: url('/assets/Images/logbackground.webp');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -24,12 +24,14 @@ body.Loginstyle {
     padding: 2rem 3rem;
 }
 
-.Loginstyle {
+.Logintitle{
     font-size: 2rem;
     font-weight: bold;
     color: #fff;
     text-align: center;
       color: #2d013a;
+      display: flex;
+      justify-content: center;
 }
 
 

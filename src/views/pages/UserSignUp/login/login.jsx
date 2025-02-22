@@ -267,10 +267,10 @@ export default function Login() {
 
   }, [])
   return (
-    <body className="Loginstyle">
+    <div className="Loginstyle">
     <section className="section1">
    <form onSubmit={Login}>
-       <span className="Loginstyle">LOGIN</span>
+       <span className="Logintitle">LOGIN</span>
        <div className="">
           
            <TextField
@@ -366,7 +366,7 @@ export default function Login() {
    </form>
    
 </section>
-</body>
+</div>
 
 
     // <Box className={classes.root}>
