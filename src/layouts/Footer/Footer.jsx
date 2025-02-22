@@ -43,7 +43,7 @@ console.log(socialLinks)
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <Link to="/">
           <img
-            src="../../../public/assets/Images/masfooter-logo.svg"
+            src="\assets\Images\masfooter-logo.svg"
             alt="Logo"
             style={{
               width: "120px",

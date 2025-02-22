@@ -10,13 +10,11 @@
 }
 
 .Solution-image-container{
-  background-image: url('../../../../../public/assets//Images//15.jpg ');
+  background-image: url('/assets/Images/15.jpg ');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   height:300px;
-
-
   width: 100%;
 padding: 0 !important;
 margin: 0 !important;
