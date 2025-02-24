@@ -85,11 +85,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   UploadBox: {
-    border: "solid 0.5px #707070",
+    border: "solid 0.5px rgb(131, 131, 131)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "110px",
+    borderRadius:"20px"
   },
   input_fild22: {
     width: "100%",
@@ -317,7 +318,9 @@ export default function Login() {
           disableBackdropClick={process}
           disableEscapeKeyDown={process}
         >
-          <DialogTitle className={classes.dailogTitle}>
+          <DialogTitle className={classes.dailogTitle}
+                  style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
+>
             Make a new auction
           </DialogTitle>
           <DialogContent>
@@ -326,7 +329,8 @@ export default function Login() {
                 <FormHelperText error>{auth.connectWalletError}</FormHelperText>
               </Box>
             )}
-            <Box>
+            <Box
+            sx={{marginBottom:"15px"}}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
                   <label style={{ margin: "0px", padding: "0px" }}>
@@ -405,7 +409,7 @@ export default function Login() {
                   <label>Details:</label>
                 </Grid>
                 <Grid item xs={12} md={12}>
-                  <Box className={classes.UploadBox}>
+                  <Box>
                     <TextField
                       id="standard-basic"
                       placeholder=""

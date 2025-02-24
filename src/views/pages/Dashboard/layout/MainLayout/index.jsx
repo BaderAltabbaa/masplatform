@@ -201,7 +201,7 @@ const MainLayout = () => {
       <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
 
       {/* main content */}
-      <Main sx={{padding:"0"}}  open={leftDrawerOpened}>
+      <Main sx={{padding:"10" ,backgroundColor:"white"}}  open={leftDrawerOpened}>
         
         {/* breadcrumb */}
         {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}

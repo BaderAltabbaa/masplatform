@@ -90,7 +90,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
       >
         {isEdit ? "Edit Audience" : "Share For Audience"}
       </DialogTitle>
@@ -292,7 +292,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors.title ? "red" : "#ddd" }}
+            style={{ borderColor: errors.title ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Title</label>
             <Input
@@ -320,7 +320,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors.details ? "red" : "#ddd" }}
+            style={{ borderColor: errors.details ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Details</label>
             <Input
@@ -384,7 +384,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
                 <div
                   className={classes.bundleCardStyle}
                   style={{
-                    borderColor: isChosen ? "rgb(157, 0, 185)" : "#ddd",
+                    borderColor: isChosen ? "rgb(157, 0, 185)" : " #8c0087",
                   }}
                   onClick={() => (isEdit ? {} : selectItem(item._id))}
                 >
@@ -518,7 +518,7 @@ export default ShareForAudienceDialog;
 const useStyles = makeStyles(() => ({
   inputContainer: {
     borderWidth: 2,
-    borderColor: "#ddd",
+    borderColor: " #8c0087",
     borderStyle: "solid",
     borderRadius: 5,
     padding: "10px",

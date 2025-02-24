@@ -71,7 +71,7 @@ export default function SupporterList({ type }) {
   }, [state.page]);
 
   return (
-    <MainCard title="  My Supporter" >
+    <MainCard title="My Supporter" >
   
       <Box className={classes.LoginBox} mb={5}>
         <Box className={classes.masBoxFlex}>

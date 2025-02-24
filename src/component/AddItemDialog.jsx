@@ -83,7 +83,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem"}}
       >
         {isEdit ? "Edit item" : "Create an item"}
       </DialogTitle>
@@ -223,7 +223,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["itemTitle"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["itemTitle"] ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>item Title</label>
             <Input
@@ -241,7 +241,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["itemName"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["itemName"] ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>item Name</label>
             <Input
@@ -259,7 +259,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["donationAmount"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["donationAmount"] ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Amount</label>
             <Input
@@ -280,7 +280,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["duration"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["duration"] ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Duration</label>
             <Input
@@ -303,7 +303,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["details"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["details"] ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Details</label>
             <Input
@@ -330,6 +330,22 @@ function removeImage(index) {
           value={watch("coinName")}
           onChange={(event) => setValue("coinName", event.target.value)}
           disabled={isEdit}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                backgroundColor: '#f5f5f5', // Background color of the dropdown
+                borderRadius: '0px 0 20px 20px',
+                borderBottom:"2px solid #8c0087" 
+              },
+            },
+            MenuListProps: {
+              sx: {
+                padding: '10px 0',
+                backgroundColor:"rgb(255, 255, 255)",
+              
+              },
+            },
+          }}
         >
           {tokensDetails.map((item, index) => (
             <MenuItem
@@ -441,7 +457,7 @@ export default AdditemDialog;
 const useStyles = makeStyles(() => ({
   inputContainer: {
     borderWidth: 2,
-    borderColor: "#ddd",
+    borderColor: " #8c0087",
     borderStyle: "solid",
     borderRadius: 5,
     padding: "10px",

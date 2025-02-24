@@ -131,7 +131,7 @@ export default function purchases() {
       </Box>
       <Box className={classes.LoginBox} >
         <Box className={classes.masBoxFlex}>
-          <Typography variant="h6">Users</Typography>
+                        <Typography variant="h6" style={{fontSize:"1.8rem" ,color:"#43005e"}}>Users</Typography>
         </Box>
         <Box>
           <Grid container spacing={2}>

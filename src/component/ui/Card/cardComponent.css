@@ -9,7 +9,7 @@
     max-height: 650px;
     padding: 10px;
     /* background: linear-gradient(to top right, #640D5F, rgb(1, 15, 78)); */
-    border-radius: 20px;
+    border-radius: 30px;
     background-color: rgba(85, 84, 84, 0.7);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* تأثير التحريك والتظليل */
@@ -25,7 +25,7 @@
     height: 210px;
     max-height: 100%;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 30px;
     transition: transform 0.3s ease; /* تأثير التحريك للصورة */
   }
   .contentContainer{

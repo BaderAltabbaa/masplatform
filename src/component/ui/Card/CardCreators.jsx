@@ -122,7 +122,7 @@ function CardCreators({
     navigate("/user-profile/" + userCardData.userName);
   }}
 >
-  <img src={userCardData.profilePic} alt={title} />
+  <img src={userCardData.profilePic} alt={title} style={{height:"320px"}}/>
   <div className="contentContainer">
     <h3
       onClick={(event) => {

@@ -30,8 +30,17 @@
 .CardContainer{
     margin: 0 10px;
     display: inline-block;
+    user-select: none;
+    scroll-snap-align: start; /* Snap cards to the start of the container */
+    flex: 0 0 auto; /* Prevent cards from shrinking */
+    margin-right: 10px; /* Add spacing between cards */
     
 }
+div[ref="carouselRef"] {
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scroll-snap-type: x mandatory; /* Snap cards into place */
+}
+
 
 @media (max-width: 480px) {
     .prev-arrow ,.next-arrow{
