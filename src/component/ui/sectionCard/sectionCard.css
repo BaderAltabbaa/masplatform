@@ -1,6 +1,5 @@
 .prev-arrow ,.next-arrow{
-    cursor: pointer;
- 
+    cursor: pointer; 
     color:#390b4d ;
     background: rgb(255, 255, 255);
     border: none;
@@ -42,10 +41,9 @@ div[ref="carouselRef"] {
 }
 
 
-@media (max-width: 480px) {
+@media (max-width: 580px) {
     .prev-arrow ,.next-arrow{
-        width: 30px;
-        height: 30px;
+       display: none;
 
     }
     .CardContainer{

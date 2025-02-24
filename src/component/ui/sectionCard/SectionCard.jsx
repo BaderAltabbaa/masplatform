@@ -17,51 +17,87 @@ const SectionCard = ({
     Marketplace
 }) => {
     const carouselRef = useRef(null);
+    const intervalRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
+    const [autoScroll, setAutoScroll] = useState(true);
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+
+    // Function to determine scroll amount
+    const getScrollAmount = () => (isDesktop ? 1000 : 100);
 
     // Handle left arrow click
     const handleScrollLeft = () => {
         if (carouselRef.current) {
-            carouselRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+            carouselRef.current.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
         }
     };
 
     // Handle right arrow click
     const handleScrollRight = () => {
         if (carouselRef.current) {
-            carouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+            carouselRef.current.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
         }
     };
 
-    // Automatic scrolling (disabled on mobile)
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (!isDragging && carouselRef.current) {
-                handleScrollRight();
-            }
-        }, 2000); // Scroll every 2 seconds
+    // Function to start auto-scrolling
+    const startAutoScroll = () => {
+        if (isDesktop) {
+            intervalRef.current = setInterval(() => {
+                if (!isDragging && autoScroll && carouselRef.current) {
+                    carouselRef.current.scrollBy({ left: 1000, behavior: 'smooth' });
+                }
+            }, 2000);
+        }
+    };
 
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, [isDragging]);
+    // Stop auto-scrolling
+    const stopAutoScroll = () => {
+        clearInterval(intervalRef.current);
+    };
+
+    // Listen for window resize to update isDesktop state
+    useEffect(() => {
+        const handleResize = () => {
+            const newIsDesktop = window.innerWidth > 768;
+            if (newIsDesktop !== isDesktop) {
+                setIsDesktop(newIsDesktop);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [isDesktop]);
+
+    // Start auto-scroll only if it's a desktop
+    useEffect(() => {
+        if (isDesktop) {
+            startAutoScroll();
+        } else {
+            stopAutoScroll();
+        }
+        return () => stopAutoScroll();
+    }, [isDesktop, isDragging, autoScroll]);
 
     // Touch event handlers
     const handleTouchStart = (e) => {
         setIsDragging(true);
-        setStartX(e.touches[0].pageX); // Record the initial touch position
-        setScrollLeft(carouselRef.current.scrollLeft); // Record the initial scroll position
+        setStartX(e.touches[0].pageX);
+        setScrollLeft(carouselRef.current.scrollLeft);
+        stopAutoScroll(); // Stop auto-scroll when touched
     };
 
     const handleTouchMove = (e) => {
         if (!isDragging) return;
-        const x = e.touches[0].pageX; // Current touch position
-        const walk = (x - startX) * 2; // Calculate the distance swiped (multiplied for faster scroll)
-        carouselRef.current.scrollLeft = scrollLeft - walk; // Scroll the carousel
+        const x = e.touches[0].pageX;
+        const walk = (x - startX) * 2;
+        carouselRef.current.scrollLeft = scrollLeft - walk;
     };
 
     const handleTouchEnd = () => {
         setIsDragging(false);
+        if (isDesktop) startAutoScroll(); // Resume only if desktop
     };
 
     return (
@@ -76,11 +112,21 @@ const SectionCard = ({
                 ref={carouselRef}
                 style={{
                     display: 'flex',
-                    overflowX: 'auto', // Allow horizontal scrolling
+                    overflowX: 'hidden',
                     scrollBehavior: 'smooth',
                     padding: '20px',
                     whiteSpace: 'nowrap',
-                    cursor: isDragging ? 'grabbing' : 'grab', // Change cursor on drag
+                    cursor: isDragging ? 'grabbing' : 'grab',
+                }}
+                onMouseEnter={() => {
+                    setAutoScroll(false);
+                    stopAutoScroll();
+                }}
+                onMouseLeave={() => {
+                    if (isDesktop) {
+                        setAutoScroll(true);
+                        startAutoScroll();
+                    }
                 }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -97,12 +143,8 @@ const SectionCard = ({
                                 Subscribe={Subscribe}
                             />
                         )}
-                        {Bundles && (
-                            <Cardbundle data={itemCard} />
-                        )}
-                        {Marketplace && (
-                            <CardMarketplace data={itemCard} />
-                        )}
+                        {Bundles && <Cardbundle data={itemCard} />}
+                        {Marketplace && <CardMarketplace data={itemCard} />}
                     </div>
                 ))}
             </div>

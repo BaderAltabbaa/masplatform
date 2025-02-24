@@ -588,7 +588,7 @@ useEffect(() => {
                     (isBuyed && activeBuy) || isUseritem
                       ? navigate("/items-details?" + itemData?._id)
                       : handleClickOpen2()
-                  } style={{height:"230px"}} /> 
+                  }  /> 
               
             )}
                <div className="contentContainer">
