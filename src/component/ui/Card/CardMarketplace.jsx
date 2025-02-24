@@ -646,7 +646,7 @@ useEffect(() => {
               disabled={isBuyed && activeBuy}
               onClick={() => (activeBuy ? {} : handleClickOpen2())}
             >
-              {activeBuy ? "Buyed" : "Renew"}
+              {activeBuy ? "Bought" : "Renew"}
             </Button>
           )}
         {auth?.userData?._id !== userId && !isBuyed && (
@@ -688,7 +688,7 @@ useEffect(() => {
             <Typography
               variant="h4"
               align="center"
-              style={{ color: "#792034", margiBottom: "10px" }}
+              style={{ color: "rgb(77, 0, 84)", margiBottom: "10px" }}
             >
               {itemData.itemTitle}
             </Typography>
@@ -758,6 +758,7 @@ useEffect(() => {
                     variant="contained"
                     size="large"
                     color="primary"
+                    style={{background:"#8c0087",color:"white" }}
                     onClick={handleClose}
                   >
                     Cancel
@@ -768,6 +769,7 @@ useEffect(() => {
                     variant="contained"
                     size="large"
                     color="secondary"
+                    style={{background:"#8c0087",color:"white" }}
                     onClick={handleClose}
                   >
                     Save Changes
@@ -900,7 +902,7 @@ useEffect(() => {
   </Box>
    {/* Buy Now and Cancel Buttons */}
    <Box mt={3} mb={3} textAlign="center">
-    <Button className={classes.LoginButton} onClick={handleClose2}>
+    <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#8c0087",color:"white" }} >
       Cancel
     </Button>
     &nbsp;&nbsp;
@@ -926,7 +928,7 @@ useEffect(() => {
   {/* Login and Subscribe Buttons */}
   {!auth.userLoggedIn && (
     <Box mt={3} mb={3} textAlign="center">
-      <Button className={classes.LoginButton} onClick={handleClose2}>
+      <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#8c0087",color:"white" }} >
         Cancel
       </Button>
       &nbsp;&nbsp;
@@ -935,6 +937,8 @@ useEffect(() => {
         onClick={() => {
           navigate("/login");
         }}
+        style={{background:"#8c0087",color:"white" }}
+
       >
         Login
       </Button>
@@ -999,7 +1003,7 @@ useEffect(() => {
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary">
+              <Button variant="contained" size="large" color="secondary"  style={{background:"#8c0087",color:"white" }} >
                 Donate now
               </Button>
             </Box>
@@ -1016,15 +1020,7 @@ useEffect(() => {
 
             </div>
 
- 
-
 </div>
-
-
-    
-
- 
-
 
 </Box>
   )

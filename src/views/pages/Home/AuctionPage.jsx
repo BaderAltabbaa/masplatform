@@ -169,7 +169,7 @@ const AuctionPage = ({ staticSections }) => {
   <>
   
   <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-      <ButtonwithAnimation  > Marketplace</ButtonwithAnimation>
+      <ButtonwithAnimation> Marketplace</ButtonwithAnimation>
     
      </div>
       {allNFT1List.length !=0 && 
@@ -195,7 +195,7 @@ const AuctionPage = ({ staticSections }) => {
     return (
       <>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-            <ButtonwithAnimation  > Creator</ButtonwithAnimation>
+            <ButtonwithAnimation> Creator</ButtonwithAnimation>
           
           </div>
 

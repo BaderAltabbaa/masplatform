@@ -256,7 +256,7 @@ export const VerifyOtp = ({
         <Typography
           variant="h4"
           style={{
-            color: "#792034",
+            color: "rgb(114, 32, 121)",
             marginBottom: "10px",
             textAlign: "center",
           }}
@@ -364,6 +364,12 @@ export const VerifyOtp = ({
       <DialogActions>
         {context === "register"}
         <Button
+        sx={{
+                  
+                    
+          backgroundColor: 'rgb(112, 2, 146)', 
+        
+      }}
           variant="contained"
           color="secondary"
           disabled={

@@ -92,9 +92,7 @@ export default function purchases() {
     <MainCard title="Purchased Items" >
  <div className={classes.subscriptionBox}>
       <Box className={classes.LoginBox} >
-        <Box className={classes.masBoxFlex}>
-          <Typography variant="h6"> </Typography>
-        </Box>
+       
         <Box>
           <Grid container spacing={3}>
             {purchases.map((data, i) => {

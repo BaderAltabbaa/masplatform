@@ -12,14 +12,14 @@
 //export let pageURL = "https://masplatform-xoep.onrender.com";
 //export let socketURL = "wss://masplatform-xoep.onrender.com";
 
- export let baseURL = "https://node.masplatform.net";
+export let baseURL = "https://node.masplatform.net";
  export let pageURL = "https://masplatform.net"
  export let socketURL = "wss://node.masplatform.net";
 
 
  //export let  baseURL = "http://localhost:1865";
- //export let socketURL = "ws://localhost:1865";
-// export let pageURL = "http://localhost:1865"
+//export let socketURL = "ws://localhost:1865";
+ //export let pageURL = "http://localhost:1865"
 
 
 /*if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -28,6 +28,7 @@
 }*/
 
 const url = `${baseURL}/api/v1`;
+
 const Apiconfigs = {
     connectWallet: `${url}/user/connectWallet`,
     updateprofile: `${url}/user/updateProfile`,

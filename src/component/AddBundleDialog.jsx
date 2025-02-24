@@ -283,7 +283,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["bundleTitle"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["bundleTitle"] ? "red" : " #8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Bundle Title</label>
             <Input
@@ -301,7 +301,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["bundleName"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["bundleName"] ? "red" : "#8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Bundle Name</label>
             <Input
@@ -319,7 +319,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["donationAmount"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["donationAmount"] ? "red" : "#8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Amount</label>
             <Input
@@ -340,7 +340,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["duration"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["duration"] ? "red" : "#8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Duration</label>
             <Input
@@ -363,7 +363,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["details"] ? "red" : "#ddd" }}
+            style={{ borderColor: errors["details"] ? "red" : "#8c0087" }}
           >
             <label style={{color:' #2d013a'}}>Details</label>
             <Input
@@ -390,6 +390,22 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           value={watch("coinName")}
           onChange={(event) => setValue("coinName", event.target.value)}
           disabled={isEdit}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                backgroundColor: '#f5f5f5', // Background color of the dropdown
+                borderRadius: '0px 0 20px 20px',
+                borderBottom:"2px solid #8c0087" 
+              },
+            },
+            MenuListProps: {
+              sx: {
+                padding: '10px 0',
+                backgroundColor:"rgb(255, 255, 255)",
+              
+              },
+            },
+          }}
         >
           {tokensDetails.map((item, index) => (
             <MenuItem
@@ -399,7 +415,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 padding: "10px 0px",
                 display: "flex",
                 alignItems: "center",
-                gap: 5,
+                gap: 5,              
               }}
             >
               <p style={{ margin: 5, width: 50 }}>{item.name}</p>

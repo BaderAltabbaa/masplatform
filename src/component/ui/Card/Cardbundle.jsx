@@ -345,6 +345,7 @@ function Cardbundle({
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent:"center",
               marginTop: "5px",
             }}
           >
@@ -414,7 +415,7 @@ function Cardbundle({
             <Typography
               variant="h4"
               align="center"
-              style={{ color: "#792034", margiBottom: "10px" }}
+              style={{ color: "rgb(60, 0, 75)", margiBottom: "10px" }}
             >
               {BundleData.bundleTitle}
             </Typography>
@@ -484,6 +485,7 @@ function Cardbundle({
                     variant="contained"
                     size="large"
                     color="primary"
+                    style={{background:"#8c0087",color:"white" }}
                     onClick={handleClose}
                   >
                     Cancel
@@ -494,6 +496,7 @@ function Cardbundle({
                     variant="contained"
                     size="large"
                     color="secondary"
+                    style={{background:"#8c0087",color:"white" }}
                     onClick={handleClose}
                   >
                     Save Changes
@@ -518,9 +521,9 @@ function Cardbundle({
             <Typography
               variant="h4"
               align="center"
-              style={{ color: "#792034", margiBottom: "10px" }}
+              style={{ color: "rgb(71, 0, 89)", margiBottom: "10px" }}
             >
-              Bundle I
+              Bundle 
             </Typography>
             <Typography
               variant="h6"
@@ -544,7 +547,7 @@ function Cardbundle({
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Duration: </span>One month
+                <span style={{ color: " #707070" }}>Duration: </span>One month
               </Typography>
               <Typography
                 variant="h6"
@@ -657,7 +660,12 @@ function Cardbundle({
           </Box>
           {!auth.userLoggedIn && (
             <Box mt={3} mb={3} textAlign="center">
-              <Button className={classes.LoginButton} onClick={handleClose2}>
+              <Button 
+              className={classes.LoginButton} 
+              onClick={handleClose2}
+              style={{background:"#8c0087",color:"white" }}
+
+              >
                 Cancel
               </Button>
               &nbsp;&nbsp;
@@ -666,6 +674,8 @@ function Cardbundle({
                 onClick={() => {
                   navigate("/login");
                 }}
+                style={{background:"#8c0087",color:"white" }}
+
               >
                 Login
               </Button>
@@ -679,7 +689,7 @@ function Cardbundle({
                   variant="contained"
                   color="secondary"
                   size="large"
-                  style={{ background:"#8c0087",color:'white'}}
+                  style={{ background:" #8c0087",color:'white'}}
 
                   onClick={() => {
                     handleClose2();
@@ -747,7 +757,7 @@ function Cardbundle({
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary">
+              <Button variant="contained" size="large" color="secondary" style={{background:"#8c0087",color:"white" }} >
                 Donate now
               </Button>
             </Box>

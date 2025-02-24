@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     },
     "& label": {
       paddingTop: "0 !important",
-      color: "#141518",
+      color: " #141518",
       fontSize: "13px",
     },
   },
@@ -339,7 +339,7 @@ export default function SignUp() {
               <Box>
                 <Typography
                   variant="h4"
-                  style={{ color: "#792034", marginBottom: "10px", textAlign: 'center' }}
+                  style={{ color: "rgb(74, 1, 84)", marginBottom: "10px", textAlign: 'center' }}
                 >
                   Last step to create your account
                 </Typography>
@@ -360,6 +360,13 @@ export default function SignUp() {
                       checked={termsCond}
                       onChange={handleChange}
                       name="termsCond"
+                      sx={{
+                         // Default color
+                        '&.Mui-checked': {
+                          color: 'rgb(112, 2, 146)', // Color when checked
+                        },
+                      }}
+                      
                     />
                   }
                 />
@@ -378,6 +385,12 @@ export default function SignUp() {
                       checked={privacyPolicy}
                       onChange={handleChange}
                       name="privacyPolicy"
+                      sx={{
+                        // Default color
+                       '&.Mui-checked': {
+                         color: 'rgb(112, 2, 146)', // Color when checked
+                       },
+                     }}
                     />
                   }
                 />
@@ -396,6 +409,12 @@ export default function SignUp() {
                       checked={riskStatment}
                       onChange={handleChange}
                       name="riskStatment"
+                      sx={{
+                        // Default color
+                       '&.Mui-checked': {
+                         color: 'rgb(112, 2, 146)', // Color when checked
+                       },
+                     }}
                     />
                   }
                 />
@@ -414,6 +433,12 @@ export default function SignUp() {
                       checked={kycProgram}
                       onChange={handleChange}
                       name="kycProgram"
+                      sx={{
+                        // Default color
+                       '&.Mui-checked': {
+                         color: 'rgb(112, 2, 146)', // Color when checked
+                       },
+                     }}
                     />
                   }
                 />
@@ -425,10 +450,16 @@ export default function SignUp() {
                   .
                 </label>
               </Box>
-              <Box className={classes.paper} mt={1}>
+              <Box className={classes.btBox} mt={1}>
                 <FormControlLabel
                   control={
                     <Checkbox
+                    sx={{
+                      // Default color
+                     '&.Mui-checked': {
+                       color: 'rgb(112, 2, 146)', // Color when checked
+                     },
+                   }}
                       checked={all}
                       onChange={() => {
                         if (state.all) {
@@ -455,14 +486,20 @@ export default function SignUp() {
                     />
                   }
                 />
-                <label>Read and agree to all.</label>
+                <label>I have Read and agree to all.</label>
               </Box>
 
-              <Box mt={2} mb={5} pb={3} className={classes.btnBox}>
+              <Box mt={2} mb={5} pb={3} className={classes.btBox}>
                 <Button
                   variant="contained"
                   size="large"
                   color="secondary"
+                  sx={{
+                  
+                    
+                     backgroundColor: 'rgb(112, 2, 146)', 
+                   
+                 }}
                   disabled={
                     loader ||
                     !state.termsCond ||
