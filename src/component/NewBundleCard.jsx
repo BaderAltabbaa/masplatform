@@ -39,11 +39,7 @@ import AddBundleDialog from "./AddBundleDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    maxWidth: 300,
-    maxHeight: 420,
-    margin: 10,
-    textAlign: "left",
+    margin:"0 10px"
   },
   media: {
     height: 0,
@@ -51,17 +47,8 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   expand: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    border: 0,
-    borderRadius: 3,
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    color: "white",
-    padding: "0 10px",
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
+    
+   
   },
   avatar: {
     backgroundColor: red[500],
@@ -258,7 +245,7 @@ export default function BundleCard({ data }) {
   }, []);
 
   return (
-    <Card className={classes.root}>
+    <Card style={{background: "linear-gradient(to top right,rgb(115, 0, 121), #180226)" ,width:"100%" ,minWidth:"240px", margin:"5px"}}>
       <CardHeader
         avatar={
           <Avatar
@@ -277,13 +264,14 @@ export default function BundleCard({ data }) {
             onClick={handleClick}
             aria-haspopup="true"
             aria-controls="long-menu"
+            sx={{color:"white"}}
           >
             <MoreVertIcon />
           </IconButton>
         }
-        title={<p style={{ fontWeight: "bold", margin: 0 }}>{userName}</p>}
+        title={<p style={{ fontWeight: "bold", margin: 0 ,color:"white"}}>{userName}</p>}
         subheader={
-          <p style={{ margin: 0, color: "black" }}>{userSpeciality}</p>
+          <p style={{ margin: 0, color: "white" }}>{userSpeciality}</p>
         }
       />
       {isVideo ? (
@@ -350,14 +338,14 @@ export default function BundleCard({ data }) {
         <Typography
           variant="h5"
           component="h5"
-          style={{ color: "#000", fontWeight: "bold" }}
+          style={{ color: "#fff", fontWeight: "bold" }}
         >
           {BundleData.bundleName}
         </Typography>
         <Typography
           variant="h5"
           component="h5"
-          style={{ color: "#000", fontWeight: "bold", marginTop: 5 }}
+          style={{ color: "#fff", fontWeight: "bold", marginTop: 5 }}
         >
           {"( "}
           {BundleData?.donationAmount
@@ -370,7 +358,7 @@ export default function BundleCard({ data }) {
         </Typography>
         <Typography
           variant="body2"
-          color="textSecondary"
+          color="#fff"
           component="p"
           style={{ marginTop: 5 }}
         >
@@ -383,30 +371,32 @@ export default function BundleCard({ data }) {
           onClick={() => likeDislikeNfthandler(BundleData._id)}
         >
           <FavoriteIcon
-            style={isLike ? { color: red[800] } : { color: red[200] }}
+            style={isLike ? { color: red[800] } : { color: "rgb(207, 141, 236)" }}
           />
         </IconButton>
-        <span>{nbLike}</span>
+        <span style={{color:"white"}}>{nbLike}</span>
         {auth.userData &&
           auth.userLoggedIn &&
           auth.userData._id !== userId &&
           isSubscribed && (
             <Button
-              className={classes.expand}
-              disabled={isSubscribed && activeSubscribe}
+            sx={{ color:"white !important" ,background:"linear-gradient(to bottom right,rgb(212, 6, 205),rgb(0, 0, 0))",margin:"0 20px"}}
+            disabled={isSubscribed && activeSubscribe}
               onClick={() => (activeSubscribe ? {} : handleClickOpen2())}
             >
               {activeSubscribe ? "Subscribed" : "Renew"}
             </Button>
           )}
         {auth?.userData?._id !== userId && !isSubscribed && (
-          <Button className={classes.expand} onClick={handleClickOpen2}>
+          <Button 
+          sx={{ color:"white" ,background:"linear-gradient(to bottom right,rgb(212, 6, 205),rgb(0, 0, 0))",margin:"0 20px"}}
+          onClick={handleClickOpen2}>
             Details
           </Button>
         )}
         {auth.userData && auth.userLoggedIn && auth.userData._id === userId && (
           <Button
-            className={classes.expand}
+          sx={{ color:"white" ,background:"linear-gradient(to bottom right,rgb(212, 6, 205),rgb(0, 0, 0))",margin:"0 20px"}}
             onClick={() => navigate("/bundles-details?" + BundleData?._id)}
           >
             View
@@ -671,7 +661,7 @@ export default function BundleCard({ data }) {
           </Box>
           {!auth.userLoggedIn && (
             <Box mt={3} mb={3} textAlign="center">
-              <Button className={classes.LoginButton} onClick={handleClose2}>
+              <Button className={classes.LoginButton} onClick={handleClose2} >
                 Cancel
               </Button>
               &nbsp;&nbsp;
@@ -693,6 +683,7 @@ export default function BundleCard({ data }) {
                   variant="contained"
                   color="secondary"
                   size="large"
+                  style={{background:" #8c0087"}}
                   onClick={() => {
                     handleClose2();
                   }}
@@ -710,6 +701,7 @@ export default function BundleCard({ data }) {
                       size="large"
                       onClick={subscribeToBundleHandler}
                       disabled={isLoading}
+                      style={{background:" #8c0087"}}
                     >
                       {isLoading ? "pending..." : "Subscribe now"}
                       {isLoading && <ButtonCircularProgress />}

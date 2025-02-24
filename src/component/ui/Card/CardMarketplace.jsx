@@ -887,14 +887,14 @@ useEffect(() => {
         {itemData.donationAmount} {itemData.coinName}
       </span>
     </Typography>
-    <Grid container spacing={2}>
+    <Grid container spacing={0}>
       <Grid item xs={12} md={3} lg={2}>
         <Typography variant="h4" align="left" color="#000">
           Details:
         </Typography>
       </Grid>
       <Grid item xs={12} md={9} lg={10}>
-        <Typography variant="body2" align="left" color="#000" style={{ color: "#000", fontWeight: "bold", marginTop: 5 }}>
+        <Typography variant="body2" align="left" color="#000" style={{ color: "#000", fontWeight: "bold", marginTop: 0 }}>
           {itemData.details}
         </Typography>
       </Grid>
@@ -912,6 +912,7 @@ useEffect(() => {
       color="secondary"  // This gives the button a distinctive color, usually the primary theme color
       variant="contained"  // This makes the button have a filled style
       disabled={isLoading}
+      style={{background:"#8c0087",color:"white" }}
     >
       {isLoading ? "pending..." : "Buy Now"}
       {isLoading && <ButtonCircularProgress />}

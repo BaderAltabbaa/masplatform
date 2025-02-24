@@ -42,11 +42,17 @@ div[ref="carouselRef"] {
 
 
 @media (max-width: 580px) {
+
+
+    
     .prev-arrow ,.next-arrow{
        display: none;
 
     }
     .CardContainer{
         margin: 0 5px ;
+    }
+    .marginForSmall{
+        margin: 0 !important;
     }
 }

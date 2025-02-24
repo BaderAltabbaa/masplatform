@@ -101,7 +101,7 @@ const SectionCard = ({
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+        <div className='marginForSmall' style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
             {/* Left Arrow */}
             <button onClick={handleScrollLeft} className='prev-arrow'>
                 <AiOutlineArrowLeft size={50} />
