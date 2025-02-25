@@ -5,6 +5,17 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
   return (
     <div className="card-container"
     >
+      
+      <div className="content2">
+        
+        <div className="text-content2">
+          <h3 style={{ 
+            
+            fontSize:'18px'
+           }}>{titel}</h3>
+          <p>{text}</p>
+        </div>
+      </div>
       <div
         className="profile-picture2"
        
@@ -35,16 +46,6 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
           
           </div> 
         )}
-      </div>
-      <div className="content2">
-        
-        <div className="text-content2">
-          <h3 style={{ 
-            
-            fontSize:'18px'
-           }}>{titel}</h3>
-          <p>{text}</p>
-        </div>
       </div>
      
     </div>

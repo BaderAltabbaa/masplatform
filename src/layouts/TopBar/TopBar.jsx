@@ -32,6 +32,7 @@ import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import InputAdornment from "@mui/material/InputAdornment";
 import './TopBar.css'
+import StaticPage from '../../views/pages/staticPage';
 
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 
@@ -459,9 +460,9 @@ export default function Header() {
   return (
     <>
       <AppBar
-        position={location.pathname.includes('chat') ? "fixed" : location.pathname !== "/" ? "relative" : "absolute"}
+        position={"relative"}
         elevation={0}
-        style={{ backgroundColor: "#eee2", border: "none" }}
+        style={{ border: "none" }}
       >
 
 
@@ -514,6 +515,7 @@ export default function Header() {
               <li><Link to="/items">Marketplace</Link></li>
               <li><Link to="/creators">Creators</Link></li>
               <li><Link to="/user-list">Transfer</Link></li>
+              <li><Link to="/corporate/metaverse">Games</Link></li>
               <li className='test'><Link to="/buymas">Buy a Mas</Link></li>
               <li className='test'><Link to="/connectWallet">Connect Wallet</Link></li>
 

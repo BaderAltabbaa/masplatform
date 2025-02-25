@@ -7,14 +7,14 @@ import { Carousel } from "react-responsive-carousel";
 
 const useStyles = makeStyles((theme) => ({
   bannerSectionBody: {
-    minHeight: "100vh",
+    minHeight: "60vh",
     padding: "100px 0px 0px",
     backgroundImage: "linear-gradient(45deg, #240b36 30%, #c31432 90%)",
     width: "100%",
+    
   },
   bannerBackground: {
-    position: "absolute",
-    top: 0,
+
     width: "100%",
     height: "400px",
     backgroundSize: "contain",

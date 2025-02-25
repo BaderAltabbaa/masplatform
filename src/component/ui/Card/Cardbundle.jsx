@@ -235,7 +235,7 @@ function Cardbundle({
    
   }}
 >
-
+<div className="media-cont">
 {isVideo ? (
         <div
           style={{ cursor: "pointer", background: '#000'}}
@@ -259,9 +259,10 @@ function Cardbundle({
               ? navigate("/bundles-details?" + BundleData?._id)
               : handleClickOpen2()
           }
-          style={{height:"100%",maxHeight: "160px"}} /> 
+          /> 
       
       )}
+      </div>
         <Menu
         anchorEl={anchorEl}
         keepMounted
@@ -343,18 +344,19 @@ function Cardbundle({
 
          <div
             className="buttons"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent:"center",
-              marginTop: "5px",
+            
+              style={{
+                display: "flex",
+                flexDirection:"row",
+                alignItems: "center",
+                marginTop: "15px",
             }}
           >
             
 
-              <CardActions disableSpacing style={{display : 'flex', justifyContent : 'space-between' ,gap : '10px' }}>
+              
        
-        
+     <div>
         {auth.userData &&
           auth.userLoggedIn &&
           auth.userData._id !== userId &&
@@ -386,9 +388,9 @@ function Cardbundle({
           >
             View
           </Button>
-        )}
+        )}</div>   
 
-<div
+<div 
 
           aria-label="add to favorites"
           onClick={() => likeDislikeNfthandler(BundleData._id)}
@@ -396,10 +398,10 @@ function Cardbundle({
         >
           <FavoriteIcon
              style={isLike ? {color: ' #FD1D1D'  } : { color:' #ffffff6e'  }}/>
-             </div>
+             
       <span style={{color: 'white'} }>{nbLike}</span>
-
-      </CardActions>
+      </div>
+      
             
           {/* edit */}
           <Dialog

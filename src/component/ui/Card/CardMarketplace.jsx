@@ -565,6 +565,7 @@ useEffect(() => {
 
 
 
+<div className="media-contm">
 
        {isVideo ? (
               <div
@@ -591,11 +592,10 @@ useEffect(() => {
                       ? navigate("/items-details?" + itemData?._id)
                       : handleClickOpen2()
                   }
-                  style={{height:"100%",maxHeight: "200px"}}
                     /> 
                   
               
-            )}
+            )}</div>
                <div className="contentContainer">
 
 
@@ -636,11 +636,10 @@ useEffect(() => {
             style={{
               display: "flex",
               alignItems: "center",
-              marginTop: "5px",
+              marginTop: "15px",
             }}
           >
 
-<CardActions disableSpacing>
        
         {auth.userData &&
           auth.userLoggedIn &&
@@ -679,7 +678,7 @@ useEffect(() => {
           <span style={{color: 'white',marginLeft:'10px'} }>{nbLike}</span>
         </div>
         
-      </CardActions>
+    
  {/* edit */}
  <Dialog
         open={open}
