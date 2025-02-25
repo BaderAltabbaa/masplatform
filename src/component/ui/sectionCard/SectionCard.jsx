@@ -104,7 +104,7 @@ const SectionCard = ({
         <div className='marginForSmall' style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
             {/* Left Arrow */}
             <button onClick={handleScrollLeft} className='prev-arrow'>
-                <AiOutlineArrowLeft size={50} />
+                <AiOutlineArrowLeft size={30} />
             </button>
 
             {/* Carousel Container */}
@@ -151,7 +151,7 @@ const SectionCard = ({
 
             {/* Right Arrow */}
             <button onClick={handleScrollRight} className='next-arrow'>
-                <AiOutlineArrowRight size={50} />
+                <AiOutlineArrowRight size={30} />
             </button>
         </div>
     );

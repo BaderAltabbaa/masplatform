@@ -122,7 +122,7 @@ function CardCreators({
     navigate("/user-profile/" + userCardData.userName);
   }}
 >
-  <img src={userCardData.profilePic} alt={title} style={{height:"320px"}}/>
+  <img src={userCardData.profilePic} alt={title} style={{height:"320px",maxHeight: "270px"}}/>
   <div className="contentContainer">
     <h3
       onClick={(event) => {
@@ -134,7 +134,7 @@ function CardCreators({
         ? userCardData.name
         : userCardData.userName}
     </h3>
-    <p>{userCardData.speciality}</p>
+    <p className="speciality">{userCardData.speciality}</p>
 
 
     <div
@@ -223,7 +223,7 @@ function CardCreators({
             {nbLike && nbLike}
           </span>
           <FaHeart
-            style={{ color: isLiked ? "red" : "white", fontSize: "20px" }}
+             style={isLike ? {color: ' #FD1D1D' ,fontSize:"20px" } : { color:' #ffffff6e' ,fontSize:"20px" }}
             onClick={(event) => {
               event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
               likeDislikeUserHandler(userCardData._id);

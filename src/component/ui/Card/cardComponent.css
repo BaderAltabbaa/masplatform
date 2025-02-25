@@ -3,10 +3,9 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    width: 300px;
-    max-width: 450px;
-    height: 500px;
-    max-height: 650px;
+    box-sizing: border-box;
+    width: 300px; /* Example width */
+    height: 450px; /* Example height */
     padding: 10px;
     /* background: linear-gradient(to top right, #640D5F, rgb(1, 15, 78)); */
     border-radius: 30px;
@@ -14,6 +13,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* تأثير التحريك والتظليل */
   }
+  .speciality {
+    height: 20px; /* Reserve space for the text */
+    visibility: hidden; /* Hide the element but keep the space */
+}
+
+.speciality:not(:empty) {
+    visibility: visible; /* Show the element if it has content */
+}
   
   .card-3:hover {
     transform: scale(1.0); /* تكبير الكرت */
@@ -22,8 +29,6 @@
   
   .card-3 img {
     width: 100%;
-    height: 210px;
-    max-height: 100%;
     object-fit: cover;
     border-radius: 30px;
     transition: transform 0.3s ease; /* تأثير التحريك للصورة */
@@ -87,13 +92,14 @@
   }
   
   .card-3 button.primary {
-    background: linear-gradient(to top right, #2f003c,#9937999c );
+    background: linear-gradient(to top right, #2f003c,#2f003c );
     color: #ffffff;
+    margin-right: 5px;
   }
   
   .card-3 button:hover {
     transform: scale(1.1); 
-    background: linear-gradient(to top right, rgb(199, 113, 338), #3d21619c);
+    background: linear-gradient(to top right,#2f003c, #67107f);
   }
   
   .ellipsis {

@@ -172,13 +172,12 @@
     flex-direction: column;
     padding: 10px;
     z-index: 1000;
-  
     border-bottom-left-radius: 10px;
     justify-content:center;
     gap: 10px;
     transition: right 0.5s ease; 
     height: 100vh;
-    padding-top: 9% !important;
+    padding-top: 5% !important;
   
   }
 
@@ -245,14 +244,12 @@
     position: absolute;
     top: 0px; 
     right: 0; 
-   
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 30%;
+    width: 90%;
     flex-direction: column;
     padding: 10px;
     z-index: 1000;
-  
     border-bottom-left-radius: 10px;
     justify-content:center;
     gap: 10px;
@@ -283,7 +280,7 @@
   }
 
   .nav-links1 a, .nav-links1 button {
-    font-size: 16px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     text-align: center;
@@ -328,10 +325,9 @@
     position: absolute;
     top: 0px; 
     right: 0; 
-   
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 50%;
+    width: 90%;
     flex-direction: column;
     padding: 10px;
     z-index: 1000;
@@ -366,7 +362,7 @@
   }
 
   .nav-links1 a, .nav-links1 button {
-    font-size: 14px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     text-align: center;
@@ -391,6 +387,7 @@
   .burger-icon {
     width: 30%;
   }
+  
 }
 
 

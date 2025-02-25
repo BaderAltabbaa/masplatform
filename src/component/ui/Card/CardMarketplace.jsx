@@ -584,11 +584,16 @@ useEffect(() => {
                 />
               </div>
             ) : (
-                <img src={itemData.mediaUrl1}   onClick={() =>
+                <img 
+                src={itemData.mediaUrl1}   
+                onClick={() =>
                     (isBuyed && activeBuy) || isUseritem
                       ? navigate("/items-details?" + itemData?._id)
                       : handleClickOpen2()
-                  }  /> 
+                  }
+                  style={{height:"100%",maxHeight: "200px"}}
+                    /> 
+                  
               
             )}
                <div className="contentContainer">
@@ -668,7 +673,8 @@ useEffect(() => {
           onClick={() => likeDislikeNft1handler(itemData._id)}
         >
           <FavoriteIcon
-           style={isLike ? {color: 'white'  } : { color:'#ffffff6e'  }}
+            style={isLike ? {color: ' #FD1D1D' } : { color:' #ffffff6e' }}
+
           />
           <span style={{color: 'white',marginLeft:'10px'} }>{nbLike}</span>
         </div>

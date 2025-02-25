@@ -255,12 +255,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
   // 
   const isMeduimScreen = useMediaQuery('(max-width: 1250px)');
-
-
-
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
-
   const menuRef = useRef(null);
 
   const toggleSearch = () => {
@@ -284,6 +280,18 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMenuOpen(false); // Close the menu whenever the window is resized
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // No dependencies, runs only once on mount and cleans up on unmount
+
 
   // 
   const classes = useStyles();
@@ -413,7 +421,7 @@ export default function Header() {
     return (
       <Box className={classes.searchResults}>
         {/* Start Title */}
-        <Box style={{ height: '54px', marginBottom: "14px", color: '#fafafa', backgroundImage: 'linear-gradient(to bottom,rgb(192, 72, 182), #480048)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box style={{ height: '54px', marginBottom: "14px", color: '#fafafa', backgroundImage: 'linear-gradient(to bottom,rgb(116, 23, 108), #480048)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Typography variant="h4" style={{color:"white"}}>
             Search Result
           </Typography>
@@ -713,6 +721,8 @@ export default function Header() {
                 variant="contained"
                 size="small"
                 color='white'
+                style={{ fontSize: "15px",background:"#8c0087",color:"white" ,margin:"0 5px"}}
+
                 mr={2}
                
                 fullWidth
@@ -724,6 +734,8 @@ export default function Header() {
                 variant="contained"
                 size="small"
                 color='white'
+                style={{ fontSize: "15px",background:"#8c0087",color:"white",margin:"0 5px" }}
+
 
                
                 fullWidth

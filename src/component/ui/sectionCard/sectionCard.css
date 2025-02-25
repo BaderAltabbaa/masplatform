@@ -1,11 +1,11 @@
 .prev-arrow ,.next-arrow{
     cursor: pointer; 
-    color:#390b4d ;
-    background: rgb(255, 255, 255);
+    color:#ffffff ;
+    background: #5b256d9c;
     border: none;
     border-radius: 30%;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center

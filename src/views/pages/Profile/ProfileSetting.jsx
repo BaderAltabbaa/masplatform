@@ -1223,7 +1223,7 @@ export default function ProfileSettings() {
                 value={name}
                 // error={!name}
                 // helperText={!name && "Please enter valid name"}
-                required="false"
+                required="true"
                 onChange={(e) => setname(e.target.value)}
                 // className={classes.input_fild2}
                 className={classes.inputField}
@@ -1243,7 +1243,7 @@ export default function ProfileSettings() {
                 value={speciality}
                 // error={!speciality}
                 // helperText={!speciality && "Please enter valid speciality"}
-                required="false"
+                required="true"
                 onChange={(e) => setspeciality(e.target.value)}
                 // className={classes.input_fild2}
                 className={classes.inputField}

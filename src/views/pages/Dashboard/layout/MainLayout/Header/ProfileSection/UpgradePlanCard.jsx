@@ -613,7 +613,7 @@ const UpgradePlanCard = () => {
             <Typography
               variant="h5"
               align="center"
-              style={{ color: "#000", margiBottom: "10px" }}
+              style={{ color: "#000", margiBottom: "10px",fontWeight: "bold",fontSize:"1.2rem" }}
             >
               Hooray!
             </Typography>
@@ -636,7 +636,8 @@ const UpgradePlanCard = () => {
                   endAdornment: (
                     <InputAdornment position="end" style={{ fontSize: "12px" }}>
                       <CopyToClipboard text={profilePageURL}>
-                        <Button onClick={() => toast.info("Copied")}>
+                        <Button onClick={() => toast.info("Copied")}
+                          style={{color: "rgb(97, 0, 93)"}}>
                           COPY
                         </Button>
                       </CopyToClipboard>
@@ -646,33 +647,33 @@ const UpgradePlanCard = () => {
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Box mt={2} align="center">
+              <Box mt={2} align="center" sx={{marginBottom:"20px"}}>
                 <FacebookShareButton
                   url={profilePageURL}
                   quote={"mas"}
                   hashtag="#mas"
                 >
-                  <FaFacebookF style={{ color: "#000" }} />
+                  <FaFacebookF style={{ color: "rgb(97, 0, 93)" ,fontSize:"40px" ,margin:"0 2px"}} />
                 </FacebookShareButton>
                 <EmailShareButton
                   url={profilePageURL}
                   subject="mas"
                   body="mas"
                 >
-                  <RiMessengerFill style={{ color: "#000" }} />
+                  <RiMessengerFill style={{ color: "rgb(97, 0, 93)" ,fontSize:"40px",margin:"0 2px" }} />
                 </EmailShareButton>
                 <TwitterShareButton
                   url={profilePageURL}
                   quote={"CampersTribe - World is yours to explore"}
                   hashtag="#camperstribe"
                 >
-                  <FaTwitter style={{ color: "#000" }} />
+                  <FaTwitter style={{ color: "rgb(97, 0, 93)" ,fontSize:"40px" ,margin:"0 2px"}} />
                 </TwitterShareButton>
                 <TelegramShareButton
                   url={profilePageURL}
                   title={"mas"}
                 >
-                  <FaTelegramPlane style={{ color: "#000" }} />
+                  <FaTelegramPlane style={{ color: "rgb(97, 0, 93)" ,fontSize:"40px",margin:"0 2px" }} />
                 </TelegramShareButton>
               </Box>
               <Button
@@ -680,6 +681,8 @@ const UpgradePlanCard = () => {
                 size="large"
                 color="secondary"
                 onClick={handleCloseShareModal}
+                style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+
               >
                 Close
               </Button>

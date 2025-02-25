@@ -258,7 +258,8 @@ function Cardbundle({
             (isSubscribed && activeSubscribe) || isUserBundle
               ? navigate("/bundles-details?" + BundleData?._id)
               : handleClickOpen2()
-          } /> 
+          }
+          style={{height:"100%",maxHeight: "160px"}} /> 
       
       )}
         <Menu
@@ -394,9 +395,8 @@ function Cardbundle({
           style={{display : 'flex' }}
         >
           <FavoriteIcon
-            style={isLike ? {color: 'white'  } : { color:'#ffffff6e'  }}
-          />
-        </div>
+             style={isLike ? {color: ' #FD1D1D'  } : { color:' #ffffff6e'  }}/>
+             </div>
       <span style={{color: 'white'} }>{nbLike}</span>
 
       </CardActions>

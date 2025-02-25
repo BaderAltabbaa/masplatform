@@ -91,10 +91,10 @@ export default function SocialAccounts() {
 
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ background:"#c695da61" }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ background:"rgba(180, 0, 234, 0.37)" }}>
         <Typography>Social Accounts</Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails style={{ background:"rgba(223, 127, 252, 0.37)" }}>
         <Box>
           <Box mb={2}>
             <TextField
@@ -104,12 +104,13 @@ export default function SocialAccounts() {
               value={facebook}
               required="false"
               placeholder="Please enter your facebook page url"
+              
               // error={!facebook}
               // helperText={!facebook && "Invalid URL" }
               onChange={(e) => setfacebook(e.target.value)}
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment position="start" >
                     <FacebookIcon
                       style={{ color: "#4267B2", marginRight: "3px" }}
                     /> {' https://fb.com/'}
@@ -177,6 +178,7 @@ export default function SocialAccounts() {
               variant="outlined"
               disabled={isLoading}
               onClick={save}
+              style={{ background:"rgb(86, 1, 112)" ,color:"white"}}
             >
               {isLoading ? "Updating social links..." : "Save"}
               {isLoading && <ButtonCircularProgress />}
