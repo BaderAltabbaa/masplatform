@@ -192,7 +192,7 @@ export default function UsersList() {
   sx={{
     width: "180px",
     margin: "20px 0",
-    border: "3px solid rgb(196, 1, 218)",
+    border: "3px solid #581454",
     borderRadius: "10px",
     padding: "2px 5px",
     background: "rgb(220, 220, 220)",

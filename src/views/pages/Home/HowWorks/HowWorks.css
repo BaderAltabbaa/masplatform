@@ -148,7 +148,7 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 150px) {
     .HowWorks {
       width: auto;
       height: auto;
