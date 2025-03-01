@@ -14,14 +14,12 @@ const Footer = () => {
 const fetcher = url => axios.get(url).then(res => res.data.result);
 const { data: staticContent } = useSWR(Apiconfigs.staticContentList, fetcher, { suspense: true })
 const { data: socialLinks } = useSWR(Apiconfigs.listSocial, fetcher, { suspense: true })
-console.log(socialLinks)
+console.log("heeeee",socialLinks)
   return (
     <footer
       style={{
         width: "100%",
         background: "linear-gradient(to right,rgb(40, 0, 38),rgb(74, 0, 79))",
-       
-
         padding: "40px 20px",
         color: "white",
         textAlign: "center",
@@ -122,7 +120,7 @@ console.log(socialLinks)
         <div >
           <h3 style={{ ...styles.sectionHeader, marginBottom: "20px" }}>Join The Community</h3>
           <div style={styles.iconsContainer} className="iconContainer">
-          <div  style={styles.iconContainer} >
+          <div  style={styles.iconContainer}>
           <Link to={socialLinks[0]?.link} target="_blank" rel="noreferrer">
               <CgFacebook  style={styles.icon}/>
             </Link>

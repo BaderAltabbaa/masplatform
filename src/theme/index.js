@@ -390,7 +390,7 @@ export const theme = (customization) => {
     // BoxBackGround :"linear-gradient(to top right,#67554d, #c98a77 , #986b5f ,#f7f2c5)",
 
 
-    BoxBackGroundReseve :"linear-gradient(to top right,rgb(117, 1, 123),rgb(58, 1, 61))",
+    BoxBackGroundReseve :"linear-gradient(to top right,rgb(117, 1, 123),#3a013d)",
 
 
 

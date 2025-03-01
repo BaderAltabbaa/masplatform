@@ -55,7 +55,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Login() {
+export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
+) {
   const classes = useStyles();
   const [search, setsearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -138,6 +139,7 @@ export default function Login() {
         
             {userListToDisplay.map((data, i) => {
               return (
+                
                 <Grid  
                 container
                 item
@@ -148,10 +150,16 @@ export default function Login() {
                 lg={3}
                 className={classes.gridbox}
                 mb={2}
+                
 
 
                >
-<CardCreators data={data} />
+<CardCreators  data={data}
+                                chat={chat}
+                                subscrib={subscrib}
+                                CardpersonalInfo={CardpersonalInfo}
+                                Subscribe={Subscribe}
+/>
                 </Grid>
                 
                 

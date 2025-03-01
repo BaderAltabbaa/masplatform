@@ -106,7 +106,7 @@ const AllItemsPage = () => {
           {auth.userLoggedIn && auth.userData?._id && (
             <>
               <div style={{ display: "flex", justifyContent: "center",marginBottom  : "50px"}}>
-                               <ButtonwithAnimation  > ALL BUNDLES</ButtonwithAnimation>
+                               <ButtonwithAnimation  > ALL ITEMS</ButtonwithAnimation>
                              
                              </div>
                           
@@ -118,7 +118,10 @@ const AllItemsPage = () => {
                 ) : (
                   ""
                 )}
-                <Grid container spacing={2}>
+                <Grid 
+                container
+                className={classes.gridbox}
+                 >
                   {allNFTList1.map((data, i) => (
                     <Grid
                     container
@@ -129,7 +132,7 @@ const AllItemsPage = () => {
                     md={4}
                     lg={3}
                     mb={{xs: 0,lg:1}}
-                      className={classes.gridbox}
+                      
                       //onMouseEnter={() => setHoveredIndex(i)}
                       //onMouseLeave={() => setHoveredIndex(null)}
                       //style={hoveredIndex === i ? { border: '10px solid red' } : null}

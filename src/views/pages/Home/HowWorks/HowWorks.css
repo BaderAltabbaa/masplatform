@@ -1,10 +1,6 @@
 
   .HowWorks{
-    text-align: left;
-    position: relative;
-    overflow: hidden;
     display: flex;
-    flex-wrap: wrap; 
     gap: 20px;
     padding-left: 20px;
     padding-bottom: 20px;
@@ -67,18 +63,27 @@
     text-align: left;
 
   }
-  @media (max-width: 1300px) {
+  @media (max-width: 1250px) {
     .HowWorks {
       width: auto;
       height: auto;
-      flex-direction: column-reverse;
+      flex-direction: column;
       text-align: center;
-      
+      padding: 0;
     }
   
     .HowWorks-image-container {
       flex: 1 1 100%;
       min-width: 100%;
+      max-width: none;
+      position: relative;
+      bottom: -10px;
+    
+    }
+
+    .HowWorks-image{
+      height: 300px !important;
+      border-radius:0 0 50px 50px !important;
     }
   
     .HowWorks-content {
@@ -109,7 +114,6 @@
     .HowWorks {
       width: auto;
       height: auto;
-      flex-direction: column-reverse;
       text-align: center;
       /* padding: 0;
       padding-top: 10px; */
@@ -118,12 +122,7 @@
       overflow: hidden;
     }
   
-    .HowWorks-image-container {
-      flex: 1 1 100%;
-      max-width: none;
-      position: relative;
-      bottom: -10px;
-    }
+    
    
     .HowWorks-image{
       height: 300px;
@@ -161,12 +160,7 @@
     }
   
 
-    .HowWorks-image-container {
-      position: relative;
-      bottom: -10px;
-      flex: 1 1 100%;
-      max-width: none;
-    }
+   
    
   
     .HowWorks-content {

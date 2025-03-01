@@ -8,6 +8,8 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import { ButtonwithAnimation } from "src/component/ui/Button/button";
+
 
 // project-import
 
@@ -60,12 +62,27 @@ const MainCard = React.forwardRef(
         {!darkTitle && title && <CardHeader sx={{  '& .MuiCardHeader-title': {
       fontSize: '1.8rem', // Custom font size
       fontWeight: 'bold', // Custom font weight
-      color: '#43005e', // Custom color
-    },}}  title={title} action={secondary} />}
-        {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
+      color: ' #43005e',
+      display:"flex",
+      justifyContent:"center",
+      marginTop:{
+        xs: '20px', // Applies to extra small screens (0px and up)
+        sm: '30px', // Applies to small screens (600px and up)
+        md: '50px', // Applies to medium screens (900px and up)
+      },
+    },}}  
+    title={<ButtonwithAnimation>{title}</ButtonwithAnimation>} action={secondary} />}
+        
+        {darkTitle && title && <CardHeader sx={headerSX} title={<ButtonwithAnimation>{title}</ButtonwithAnimation>} action={secondary} />}
 
         {/* content & header divider */}
-        {title && <Divider />}
+        {title && <Divider sx={{marginTop:{
+           xs: '20px', // Applies to extra small screens (0px and up)
+           sm: '30px', // Applies to small screens (600px and up)
+           md: '40px', // Applies to medium screens (900px and up)
+        }
+
+        }}/>}
 
         {/* card content */}
         {content && (

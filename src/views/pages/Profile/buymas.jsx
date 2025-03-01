@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '75vh',
-    backgroundColor: 'rgb(211, 182, 220)'
+    background: 'linear-gradient(to right,#280026,#4a004f)',
+    color:"white"
   },
   balanceContainer: {
     marginBottom: theme.spacing(2),
@@ -42,12 +43,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     width: '90%',
     maxWidth: '600px',
+   
   },
   label: {
     marginRight: theme.spacing(1),
+    
+    
   },
   textBox: {
     flex: 1,
+    
   },
   buttonContainer: {
     display: 'flex',
@@ -344,10 +349,10 @@ useEffect(() => {
   return (
     <div className={classes.root}>
     <Box className={classes.balanceContainer}>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px', }}>
         <h2>Buy Cryptocurrency (MAS)</h2>
       </div>
-      <Typography variant="h5" component="h5">
+      <Typography variant="h5" component="h5" sx={{ color:"white",marginBottom:"10px"}}>
         YOUR Balance
       </Typography>
       <BalanceBox
@@ -357,24 +362,57 @@ useEffect(() => {
     </Box>
       <br />
       <Box className={classes.inputContainer}>
-        <Typography className={classes.label} variant="subtitle1">Enter USDT Amount:</Typography>
+        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Enter USDT Amount:</Typography>
         <TextField
         variant="standard"
           className={classes.textBox}
           type="number"
           value={usdtAmount}
           onChange={handleUsdtAmountChange}
+          inputProps={{
+            min: 0,
+          }}
+          sx={{
+            "& .MuiInputBase-input": {
+              color: "white",
+              marginLeft:"5px" // Text color
+            },
+            "& .MuiInputLabel-root": {
+              color: "white", // Placeholder color
+            },
+            "& .MuiInput-underline:before": {
+              borderBottomColor: "white", // Underline color before focus
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "white", // Underline color after focus
+            },
+          }}
         />
       </Box>
       <br />
       <Box className={classes.inputContainer}>
-        <Typography className={classes.label} variant="subtitle1">Mas Amount (0.1 of USDT):</Typography>
+        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Mas Amount (0.1 of USDT):</Typography>
         <TextField
         variant="standard"
           className={classes.textBox}
           type="text"
           value={masAmount}
           readOnly
+          sx={{
+            "& .MuiInputBase-input": {
+              color: "white",
+              marginLeft:"5px" // Text color
+            },
+            "& .MuiInputLabel-root": {
+              color: "white", // Placeholder color
+            },
+            "& .MuiInput-underline:before": {
+              borderBottomColor: "white", // Underline color before focus
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "white", // Underline color after focus
+            },
+          }}
         />
       </Box>
       <br />

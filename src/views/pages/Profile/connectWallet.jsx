@@ -32,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '90vh',
     padding: theme.spacing(2),
-     backgroundColor: 'rgb(211, 182, 220)'
+    background: 'linear-gradient(to right,#280026,#4a004f)',
+    color:"white"
+
   },
   topBar: {
     marginBottom: theme.spacing(2),
@@ -709,7 +711,7 @@ const ConnectWallet = () => {
         {/* Your top bar content goes here */}
       </div>
       <div className={classes.balanceBox}>
-        <Typography variant="h5" component="h5" mb={2}>
+        <Typography variant="h5" component="h5" mb={2} sx={{    color:"white"}}>
           YOUR Balance
         </Typography>
         <BalanceBox

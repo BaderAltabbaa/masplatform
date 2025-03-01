@@ -9,11 +9,13 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { FiCopy } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { isMobile } from "react-device-detect";
+import { color } from 'framer-motion';
 
 const useStyles = makeStyles(() => ({
   tbody: {
     minWidth: 320,
     border: '1px solid #e5e3dd',
+    backgroundColor:"#cdc8c8",
     '& th': {
       border: '1px solid #e5e3dd',
       width: "50px!important"
@@ -41,14 +43,14 @@ export default function ChildTableUser({ row, index }) {
 
         <TableCell
           classsName={classes.img}
-          style={{ color: 'black', width: "50px!important", padding: "5px!important" }}
+          style={{ color: 'black', width: "60px !important", padding: "5px!important" }}
           align="Center"
           component="th"
           scope="row"
         >
           {/* {index + 1} */}
           <Avatar
-            style={{ width: "60px", height: "60px", backgroundColor: "#999" }}
+            style={{ width: "70px", height: "70px", backgroundColor: "#999" ,borderRadius:"20px" }}
             src={row.profilePic ? row.profilePic :
               `https://avatars.dicebear.com/api/miniavs/${row._id}.svg`}
             alt=""
@@ -70,7 +72,7 @@ export default function ChildTableUser({ row, index }) {
             }}>
 
             <Box align='left' ml={2} >
-              <Typography align="center" variant='h6' style={{ color: "#6345ED", fontSize: "20px", minWidth: "120px", }}>
+              <Typography align="center" variant='h6' style={{ color: " #43005e", fontSize: "20px", minWidth: "120px", }}>
                 {row.name ? row.name : ''} {' '}
               </Typography>
               {/* <Typography variant='h5'>
@@ -99,13 +101,13 @@ export default function ChildTableUser({ row, index }) {
         {/* End Third Row */}
 
         {/* Start Fourth Row */}
-        <TableCell style={{ color: 'black' }} align="Center">
+        <TableCell style={{ color: 'black' ,textAlign:"center"}} align="Center">
           <Typography variant='h5'>
             {/* {row.followers ? row.followers.length : 'N/A'} */}
-            {sortAddress(row.walletAddress)}
+            {row.walletAddress}
             <CopyToClipboard
               text={row?.ethAccount?.address}
-              style={{ cursor: "pointer", marginLeft: "3px" }}
+              style={{ cursor: "pointer", marginLeft: "5px" ,color:" #43005e" }}
             >
               <FiCopy onClick={() => toast.info("Copied")} />
             </CopyToClipboard>
@@ -114,7 +116,7 @@ export default function ChildTableUser({ row, index }) {
         {/* End Fourth Row */}
 
         {/* Start Fivth Row */}
-        <TableCell style={{ color: 'black' }} align="Center">
+        <TableCell style={{ color: 'black',textAlign:"center" }} align="Center">
           <Typography variant='h5'>
             {/* {row.supporters ? row.supporters.length : 'N/A'} */}
             {row.speciality}

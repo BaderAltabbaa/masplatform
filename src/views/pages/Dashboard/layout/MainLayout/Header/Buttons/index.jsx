@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogContent, DialogContentText, IconButton, Typography, Container, Input, InputAdornment, } from '@mui/material'
+import { Box, Button, Dialog, DialogContent, DialogContentText, IconButton, Typography, Container, Input, InputAdornment, Grid, } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { AiFillSetting } from 'react-icons/ai';
 import { isMobile } from "react-device-detect";
@@ -158,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     dilogBody: {
-        paddingBottom: "30px",
+        paddingBottom: "20px",
         position: "relative",
         "& small": {
             position: "absolute",
@@ -264,6 +264,14 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "15px",
         padding: "4px 10px"
     },
+
+    buttonContainerStyle: {
+        padding: "0px 20px",
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center",
+        margin:"3px 0"
+      },
 }));
 
 const Buttons = () => {
@@ -395,7 +403,7 @@ const Buttons = () => {
                     variant="contained"
                     size="large"
                     color=""
-                    style={{ width: "40%", fontSize: "15px", marginRight: "15px",background:"rgb(140, 0, 135)",color:"white" }}
+                    style={{ width: "40%", fontSize: "15px", marginRight: "15px",background:"#8c0087",color:"white" }}
                     onClick={() => setOpenDeposit(true)}
                 >
                     Deposit
@@ -425,14 +433,14 @@ const Buttons = () => {
                         <Typography
                             variant="h3"
                             align="center"
-                            style={{ color: "#792034", margiBottom: "10px" }}
+                            style={{ color: " #2d013a", marginBottom: "20px" }}
                         >
                             Deposit
                         </Typography>
                         <Typography
                             variant="h5"
                             align="center"
-                            style={{ color: "#792034", margiBottom: "10px" }}
+                            style={{ color: "#000", marginBottom: "10px" }}
                         >
                             Please make sure you use BSC (BNB Smart Chain) and send only supperted tokens (MAS, USDT, BUSD)
                         </Typography>
@@ -450,7 +458,7 @@ const Buttons = () => {
                                     startAdornment={
                                         <InputAdornment position="end">
                                             <CopyToClipboard text={user.userData?.ethAccount?.address}>
-                                                <Button onClick={() => toast.info("Copied")}>
+                                                <Button onClick={() => toast.info("Copied")} sx={{color:"#2d013a"}}>
                                                     COPY
                                                 </Button>
                                             </CopyToClipboard>
@@ -503,16 +511,16 @@ const Buttons = () => {
                 <DialogContent className={classes.dilogBody}>
                     <DialogContentText id="alert-dialog-description">
                         <Typography
-                            variant="h5"
+                            variant="h3"
                             align="center"
-                            style={{ color: "#792034", margiBottom: "10px" }}
+                            style={{ color: "#2d013a", marginBottom: "10px" }}
                         >
                             Withdraw
                         </Typography>
                         <Typography
                             variant="body2"
                             align="center"
-                            style={{ color: "#000" }}
+                            style={{ color: "#000" , marginBottom:"20px"}}
                         >
                             <>
                                 Please make sure the Wallet address is BEP20 <br />
@@ -540,6 +548,10 @@ const Buttons = () => {
                                     placeholder={"Minimum amount 10 " + selectedToken?.name?.toString()}
                                     className={classes.input_fild2}
                                     type="number"
+                                    inputProps={{
+                                        min:0
+                                    }}
+                                    sx={{marginBottom:"20px"}}
                                     min={10}
                                     onChange={(e) => setWithdrawAmount(e.target.value)}
                                     endAdornment={
@@ -572,19 +584,20 @@ const Buttons = () => {
                                 <Typography
                                     variant="body2"
                                     align="left"
-                                    style={{ color: "#000" }}
+                                    style={{ color: "#000" ,lineHeight:"30px"}}
                                 >
                                     <span>Withdraw fees: {withdrawAmount ? <span>{withdrawFees} {selectedToken.name}</span> : user.userData?.withdrawFees + "%"} </span>
                                     <br />
                                     {withdrawAmount ?
-                                        <strong>Amount + Fees: {parseFloat(withdrawAmount) + parseFloat(withdrawFees)} {selectedToken.name}</strong> : ""
+                                        <strong>Total: {parseFloat(withdrawAmount) + parseFloat(withdrawFees)} {selectedToken.name}</strong> : ""
                                     }
                                 </Typography>
+                                <Grid  xs={12} className={classes.buttonContainerStyle}>
                                 <Button
                                     variant="contained"
                                     size="large"
                                     color=""
-                                    style={{ marginTop:"15px",fontSize: "15px",background:" #8c0087",color:"white" }}
+                                    style={{ fontSize: "15px",background:" #8c0087",color:"white" }}
 
                                     onClick={withdraw}
                                     disabled={loader || !withdrawAmount || !selectedToken}
@@ -592,6 +605,16 @@ const Buttons = () => {
                                     {loader ? "Pending..." : `Withdraw`}
                                     {loader && <ButtonCircularProgress />}
                                 </Button>
+                                <Button
+                                    variant="contained"
+                                    size="large"
+                                    color="secondary"
+                                    onClick={() => setOpenWithdraw(false)}
+                                    style={{  fontSize: "15px",background:"#8c0087",color:"white" }}
+                                >
+                                    Close
+                                </Button>
+                                </Grid>
                                 <Typography
                                     variant="body2"
                                     align="center"

@@ -399,7 +399,7 @@ function Cardbundle({
           <FavoriteIcon
              style={isLike ? {color: ' #FD1D1D'  } : { color:' #ffffff6e'  }}/>
              
-      <span style={{color: 'white'} }>{nbLike}</span>
+      <span style={{color: 'white',marginLeft:'10px'} }>{nbLike}</span>
       </div>
       
             

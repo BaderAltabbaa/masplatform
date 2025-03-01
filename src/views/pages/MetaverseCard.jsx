@@ -3,11 +3,11 @@ import { Card } from "@mui/material/";
 import { makeStyles } from '@mui/styles';
 
 import "./style.css";
+import { color } from 'framer-motion';
 export default function MetaverseCard({ data, key }) {
     const useStyles = makeStyles((theme) => ({
         main: {
-            backgroundColor: '#D9AFD9',
-            backgroundImage: 'linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)',
+            background: 'linear-gradient(to top right,rgb(144, 0, 152),rgb(77, 0, 81))',
             padding: "10px 10px 15px 10px",
             borderRadius: "10px",
             width: "300px",
@@ -41,24 +41,25 @@ export default function MetaverseCard({ data, key }) {
         nameSpec: {
             width: "100%",
             padding: "15px",
-            background: "#eee",
+            background: "transparent",
             "& div": {
                 width: "100%",
                 textAlign: "center",
                 fontSize: "16px",
+                color:"white"
             },
         },
     }))
     const classes = useStyles();
     return (
         <div>
-            <Card className={classes.main}>
+            <Card className={classes.main} sx={{background:"linear-gradient(to top right,rgb(144, 0, 152),rgb(77, 0, 81))"}}>
                 <div className={classes.imgParent}>
                     <img src={data} />
                 </div>
                 <div className={classes.nameSpec}>
-                    <div>game 01</div>
-                    <div>version: 3.2</div>
+                    <div>Game 01</div>
+                    <div>Version: 3.2</div>
                 </div>
             </Card>
         </div >

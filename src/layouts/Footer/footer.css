@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 /* استجابة للشاشات اللوحية */
 @media (max-width: 768px) {
   .footer .footer-content{
@@ -54,4 +55,6 @@
   .icon {
     font-size: 20px;
   }
+  
+  
 }

@@ -18,9 +18,10 @@ const useStyles = makeStyles(() => ({
 
   main: {
     color: "#999",
-    background: "#fff",
+    background: "rgb(244, 244, 244)",
+    borderRadius:"20px",
     cursor: "pointer",
-    padding: "10px"
+    padding: "10px",
   },
 }));
 
@@ -42,18 +43,18 @@ export default function UsersCard({
       <Grid
         container
         direction="row"
-        justifyContent="flex-start"
-        alignItems="stretch"
+        justifyContent="space-between"
+        alignItems="center"
         spacing={2}
       >
-        <Grid item >
-          <Box>
+        <Grid item  sx={{width:"160px"}}>
+          <Box sx={{display:"flex" ,flexDirection:"column" ,alignItems:"start" }}>
             <figure
-              style={{ cursor: "pointer", marginLeft: "10px" }}
+              style={{ cursor: "pointer", marginBottom: "5px" }}
             >
               <img
                 src={users.profilePic || `https://avatars.dicebear.com/api/miniavs/${users?.userName}.svg`}
-                style={{ height: "45px", width: "45px" }}
+                style={{ height: "50px", width: "50px" ,borderRadius:"50%" }}
               />
             </figure>
             <Typography

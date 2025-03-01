@@ -413,31 +413,28 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnCansel:{
-    border:"solid 0.5px #c600a4",
     transition:'.5s',
     borderRadius:'15px  !important',
     cursor :'pointer',
-    background:"white !important",
-    color:"#000 !important",
+    background:"#2d013a !important",
+    color:"#fff !important",
 
 
 
     "&:hover": {
       // background:"linear-gradient(90deg, #6345ED 50%, #DC39FC 90%) !important"
-      background:"#c600a4 !important",
+      background:"#3d0050 !important",
       color:"#fff !important",
     }
   },
   btnTransfer:{
-    background:"#c600a4 !important",
+    background:" #2d013a !important",
     color:"#fff !important",
     transition:'.5s',
     borderRadius:'50px !important',
     cursor :'pointer',
     "&:hover": {
-      border:"solid 0.5px #c600a4 !important",
-      background:"#fff !important",
-      color:"#000 !important",
+      background:"#3d0050 !important",
     }
   },
   cardContent2: {
@@ -847,7 +844,7 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
             <Typography
               variant="h4"
               align="center"
-              style={{ color: "#c600a4", marginBottom: "10px" }}
+              style={{ color: " #2d013a", marginBottom: "10px" }}
             >
              Send donation to {userData.userName}
             </Typography>
@@ -950,6 +947,7 @@ variant="standard"
                     variant="contained"
                     size="large"
                     color="secondary"
+                    style={{backgroundColor:" #2d013a"}}
                     disabled={ isLoading  || donationAmount < 1 || selectedToken == "select"}
                     onClick={donationWithoutBlockchainHandler}
                   >
@@ -1088,7 +1086,7 @@ variant="standard"
         aria-labelledby="max-width-dialog-title"
       >
         <DialogContent>
-          <DialogTitle className={classes.dailogTitle}>
+          <DialogTitle className={classes.dailogTitle} sx={{color:"#2d013a" ,fontSize:"16px"}}>
             Select a token
           </DialogTitle>
           {tokensDetails.map((data, i) => {

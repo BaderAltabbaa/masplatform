@@ -25,7 +25,7 @@ const SectionCard = ({
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
 
     // Function to determine scroll amount
-    const getScrollAmount = () => (isDesktop ? 1000 : 100);
+    const getScrollAmount = () => (isDesktop ? 1000 : 75);
 
     // Handle left arrow click
     const handleScrollLeft = () => {

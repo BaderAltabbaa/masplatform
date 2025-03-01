@@ -105,8 +105,8 @@ function ForgetPassword() {
 
     };
     return (
-        <body className="Loginstyle">
-            <section className="section1">
+        <div className="Loginstyle">
+            <section className="section1" style={{padding:"1rem 3rem"}}>
                 <form>
                      {verificationSent &&
               <DialogTitle>
@@ -140,12 +140,13 @@ function ForgetPassword() {
 {!verificationSent &&
                 <Box mt={3}>
                 
-                <h1 className="Loginstyle"> Forget Password</h1>
+                <span className="Logintitle" style={{marginBottom:"20px"}}> Forget Password</span>
                     <p
                         style={{
                             color: 'white',
                             fontWeight: '400',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            marginBottom:"20px"
                         }}
                     >Enter the email address associated with your account and we'll send you a code to reset your password</p>
                     <div className="">
@@ -272,7 +273,7 @@ function ForgetPassword() {
 
                 </form>
             </section>
-        </body>
+        </div>
 
     );
 }

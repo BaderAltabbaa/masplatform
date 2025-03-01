@@ -10,6 +10,8 @@ import {useLocation, useParams} from "react-router";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import axios from "axios";
 import MetaverseCard from "./MetaverseCard";
+import { ButtonwithAnimation } from "src/component/ui/Button/button";
+
 import IMG1 from "./img/card 1.jpeg"
 import IMG2 from "./img/card2.jpeg"
 import IMG3 from "./img/card3.jpeg"
@@ -62,14 +64,17 @@ export default function StaticPage() {
 
 
     return (title && content) ? (
-        <Container maxWidth="lg">
-            <Typography variant="h3" className={classes.title}>
-                {title}
-            </Typography>
+        <Container maxWidth="xl" sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
+             <div style={{display:"flex" ,flexDirection:"column",alignItems:"center", padding:"40px"}}>
+              <div style={{marginBottom:"40px"}}>
+              <ButtonwithAnimation>{title}</ButtonwithAnimation>  
+              </div>
+              <div>
             <Grid container spacing={2}>
                 {dataArray.length > 0 ?
                     dataArray.map((data, i) => {
                         return <Grid
+                        
                             item
                             key={i}
                             xs={12}
@@ -87,6 +92,8 @@ export default function StaticPage() {
                     : <div> no Item</div>
                 }
             </Grid>
+            </div>
+            </div>
 
         </Container>
     ) : null

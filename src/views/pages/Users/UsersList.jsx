@@ -11,6 +11,7 @@ import {
   InputAdornment,
   Input,
   Container,
+  TextField,
 } from '@mui/material';  
 
 import { makeStyles } from '@mui/styles';
@@ -25,6 +26,10 @@ import ChildTableUser from "../../../component/userRow";
 import { UserContext } from "src/context/User";
 import { isMobile } from 'react-device-detect';
 import theme from "../../../theme";
+import { ButtonwithAnimation } from "../../../component/ui/Button/button";
+import './UsersList.css'; 
+
+
 
 
 const useStyles = makeStyles(() => ({
@@ -66,7 +71,7 @@ const useStyles = makeStyles(() => ({
       padding: "10px!important",
     },
     "& td": {
-      border: "1px solid #e5e3dd",
+      border: "none",
       padding: "6px!important",
     },
   },
@@ -162,33 +167,62 @@ export default function UsersList() {
 
   return (
     <Container maxWidth='xl'
-    sx={{background:" rgb(211, 182, 220)"}}
+    sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}
     >
-<Box className={classes.paddingContainer}>
-      <Box className={classes.LoginBox} mb={5}>
+     
+<Box className={classes.paddingContainer} >
+
+      <Box className={classes.LoginBox} mb={5} >
         {/* Start Title */}
-        <Box className={classes.masBoxFlex}
         
+        <Box className={classes.masBoxFlex}
+        sx={{display:"flex" ,flexDirection:"column" ,justifyContent:"center",alignContent:"center"}}
         >
+          <ButtonwithAnimation  >Users</ButtonwithAnimation>
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}
-          <Box variant="h6" style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-            <span style={{  fontSize: "2rem",fontWeight: "700",color: " #280026" }}>
-              Users
-            </span>
-            <Input
-              placeholder="Find User"
-              className={classes.input_fild2}
-              value={filterData.searchKey}
-              style={{ width: "180px", marginLeft: "110px", border: "1px solid #280026", borderRadius: "10px", padding: "2px 5px" ,background:"rgb(248, 233, 255)"}}
-              type="text"
-              name="searchKey"
-              onChange={_onInputChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-            />
+          <Box variant="h6" style={{ display: "flex", justifyContent: "end", width: "100%" }}>
+                                   
+            
+            
+          <TextField
+  placeholder="Find User"
+  variant="standard"
+  className={classes.input_fild2}
+  value={filterData.searchKey}
+  sx={{
+    width: "180px",
+    margin: "20px 0",
+    border: "3px solid rgb(196, 1, 218)",
+    borderRadius: "10px",
+    padding: "2px 5px",
+    background: "rgb(220, 220, 220)",
+    '& .MuiInputBase-input::placeholder': {
+      color: 'black', // Change placeholder color
+      opacity: 0.75, // Ensure full opacity
+    },
+  }}
+  InputProps={{
+    sx: {
+      '&:before': {
+        borderBottom: 'none', // Remove the bottom border
+      },
+      '&:after': {
+        borderBottom: 'none', // Remove the bottom border on focus
+      },
+      '&:hover:not(.Mui-disabled):before': {
+        borderBottom: 'none', // Remove the bottom border on hover
+      },
+    },
+    endAdornment: (
+      <InputAdornment position="end" sx={{ color: 'black' , opacity: 0.5}}>
+        <SearchIcon />
+      </InputAdornment>
+    ),
+  }}
+  type="text"
+  name="searchKey"
+  onChange={_onInputChange}
+/>
           </Box>
         </Box>
         {/* End Title */}
@@ -225,53 +259,39 @@ export default function UsersList() {
         {/*End Serach */}
 
         {/* Start Table */}
-        <TableContainer style={isMobile ? { width: "400px!important" } : { width: "100%" }} component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
+        <div className="tableWrapper">
+            <div className="tableAnimatedBackground"></div>
+            <div className="tableInnerBlurEffect"></div>
+            <TableContainer className="tableindex"  style={isMobile ? { width: "400px!important" } : { width: "100%"}} sx={{border:"none"}} component={Paper}>
+              <Table aria-label="simple table" sx={{border:"2px solid #581454" }}>
+                <TableHead sx={{ background: "linear-gradient(to right,rgba(77, 20, 96, 0.96),rgb(44, 0, 47))"  }}>
+                  <TableRow>
+                    <TableCell className={classes.ranking} align="Center" style={{ color: "white", padding: "1px", width: "10px !important", textAlign: "center" }}>
+                      Img
+                    </TableCell>
+                    <TableCell className={classes.profile} align="Center" style={{ color: "white", textAlign: "center" }}>
+                      Name
+                    </TableCell>
+                    <TableCell align="Center" style={{ color: "white", textAlign: "center" }}>
+                      Action
+                    </TableCell>
+                    <TableCell align="Center" style={{ color: "white", textAlign: "center" }}>
+                      Wallet Address
+                    </TableCell>
+                    <TableCell align="Center" style={{ color: "white", textAlign: "center" }}>
+                      Sepeciality
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {allUserList && allUserList?.map((row, index) => (
+                    <ChildTableUser row={row} index={index} key={index} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
 
-            {/* Start Head */}
-            <TableHead
-                       style={{
-                        background: "linear-gradient(to right, #280026, #4a004f)",
-                      }}
-            >
-              <TableRow>
-                <TableCell className={classes.ranking} align="Center" style={{ color: "white", padding: "1px", width: "10px!important",textAlign:"center" }}>
-                  Img
-                </TableCell>
-                <TableCell className={classes.profile} align="Center" style={{ color: "white",textAlign:"center" }}>
-                  Name
-                </TableCell>
-                <TableCell align="Center" style={{ color: "white",textAlign:"center" }}>
-                  Action
-                </TableCell>
-                <TableCell align="Center" style={{ color: "white", fontSize: "10px" ,textAlign:"center"}}>
-                  Wallet Address
-                </TableCell>
-                <TableCell align="Center" style={{ color: "white" ,textAlign:"center"}}>
-                  Sepeciality
-                </TableCell>
-                {/* <TableCell align="Center" style={{ color: "white" }}>
-                  Total earning
-                </TableCell> */}
-                {/* <TableCell align="Center" style={{ color: "white" }}>
-                  Total referral earning
-                </TableCell> */}
-
-              </TableRow>
-            </TableHead>
-            {/* End Head */}
-
-            {/* Start Body */}
-            <TableBody>
-              {allUserList &&
-                allUserList?.map((row, index) => (
-                  <ChildTableUser row={row} index={index} key={index} />
-                ))}
-            </TableBody>
-            {/* End Body */}
-
-          </Table>
-        </TableContainer>
         {/* End Table */}
 
         <Box mt={3}>{isLoadingData && <Loader />}</Box>
@@ -285,6 +305,11 @@ export default function UsersList() {
             count={pages}
             page={page}
             onChange={(e, v) => setPage(v)}
+            sx={{
+              "& .MuiPaginationItem-root": { color: "white" }, // Change text color
+              "& .MuiPaginationItem-page.Mui-selected": {  color: "white" }, // Change selected color
+              "& .MuiPaginationItem-ellipsis": { color: "white" }, // Change ellipsis color
+            }}
           />
         </Box>
       </Box>

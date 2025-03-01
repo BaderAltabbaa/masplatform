@@ -231,17 +231,15 @@ const useStyles = makeStyles((theme) => ({
     top: '0px',
     right: '0px',
     zIndex: '1000',
-    background: "white",
+    background: "#cdc8c8",
     height: '100vh',
     maxHeight: "100vh",
     width: "300px",
     overflowY: "scroll",
-    "@media(max-width:816px)": {
-      position: 'initial',
-      width: "100%",
-      marginTop: '10px',
-      maxHeight: 'initial'
+    "@media(max-width:1250px)": {
+       top:"0px"
     },
+  
   },
 
   searchBox: {
@@ -469,7 +467,7 @@ export default function Header() {
         <header className="header  " >
           <div className='logo1_contanier '>
             <Link to={"/"}>
-            <img className="logo1" src="\assets\Images\maslogo2.svg" alt="Logo11" />
+            <img className="logo1" src="\assets\Images\bader-logo.svg" alt="Logo11" />
             </Link>
           </div>
 
@@ -479,8 +477,8 @@ export default function Header() {
 
                 <Box className={classes.searchBox} >
                   <InputBase
-                    placeholder="  Search.."
-                    style={{ color: "#000" }}
+                    placeholder="Search.."
+                    style={{ color: "#000",paddingLeft:"8px" }}
                     value={search}
                     onChange={(e) => setsearch(e.target.value)}
                     classes={{
@@ -510,7 +508,7 @@ export default function Header() {
 
 
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
-            <ul className=''>
+            <ul className=''style={{display:"flex" ,alignItems:"center", marginBottom:"10px"}}>
               <li><Link to="/bundles">Explore</Link></li>
               <li><Link to="/items">Marketplace</Link></li>
               <li><Link to="/creators">Creators</Link></li>
@@ -518,12 +516,45 @@ export default function Header() {
               <li><Link to="/corporate/metaverse">Games</Link></li>
               <li className='test'><Link to="/buymas">Buy a Mas</Link></li>
               <li className='test'><Link to="/connectWallet">Connect Wallet</Link></li>
-
               
-
+              <li className='test'><Link to="/profile">Create on MAS</Link></li>
+             
+              {
+                    auth.userLoggedIn ? <></> :
+             
+              <li className='test'><Link to="/login">Login</Link></li>}
 
 
             </ul>
+
+            <div style={{display:"flex"}}>
+            <div className="search-container2">
+              {isSearchVisible && (
+
+                <Box className={classes.searchBox} >
+                  <InputBase
+                    placeholder="Search.."
+                    style={{ color: "#000",paddingLeft:"8px" }}
+                    value={search}
+                    onChange={(e) => setsearch(e.target.value)}
+                    classes={{
+                      root: inputRoot,
+                      input: inputInput,
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+
+                  />
+
+                  {search !== "" && <SearchResult />}
+
+                </Box>
+
+              )}
+              <FaSearch
+                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
+                onClick={toggleSearch}
+              />
+            </div>
             {ProfileId ? (
               <Grid item >
                 <Box className={flexButton}>
@@ -643,7 +674,7 @@ export default function Header() {
               </Grid>
             )
               : (
-                <div className='btn_group'>
+                <div className='btn_group test2'>
                   <Link style={{ color: "white" }} to="/profile" className=' Create_on_MAS'> <Button className="primaryButton"
                              fullWidth
                             variant="contained"> Create on MAS</Button></Link>
@@ -669,7 +700,7 @@ export default function Header() {
 
                 </div>
               )}
-
+</div>
 
 
 

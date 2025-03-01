@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   LoginBox: {
-    paddingTop: "20px",
+    paddingTop: "60px",
     "& h6": {
       fontWeight: "bold",
       marginBottom: "10px",

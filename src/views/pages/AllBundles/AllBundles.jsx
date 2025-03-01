@@ -112,7 +112,7 @@ const AllBundlesPage = () => {
         // <section>
         <Container maxWidth='xl'>
           <div style={{ display: "flex", justifyContent: "center",marginBottom  : "50px"}}>
-                  <ButtonwithAnimation  > ALL BUNDLES</ButtonwithAnimation>
+                  <ButtonwithAnimation>ALL BUNDLES</ButtonwithAnimation>
                 
                 </div>
              

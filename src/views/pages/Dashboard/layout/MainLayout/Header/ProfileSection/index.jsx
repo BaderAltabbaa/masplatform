@@ -94,7 +94,7 @@ const ProfileSection = () => {
           borderRadius: '27px',
           transition: 'all .2s ease-in-out',
           borderColor: 'rgb(66, 0, 64)',
-          backgroundColor: 'rgb(155, 79, 193)',
+          backgroundColor: '#8c0087',
           '& svg': {
             stroke: theme.palette.primary.light
           },
@@ -103,7 +103,7 @@ const ProfileSection = () => {
             background: `rgb(122, 0, 118) !important`,
             color: theme.palette.primary.light,
             '& svg': {
-              stroke: "rgb(197, 164, 206)"
+              stroke: "rgb(255, 255, 255)"
             }
           },
           '& .MuiChip-label': {

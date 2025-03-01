@@ -201,7 +201,7 @@ export default function Bundles() {
 
     <Box className={classes.LoginBox} mb={5}>
       <Box className={classes.masBoxFlex}>
-        <Typography variant="h6" color="white"></Typography>
+        <Typography variant="h6" color="black"></Typography>
         <Box display="flex" sx={{}}>
           <Button
             variant="contained"

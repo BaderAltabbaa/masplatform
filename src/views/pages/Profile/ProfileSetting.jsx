@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   LoginBox: {
     paddingBottom: "50px",
     overflow : "hidden",
+    backgroundColor:"#cdc8c8"
  
   },
   basic: {

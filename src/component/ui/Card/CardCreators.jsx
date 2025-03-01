@@ -143,9 +143,10 @@ function CardCreators({
         display: "flex",
         alignItems: "center",
         marginTop: "15px",
+        justifyContent:"space-evenly"
       }}
     >
-      {Subscribe ? (
+ 
         <div>
           <button
             onClick={(event) => {
@@ -153,6 +154,7 @@ function CardCreators({
               subscribeToUserHandler();
             }}
             className="primary"
+            style={{padding:"8px"}}
           >
             {isSubscribed ? "Subscribed" : "Subscribe"}
           </button>
@@ -171,17 +173,9 @@ function CardCreators({
               : "0 sub"}
           </span>
         </div>
-      ) : (
-        <button
-          onClick={(event) => {
-            event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
-            onFollow();
-          }}
-          className="primary"
-        >
-          Details
-        </button>
-      )}
+     
+        
+     
 
       <div
         style={{
@@ -219,7 +213,7 @@ function CardCreators({
             alignItems: "center",
           }}
         >
-          <span style={{ fontSize: "12px", margin: "1px 5px", color: "white" }}>
+          <span style={{ fontSize: "15px", margin: "1px 10px", color: "white" }}>
             {nbLike && nbLike}
           </span>
           <FaHeart
