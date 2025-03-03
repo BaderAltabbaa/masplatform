@@ -467,7 +467,7 @@ useEffect(() => {
               >
                   <DialogTitle id="billing-dialog-title">Billing Information</DialogTitle>
                   <DialogContent>
-                      <Typography variant="body1">Please enter your billing information below:</Typography>
+                      <Typography variant="body1" sx={{color:"#8c0087"}}>Please enter your billing information below:</Typography>
                       {error && <Typography color="error">{error}</Typography>}  
                       {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2","serialNumber"].map((item) => (
                           <TextField
@@ -483,9 +483,9 @@ useEffect(() => {
                       ))}
                   </DialogContent>
                   <br />
-                  <Box textAlign="center" width="100%">
-                      <Button onClick={onClose} color="primary">Cancel</Button>
-                      <Button onClick={handleBuy} color="secondary" variant="contained">Buy Now</Button>
+                  <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
+                      <Button onClick={onClose} sx={{color:"#8c0087"}}>Cancel</Button>
+                      <Button onClick={handleBuy} color="secondary" variant="contained" style={{background:"#8c0087",color:"white" }}>Buy Now</Button>
                   </Box>
                   <br />
               </Dialog>
@@ -883,30 +883,23 @@ useEffect(() => {
   ))}
 
   <Box mt={3} className={classes.itemText} textAlign="center">
-    <Typography variant="h4">{itemData.itemTitle}</Typography>
+    <Typography variant="h3">{itemData.itemTitle}</Typography>
   </Box>
   <Box mt={2} className={classes.deskiText}>
-    <Typography variant="h4" align="left" color="#000"  style={{ color: "#008000", fontWeight: "bold", marginTop: 5 }}>
-      Price:
+    <Typography variant="h4" align="left" color="#000"  style={{ color: "rgb(128, 0, 128)", fontWeight: "bold", marginTop: 5 }}>
+      Price: <span> </span>
       <span>
         {itemData.donationAmount} {itemData.coinName}
       </span>
     </Typography>
-    <Grid container spacing={0}>
-      <Grid item xs={12} md={3} lg={2}>
-        <Typography variant="h4" align="left" color="#000">
-          Details:
+        <Typography variant="h4" align="left" color="#000" style={{marginTop: 5}}>
+          Details: <span> </span>
+      <span> {itemData.details} </span>
         </Typography>
-      </Grid>
-      <Grid item xs={12} md={9} lg={10}>
-        <Typography variant="body2" align="left" color="#000" style={{ color: "#000", fontWeight: "bold", marginTop: 0 }}>
-          {itemData.details}
-        </Typography>
-      </Grid>
-    </Grid>
   </Box>
    {/* Buy Now and Cancel Buttons */}
-   <Box mt={3} mb={3} textAlign="center">
+   {auth.userLoggedIn && (
+   <Box mt={3} mb={3} textAlign="center" display="flex" justifyContent="space-around">
     <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#8c0087",color:"white" }} >
       Cancel
     </Button>
@@ -923,6 +916,7 @@ useEffect(() => {
       {isLoading && <ButtonCircularProgress />}
     </Button>
   </Box>
+  )}
   <BillingDialog
   open={openBillingDialog}
   onClose={() => setOpenBillingDialog(false)}
@@ -933,7 +927,7 @@ useEffect(() => {
 
   {/* Login and Subscribe Buttons */}
   {!auth.userLoggedIn && (
-    <Box mt={3} mb={3} textAlign="center">
+    <Box mt={3} mb={3} textAlign="center" display="flex" justifyContent="space-around">
       <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#8c0087",color:"white" }} >
         Cancel
       </Button>
