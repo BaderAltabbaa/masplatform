@@ -122,7 +122,7 @@ function CardCreators({
     navigate("/user-profile/" + userCardData.userName);
   }}
 >
-  <img src={userCardData.profilePic} alt={title} style={{height:"320px",maxHeight: "270px"}}/>
+  <img src={userCardData.profilePic} alt={title} style={{height:"180px",maxHeight: "180px"}}/>
   <div className="contentContainer">
     <h3
       onClick={(event) => {
@@ -141,8 +141,8 @@ function CardCreators({
       className="buttons"
       style={{
         display: "flex",
+        flexDirection:"row",
         alignItems: "center",
-        marginTop: "15px",
         justifyContent:"space-evenly"
       }}
     >
@@ -154,7 +154,7 @@ function CardCreators({
               subscribeToUserHandler();
             }}
             className="primary"
-            style={{padding:"8px"}}
+            style={{padding:"5px"}}
           >
             {isSubscribed ? "Subscribed" : "Subscribe"}
           </button>
@@ -162,7 +162,7 @@ function CardCreators({
             style={{
               color: "white",
               fontWeight: "600",
-              fontSize: "12px",
+              fontSize: "10px",
               padding: "2px",
             }}
           >
@@ -197,7 +197,7 @@ function CardCreators({
               badgeContent={Object.keys(auth.unreadChats).length}
               overlap="rectangular"
             >
-              <BsChat style={{ color: "white", margin: "10px", fontSize: "20px" }} />
+              <BsChat style={{ color: "white", margin: "2px", fontSize: "13px" }} />
             </Badge>
           </div>
         </Tooltip>
@@ -207,17 +207,17 @@ function CardCreators({
         <Box
           style={{
             cursor: "pointer",
-            margin: "0 3px",
+            margin: "5px 3px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <span style={{ fontSize: "15px", margin: "1px 10px", color: "white" }}>
+          <span style={{ fontSize: "12px", margin: "0 6px", color: "white" }}>
             {nbLike && nbLike}
           </span>
           <FaHeart
-             style={isLike ? {color: ' #FD1D1D' ,fontSize:"20px" } : { color:' #ffffff6e' ,fontSize:"20px" }}
+             style={isLike ? {color: ' #FD1D1D' ,fontSize:"14px" } : { color:' #ffffff6e' ,fontSize:"14px" }}
             onClick={(event) => {
               event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
               likeDislikeUserHandler(userCardData._id);

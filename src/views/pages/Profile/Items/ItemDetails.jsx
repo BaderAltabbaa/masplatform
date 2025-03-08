@@ -19,7 +19,7 @@ import ReactPlayer from "react-player";
 import CloseIcon from '@mui/icons-material/Close';
 
 const useStyles = makeStyles((theme) => ({
-  root: { padding: "70px 0px" },
+  root: { padding: "70px 0px" ,background:"linear-gradient(to right,rgb(194, 0, 0),#4a004f)" },
   bannerimg: {
     overflow: "hidden",
     backgroundPosition: "center !important",
@@ -574,6 +574,7 @@ export default function itemDetails() {
   return (
     <>
     <Box className={classes.root}>
+    <Box>
       {isLoadingBunldeView ? (
         <Loader />
       ) : (
@@ -669,9 +670,10 @@ export default function itemDetails() {
       onMouseEnter={e => e.currentTarget.style.border = "5px solid red"} // Change to red on mouse enter
       onMouseLeave={e => e.currentTarget.style.border = "5px solid #808080"} // Revert to default on mouse leave
     >
+      
       <img
         src={itemDetails?.[`mediaUrl${index + 1}`]}
-        alt={`Profile Image ${index + 1}`}
+        alt={`Item Image ${index + 1}`}
         style={{
           width: "100%", 
           height: "auto", 
@@ -694,7 +696,7 @@ export default function itemDetails() {
     <img src={currentImg} alt="Enlarged view" style={{ width: '100%', height: 'auto' }} />
   </Dialog>
 </Box>
-    </>
+</Box>  </>
   );
 
   function handleVideo(url) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";  // Fixed incorrect double slashes
-import DialogTitle from "@mui/material/DialogTitle";  // Fixed import path
-import DialogContent from "@mui/material/DialogContent";  // Fixed import path
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
 import {
   Grid,
   Input,
@@ -11,10 +11,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-
-// Correct import of makeStyles for compatibility, although using the styled API is recommended in MUI v5
-import { makeStyles } from '@mui/styles';  
-
+import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,10 +21,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReactPlayer from "react-player";
 import { toast } from "react-toastify";
-
-// Corrected Pagination import
-import { Pagination } from "@mui/material";  // Moved to @mui/material in MUI v5
-
+import { Pagination } from "@mui/material";
 
 const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
   const classes = useStyles();
@@ -51,7 +45,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
     bundleIds: yup.array().min(1, "Select 1 bundle at least"),
   });
 
-  // React hook form for handle form data
+  // React hook form for handling form data
   const {
     control,
     watch,
@@ -71,6 +65,9 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
     },
   });
 
+  const formBundles = watch("bundleIds") || []; // Ensure formBundles is always an array
+  const [selectedItemName, setSelectedItemName] = useState("");
+
   useEffect(() => {
     updateState({ mediaUrl: isEdit ? audienceData.mediaUrl : "" });
   }, [show]);
@@ -79,7 +76,21 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
     getBundleListHandler().catch(console.error);
   }, [page]);
 
-  /* Main Return */
+  // Handle item click
+  const handleItemClick = (item) => {
+    if (!isEdit) {
+      selectItem(item._id);
+      setSelectedItemName(item.bundleName); // Update selected item name
+    }
+  };
+
+  // Select/deselect an item
+  const selectItem = (itemId) => {
+    const updatedBundles = formBundles.includes(itemId)
+      ? formBundles.filter((id) => id !== itemId) // Deselect
+      : [...formBundles, itemId]; // Select
+    setValue("bundleIds", updatedBundles); // Update form value
+  };
 
   return (
     <Dialog
@@ -88,9 +99,15 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
       open={show}
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
+      PaperProps={{
+        style: {
+          height: "95vh",
+          maxHeight: "95vh",
+        },
+      }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
       >
         {isEdit ? "Edit Audience" : "Share For Audience"}
       </DialogTitle>
@@ -107,11 +124,8 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
     </Dialog>
   );
 
-  /* Main Return */
-
   function MediaBox() {
     const { name } = watch("file") ? watch("file") : { type: "", name: "" };
-
     const isVideo = watch("file")
       ? watch("file")?.type?.split("/")[0] !== "image"
       : isEdit
@@ -129,9 +143,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
         className={classes.mediaBox}
       >
         {isVideo ? (
-          <div
-            style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}
-          >
+          <div style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}>
             <ReactPlayer
               url={mediaUrl}
               playing
@@ -151,19 +163,8 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
         )}
         <div className={classes.mediaBoxInfo}>
           <div>
-            <p
-              style={{
-                color: "#777",
-                fontWeight: "600",
-                margin: 0,
-                fontSize: 14,
-              }}
-            >
-              Filename
-            </p>
-            <p style={{ marginTop: 5, fontWeight: "500" }}>
-              {name ? name : ""}
-            </p>
+            <p style={{ color: "#777", fontWeight: "600", margin: 0, fontSize: 14 }}>Filename</p>
+            <p style={{ marginTop: 5, fontWeight: "500" }}>{name ? name : ""}</p>
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <DeleteIcon
@@ -200,19 +201,16 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
-
+          style={{ fontSize: "15px", background: "#8c0087", color: "white", margin: "0 10px" }}
         >
           Cancel
         </Button>
         <Button
-         color="primary"
+          color="primary"
           variant="contained"
           onClick={onSubmit}
           size="large"
-          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
-
-          // className={classes.submitButton}
+          style={{ fontSize: "15px", background: "#8c0087", color: "white", margin: "0 10px" }}
         >
           {isEdit ? "Edit" : "Share"}
         </Button>
@@ -258,26 +256,18 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
-            <div className={classes.uploadIcon}>
-              <CloudUploadIcon />
-            </div>
-            <div style={{ margin: 15, textAlign: "left" }}>
-              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>
-                Select Image/Video
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>Drag And Drop Files</p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Accept All Video/Image Formats
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Max File Size: 1024 MP
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Min Width Size: 300px
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Min Height Size: 160px
-              </p>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", border: "1px solid rgb(184, 180, 180)", height: "100%", padding: "0 10px", borderRadius: "10px" }}>
+              <div className={classes.uploadIcon}>
+                <CloudUploadIcon />
+              </div>
+              <div style={{ margin: 15, textAlign: "center" }}>
+                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>Select Image/Video</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Drag And Drop Files</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Accept All Video/Image Formats</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Max File Size: 1024 MP</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Min Width Size: 300px</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Min Height Size: 160px</p>
+              </div>
             </div>
           </Button>
         </label>
@@ -289,17 +279,20 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
     return (
       <Grid item xs={12} sm={7}>
         <>
+          <BundleSelector />
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors.title ? "red" : " #8c0087" }}
+            style={{ borderColor: errors.title ? "red" : "rgba(43, 31, 42, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Title</label>
+            <label style={{ color: "#2d013a" }}>Title</label>
             <Input
               {...register("title")}
               className={classes.input}
               placeholder={"Enter Title"}
               disabled={isEdit}
+              value={selectedItemName} // Bind the selected item's name to the input
+              onChange={(e) => setSelectedItemName(e.target.value)} // Allow manual editing if needed
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -307,22 +300,26 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           </p>
         </>
         <Grid sm={12} className={classes.inputContainer}>
-          <label style={{color:' #2d013a'}}>Type</label>
+          <label style={{ color: "#2d013a" }}>Type</label>
           <Input
             {...register("type")}
             className={classes.input}
             placeholder={"Enter Type"}
             disabled={true}
-            endAdornment={<TypeSelector />}
+            endAdornment={
+              <Box sx={{ position: 'relative', top: '-15px' }}> {/* Adjust `top` value as needed */}
+              <TypeSelector />
+            </Box>
+            }
           />
         </Grid>
         <>
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors.details ? "red" : " #8c0087" }}
+            style={{ borderColor: errors.details ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Details</label>
+            <label style={{ color: "#2d013a" }}>Details</label>
             <Input
               {...register("details")}
               className={classes.input}
@@ -334,7 +331,6 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             {errors.details?.message}
           </p>
         </>
-        <BundleSelector />
       </Grid>
     );
   }
@@ -359,22 +355,10 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
   }
 
   function BundleSelector() {
-    const formBundles = watch("bundleIds");
-    const selectItem = (id) => {
-      if (formBundles.includes(id)) {
-        setValue(
-          "bundleIds",
-          formBundles.filter((i) => i !== id)
-        );
-      } else {
-        setValue("bundleIds", [...formBundles, id]);
-      }
-    };
-
     return (
-      <div style={{ margin: 10 }}>
-        <p className={classes.selectorTitleStyle} style={{color:' #2d013a'}}>
-          Chose Bundles To Share with
+      <div style={{ margin:"0 10px" }}>
+        <p className={classes.selectorTitleStyle} style={{ color: " #2d013a" }}>
+          Choose Bundles To Share with
         </p>
         <Grid container spacing={2}>
           {bundleList.map((item) => {
@@ -384,9 +368,11 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
                 <div
                   className={classes.bundleCardStyle}
                   style={{
-                    borderColor: isChosen ? "rgb(157, 0, 185)" : " #8c0087",
+                    backgroundColor: isChosen ? "rgb(85, 0, 82)" : "#8c0087",
+                    cursor: "pointer",
+                      color: "white"
                   }}
-                  onClick={() => (isEdit ? {} : selectItem(item._id))}
+                  onClick={() => handleItemClick(item)}
                 >
                   <p style={{ textAlign: "center" }}>{item.bundleName}</p>
                 </div>
@@ -403,7 +389,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             mt={2}
             display="flex"
             justifyContent="center"
-            style={{ marginTop: 40 }}
+            style={{ marginTop: 20 }}
           >
             <Pagination
               count={pages}
@@ -518,14 +504,14 @@ export default ShareForAudienceDialog;
 const useStyles = makeStyles(() => ({
   inputContainer: {
     borderWidth: 2,
-    borderColor: " #8c0087",
+    borderColor: "rgba(140, 0, 135, 0)",
     borderStyle: "solid",
     borderRadius: 5,
     padding: "10px",
     marginBottom: 10,
     transition: "border-color 0.3s ease-in",
     "&:focus-within": {
-      borderColor: "rgb(192, 72, 72)",
+      borderColor: "rgba(72, 162, 192, 0)",
       "& label": {
         color: "rgb(192, 72, 72)",
         transition: "color 0.3s ease-in",
@@ -560,6 +546,7 @@ const useStyles = makeStyles(() => ({
     },
     "& div:focus": {
       background: "transparent",
+      
     },
   },
 
@@ -588,8 +575,9 @@ const useStyles = makeStyles(() => ({
   buttonContainerStyle: {
     padding: "0px 20px",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
+    marginTop:"25px"
   },
 
   submitButton: {

@@ -32,13 +32,13 @@ const handleClose = () => {
   setSelectedItem(null);
 };
 
-console.log("heeeee",staticContent)
+console.log("heeeee",staticContent[3])
   return (
     <footer
       style={{
         width: "100%",
         background: "linear-gradient(to right,rgb(40, 0, 38),rgb(74, 0, 79))",
-        padding: "40px 20px",
+        padding: "0px 20px 20px",
         color: "white",
         textAlign: "center",
         fontFamily: "'Arial', sans-serif",
@@ -57,7 +57,7 @@ console.log("heeeee",staticContent)
         className="footer-content"
       >
         {/* Logo Section */}
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <div style={{ textAlign: "center", marginBottom: "20px" ,display:"flex" ,flexDirection:"column",alignItems:"center"}}>
         <Link to="/">
           <img
             src="\assets\Images\masfooter-logo.svg"
@@ -72,9 +72,11 @@ console.log("heeeee",staticContent)
           <h3 style={{ fontSize: "28px", fontWeight: "bold" }}>MAS Platform</h3>
         </div>
 
+
+
         {/* Marketplace Section */}
         <div>
-          <h3 style={styles.sectionHeader}>Marketplace Section</h3>
+          <h3 style={styles.sectionHeader}></h3>
           {staticContent.slice(0, 4).map((row) => (
             <>     
             <li key={row.title} style={styles.listItem}  onClick={() => handleClickOpen(row)}>
@@ -90,7 +92,7 @@ console.log("heeeee",staticContent)
             ))}
       
 
-      <Dialog open={open} onClose={handleClose} >
+      <Dialog open={open} onClose={handleClose}  maxWidth="lg" fullWidth>
         <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e">
           <h1>{selectedItem?.title}</h1>
           <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleClose}><AiOutlineClose/></div>
@@ -109,7 +111,7 @@ console.log("heeeee",staticContent)
 
         {/* My Account Section */}
         <div>
-          <h3 style={styles.sectionHeader}>My Account</h3>
+          <h3 style={styles.sectionHeader}></h3>
           <ul style={styles.list}>
           {staticContent.slice(4,8).map((row) => (
             <>
@@ -189,7 +191,7 @@ console.log("heeeee",staticContent)
 
 const styles = {
   sectionHeader: {
-    marginBottom: "15px",
+    marginBottom: "40px",
     fontSize: "22px",
     fontWeight: "bold",
     textShadow: "0px 0px 2px rgb(147, 128, 255), 0px 0px 5px rgb(12, 0, 81)",

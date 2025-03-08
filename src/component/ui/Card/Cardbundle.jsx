@@ -302,15 +302,15 @@ function Cardbundle({
 
 
    <Typography
-          variant="h5"
-          component="h5"
+          variant="h6"
+          component="h6"
           style={{ color: "white", fontWeight: "bold" }}
         >
           {BundleData.bundleName}
         </Typography>
   <Typography
-          variant="h5"
-          component="h5"
+          variant="h6"
+          component="h6"
           style={{ color: "white", fontWeight: "bold", marginTop: 5 }}
         >
           {"( "}
@@ -349,7 +349,8 @@ function Cardbundle({
                 display: "flex",
                 flexDirection:"row",
                 alignItems: "center",
-                marginTop: "15px",
+                justifyContent:"space-between",
+                marginTop: "10px",
             }}
           >
             
@@ -362,7 +363,13 @@ function Cardbundle({
           auth.userData._id !== userId &&
           isSubscribed && (
             <Button
-             className="primary"
+             className="primary" 
+             style={{
+              color: "white",
+              fontWeight: "600",
+              fontSize: "12px",
+              padding: "2px 3px",
+            }}
               disabled={isSubscribed && activeSubscribe}
               onClick={() => (activeSubscribe ? {} : handleClickOpen2())}
             >
@@ -373,6 +380,12 @@ function Cardbundle({
         
           <Button 
          className="primary"
+         style={{
+          color: "white",
+          fontWeight: "600",
+          fontSize: "12px",
+          padding: "2px",
+        }}
           onClick={handleClickOpen2}>
             Details
           </Button>
@@ -384,6 +397,12 @@ function Cardbundle({
             
           <Button
             className="primary"
+            style={{
+              color: "white",
+              fontWeight: "600",
+              fontSize: "12px",
+              padding: "2px",
+            }}
             onClick={() => navigate("/bundles-details?" + BundleData?._id)}
           >
             View
@@ -397,11 +416,11 @@ function Cardbundle({
           style={{display : 'flex' }}
         >
           <FavoriteIcon
-             style={isLike ? {color: ' #FD1D1D'  } : { color:' #ffffff6e'  }}/>
+             style={isLike ? {color: ' #FD1D1D' ,fontSize:"20px" } : { color:' #ffffff6e',fontSize:"20px"  }}/>
              
-      <span style={{color: 'white',marginLeft:'10px'} }>{nbLike}</span>
+      <span style={{color: 'white',marginLeft:'5px',fontSize: "12px"} }>{nbLike}</span>
       </div>
-      
+      </div> 
             
           {/* edit */}
           <Dialog
@@ -776,7 +795,7 @@ function Cardbundle({
           </div>
     
 
-  </div> 
+ 
 </Box>
 
 

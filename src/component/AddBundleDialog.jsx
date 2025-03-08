@@ -190,7 +190,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+          style={{ fontSize: "15px",background:"#8c0087",color:"white" ,margin:"0 5px"}}
 
         >
           Cancel
@@ -202,7 +202,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           size="large"
           // className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
-          style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+          style={{ fontSize: "15px",background:"#8c0087",color:"white" ,margin:"0 5px"}}
 
         >
           {isEdit ? "Edit" : "Create"}
@@ -249,6 +249,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
+             <div style={{display:"flex" ,justifyContent:"center", alignItems:"center" ,border:"1px solid rgb(184, 180, 180)",padding:"60px 10px",borderRadius:"10px"
+            }}>
             <div className={classes.uploadIcon}>
               <CloudUploadIcon />
             </div>
@@ -270,6 +272,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 Min Height Size: 160px
               </p>
             </div>
+            
+            </div>
           </Button>
         </label>
       </label>
@@ -283,7 +287,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["bundleTitle"] ? "red" : " #8c0087" }}
+            style={{ borderColor: errors["bundleTitle"] ? "red" : "rgba(45, 34, 45, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Bundle Title</label>
             <Input
@@ -301,7 +305,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["bundleName"] ? "red" : "#8c0087" }}
+            style={{ borderColor: errors["bundleName"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Bundle Name</label>
             <Input
@@ -319,16 +323,20 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["donationAmount"] ? "red" : "#8c0087" }}
+            style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Amount</label>
             <Input
               {...register("donationAmount")}
               className={classes.input}
+
               placeholder={"Enter Donation Amount"}
               disabled={isEdit}
               type={"number"}
-              endAdornment={CoinSelector()}
+              endAdornment={
+           <Box sx={{ position: 'relative', top: '-18px' }}> {/* Adjust `top` value as needed */}
+             <CoinSelector/>
+             </Box>}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -340,7 +348,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["duration"] ? "red" : "#8c0087" }}
+            style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Duration</label>
             <Input
@@ -363,7 +371,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["details"] ? "red" : "#8c0087" }}
+            style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Details</label>
             <Input
@@ -395,7 +403,6 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               sx: {
                 backgroundColor: '#f5f5f5', // Background color of the dropdown
                 borderRadius: '0px 0 20px 20px',
-                borderBottom:"2px solid #8c0087" 
               },
             },
             MenuListProps: {
@@ -415,7 +422,6 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 padding: "10px 0px",
                 display: "flex",
                 alignItems: "center",
-                gap: 5,              
               }}
             >
               <p style={{ margin: 5, width: 50 }}>{item.name}</p>
@@ -578,7 +584,7 @@ const useStyles = makeStyles(() => ({
   buttonContainerStyle: {
     padding: "0px 20px",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
   },
 

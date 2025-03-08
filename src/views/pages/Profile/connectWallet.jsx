@@ -4,6 +4,7 @@ import { useWallet } from './WalletContext';
 
 import {
   Button,
+  Box,
   TextField,
   Typography,
   InputAdornment,
@@ -20,6 +21,8 @@ import { tokensDetails } from "src/constants";  // Custom token constants
 import BalanceBox from "src/component/ui/BalanceBox";  // Custom BalanceBox component
 import { UserContext } from "src/context/User";  // Custom context for user data
 import { sortAddress } from "src/utils";  // Utility function for sorting addresses
+import './buymas.css'; 
+import { ButtonwithAnimation } from '../../../component/ui/Button/button';
 
 
 
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   balanceBox: {
-    width: '50%',
+    width: '75%',
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
     "@media(max-width:768px)": {
@@ -707,9 +710,12 @@ const ConnectWallet = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.topBar}>
-        {/* Your top bar content goes here */}
-      </div>
+       <div className="tableWrapper" style={{maxWidth:"100%", width:"800px"}}>
+
+<div className="tableAnimatedBackground"></div>
+<div className="tableInnerBlurEffect"></div>
+           <Box className="buybox" sx={{maxWidth:"100%", width:"800px" ,display:"flex" ,flexDirection:"column",alignItems:"center" ,backgroundColor:"rgb(48, 0, 60)", borderRadius:"20px"}}>
+     
       <div className={classes.balanceBox}>
         <Typography variant="h5" component="h5" mb={2} sx={{    color:"white"}}>
           YOUR Balance
@@ -721,7 +727,7 @@ const ConnectWallet = () => {
         />
       </div>
       <div className={classes.walletConnect}>
-  <h2>Wallet Connection</h2>
+  <h2 style={{marginBottom:"10px"}}>Wallet Connection</h2>
   {connected ? (
     <div>
       <Button
@@ -729,7 +735,7 @@ const ConnectWallet = () => {
         variant="contained"
         color="secondary"
         className="primaryButton"
-
+        sx={{marginBottom:"10px"}}
       >
         {sortAddress(account)}
       </Button>
@@ -738,6 +744,7 @@ const ConnectWallet = () => {
         variant="contained"
         color="secondary"
         className="primaryButton"
+        sx={{marginBottom:"10px"}}
 
       >
         Charge Your Account with USDT
@@ -754,6 +761,7 @@ const ConnectWallet = () => {
               onClick={() => setShowConnectDialog(true)}
               variant="contained"
               color="secondary"
+              sx={{marginBottom:"20px"}}
              
             >
               Connect Wallet
@@ -808,6 +816,8 @@ const ConnectWallet = () => {
             )}
           </>
         )}
+      </div>
+      </Box>
       </div>
        {/* Charge Dialog */}
        <Dialog open={chargeDialogOpen} onClose={handleCloseChargeDialog}>

@@ -97,8 +97,7 @@ const MainLayout = () => {
         </Main>
       </Box>
 
-      {/* Footer */}
-      <Footer />
+     
     </>
   );
 };

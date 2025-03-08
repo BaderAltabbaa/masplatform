@@ -10,8 +10,7 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
         
         <div className="text-content2">
           <h3 style={{ 
-            
-            fontSize:'18px'
+            fontSize:'14px'
            }}>{titel}</h3>
           <p>{text}</p>
         </div>

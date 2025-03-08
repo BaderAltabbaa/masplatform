@@ -25,7 +25,7 @@ const SectionCard = ({
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
 
     // Function to determine scroll amount
-    const getScrollAmount = () => (isDesktop ? 1000 : 75);
+    const getScrollAmount = () => (isDesktop ? 300 : 50);
 
     // Handle left arrow click
     const handleScrollLeft = () => {
@@ -46,7 +46,7 @@ const SectionCard = ({
         if (isDesktop) {
             intervalRef.current = setInterval(() => {
                 if (!isDragging && autoScroll && carouselRef.current) {
-                    carouselRef.current.scrollBy({ left: 1000, behavior: 'smooth' });
+                    carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
                 }
             }, 2000);
         }
@@ -101,7 +101,7 @@ const SectionCard = ({
     };
 
     return (
-        <div className='marginForSmall' style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+        <div className='marginForSmall' style={{ display: 'flex', alignItems: 'center', margin: '10px' }}>
             {/* Left Arrow */}
             <button onClick={handleScrollLeft} className='prev-arrow'>
                 <AiOutlineArrowLeft size={30} />

@@ -18,6 +18,10 @@ import { makeStyles } from '@mui/styles';  // Styling solution for your componen
 
 import BigNumber from 'bignumber.js';  // BigNumber for handling large values in JS (important for handling tokens, etc.)
 import { useWallet } from './WalletContext';  // Custom hook for wallet-related operations
+import { ButtonwithAnimation } from '../../../component/ui/Button/button';
+import { Padding } from '@mui/icons-material';
+import './buymas.css'; 
+
 
 
 
@@ -28,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '75vh',
+    minHeight: '90vh',
     background: 'linear-gradient(to right,#280026,#4a004f)',
-    color:"white"
+    color:"white",
+    padding: theme.spacing(2),
+
   },
   balanceContainer: {
     marginBottom: theme.spacing(2),
@@ -348,9 +354,13 @@ useEffect(() => {
   
   return (
     <div className={classes.root}>
+       <div className="tableWrapper" style={{maxWidth:"100%", width:"800px"}}>
+       <div className="tableAnimatedBackground"></div>
+       <div className="tableInnerBlurEffect"></div>
+      <Box className="buybox" sx={{maxWidth:"100%", width:"800px" ,display:"flex" ,flexDirection:"column",alignItems:"center" ,backgroundColor:"rgb(48, 0, 60)", borderRadius:"20px"}}>
     <Box className={classes.balanceContainer}>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px', }}>
-        <h2>Buy Cryptocurrency (MAS)</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px',marginTop:"20px" }}>
+        <h2>Buy $MAS Coin</h2>
       </div>
       <Typography variant="h5" component="h5" sx={{ color:"white",marginBottom:"10px"}}>
         YOUR Balance
@@ -362,7 +372,7 @@ useEffect(() => {
     </Box>
       <br />
       <Box className={classes.inputContainer}>
-        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Enter USDT Amount:</Typography>
+        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Enter Amount :</Typography>
         <TextField
         variant="standard"
           className={classes.textBox}
@@ -386,12 +396,20 @@ useEffect(() => {
             "& .MuiInput-underline:after": {
               borderBottomColor: "white", // Underline color after focus
             },
+            marginLeft:"10px",
+            "& input[type=number]": {
+              "-moz-appearance": "textfield", // Firefox
+            },
+            "& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button": {
+              "-webkit-appearance": "none", // Safari and Chrome
+              margin: 0,
+            },
           }}
         />
       </Box>
       <br />
       <Box className={classes.inputContainer}>
-        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Mas Amount (0.1 of USDT):</Typography>
+        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Mas Amount :</Typography>
         <TextField
         variant="standard"
           className={classes.textBox}
@@ -412,6 +430,7 @@ useEffect(() => {
             "& .MuiInput-underline:after": {
               borderBottomColor: "white", // Underline color after focus
             },
+            marginLeft:"15px"
           }}
         />
       </Box>
@@ -424,15 +443,17 @@ useEffect(() => {
           onClick={buymas}
           disabled={!web3 || !contract || loading}
         >
-          {loading ? 'Processing...' : 'Buy Mas'}
+          {loading ? 'Processing...' : 'Swap'}
         </Button>
       </Box>
       <br />
     <div>
-              <p>External wallet: {metaMaskAddress}</p>
-              <p>USDT Balance in External wallet: {usdtBalanceInUSDT.toFixed(3)}</p>
+              <p style={{marginBottom:"10px"}}>External wallet: {metaMaskAddress} USDT Balance in External wallet: {usdtBalanceInUSDT.toFixed(3)}</p>
+              
               {/*<p>FDUSD Balance in External wallet: {fdusdBalanceInFDUSD.toFixed(3)}</p>*/}
             </div>
+            </Box> 
+            </div> 
           </div>
     
   );

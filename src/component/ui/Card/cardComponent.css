@@ -1,18 +1,20 @@
 .card-3 {
-    margin: 10px;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    box-sizing: border-box;
-    width: 300px; /* Example width */
-    height: 450px; /* Example height */
-    padding: 10px;
-    /* background: linear-gradient(to top right, #640D5F, rgb(1, 15, 78)); */
-    border-radius: 30px;
-    background-color: rgba(85, 84, 84, 0.7);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* تأثير التحريك والتظليل */
-  }
+  margin: 10px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 220px;
+  max-width: 250px;
+  height: auto; 
+  min-height: 300px;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: rgba(85, 84, 84, 0.7);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
   .speciality {
     height: 20px; /* Reserve space for the text */
     visibility: hidden; /* Hide the element but keep the space */
@@ -35,7 +37,7 @@
   }
   .contentContainer{
     /* padding-top: 10px; */
-    padding: 10px ;
+    padding: 2px ;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,29 +47,30 @@
 
   .media-cont{
     width: 100%;
-    height: 200px;
+    height: 150px;
   }
   .media-cont img{
-    height: 200px;
+    height: 150px;
     object-fit: fill;
   }
 
   .media-contm{
     width: 100%;
-    height: 230px;
+    height: 150px;
   }
   .media-contm img{
-    height: 230px;
+    height: 150px;
     object-fit: fill;
   }
 
+  
 
   
   .card-3:hover {
     transform: scale(1.01); 
   }
   .contentContainer h3{
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 400;
     color: white !important;
     text-align: center;
@@ -78,10 +81,10 @@
 
   
   .contentContainer p {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     opacity: 0.6;
     color: white !important;
   }
@@ -89,10 +92,8 @@
   .card-3 .buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 13px;
     justify-content: space-between;
     margin-top: auto;
-    width: 100%;
     color: #ffffff6e;
   }
   
@@ -101,12 +102,9 @@
     background: transparent;
     font-weight: 500;
     color: #f8f8f8;
-    width: 100px;
-    max-width: 150px;
     text-align: center;
     font-family: inherit;
-    padding: 10px 15px;
-    font-size: 14px;
+    font-size: 12px;
     border-radius: 40px;
     transition: background 0.3s, transform 0.3s ease;
   }
@@ -137,30 +135,20 @@
 }
 
     .card-3 h3 {
-        font-size: 20px; /* تقليل حجم الخط ليتناسب مع الشاشات الصغيرة */
+        font-size: 15px; /* تقليل حجم الخط ليتناسب مع الشاشات الصغيرة */
     }
 
     .card-3 h3:nth-child(2) {
-        font-size: 14px; /* تعديل حجم العنوان الفرعي */
+        font-size: 10px; /* تعديل حجم العنوان الفرعي */
     }
 
     .card-3 p {
-        font-size: 14px; /* تقليل حجم الخط للنصوص */
+        font-size: 10px; /* تقليل حجم الخط للنصوص */
     }
 
   
 
-    .card-3 button {
-        width: 100%; /* جعل الأزرار تأخذ العرض الكامل */
-        padding: 10px; /* تحسين الحشو للأزرار */
-        margin-right: 10px;
-    }
-
-    .buttons {
-        display: block; /* تغيير ترتيب الأزرار ليتناسب مع الشاشة */
-        width: 100%;
-        text-align: center;
-    }
+  
 }
 
 /* استجابة الشاشات الصغيرة */
@@ -178,7 +166,7 @@
     
     }
     .card-3 h3 {
-        font-size: 18px; 
+        font-size: 14px; 
         margin: 0;
     }
 
@@ -186,18 +174,5 @@
         font-size: 13px; /* تقليل حجم العنوان الفرعي أكثر */
     }
 
-    .card-3 button {
-        width: 100%; /* جعل الأزرار تأخذ عرض الشاشة */
-        padding: 10px; /* تحسين الحشو للأزرار */
-    }
-
-    .card-3 p {
-        font-size: 12px; /* تقليل حجم النصوص بشكل أكبر */
-    }
-
-    .buttons {
-        display: block;
-        width: 100%;
-        text-align: center;
-    }
+  
 }

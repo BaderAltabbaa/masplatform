@@ -600,15 +600,15 @@ useEffect(() => {
 
 
                <Typography
-       variant="h5"
-       component="h5"
+       variant="h6"
+       component="h6"
        style={{ color: "white", fontWeight: "bold" }}
      >
        {itemData.itemName}
      </Typography>
 <Typography
-       variant="h5"
-       component="h5"
+       variant="h6"
+       component="h6"
        style={{ color: "white", fontWeight: "bold", marginTop: 5,marginBottom :'10px' }}
      >
       {"( "}
@@ -647,6 +647,12 @@ useEffect(() => {
           isBuyed && (
             <Button
               className="primary"
+              style={{
+                color: "white",
+                fontWeight: "600",
+                fontSize: "12px",
+                padding: "2px 3px",
+              }}
               disabled={isBuyed && activeBuy}
               onClick={() => (activeBuy ? {} : handleClickOpen2())}
             >
@@ -654,13 +660,25 @@ useEffect(() => {
             </Button>
           )}
         {auth?.userData?._id !== userId && !isBuyed && (
-          <Button className="primary" onClick={handleClickOpen2}>
+          <Button className="primary"
+          style={{
+            color: "white",
+            fontWeight: "600",
+            fontSize: "12px",
+            padding: "2px 3px",
+          }} onClick={handleClickOpen2}>
             Details
           </Button>
         )}
         {auth.userData && auth.userLoggedIn && auth.userData._id === userId && (
           <Button
             className="primary"
+            style={{
+              color: "white",
+              fontWeight: "600",
+              fontSize: "12px",
+              padding: "2px 3px",
+            }}
             onClick={() => navigate("/items-details?" + itemData?._id)}
           >
             View
@@ -672,10 +690,9 @@ useEffect(() => {
           onClick={() => likeDislikeNft1handler(itemData._id)}
         >
           <FavoriteIcon
-            style={isLike ? {color: ' #FD1D1D' } : { color:' #ffffff6e' }}
+             style={isLike ? {color: ' #FD1D1D' ,fontSize:"20px" } : { color:' #ffffff6e',fontSize:"20px"  }}/>
 
-          />
-          <span style={{color: 'white',marginLeft:'10px'} }>{nbLike}</span>
+      <span style={{color: 'white',marginLeft:'5px',fontSize: "12px"} }>{nbLike}</span>
         </div>
         
     
@@ -870,12 +887,12 @@ useEffect(() => {
       <Grid container spacing={2}>
         {group.map((url, idx) => (
           <Grid item xs={12} sm={4} key={idx}>
+           {url && (
             <img
               src={url}
-              alt={`Media ${index * 3 + idx + 1}`}
-              style={{ width: "100%", height: "150px" }}  // Adjust the size as needed
+              style={{ width: "100%", height: "150px" ,objectFit: "fill" }}  // Adjust the size as needed
               onClick={() => handleOpenImageDialog(url)}
-            />
+            />)}
           </Grid>
         ))}
       </Grid>

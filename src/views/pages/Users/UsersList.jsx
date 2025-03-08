@@ -200,6 +200,9 @@ export default function UsersList() {
       color: 'black', // Change placeholder color
       opacity: 0.75, // Ensure full opacity
     },
+    "& .MuiInputBase-input": {
+      textAlign: "center", // Center the text
+    },
   }}
   InputProps={{
     sx: {

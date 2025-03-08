@@ -334,6 +334,11 @@ export const routes = [
     layout: HomeLayout,
     element: lazy(() => import("src/views/pages/staticPage")),
   },
+{
+  path: "/corporate/company",
+  
+  element: lazy(() => import("src/views/pages/Landing")),
+},
 
   {
     path: "/404",

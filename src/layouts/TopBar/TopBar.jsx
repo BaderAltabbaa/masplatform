@@ -514,6 +514,7 @@ export default function Header() {
               <li><Link to="/creators">Creators</Link></li>
               <li><Link to="/user-list">Transfer</Link></li>
               <li><Link to="/corporate/metaverse">Games</Link></li>
+              <li><Link to="/corporate/metaverse">Metaverse</Link></li>
               <li className='test'><Link to="/buymas">Buy a Mas</Link></li>
               <li className='test'><Link to="/connectWallet">Connect Wallet</Link></li>
               
@@ -542,6 +543,11 @@ export default function Header() {
                       input: inputInput,
                     }}
                     inputProps={{ "aria-label": "search" }}
+                    sx={{
+                      "& .MuiInputBase-input": {
+                        textAlign: "center", // Center the text
+                      },
+                    }}
 
                   />
 
@@ -644,7 +650,7 @@ export default function Header() {
                   </Box>
                   {!isMeduimScreen &&
                     (
-                      <Box className="hidden md:flex !bg-slate-700">
+                      <Box className="hidden md:flex ">
                         <Button
                              className="primaryButton"
                              

@@ -160,7 +160,7 @@ function removeImage(index) {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ background:"#8c0087",color:'white'}}
+          style={{ background:"#8c0087",color:'white',margin:"0 5px"}}
 
         >
           Cancel
@@ -169,7 +169,7 @@ function removeImage(index) {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          style={{ background:"#8c0087",color:'white'}}
+          style={{ background:"#8c0087",color:'white',margin:"0 5px"}}
 
           className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
@@ -223,7 +223,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["itemTitle"] ? "red" : " #8c0087" }}
+            style={{ borderColor: errors["itemTitle"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>item Title</label>
             <Input
@@ -241,7 +241,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["itemName"] ? "red" : " #8c0087" }}
+            style={{ borderColor: errors["itemName"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>item Name</label>
             <Input
@@ -259,7 +259,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["donationAmount"] ? "red" : " #8c0087" }}
+            style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Amount</label>
             <Input
@@ -268,7 +268,11 @@ function removeImage(index) {
               placeholder={"Enter Donation Amount"}
               disabled={isEdit}
               type={"number"}
-              endAdornment={CoinSelector()}
+              endAdornment={
+                <Box sx={{ position: 'relative', top: '-18px' }}>
+                  <CoinSelector/>
+                </Box>
+              }
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -280,7 +284,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["duration"] ? "red" : " #8c0087" }}
+            style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Duration</label>
             <Input
@@ -303,7 +307,7 @@ function removeImage(index) {
           <Grid
             sm={12}
             className={classes.inputContainer}
-            style={{ borderColor: errors["details"] ? "red" : " #8c0087" }}
+            style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
             <label style={{color:' #2d013a'}}>Details</label>
             <Input
@@ -534,7 +538,7 @@ const useStyles = makeStyles(() => ({
   buttonContainerStyle: {
     padding: "0px 20px",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
   },
 

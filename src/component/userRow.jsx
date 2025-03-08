@@ -93,7 +93,7 @@ export default function ChildTableUser({ row, index }) {
             className={classes.createButton}
             onClick={() => setOpenDonation(true)}
 
-            style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white !important",textAlign:"center" }}
+            style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
           >
                  Transfer Funds
           </Button>
