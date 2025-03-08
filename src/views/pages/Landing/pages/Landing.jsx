@@ -4,7 +4,7 @@ import img1 from "../assets/Image_1.png"
 import img2 from "../assets/Image_2.png"
 import { slideIn, fadeIn, textVariant } from "../utils/Motion.js"
 import { motion } from "framer-motion";
-import CountdownTimer  from '../components/ui/countdownTime.jsx'
+import CountdownTimer  from '../components/ui/CountdownTime.jsx'
 import Button from "../components/ui/button.jsx";
 
 
