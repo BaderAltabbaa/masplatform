@@ -21,6 +21,8 @@ import Apiconfigs from "../Apiconfig/Apiconfigs";
 import { tokensDetails } from "../constants/index";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"
+import LinearProgress from "@mui/material/LinearProgress";
+
 import { toast } from "react-toastify";
 
 const AdditemDialog = ({ show, handleClose, itemData }) => {
@@ -129,12 +131,22 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
             ))}
             {uploadCounter > 0 && (
           <div className={classes.uploadCounter}>
-            <CloudUploadIcon
-              fontSize={"large"}
-              style={{ color: "rgb(192, 72, 72)" }}
-              className={classes.uploadCounterIcon}
-            />
-            <p>Uploading {uploadCounter}%</p>
+              <p>Uploading {uploadCounter}%</p>
+           <LinearProgress
+                       variant="determinate"
+                       value={uploadCounter}  
+                       sx={{
+                        marginTop:"10px",
+                         width: "100%", // Take full width of the parent container
+                         height: 10, // Set a visible height
+                         borderRadius: 5, // Optional: Add rounded corners
+                         backgroundColor: " #e0e0e0", // Background color
+                         "& .MuiLinearProgress-bar": {
+                           backgroundColor: "rgb(67, 0, 90)", // Progress bar color
+                         },
+                       }}
+                      />
+          
           </div>
         )}
         </div>
@@ -265,6 +277,9 @@ function removeImage(index) {
             <Input
               {...register("donationAmount")}
               className={classes.input}
+              inputProps={{
+                min: 0,
+              }}
               placeholder={"Enter Donation Amount"}
               disabled={isEdit}
               type={"number"}
@@ -290,6 +305,9 @@ function removeImage(index) {
             <Input
               {...register("duration")}
               className={classes.input}
+              inputProps={{
+                min: 0,
+              }}
               placeholder={"Enter Duration"}
               disabled={isEdit}
               type={"number"}

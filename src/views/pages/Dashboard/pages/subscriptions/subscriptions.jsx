@@ -108,7 +108,7 @@ export default function Subscriptions() {
           <Grid container>
             {subscriptions.map((data, i) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3.5} key={i}>
+                <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
                   <Cardbundle data={data.nftId}  />
                 </Grid>
               );
@@ -138,7 +138,7 @@ export default function Subscriptions() {
           <Grid container>
             {userList.map((data, i) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3.5} key={i}>
+                <Grid  key={i} lg={3} md={4} sm={6} xm={12}>
                   <CardCreators data={data}  />
                 </Grid>
               );

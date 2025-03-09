@@ -85,7 +85,7 @@ export default function Subscribers({ type }) {
           <Grid container>
             {userList.map((data, i) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3.5} key={i}>
+                <Grid item xs={12} sm={6} md={5} lg={3} key={i}>
                     <CardCreators 
                     chat
                     Subscribe

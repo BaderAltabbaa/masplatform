@@ -19,6 +19,8 @@ import axios from "axios";
 import Apiconfigs from "../Apiconfig/Apiconfigs";
 import { tokensDetails } from "../constants/index";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReactPlayer from "react-player";
 import { toast } from "react-toastify";
@@ -165,12 +167,22 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         </div>
         {uploadCounter > 0 && (
           <div className={classes.uploadCounter}>
-            <CloudUploadIcon
-              fontSize={"large"}
-              style={{ color: "rgb(192, 72, 72)" }}
-              className={classes.uploadCounterIcon}
-            />
             <p>Uploading {uploadCounter}%</p>
+            <LinearProgress
+               variant="determinate"
+               value={uploadCounter}  
+               sx={{
+                marginTop:"10px",
+                 width: "100%", // Take full width of the parent container
+                 height: 10, // Set a visible height
+                 borderRadius: 5, // Optional: Add rounded corners
+                 backgroundColor: " #e0e0e0", // Background color
+                 "& .MuiLinearProgress-bar": {
+                   backgroundColor: "rgb(67, 0, 90)", // Progress bar color
+                 },
+               }}
+            />
+            
           </div>
         )}
       </Box>
@@ -329,7 +341,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             <Input
               {...register("donationAmount")}
               className={classes.input}
-
+              inputProps={{
+                min: 0,
+              }}
               placeholder={"Enter Donation Amount"}
               disabled={isEdit}
               type={"number"}
@@ -353,6 +367,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             <label style={{color:' #2d013a'}}>Duration</label>
             <Input
               {...register("duration")}
+              inputProps={{
+                min: 0,
+              }}
               className={classes.input}
               placeholder={"Enter Duration"}
               disabled={isEdit}

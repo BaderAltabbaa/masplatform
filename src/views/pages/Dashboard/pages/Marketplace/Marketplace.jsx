@@ -70,10 +70,7 @@ const useStyles = makeStyles((theme) => ({
   LoginBox: {
     paddingTop: "20px",
     "& h6": {
-      fontWeight: "bold",
-      marginBottom: "10px",
-      fontSize: "20px",
-      color: "#000",
+    
       "& span": {
         fontWeight: "300",
       },
@@ -242,7 +239,7 @@ export default function Marketplace() {
         <Grid container spacing={2} className={classes.bunbox}>
           {itemList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3.5} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
                 <CardMarketplace data={data} />
                 {/* <ItemCard data={data} index={i} isDays={true} /> */}
               </Grid>

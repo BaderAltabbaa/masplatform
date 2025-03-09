@@ -97,7 +97,7 @@ export default function sales() {
                         <Grid container spacing={2}>
                             {sales.map((data, i) => {
                                 return (
-                                    <Grid item xs={12} sm={6} md={4} lg={3.5} key={i}  mr={2}>
+                                    <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
                                         <CardCreators
                                             data={data}
                                             chat
@@ -134,7 +134,7 @@ export default function sales() {
                         <Grid container spacing={2}>
                             {userList.map((data, i) => {
                                 return (
-                                    <Grid item xs={12} sm={6} md={4} lg={3.5} key={i} mr={2}>
+                                    <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
                                         <CardCreators
                                             data={data}
                                             chat

@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 
 const useStyles = makeStyles((theme) => ({
-  root: { padding: "70px 0px",background:"linear-gradient(to right,#280026,rgb(142, 82, 146))"
+  root: { padding: "70px 0px",background:"linear-gradient(to right, #280026,rgb(142, 82, 146))"
    },
   bannerimg: {
     overflow: "hidden",
@@ -562,6 +562,7 @@ export default function BundleDetails() {
                     <ReactPlayer
                       url={bundleDetails?.mediaUrl}
                       playing
+                      muted
                       controls
                       width={"100%"}
                       height={"100%"}

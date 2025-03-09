@@ -62,10 +62,7 @@ const useStyles = makeStyles((theme) => ({
   LoginBox: {
     paddingTop: "20px",
     "& h6": {
-      fontWeight: "bold",
-      marginBottom: "10px",
-      fontSize: "20px",
-      color: "#000",
+      
       "& span": {
         fontWeight: "300",
       },
@@ -235,7 +232,7 @@ export default function Bundles() {
         <Grid container spacing={2}  >
           {bundleList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3.5} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
                 <Cardbundle data={data}/>
                 {/* <BundleCard data={data} index={i} isDays={true} /> */}
               </Grid>

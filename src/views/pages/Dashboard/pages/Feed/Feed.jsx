@@ -76,7 +76,7 @@ export default function Login() {
         <Grid container spacing={3} className={classes.bunbox}>
           {allFeed?.map((data, i) => {
             return (
-              <Grid item lg={3} md={4} sm={6} xm={12} key={i}>
+              <Grid item lg={4} md={6} sm={7} xm={12} key={i}>
                 <FeedCard
                   updateList={getFeedListHandler}
                   data={data}

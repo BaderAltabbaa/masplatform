@@ -1,30 +1,30 @@
 import React ,{Suspense,useState} from "react";
 import useSWR from 'swr';
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import { Dialog, DialogTitle, DialogContent, DialogContentText } from "@mui/material";
-
+import { Dialog, DialogTitle, DialogContent, DialogContentText ,TextField,Button,Container,Typography,Snackbar } from "@mui/material";
+import MuiAlert from '@mui/material/Alert';
 import { CgFacebook } from "react-icons/cg";
 import { FaTelegram, FaTwitterSquare, FaDiscord, FaFacebook } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
-
 import { SiAppstore, SiGoogleplay } from "react-icons/si";
 import './footer.css';
-import Container from '@mui/material/Container'
 import { Link } from "react-router-dom";
 import axios from "axios";
 import NoDataFound from "src/component/NoDataFound";
-
 
 const Footer = () => {
 const fetcher = url => axios.get(url).then(res => res.data.result);
 const { data: staticContent } = useSWR(Apiconfigs.staticContentList, fetcher, { suspense: true })
 const { data: socialLinks } = useSWR(Apiconfigs.listSocial, fetcher, { suspense: true })
 const [open, setOpen] = useState(false);
+const [openForm, setOpenForm] = useState(false);
+
 const [selectedItem, setSelectedItem] = useState(null);
 
 const handleClickOpen = (item) => {
   setSelectedItem(item);
   setOpen(true);
+
 };
 
 const handleClose = () => {
@@ -32,7 +32,134 @@ const handleClose = () => {
   setSelectedItem(null);
 };
 
-console.log("heeeee",staticContent[3])
+const handleFormOpen = (item) => {
+  setSelectedItem(item);
+  setOpenForm(true);
+}
+
+const handleCloseForm = () => {
+  setOpenForm(false);
+  setSelectedItem(null);
+};
+
+
+const ContactForm = () => {
+  const [email , setEmail] = useState('');
+  const [subject , setSubject ] = useState('');
+  const [message , setMessage ] = useState('');
+  const [openSnackBar ,setOpenSnackBar ] = useState(false);
+  const [snackbarMessage, setSnackbarMessage ] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+ 
+
+  const formspreeEndpoint = 'https://formspree.io/f/xeoajvaq';
+
+  const formData = new URLSearchParams();
+  formData.append('email', email);
+  formData.append('subject', subject);
+  formData.append('message', message);
+
+try {
+  const response = await axios.post(formspreeEndpoint, formData ,{
+    headers: {
+      'Content-Type' : 'application/x-www-form-urlencoded',
+    },
+  });
+  
+  if(response.status === 200){
+    setSnackbarMessage('Message sent successfully!');
+    setSnackbarSeverity('success');
+    setEmail('');
+    setSubject('');
+    setMessage('');
+    console.log(response.data,"heeeeey");
+  }
+  else {
+    setSnackbarMessage('Failed to send message. Please try again.');
+    setSnackbarSeverity('error');
+  }
+}
+
+catch(error){
+  setSnackbarMessage('An error occurred. Please try again.');
+  setSnackbarSeverity('error');
+} 
+
+finally {
+  setOpenSnackBar(true);
+}
+
+  };
+
+
+const handleCloseSnackbar = () => {
+  setOpenSnackBar(false);
+};
+
+
+return (
+  <Container maxWidth="sm">
+    
+    <form onSubmit={handleSubmit}>
+      <TextField
+        label="Email"
+        type="email"
+        fullWidth
+        margin="normal"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <TextField
+        label="Subject"
+        fullWidth
+        margin="normal"
+        value={subject}
+        onChange={(e) => setSubject(e.target.value)}
+        required
+      />
+      <TextField
+        label="Message"
+        fullWidth
+        margin="normal"
+        multiline
+        rows={4}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        required
+      />
+      <Button type="submit" variant="contained"  fullWidth sx={{backgroundColor:"#43005e",marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(99, 0, 139)"}}}>
+        Submit
+      </Button>
+    </form>
+
+    <Snackbar
+        open={openSnackBar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+       
+      
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+        >
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
+
+    
+  </Container>)
+
+ }
+
+
   return (
     <footer
       style={{
@@ -76,8 +203,9 @@ console.log("heeeee",staticContent[3])
 
         {/* Marketplace Section */}
         <div>
+        <ul style={styles.list}>
           <h3 style={styles.sectionHeader}></h3>
-          {staticContent.slice(0, 4).map((row) => (
+          {staticContent.slice(0, 3).map((row) => (
             <>     
             <li key={row.title} style={styles.listItem}  onClick={() => handleClickOpen(row)}>
                 <span style={{cursor:"pointer"}}>{row.title}</span>
@@ -86,10 +214,19 @@ console.log("heeeee",staticContent[3])
               </li>
              
             
-            </>
-            
-              
+            </> 
             ))}
+
+{staticContent.slice(3, 4).map((row) => (
+  <>  
+            <li style={styles.listItem} onClick={() => handleFormOpen(row)}>
+            <span style={{cursor:"pointer"}}>{row.title}</span>
+                <div style={styles.divider} />
+                <div style={styles.dot} />
+            </li>
+            </> 
+            ))}
+            </ul>
       
 
       <Dialog open={open} onClose={handleClose}  maxWidth="lg" fullWidth>
@@ -113,7 +250,7 @@ console.log("heeeee",staticContent[3])
         <div>
           <h3 style={styles.sectionHeader}></h3>
           <ul style={styles.list}>
-          {staticContent.slice(4,8).map((row) => (
+          {staticContent.slice(4,6).map((row) => (
             <>
             <Link
                         style={{ color: 'white', textDecoration: 'none', }}
@@ -137,8 +274,26 @@ console.log("heeeee",staticContent[3])
             </>
               
             ))}
+
+            
+{staticContent.slice(6, 8).map((row) => (
+            <>     
+            <li key={row.title} style={styles.listItem}  onClick={() => handleClickOpen(row)}>
+                <span style={{cursor:"pointer"}}>{row.title}</span>
+                <div style={styles.divider} />
+                <div style={styles.dot} />
+              </li>
+             
+            
+            </>
+            
+              
+            ))}
+
           </ul>
+          
         </div>
+        
 
         {/* Community Section */}
         <div >
@@ -184,6 +339,17 @@ console.log("heeeee",staticContent[3])
         </div>
       </div>
       </Container>
+
+
+      <Dialog open={openForm} onClose={handleCloseForm}  maxWidth="sm" fullWidth>
+        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e">
+          <h1>{selectedItem?.title}</h1>
+          <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleCloseForm}><AiOutlineClose/></div>
+          </DialogTitle>
+         <DialogContent>
+          <ContactForm/>
+  </DialogContent>
+      </Dialog>
 
     </footer>
   );

@@ -121,18 +121,20 @@ function Cardbundle({
       BundleData?.userId?.profilePic ||
       BundleData?.userDetail?.profilePic ||
       `https://avatars.dicebear.com/api/miniavs/${userName}.svg`;
-    const videoFormats = [
-      "mp4",
-      "avi",
-      "wmv",
-      "mov",
-      "mkv",
-      "flv",
-      "webm",
-      "mpeg",
-      "3gp",
-      "ogv",
-    ];
+    
+      useEffect(() => {
+        const videoExtensions = ["mp4", "avi", "wmv", "mov", "mkv", "flv", "webm", "mpeg", "3gp", "ogv"];
+      
+        const mediaUrl = BundleData?.mediaUrl;
+        if (mediaUrl) {
+          const extension = mediaUrl.split('.').pop().toLowerCase();
+          if (videoExtensions.includes(extension)) {
+            setisVideo(true); // It's a video
+          } 
+        }
+      }, [BundleData]);
+
+      
 
   
     const subscribeToBundleHandler = async () => {
@@ -238,7 +240,7 @@ function Cardbundle({
 <div className="media-cont">
 {isVideo ? (
         <div
-          style={{ cursor: "pointer", background: '#000'}}
+          style={{ cursor: "pointer", background: '#000' ,borderRadius:"30px"}}
           onClick={() =>
             isSubscribed || isUserBundle
               ? navigate("/bundles-details?" + BundleData?._id)
@@ -249,12 +251,12 @@ function Cardbundle({
             url={BundleData.mediaUrl}
             muted
             playing
-            width="10%"
-            height={"166px"}
+            width="100%"
+            height="150px"
           />
         </div>
       ) : (
-         <img src={BundleData.mediaUrl}  onClick={() =>
+         <img src={BundleData?.mediaUrl}  onClick={() =>
             (isSubscribed && activeSubscribe) || isUserBundle
               ? navigate("/bundles-details?" + BundleData?._id)
               : handleClickOpen2()
@@ -613,12 +615,11 @@ function Cardbundle({
               <div>
                 <ReactPlayer
                   url={BundleData.mediaUrl}
+                  muted
                   controls
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "300px",
-                    height: "50%",
-                  }}
+                  playing
+                  width="100%"
+                  height="auto"
                 />
                 {auth.userData &&
                   auth.userLoggedIn &&
@@ -645,11 +646,12 @@ function Cardbundle({
                   )}
               </div>
             ) : (
+              <div style={{width:"100%" ,height:"300px"}}>
               <img
                 src={BundleData.mediaUrl}
                 alt=""
-                style={{ width: "100%", height: "50%" }}
-              />
+                style={{ width: "100%", height: "300px", objectFit:"fill" }}
+              /></div>
             )}
           </Box>
           <Box mt={3} className={classes.bundleText} textAlign="center">
