@@ -13,17 +13,8 @@ import { color } from 'framer-motion';
 
 const useStyles = makeStyles(() => ({
   tbody: {
-    minWidth: 320,
-    border: '1px solid #e5e3dd',
     backgroundColor:"#cdc8c8",
-    '& th': {
-      border: '1px solid #e5e3dd',
-      width: "50px!important"
-    },
-    '& td': {
-      border: '1px solid #e5e3dd',
-      // width: "10px!important",
-    },
+    
   },
   createButton: {
     color: '#fff',
@@ -42,15 +33,10 @@ export default function ChildTableUser({ row, index }) {
       <TableRow className={classes.tbody} key={row.coinName}>
 
         <TableCell
-          classsName={classes.img}
-          style={{ color: 'black', width: "60px !important", padding: "5px!important" }}
-          align="Center"
-          component="th"
-          scope="row"
         >
           {/* {index + 1} */}
           <Avatar
-            style={{ width: "70px", height: "70px", backgroundColor: "#999" ,borderRadius:"20px" }}
+            style={{ width: "40px", height: "40px", backgroundColor: "#999" ,borderRadius:"20px" }}
             src={row.profilePic ? row.profilePic :
               `https://avatars.dicebear.com/api/miniavs/${row._id}.svg`}
             alt=""

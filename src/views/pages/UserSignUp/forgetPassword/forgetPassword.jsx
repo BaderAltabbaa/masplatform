@@ -157,7 +157,10 @@ function ForgetPassword() {
                       variant="standard"
                         label="Your Email Account"
                             placeholder={email}
-                            // className={classes.inputText}
+                            autoComplete="off"
+              sx={{ '& .MuiFormHelperText-root':{
+                color:"red"
+              }}}
                             type="email"
                             error={!emailvalid}
                             helperText={

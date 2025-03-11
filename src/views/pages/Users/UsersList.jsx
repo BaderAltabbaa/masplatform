@@ -34,7 +34,7 @@ import './UsersList.css';
 
 const useStyles = makeStyles(() => ({
   LoginBox: {
-    paddingBottom: "50px",
+    paddingBottom: "0px",
   },
   websiteButton: {
     border: "solid 0.5px #707070",
@@ -50,14 +50,13 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "8px",
-    marginTop: "30px",
     "& h6": {
       fontSize: "28px",
       color: "#000",
     },
   },
   paddingContainer: {
-    padding: "30px 30px",
+    padding: "30px 30px  10px 30px",
     // marginTop: "-30px",
     
   },
@@ -144,7 +143,7 @@ export default function UsersList() {
         params: {
           search: filterData.searchKey != "" ? filterData.searchKey : null,
           type: filterData.userType != "" ? filterData.userType : null,
-          limit: 100,
+          limit: 6,
           page: page,
 
         },
@@ -180,7 +179,11 @@ export default function UsersList() {
         >
           <ButtonwithAnimation  >Users</ButtonwithAnimation>
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}
-          <Box variant="h6" style={{ display: "flex", justifyContent: "end", width: "100%" }}>
+          <Box variant="h6" sx={{ display: "flex", justifyContent: "end", width: "100%" ,
+            "@media(max-width:850px)":{
+              marginTop:"30px"
+            }
+          }}>
                                    
             
             
@@ -191,7 +194,7 @@ export default function UsersList() {
   value={filterData.searchKey}
   sx={{
     width: "180px",
-    margin: "20px 0",
+    margin: "5px 0",
     border: "3px solid #581454",
     borderRadius: "10px",
     padding: "2px 5px",

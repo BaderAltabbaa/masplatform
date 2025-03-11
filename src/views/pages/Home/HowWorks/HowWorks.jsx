@@ -10,7 +10,7 @@ const HowWorks = ({title,description,contents,img}) => {
 
      
       <div className="HowWorks-content ">
-        <Typography component="headTitle"  >{title} </Typography>
+        <Typography className='headTitle' >{title} </Typography>
         <h2 className="HowWorks-subtitle">{description}</h2>
         {contents.map((content) => {
           return (
@@ -31,7 +31,7 @@ const HowWorks = ({title,description,contents,img}) => {
 
 
       <div className="HowWorks-image-container">
-        <img src={'assets/Images/10.jpg'} alt="How Works" className="HowWorks-image" />
+        <img src={'assets/Images/22.jpg'} alt="How Works" className="HowWorks-image" />
       </div>
  </div>
   )

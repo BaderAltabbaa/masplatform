@@ -61,6 +61,10 @@
     display: inline-block;
     color: #fff;
   }
+
+  .buttonFree:hover{
+    background: transparent;
+  }
  
   .animatedBackground {
     content: '';

@@ -32,13 +32,13 @@ export default function componentStyleOverrides(theme) {
       styleOverrides: {
         root: (props) => ({
           "&.primaryButton": {
-            padding: "10px 15px",
+            padding: "10px",
             borderRadius: "15px",
             cursor: "pointer",
             transition: "all 0.3s",
             color: "white",
-            minWidth : "100px",
-            minHeight: "50px",
+            minWidth : "110px",
+            
             background: props.theme.custom.gradientButton,
             "&:hover": {
               background: props.theme.custom.hoverGradientButton,

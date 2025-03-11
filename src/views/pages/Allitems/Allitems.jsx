@@ -41,12 +41,10 @@ const useStyles = makeStyles(() => ({
   gridbox: {
     marginBottom : '50px',
 
-    justifyContent: 'center',
-    // "@media(max-width:1280px)": {
-    //   display: "flex",
-    //   justifyContent: "center",
-    //   transition: 'border 0.3s ease',
-    // },
+
+      justifyContent: "center",
+   
+  
   },
   gridboxHover: {
     border: '10px solid red', // Red border on hover
@@ -106,7 +104,7 @@ const AllItemsPage = () => {
           {auth.userLoggedIn && auth.userData?._id && (
             <>
               <div style={{ display: "flex", justifyContent: "center",marginBottom  : "50px"}}>
-                               <ButtonwithAnimation  > ALL ITEMS</ButtonwithAnimation>
+                               <ButtonwithAnimation>ALL ITEMS</ButtonwithAnimation>
                              
                              </div>
                           
@@ -120,6 +118,7 @@ const AllItemsPage = () => {
                 )}
                 <Grid 
                 container
+                
                 className={classes.gridbox}
                  >
                   {allNFTList1.map((data, i) => (
@@ -128,10 +127,11 @@ const AllItemsPage = () => {
                     item
                     key={i}
                     xs={12}
-                    sm={6}
-                    md={4}
-                    lg={3}
+                      sm={4}
+                      md={3}
+                    lg={2.2}
                     mb={{xs: 0,lg:1}}
+                    className={classes.gridbox}
                       
                       //onMouseEnter={() => setHoveredIndex(i)}
                       //onMouseLeave={() => setHoveredIndex(null)}

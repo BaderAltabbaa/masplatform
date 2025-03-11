@@ -202,6 +202,10 @@ export default function SignUp() {
               fullWidth
               label="User Name"
               required
+              autoComplete="off"
+              sx={{ '& .MuiFormHelperText-root':{
+                color:"red"
+              }}}
               value={username}
               error={!uservalid}
               helperText={!uservalid && "Please enter username"}
@@ -224,7 +228,10 @@ export default function SignUp() {
               error={!emailvalid}
               helperText={!emailvalid && "Please enter valid email address"}
               value={email}
-
+              autoComplete="off"
+              sx={{ '& .MuiFormHelperText-root':{
+                color:"red"
+              }}}
               type="email"
               onChange={(e) => {
                 setemail(e.target.value);
@@ -246,6 +253,10 @@ export default function SignUp() {
                 defaultCountry="US"
                 disableFormatting
                 required
+                autoComplete="off"
+              sx={{ '& .MuiFormHelperText-root':{
+                color:"red"
+              }}}
                 error={!phonevalid}
                 helperText={!phonevalid && "Please enter valid phone number"}
                 value={phone}
@@ -267,6 +278,10 @@ export default function SignUp() {
               variant="standard"
               className="auth-input"
               fullWidth
+              autoComplete="off"
+              sx={{ '& .MuiFormHelperText-root':{
+                color:"red"
+              }}}
               label="password"
               type={show ? "text" : "password"}
               error={!passvalid}
@@ -302,6 +317,10 @@ export default function SignUp() {
               variant="standard"
               className="auth-input"
               fullWidth
+              autoComplete="off"
+              sx={{ '& .MuiFormHelperText-root':{
+                color:"red"
+              }}}
               label="Referral Code"
               name="Referral"
               onChange={(e) => setReferralCode(e.target.value)}

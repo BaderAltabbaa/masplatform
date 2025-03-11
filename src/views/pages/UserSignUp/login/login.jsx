@@ -280,6 +280,9 @@ export default function Login() {
               '-webkit-box-shadow': '0 0 0 30px white inset !important', // Change 'white' to your desired background color
               backgroundColor: 'transparent !important',
             },
+            '& .MuiFormHelperText-root':{
+              color:"red"
+            }
             }}
            label="Email"
                 error={!emailvalid}
@@ -303,7 +306,11 @@ export default function Login() {
            
            <TextField
            className="auth-input"
-           sx={{width:"300px" }}
+           sx={{width:"300px",
+            '& .MuiFormHelperText-root':{
+              color:"red"
+            }
+            }}
              fullWidth
              label="Password"
              variant="standard"

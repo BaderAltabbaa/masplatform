@@ -62,136 +62,27 @@ const menuLinks = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  menuButton: {
-    fontSize: "14px",
-    lineHeight: "20px",
-    fontWeight: "600",
-    borderRadius: 0,
-    minWidth: "auto",
-    color: theme.palette.secondary.main,
-    height: "30px",
-    padding: "0px 0px",
-    letterSpacing: "1px",
-    marginLeft: "15px",
-    color: "black",
-    "@media (max-width: 900px)": {
-      color: "#FFF",
-      padding: "15px !important",
-      height: "51px",
-      width: "100%",
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
-    },
-    "&:active": {
-      color: theme.palette.secondary.dark,
-    },
-    "&:hover": {
-      color: '#222',
-    },
-  },
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    height: "100%",
-    "@media (max-width: 900px)": {
-      paddingLeft: "75px",
-      paddingRight: "20px",
-      height: "100%",
-    },
-  },
-  liLink: {
-    "& span li": {
-      width: "fit-content",
-      textAlign: "center",
-    }
-  },
-  logoDrawer: {
-    paddingLeft: "10px",
-    width: "140px",
-    marginBottom: "30px",
-  },
-  drawerContainer: {
-    padding: "20px 0px ",
-    background: "#fff",
-    width: "240px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    "@media(max-width:500px)": {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "start",
-      alignItems: "start",
-    },
-  },
+  
+    
+  
+ 
+  
+ 
 
-  logoImg: {
-    width: "75px",
-    margin: " 14px 15px 11px 0px",
-    objectFit: "contain",
-    "@media (max-width: 500px)": {
-      margin: " 11px 1px 3px 0px",
-      width: "52px",
-    },
-  },
+  
   flexButton: {
     display: "flex",
     justifyContent: "flex-between",
     alignItems: "center",
   },
-  menuMobile: {
-    fontSize: "16px",
-    fontWeight: "800",
-    fontStyle: "normal",
-    lineHeight: "1.75",
-    padding: "16px",
-    textAlign: 'center',
-    "@media (max-width: 500px)": {
-      padding: "7px 0",
-      width: "100%",
-      textAlign: 'center',
-    },
-  },
 
-  containerHeight: {
-    height: "100%",
-    background: "white",
-    height: "54px",
-  },
-
-  createButton: {
-    color: "#fff",
-    backgroundImage: "linear-gradient(45deg, #240b36 30%, #c31432 90%)",
-    margin: "0px 10px",
-  },
 
   inputRoot: {
     color: "black",
     fontSize: "12px",
     width: "100%",
   },
-  wallet: {
-    fontSize: "14px",
-    fontWeight: "400",
-    fontStyle: "normal",
-    lineHeight: "21px",
-    color: "#fff",
-    border: "1px solid #ec0066",
-    padding: "0 15px",
-    background: "#ec0066",
-    borderRadius: "50px",
-    height: "30px",
-    "&:hover": {
-      background: "#fff",
-      color: "#ec0066",
-    },
-    "@media (max-width: 900px)": {
-      marginLeft: "12px",
-      marginTop: "12px",
-    },
-  },
+
   inputInput: {
     fontSize: "13px",
     color: "black",
@@ -201,30 +92,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-  submenu: {
-    top: "25px !important",
-  },
-  menuMobile1: {
-    marginLeft: "10px",
-    backgroundColor: " #FCF2FA",
-    borderRadius: "40px",
-    textAlign: "center!important",
-    "& h4": {
-      fontSize: "14px",
-      lineHeight: " 17px",
-      color: "#D200A5",
-      margin: "0 5px",
-    },
-    "&:hover": {
-      backgroundColor: " #FCF2FA",
-      borderRadius: "40px",
-    },
 
-  },
-  imgbox: {
-    display: "flex",
-    justifyContent: "center",
-  },
 
   searchResults: {
     position: 'fixed',
@@ -780,7 +648,7 @@ export default function Header() {
                 fullWidth
                 onClick={() => {
                   auth.logOut();
-                  navigate('/login');
+                  navigate('/');
                 }}
               >
                 Yes

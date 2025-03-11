@@ -100,9 +100,12 @@ console.log(landingSections)
           bannerDuration={bannerDuration}
         />
       )}
+      
+      <Box className='landingBox'>
       {landingSections.map((item, index) => (
         <LandingSection key={item._id} item={item} index={index} />
-      ))}
+      ))}</Box>
+
       <AuctionPage staticSections={staticSections}/>
     </Box>
   );

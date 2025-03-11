@@ -3,7 +3,7 @@ import { Container, Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import { useNavigate } from "react-router";
+import { useNavigate ,Link } from "react-router";
 import "./style.css";
 import SectionCard from "../../../component/ui/sectionCard/SectionCard";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
@@ -68,9 +68,20 @@ const AuctionPage = ({ staticSections }) => {
     const item = staticSections.find((i) => i?.title === "NFT");
 
     return (
+      <Box sx={{
+        padding:"0 150px",
+        "@media(max-width:900px)": {
+          padding:"0 50px",
+
+        },
+        "@media(max-width:768px)": {
+          padding:"0"
+        }
+
+      }}>
      <NFTSection /> 
       
-
+     </Box>
 
       // <Container
       //   maxWidth="100%"
@@ -143,7 +154,7 @@ const AuctionPage = ({ staticSections }) => {
     return (
     <>
       <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-      <ButtonwithAnimation  > Bundles</ButtonwithAnimation>
+      <Link to={"/bundles"}  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  > Bundles</ButtonwithAnimation></Link>
     
     </div>
 
@@ -169,7 +180,7 @@ const AuctionPage = ({ staticSections }) => {
   <>
   
   <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-      <ButtonwithAnimation> Marketplace</ButtonwithAnimation>
+    <Link to={"/items"}  style={{ textDecoration: "none", outline: "none" }}>  <ButtonwithAnimation> Marketplace</ButtonwithAnimation></Link>
     
      </div>
       {allNFT1List.length !=0 && 
@@ -195,7 +206,7 @@ const AuctionPage = ({ staticSections }) => {
     return (
       <>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-            <ButtonwithAnimation> Creator</ButtonwithAnimation>
+        <Link to={"/creators"}  style={{ textDecoration: "none", outline: "none" }}>   <ButtonwithAnimation> Creator</ButtonwithAnimation></Link>
           
           </div>
 

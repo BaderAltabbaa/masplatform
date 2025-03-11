@@ -116,7 +116,6 @@
   }
   
   .card-3 button:hover {
-    transform: scale(1.1); 
     background: linear-gradient(to top right,#2f003c, #67107f);
   }
   

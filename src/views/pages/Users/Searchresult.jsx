@@ -145,9 +145,9 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
                 item
                 key={i}
                 xs={12}
-                sm={6}
-                md={4}
-                lg={3}
+                sm={4}
+                md={3}
+              lg={2.2}
                 className={classes.gridbox}
                 mb={2}
                 

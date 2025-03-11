@@ -53,6 +53,15 @@
       padding: 50px 0;
     }
     
+ .landingBox{
+  padding: 0 150px;
+ }
+
+
+ @media (max-width: 900px) {
+  .landingBox{padding: 0 50px;}
+ }
+
     @media (max-width: 768px) {
      
       .section {
@@ -61,6 +70,10 @@
     
       .section-title {
         font-size: 40px;
+      }
+
+      .landingBox{
+        padding: 0;
       }
     }
     

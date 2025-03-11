@@ -42,6 +42,10 @@ const handleCloseForm = () => {
   setSelectedItem(null);
 };
 
+const scrollToTop = () => {
+  window.scrollTo({top: 0 , behavior: "smooth"})
+}
+
 
 const ContactForm = () => {
   const [email , setEmail] = useState('');
@@ -185,7 +189,7 @@ return (
       >
         {/* Logo Section */}
         <div style={{ textAlign: "center", marginBottom: "20px" ,display:"flex" ,flexDirection:"column",alignItems:"center"}}>
-        <Link to="/">
+        <Link to="/" onClick={scrollToTop}>
           <img
             src="\assets\Images\masfooter-logo.svg"
             alt="Logo"
