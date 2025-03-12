@@ -523,16 +523,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "7px",
-    border: "solid 0.5px #e5e3dd;",
+    borderBottom:"2px solid rgb(171, 171, 171)",
     "&:hover": {
-      backgroundColor: "rgba(209, 91, 91, 0.39)",
+      backgroundColor: "rgba(182, 91, 209, 0.39)",
+      borderRadius:"20px 20px 0px 0px"
     },
     "&.active": {
       backgroundColor: "rgba(209, 91, 91, 0.39)",
     },
     "& h3": {
       color: "#141518",
-      fontSize: "14px",
+      fontSize: "18px",
     },
   },
   PhotoBox: {
@@ -599,12 +600,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   heading: {
-    backgroundImage: "linear-gradient(to bottom, #792034, #3d101a)",
+    background:"linear-gradient(to right, #280026, #4a004f)",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     padding: "20px",
     alignItems: "center",
     color: "#fff",
+    borderRadius:"10px",
     [theme.breakpoints.down("xs")]: {
       padding: "10px",
     },
@@ -627,7 +629,12 @@ const useStyles = makeStyles((theme) => ({
   body: {
     position: "relative",
     zIndex: 2,
-    padding: "50px 20px 150px 20px",
+    padding: "20px",
+    backgroundColor:"rgb(223, 223, 223)",
+    marginBottom:"20px",
+    borderRadius:"20px",
+    boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
+
     [theme.breakpoints.down("xs")]: {
       padding: "50px 20px 60px 20px",
     },
@@ -721,6 +728,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     border: " solid 0.5px #e5e3dd",
   },
+
+  
+  
 }));
 export const DonationPopUp = ({ open, handleClose, userData }) => {
   const classes = useStyles();
@@ -827,6 +837,19 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
       console.log("Error", error);
     }
   };
+
+  const currentDate = new Date();
+  let cHour = currentDate.getHours().toString().padStart(1,0);
+  cHour =  cHour % 12 || 12 ;
+  const ampm = cHour >= 12 ? "PM" : "AM";
+  const cMin = currentDate.getMinutes().toString().padStart(2,0);
+  const cSec = currentDate.getSeconds().toString().padStart(2,0);
+  const cDay = currentDate.getDate();
+  const cMonth = currentDate.getMonth() + 1;
+  const cYear = currentDate.getFullYear();
+
+  const cDate = `${ampm} ${cHour}:${cMin}:${cSec}  ${cDay}/${cMonth}/${cYear} `
+  
   return (
     <Box>
       <Dialog
@@ -858,13 +881,16 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
             <Box>
               <Grid container spacing={2}>
                 
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{marginBottom:"20px"}}>
                 <Box mt={4}>
                 <Input
                   value={donationAmount}
                   placeholder={"Minimum amount 1 "+selectedToken?.name?.toString()}
                   className={classes.input_fild2}
                   type="number"
+                  inputProps={{
+                    min:0
+                  }}
                   onChange={(e) => setDonationAmount(e.target.value)}
                   endAdornment={
                     <InputAdornment
@@ -896,13 +922,11 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
             
             <Box>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  Donation Message
-                </Grid>
+                
                 <Grid item xs={12}>
                   <TextField
 variant="standard"
-                  
+                  placeholder="Donation Note"
                     multiline
                     maxRows={3}
                     className={classes.input_fild2}
@@ -928,7 +952,7 @@ variant="standard"
               }
             </Typography>
             </Grid>
-                <Grid item md={6}>
+            <Box display="flex" justifyContent="center" marginTop="20px">
                   <Button
                     variant="contained"
                     size="large"
@@ -940,21 +964,19 @@ variant="standard"
                   >
                     Cancel
                   </Button>
-                </Grid>
-                <Grid item md={6}>
                   <Button
                   className={classes.btnTransfer}
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{backgroundColor:" #2d013a"}}
+                    sx={{backgroundColor:" #2d013a", marginLeft:"20px"}}
                     disabled={ isLoading  || donationAmount < 1 || selectedToken == "select"}
                     onClick={donationWithoutBlockchainHandler}
                   >
                     Transfer Funds {isLoading && <ButtonCircularProgress />}
                   </Button>
+                  </Box>
                 </Grid>
-              </Grid>
             </Box>
           </DialogContentText>
         </DialogContent>
@@ -974,18 +996,21 @@ variant="standard"
           <Box id="certificate_UI">
             <DialogContent className={classes.certificate}>
               <Box className={classes.certificateBox}>
-                <img src="/images/Component.png" className={classes.centerImg}  alt="" />
                 <Box className={classes.heading}>
-                  <img src="/images/icon.png" />
-                  <Typography variant="h6">
-                    
-                    وصل استلام
+                  <img src="\assets\Images\masfooter-logo.svg" />
+                  <Typography variant="h2" color="white" align="center">
+                  Transaction Receipt
                   </Typography>
-                  <img src="/images/icon.png"  alt=""/>
+                  <img src="\assets\Images\masfooter-logo.svg"  alt=""/>
                 </Box>
-                <Box className={classes.body} align="center" mt={3}>
-                  <Typography variant="h5">المرسل</Typography>
-                  <Typography variant="h2">
+                <Box className={classes.body} align="start" mt={3}>
+
+                  <Box display="flex" alignItems="center" marginBottom="15px"> 
+                  <Typography variant="h3" sx={{marginRight:"5px"}}>
+                    From:
+
+                  </Typography>
+                  <Typography variant="h5">
                     {user?.userData?.name
                       ? user?.userData?.name
                       : sortAddress(
@@ -994,62 +1019,103 @@ variant="standard"
                             : user?.userData?.ethAccount?.address
                         )}
                   </Typography>
-                  <Typography variant="h5">
+                  </Box>
+
+                  <Box display="flex" alignItems="start" marginBottom="15px" flexDirection="column">
+                  <Typography variant="h3" sx={{marginRight:"5px"}}>
+                     Sender Wallet Address:
+                     </Typography>
+                  <Typography  sx={{fontSize:"15px" ,
+                    "@media(max-width: 800px)":{
+                      fontSize:"10px"
+                    }
+                  }}>
                     {` (${
                       user?.userData?.walletAddress
                         ? user?.userData?.walletAddress
                         : user?.userData?.ethAccount?.address
                     })`}
                   </Typography>
-                  <Typography
-                    variant="h5"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
+                  </Box>
+
+                  <Box display="flex" alignItems="center" marginBottom="15px">
+                  <Typography variant="h3" sx={{marginRight:"5px"}}
                   >
-                    المبلغ المرسل
-                    <Typography variant="h2">
-                      {donationAmount + ` `}&nbsp;
+                  Amount:     
+                  </Typography>            
+                     <Typography variant="h4">
+                      {donationAmount + ``}
                     </Typography>
-                    {" " + selectedToken.name} الى
-                  </Typography>
-                  <Typography variant="h2">
+                    <Typography variant="h4" >{" " + selectedToken.name}</Typography>
+                    </Box>
+
+                    <Box display="flex" alignItems="center" marginBottom="15px">
+                    <Typography variant="h3" sx={{marginRight:"5px"}}>
+                     To:
+                     </Typography>
+                  <Typography variant="h5">
                     {userData?.name
                       ? userData.name
                       : userData?.ethAccount?.address
                       ? sortAddress(userData?.ethAccount.address)
                       : sortAddress(userData?.walletAddress)}
                   </Typography>
-                  <Typography variant="h5">
+                  </Box>
+
+                  <Box display="flex" alignItems="start" marginBottom="15px" flexDirection="column">
+                  <Typography variant="h3" sx={{marginRight:"5px"}}>
+                    Receiver Wallet Address:
+                     </Typography>
+                  <Typography sx={{fontSize:"15px" ,
+                    "@media(max-width: 800px)":{
+                      fontSize:"10px"
+                    }
+                  }}>
                     {`(${
                       userData?.ethAccount?.address
                         ? userData?.ethAccount?.address
                         : userData?.walletAddress
                     })`}
                   </Typography>
+                  </Box>
+
+                  <Box display="flex" alignItems="center" marginBottom="15px">
+                    <Typography variant="h3" sx={{marginRight:"5px"}}>
+                      Note:
+                    </Typography>
                   <Typography variant="h5">
-                    {donationMessage ? donationMessage : ""}
+                    {donationMessage ? donationMessage : "No Note"}
                   </Typography>
+                  </Box>
+
+                  <Box display="flex" alignItems="center" marginBottom="15px">
+                    <Typography variant="h3" sx={{marginRight:"5px"}}>
+                      Date:
+                    </Typography>
+                  <Typography variant="h5">
+                    {cDate}
+                  </Typography>
+                  </Box>
+
+
                 </Box>
                 <Box className={classes.footer}>
                   <Grid
                     container
                     spacing={2}
-                    style={{ alignItems: "flex-end" }}
+                    style={{ alignItems: "center" }}
                   >
-                    <Grid item xs={3} align="left">
-                      <Typography variant="h5" style={{ color: "#d15b5b" }}>
+                    <Grid item xs={3} align="center">
+                      <Typography variant="h5" style={{ color: "rgb(158, 91, 209)" }}>
                         {CEO_NAME}
                       </Typography>
                       <Typography variant="body2">ماس للحوالات المصرفية</Typography>
                     </Grid>
                     <Grid item xs={6} align="center">
-                      <span> حوالة مالية رقمية </span>
+                      <Typography style={{fontSize:"14px"}}>Digital Transfer</Typography>
                     </Grid>
-                    <Grid item xs={3} align="right">
-                      <Typography variant="h5">transactionHash:</Typography>
+                    <Grid item xs={3} align="center">
+                      <Typography variant="h5">Transaction Hash:</Typography>
                       <Typography variant="body2" component="label">
                         {serialNumber}
                       </Typography>
@@ -1062,14 +1128,19 @@ variant="standard"
           <Box
             mt={2}
             pb={4}
-            style={{ width: "100%", maxWidth: "200px", margin: "0 auto" }}
+            sx={{ width: "100%", maxWidth: "200px", margin: "auto",display:"flex",alignItems:"center",justifyContent:"center" }}
           >
             <Button
               variant="contained"
               size="large"
-              color="secondary"
               onClick={donloadBadge}
               disabled={download}
+              sx={{
+                backgroundColor:"#4a004f",
+                "&:hover":{
+                  backgroundColor:"rgb(112, 2, 120)"
+                }
+              }}
             >
               download <FiDownload /> {download && <ButtonCircularProgress />}
             </Button>
@@ -1086,7 +1157,7 @@ variant="standard"
         aria-labelledby="max-width-dialog-title"
       >
         <DialogContent>
-          <DialogTitle className={classes.dailogTitle} sx={{color:"#2d013a" ,fontSize:"16px"}}>
+          <DialogTitle align="center" className={classes.dailogTitle} sx={{color:" #2d013a" ,fontSize:"20px",fontWeight:"bold"}}>
             Select a token
           </DialogTitle>
           {tokensDetails.map((data, i) => {

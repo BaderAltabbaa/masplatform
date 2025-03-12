@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { TableCell, TableRow, Typography, Button, Box, Avatar } from '@mui/material/'
+import React, { useContext, useState } from 'react'
+import { TableCell, TableRow, Typography, Button, Box, Avatar ,Dialog,DialogTitle,DialogContent,DialogContentText } from '@mui/material/'
 import { makeStyles } from '@mui/styles';
 import { DonationPopUp } from 'src/component/Modals/DonationPopUp'
 import { tokensDetails } from "src/constants";
@@ -10,6 +10,12 @@ import { FiCopy } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { isMobile } from "react-device-detect";
 import { color } from 'framer-motion';
+import { UserContext } from "src/context/User";
+import BalanceBox from './ui/BalanceBox';
+import { Link } from "react-router-dom";
+
+
+
 
 const useStyles = makeStyles(() => ({
   tbody: {
@@ -26,8 +32,30 @@ export default function ChildTableUser({ row, index }) {
   const classes = useStyles();
   // const {t} = useTranslation();
   const [openDonation, setOpenDonation] = useState(false)
+  const [openBalance, setOpenBalance]  = useState(false)
   const navigate = useNavigate()
   const mastoken = tokensDetails[0];
+  const user = useContext(UserContext);
+const userNam = user.userData.name;
+  console.log("hrrr",userNam)
+
+const handleOpenBalance = () => {
+      setOpenBalance(true);
+}
+
+const handleCloseBalance = () => {
+  setOpenBalance(false);
+}
+
+    const [selectedToken, setSelectedToken] = useState(tokensDetails[0]);
+  
+
+    const availableBalance = {
+      masBalance : parseFloat(user.userData.masBalance),
+      fdusdBalance : parseFloat(user.userData.fdusdBalance),
+      usdtBalance : parseFloat(user.userData.usdtBalance),
+    }
+
   return (
     <>
       <TableRow className={classes.tbody} key={row.coinName}>
@@ -75,14 +103,28 @@ export default function ChildTableUser({ row, index }) {
 
         {/* Start Third Row */}
         <TableCell style={{  color : "white" ,textAlign:"center"}} align="Center">
-          <Button
+         
+         {(userNam == row.name)? 
+         <Button
+         className={classes.createButton}
+         onClick={() => handleOpenBalance()}
+
+         style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
+       >
+              Check Balance
+       </Button>
+          : <Button
             className={classes.createButton}
             onClick={() => setOpenDonation(true)}
 
             style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
           >
                  Transfer Funds
-          </Button>
+          </Button>}
+         
+         
+          
+          
         </TableCell>
         {/* End Third Row */}
 
@@ -141,6 +183,24 @@ export default function ChildTableUser({ row, index }) {
         handleClose={() => setOpenDonation(false)}
         userData={row}
       />
+
+<Dialog open={openBalance} onClose={handleCloseBalance} maxWidth="sm" fullWidth>
+<DialogTitle>
+  <Typography variant='h3' color='rgb(33, 0, 46)'>Your Balance</Typography>
+  <DialogContent align="center">
+    <BalanceBox
+    availableBalance={availableBalance}
+    tokensDetails={tokensDetails}
+    />
+ <Link to={"/buymas"}><Button className={classes.createButton} sx={{color:"white" ,marginTop:"20px"}}>Buy MAS</Button></Link>
+  </DialogContent>
+</DialogTitle>
+
+
+</Dialog>
+
+
+
     </>
   )
 }

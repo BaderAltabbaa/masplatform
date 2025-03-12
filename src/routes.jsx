@@ -51,6 +51,13 @@ export const routes = [
       },
 
       {
+        path: 'My_Wallet',
+        element:lazy(() =>
+          import("src/views/pages/Dashboard/pages/Wallet/Wallet")
+        ),
+      },
+
+      {
         path: 'My_purchases',
         element:lazy(() =>
           import("src/views/pages/Dashboard/pages/purchases/purchases")
@@ -206,11 +213,15 @@ export const routes = [
 
   {
     path: "/user-list",
+    guard: true,
+
     layout: HomeLayout,
     element: lazy(() => import("src/views/pages/Users/UsersList")),
   },
   {
     path: "/creators",
+    guard: true,
+
     layout: HomeLayout,
     element: lazy(() => import("src/views/pages/Users/Searchresult")),
   },

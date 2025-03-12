@@ -357,7 +357,7 @@ useEffect(() => {
        <div className="tableWrapper" style={{maxWidth:"100%", width:"800px"}}>
        <div className="tableAnimatedBackground"></div>
        <div className="tableInnerBlurEffect"></div>
-      <Box className="buybox" sx={{maxWidth:"100%", width:"800px" ,display:"flex" ,flexDirection:"column",alignItems:"center" ,backgroundColor:"rgb(48, 0, 60)", borderRadius:"20px"}}>
+      <Box className="buybox" sx={{maxWidth:"100%", width:"800px" ,display:"flex" ,flexDirection:"column",alignItems:"center" ,backgroundColor:"#30003c", borderRadius:"20px"}}>
     <Box className={classes.balanceContainer}>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px',marginTop:"20px" }}>
         <h2>Buy $MAS Coin</h2>

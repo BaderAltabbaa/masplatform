@@ -143,7 +143,7 @@ export default function UsersList() {
         params: {
           search: filterData.searchKey != "" ? filterData.searchKey : null,
           type: filterData.userType != "" ? filterData.userType : null,
-          limit: 6,
+          limit: 12,
           page: page,
 
         },

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     loader:{
         width:300,
-        maxWidth:"40%",
+        maxWidth:"100%",
         margin: "auto",
     },
     progressBar:{
@@ -34,7 +34,7 @@ export default function PageLoading() {
         <div className={classes.root}>
             <Box width={300} display='flex' alignItems='center' justifyContent='center'>
                 {/* <LinearProgress height={10} /> */}
-                <img className={classes.loader} src="/images/loader.gif" alt="loader" />
+                <img className={classes.loader} src="/images/iloader.gif" alt="loader" />
             </Box>
         </div>
     )

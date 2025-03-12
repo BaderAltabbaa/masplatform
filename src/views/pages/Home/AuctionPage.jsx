@@ -68,17 +68,7 @@ const AuctionPage = ({ staticSections }) => {
     const item = staticSections.find((i) => i?.title === "NFT");
 
     return (
-      <Box sx={{
-        padding:"0 150px",
-        "@media(max-width:900px)": {
-          padding:"0 50px",
-
-        },
-        "@media(max-width:768px)": {
-          padding:"0"
-        }
-
-      }}>
+      <Box>
      <NFTSection /> 
       
      </Box>

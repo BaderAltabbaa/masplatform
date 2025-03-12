@@ -1,6 +1,6 @@
 // assets
 import { IconDashboard } from '@tabler/icons-react';
-import { FaBox, FaDollarSign, FaDonate, FaGavel, FaHeart, FaHistory, FaNewspaper, FaShoppingCart, FaStore, FaStream, FaUsers, FaCamera, FaCopy, FaUserEdit } from "react-icons/fa";
+import { FaBox, FaDollarSign, FaDonate, FaGavel, FaHeart, FaHistory, FaNewspaper, FaShoppingCart, FaStore, FaStream, FaUsers, FaCamera, FaCopy, FaUserEdit,FaWallet,FaUser } from "react-icons/fa";
 
 // constant
 const icons = { IconDashboard,FaBox ,FaDollarSign,FaDonate,FaGavel,FaHeart,FaHistory, FaNewspaper, FaShoppingCart, FaStore };
@@ -28,6 +28,14 @@ const dashboard = {
       url: '/profile/My_Marketplace',
       icon: icons.FaDollarSign,
       breadcrumbs: false
+    },
+    {id: 'My_Wallet',
+      title: 'My Wallet',
+      type: 'item',
+      url: '/profile/My_Wallet',
+      icon: icons.FaDollarSign,
+      breadcrumbs: false
+
     },
     {
       id: 'My_purchases',

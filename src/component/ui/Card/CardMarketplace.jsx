@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
-
+import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import Dialog from "@mui/material//Dialog";
 import DialogTitle from "@mui/material//Dialog";
@@ -31,6 +31,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import bwipjs from 'bwip-js';
+import ButtonCircularProgress from "src/component/ButtonCircularProgress";
+
 const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -88,7 +90,13 @@ const CardMarketplace = ({data}) => {
   const [openImageDialog, setOpenImageDialog] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
 
+  const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
 
+  const handleImageClick = (url) => {
+    setSelectedImage(url);
+  };
 
 
   const handleClick = (event) => {
@@ -476,6 +484,7 @@ useEffect(() => {
                               label={item.charAt(0).toUpperCase() + item.slice(1).replace(/([A-Z])/g, ' $1').trim()}
                               type="text"
                               fullWidth
+                              autoComplete="off"
                               name={item}
                               value={formData[item]}
                               onChange={handleChange}
@@ -873,8 +882,8 @@ useEffect(() => {
       </Dialog>
       {/* buy now */}
       <Dialog
-        fullWidth="sm"
-        maxWidth="sm"
+        fullWidth
+        maxWidth="md"
         open={open2}
         onClose={handleClose2}
         aria-labelledby="max-width-dialog-title"
@@ -882,22 +891,85 @@ useEffect(() => {
         disableEscapeKeyDown={isLoading}
       >
         <DialogContent>
-  {groupedImages.map((group, index) => (
-    <Box key={index} className={classes.PhotoBox}>
-      <Grid container spacing={2}>
-        {group.map((url, idx) => (
-          <Grid item xs={12} sm={4} key={idx}>
-           {url && (
+        <Box sx={{
+          display:"flex" ,
+          flexDirection:"column",
+          alignItems:"center",
+          backgroundColor:"rgb(234, 232, 232)",
+          padding:"20px",
+          borderRadius:"20px",
+          boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
+          "@media(max-width:800px)":{
+            backgroundColor:"#2f0032"
+          }
+          }}>
+      {/* Big Image */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: 2,
+        }}
+      >
+        <img
+          src={selectedImage? selectedImage : itemData.mediaUrl1}
+          alt="Selected"
+          style={{
+            width: "100%",
+            maxWidth: "400px",
+            height: "250px",
+            objectFit: "cover",
+            borderRadius:"20px",
+            boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
+
+          }}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems:"center",
+          justifyContent:"center",
+          gap: 1, // Adds spacing between images
+          overflowX: "auto", // Allows horizontal scrolling if there are too many images
+          padding: 1, // Adds some padding at the bottom
+          background:"#2f0032",
+          borderRadius:"10px",
+          boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
+
+          "@media(max-width:800px)":{
+            display:"grid",
+            gridTemplateColumns:"1fr 1fr 1fr"
+          }
+        }}
+      >
+        {groupedImages.flat().map((url, idx) => (
+          <Box
+            key={idx}
+            sx={{
+              flexShrink: 0, // Prevents images from shrinking
+              cursor: "pointer",
+              borderRadius: 1, // Optional: Adds rounded corners
+            }}
+            onClick={() => handleImageClick(url)}
+          >
+            {url && (
             <img
               src={url}
-              style={{ width: "100%", height: "150px" ,objectFit: "fill" }}  // Adjust the size as needed
-              onClick={() => handleOpenImageDialog(url)}
+              alt={`Thumbnail ${idx}`}
+              style={{
+                objectFit: "cover",
+    borderRadius:"10px",
+    border:"2px solid white"
+              }}
+              className="itemSmallImage"
             />)}
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
     </Box>
-  ))}
 
   <Box mt={3} className={classes.itemText} textAlign="center">
     <Typography variant="h3">{itemData.itemTitle}</Typography>

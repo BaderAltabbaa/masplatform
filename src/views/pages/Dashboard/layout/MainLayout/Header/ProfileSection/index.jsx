@@ -143,7 +143,7 @@ const ProfileSection = () => {
               <ClickAwayListener onClickAway={handleClose}>
                
                     <Box sx={{padding:"5px",backgroundColor:"rgb(255, 255, 255)",borderRadius:"20px" }}>
-                      <UpgradePlanCard />
+                      
                      
                      
                       <List
@@ -175,6 +175,7 @@ const ProfileSection = () => {
                   
                     
                       </List>
+                      <UpgradePlanCard />
                     </Box>
                   
               </ClickAwayListener>

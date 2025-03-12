@@ -14,7 +14,7 @@ const NFTSection = () => {
     <div className='NFTSection'>
         <LandingSection >
         <div className="NFT-text-content">
-        <Typography component='headTitle' onClickFun={onClickFun }> NFT Auction</Typography>
+        <Typography component='headTitle' onClickFun={onClickFun }>RWA</Typography>
        
      
         
@@ -29,7 +29,7 @@ const NFTSection = () => {
 
 
       <div className="NFT-image-container">
-      <img src={'assets/Images/11.jpg'} alt="" />
+      <img src={'assets/Images/24.png'} alt="" />
       </div>
 
 

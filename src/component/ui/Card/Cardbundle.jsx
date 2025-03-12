@@ -242,7 +242,7 @@ function Cardbundle({
 <div className="media-cont">
 {isVideo ? (
         <div
-          style={{ cursor: "pointer", background: '#000' ,borderRadius:"30px"}}
+          style={{ cursor: "pointer", background: '#000' ,borderRadius:"20px"}}
           onClick={() =>
             isSubscribed || isUserBundle
               ? navigate("/bundles-details?" + BundleData?._id)

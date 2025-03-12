@@ -32,7 +32,7 @@ export default function componentStyleOverrides(theme) {
       styleOverrides: {
         root: (props) => ({
           "&.primaryButton": {
-            padding: "10px",
+            padding: "5px",
             borderRadius: "15px",
             cursor: "pointer",
             transition: "all 0.3s",
