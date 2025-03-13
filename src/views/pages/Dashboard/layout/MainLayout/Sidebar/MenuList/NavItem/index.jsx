@@ -91,7 +91,12 @@ const NavItem = ({ item, level }) => {
       <ListItemText
         primary={
           <Typography variant={customization.isOpen.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'} 
-          sx={{ color: customization.isOpen.findIndex((id) => id === item.id) > -1 ? '#5e35b1' : 'white' }}
+          sx={{ color: customization.isOpen.findIndex((id) => id === item.id) > -1 ? '#5e35b1' : 'white',
+            "&:hover":{
+              color:"#5e35b1 !important",
+              fontWeight:"bold"
+            }
+           }}
           >
             {item.title}
           </Typography>

@@ -14,6 +14,8 @@ import useSWR from "swr";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import axios from "axios";
 import DataLoading from "src/component/DataLoading";
+import { ButtonwithAnimation } from '../../../component/ui/Button/button';
+
 
 const useStyles = makeStyles(() => ({}));
 
@@ -38,10 +40,10 @@ function UserProfile() {
         userListToDisplay={userListToDisplay}
       />
       <Container maxWidth="xl">
-        <Typography variant="h2" align="center">
-          Bundles
-        </Typography>
-        <Grid container style={{ margin: "20px auto" }}>
+        <Box align="center" mt={3}>
+        <ButtonwithAnimation>Bundles</ButtonwithAnimation>  
+        </Box>
+        <Grid container style={{ margin: "30px auto" }}>
           {userDetails?.bundleDetails?.map((data, i) => {
             return (
               <Grid

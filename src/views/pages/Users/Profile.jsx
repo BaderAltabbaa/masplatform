@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   profilebg: {
     boxShadow: " 0 1.5px 3px 0 rgba(0, 0, 0, 0.16)",
     backgroundImage: " linear-gradient(to bottom,rgb(79, 8, 105),rgb(60, 0, 60))",
-    height: " 143.5px",
+    height: "200px",
     width: "100%",
   },
   bgimg: {
@@ -89,10 +89,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    width: " 130px !important",
-    height: " 130px  !important",
+    width: " 200px !important",
+    height: " 200px  !important",
     cursor: "pointer",
-    marginTop: '-50px'
+    marginTop: '-150px'
   },
   textname: {
     "@media(max-width:1025px)": {
@@ -290,7 +290,7 @@ export default function Profile({ data, isabout }) {
                 )}
                 &nbsp;
 
-                <span style={{ color: "#8f2b48", borderBottom: "1px solid #8f2b48", padding: "3px 10px", margin: "10px" }}>
+                <span style={{ color: "#59006c", borderBottom: "1px solid #59006c", padding: "3px 10px", margin: "10px" }}>
                   {data?.name
                     ? data.name
                     : data?.ethAccount?.address

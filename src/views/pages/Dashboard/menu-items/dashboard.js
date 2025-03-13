@@ -12,6 +12,14 @@ const dashboard = {
   title: 'Dashboard',
   type: 'group',
   children: [
+    {id: 'My_Wallet',
+      title: 'My Wallet',
+      type: 'item',
+      url: '/profile/My_Wallet',
+      icon: icons.FaDonate,
+      breadcrumbs: false
+
+    },
     {
       id: 'My_Bundles',
       title: 'My Bundles',
@@ -29,14 +37,7 @@ const dashboard = {
       icon: icons.FaDollarSign,
       breadcrumbs: false
     },
-    {id: 'My_Wallet',
-      title: 'My Wallet',
-      type: 'item',
-      url: '/profile/My_Wallet',
-      icon: icons.FaDollarSign,
-      breadcrumbs: false
-
-    },
+   
     {
       id: 'My_purchases',
       title: 'My purchases',

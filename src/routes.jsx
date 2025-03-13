@@ -32,7 +32,7 @@ export const routes = [
       {
         index: true, // This makes it the default route
         element: lazy(() =>
-          import("src/views/pages/Dashboard/pages/Bundles/Bundles")
+          import("src/views/pages/Dashboard/pages/Wallet/Wallet")
         ),
       },
       {

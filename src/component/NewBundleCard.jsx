@@ -121,18 +121,19 @@ export default function BundleCard({ data }) {
     BundleData?.userId?.profilePic ||
     BundleData?.userDetail?.profilePic ||
     `https://avatars.dicebear.com/api/miniavs/${userName}.svg`;
-  const videoFormats = [
-    "mp4",
-    "avi",
-    "wmv",
-    "mov",
-    "mkv",
-    "flv",
-    "webm",
-    "mpeg",
-    "3gp",
-    "ogv",
-  ];
+  
+
+     useEffect(() => {
+            const videoExtensions = ["mp4", "avi", "wmv", "mov", "mkv", "flv", "webm", "mpeg", "3gp", "ogv"];
+          
+            const mediaUrl = BundleData?.mediaUrl;
+            if (mediaUrl) {
+              const extension = mediaUrl.split('.').pop().toLowerCase();
+              if (videoExtensions.includes(extension)) {
+                setisVideo(true); // It's a video
+              } 
+            }
+          }, [BundleData]);
   //const bundleMediaFormat = BundleData.mediaUrl.split(".").slice(-1)[0];
   //let isVideo = videoFormats.includes(bundleMediaFormat);
 
@@ -245,7 +246,7 @@ export default function BundleCard({ data }) {
   }, []);
 
   return (
-    <Card style={{background: "linear-gradient(to top right,rgb(115, 0, 121), #180226)" ,width:"100%" ,minWidth:"240px", margin:"5px"}}>
+    <Card style={{background: "linear-gradient(to top right,rgb(115, 0, 121), #180226)" ,width:"100%" ,minWidth:"230px", margin:"5px"}}>
       <CardHeader
         avatar={
           <Avatar
@@ -276,6 +277,7 @@ export default function BundleCard({ data }) {
       />
       {isVideo ? (
         <div
+        
           style={{ cursor: "pointer", background: '#000'}}
           onClick={() =>
             isSubscribed || isUserBundle
@@ -288,7 +290,7 @@ export default function BundleCard({ data }) {
             muted
             playing
             width="100%"
-            height={"166px"}
+            height="100%"
           />
         </div>
       ) : (
@@ -345,7 +347,7 @@ export default function BundleCard({ data }) {
         <Typography
           variant="h5"
           component="h5"
-          style={{ color: "#fff", fontWeight: "bold", marginTop: 5 }}
+          style={{ color: "#fff", fontWeight: "bold" }}
         >
           {"( "}
           {BundleData?.donationAmount
@@ -360,12 +362,12 @@ export default function BundleCard({ data }) {
           variant="body2"
           color="#fff"
           component="p"
-          style={{ marginTop: 5 }}
+          
         >
           {BundleData?.details}
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
+      
+   
         <IconButton
           aria-label="add to favorites"
           onClick={() => likeDislikeNfthandler(BundleData._id)}
@@ -402,7 +404,8 @@ export default function BundleCard({ data }) {
             View
           </Button>
         )}
-      </CardActions>
+     
+      </CardContent>
 
       {/* edit */}
       <Dialog

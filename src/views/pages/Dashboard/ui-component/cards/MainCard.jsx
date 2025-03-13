@@ -47,13 +47,16 @@ const MainCard = React.forwardRef(
         ref={ref}
         {...others}
         sx={{
-          marginTop:"100px",
+          marginTop:"30px",
           border: border ? '1px solid' : 'none',
           borderRadius:"0",
           borderColor: 'divider',
           backgroundColor:"white",
           ':hover': {
             boxShadow: boxShadow ? shadow || '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'
+          },
+          "@media(max-width:900px)":{
+               marginTop:"50px"
           },
           ...sx
         }}
@@ -76,13 +79,7 @@ const MainCard = React.forwardRef(
         {darkTitle && title && <CardHeader sx={headerSX} title={<ButtonwithAnimation>{title}</ButtonwithAnimation>} action={secondary} />}
 
         {/* content & header divider */}
-        {title && <Divider sx={{marginTop:{
-           xs: '20px', // Applies to extra small screens (0px and up)
-           sm: '30px', // Applies to small screens (600px and up)
-           md: '40px', // Applies to medium screens (900px and up)
-        }
-
-        }}/>}
+      
 
         {/* card content */}
         {content && (

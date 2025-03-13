@@ -46,7 +46,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
         }}
        
       >
-        <Box component="span" sx={{ display: { xs: 'none', md: 'block' ,marginBottom : '5px' ,marginTop: '5px' }, flexGrow: 1 }}>
+        <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
        
         <Avatar
         onClick={() => navigate("/profile")}
@@ -56,8 +56,8 @@ const Header = ({ handleLeftDrawerToggle }) => {
                     : `https://avatars.dicebear.com/api/miniavs/${user?.userData?._id}.svg`
                 }
                 style={{
-                  width: "60px",
-                  height: "60px",
+                  width: "50px",
+                  height: "50px",
                   border: 'solid 2px rgb(255, 255, 255)',
                   cursor: "pointer"
                 }}

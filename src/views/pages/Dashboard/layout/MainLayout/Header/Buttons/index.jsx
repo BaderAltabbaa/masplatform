@@ -275,7 +275,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Buttons = () => {
-    const [openDeposit, setOpenDeposit] = useState(false);
     const [openWihdraw, setOpenWithdraw] = useState(false);
      const [withdrawAmount, setWithdrawAmount] = useState(0);
       const [withdrawFees, setWithdrawFees] = useState();
@@ -383,12 +382,7 @@ const Buttons = () => {
         }
       };
     
-      const handleCloseDepositModal = () => {
-        setOpenDeposit(false);
-      };
-      const handleCloseWithdrawModal = () => {
-        setOpenWithdraw(false);
-      };
+      
    
     
       const profilePageURL = websiteName + "/user-profile/" + user?.userData?.userName;
@@ -398,237 +392,14 @@ const Buttons = () => {
             <Box
 
             >
-                <Button
-
-                    variant="contained"
-                    size="large"
-                    color=""
-                    style={{ width: "40%", fontSize: "15px", marginRight: "15px",background:"#8c0087",color:"white" }}
-                    onClick={() => setOpenDeposit(true)}
-                >
-                    Deposit
-                </Button>
-                <Button
-                    variant="contained"
-                    style={{ width: "40%", fontSize: "15px",background:"#8c0087",color:"white" }}
-                    size="large"
-                    color="secondary"
-                    onClick={() => setOpenWithdraw(true)}
-                >
-                    Withdraw
-                </Button>
+              
+               
 
             </Box>
-            <Dialog
-                open={openDeposit}
-                fullWidth="sm"
-                maxWidth="sm"
-                onClose={handleCloseDepositModal}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                style={isMobile ? { height: "70%" } : { heihgt: "100%" }}
-            >
-                <DialogContent className={classes.dilogBody}>
-                    <DialogContentText id="alert-dialog-description">
-                        <Typography
-                            variant="h3"
-                            align="center"
-                            style={{ color: " #2d013a", marginBottom: "20px" }}
-                        >
-                            Deposit
-                        </Typography>
-                        <Typography
-                            variant="h5"
-                            align="center"
-                            style={{ color: "#000", marginBottom: "10px" }}
-                        >
-                            Please make sure you use BSC (BNB Smart Chain) and send only supperted tokens (MAS, USDT, BUSD)
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            align="center"
-                            style={{ color: "#000" }}
-                        ></Typography>
-                        <Container maxWidth="md">
-                            <Box mt={4}>
-                                <Input
-                                    value={user.userData?.ethAccount?.address}
-                                    placeholder="Wallet Address"
-                                    className={classes.input_fild2}
-                                    startAdornment={
-                                        <InputAdornment position="end">
-                                            <CopyToClipboard text={user.userData?.ethAccount?.address}>
-                                                <Button onClick={() => toast.info("Copied")} sx={{color:"#2d013a"}}>
-                                                    COPY
-                                                </Button>
-                                            </CopyToClipboard>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </Box>
-                            <Box mt={2} mb={4}>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    color="secondary"
-                                    onClick={() => setOpenDeposit(false)}
-                                    style={{  fontSize: "15px",background:"#8c0087",color:"white" }}
-                                >
-                                    Close
-                                </Button>
-                            </Box>
+           
+           
 
-                        </Container>
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
-
-            <VerifyOtp
-                open={verifyOTPOpen}
-                handleClose={() => setVerifyOTPOpen(false)}
-                channels={['email']}
-                context={'withdraw'}
-                emailVerificationSent={false}
-                smsVerificationSent={false}
-                payload={withdrawTx}
-                successCallback={() => {
-                    setVerifyOTPOpen(false);
-                    toast.success("Withdrawal successful!");
-                }}
-            />
-
-            <Dialog
-                open={openWihdraw}
-                fullWidth="sm"
-                maxWidth="sm"
-                onClose={handleCloseWithdrawModal}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                disableBackdropClick={loader}
-                disableEscapeKeyDown={loader}
-                style={isMobile ? { height: "70%" } : { height: "100%" }}
-            >
-                <DialogContent className={classes.dilogBody}>
-                    <DialogContentText id="alert-dialog-description">
-                        <Typography
-                            variant="h3"
-                            align="center"
-                            style={{ color: "#2d013a", marginBottom: "10px" }}
-                        >
-                            Withdraw
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            align="center"
-                            style={{ color: "#000" , marginBottom:"20px"}}
-                        >
-                            <>
-                                Please make sure the Wallet address is BEP20 <br />
-                                (Transaction will be sent in BSC Network)
-                            </>
-                        </Typography>
-                        <BalanceBox
-                            availableBalance={availableBalance}
-                            tokensDetails={tokensDetails}
-                            setSelectedToken={setSelectedToken}
-                        />
-                        <Container maxWidth="md">
-                            <Box mt={4}>
-                                <Input
-                                    placeholder="Wallet Address"
-                                    value={withdrawAddress}
-                                    className={classes.input_fild2}
-                                    onChange={(e) => setWithdrawAddress(e.target.value)}
-
-                                />
-                            </Box>
-                            <Box mt={4}>
-                                <Input
-                                    value={withdrawAmount}
-                                    placeholder={"Minimum amount 10 " + selectedToken?.name?.toString()}
-                                    className={classes.input_fild2}
-                                    type="number"
-                                    inputProps={{
-                                        min:0
-                                    }}
-                                    sx={{marginBottom:"20px"}}
-                                    min={10}
-                                    onChange={(e) => setWithdrawAmount(e.target.value)}
-                                    endAdornment={
-                                        <InputAdornment
-                                            position="end"
-                                            onClick={() => setOpenSelectToken(true)}
-                                        >
-
-                                            <Box style={{ cursor: "pointer" }}>
-                                                <img src={selectedToken?.img} alt="" width="20px" />
-                                                <ArrowDropDownIcon style={{ cursor: "pointer" }} />
-                                            </Box>
-
-                                        </InputAdornment>
-                                    }
-                                />
-                                <Typography
-                                    variant="body2"
-                                    align="left"
-                                    style={{ color: "#000" }}
-                                >
-                                    <span onClick={() => MAxWithdrawAmount()} >
-                                        Available: {availableBalance[selectedToken.databaseKey]?.toFixed(2)} {selectedToken.name}
-                                    </span>
-                                </Typography>
-
-                            </Box>
-
-                            <Box mt={2} mb={4}>
-                                <Typography
-                                    variant="body2"
-                                    align="left"
-                                    style={{ color: "#000" ,lineHeight:"30px"}}
-                                >
-                                    <span>Withdraw fees: {withdrawAmount ? <span>{withdrawFees} {selectedToken.name}</span> : user.userData?.withdrawFees + "%"} </span>
-                                    <br />
-                                    {withdrawAmount ?
-                                        <strong>Total: {parseFloat(withdrawAmount) + parseFloat(withdrawFees)} {selectedToken.name}</strong> : ""
-                                    }
-                                </Typography>
-                                <Grid  xs={12} className={classes.buttonContainerStyle}>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    color=""
-                                    style={{ fontSize: "15px",background:" #8c0087",color:"white" }}
-
-                                    onClick={withdraw}
-                                    disabled={loader || !withdrawAmount || !selectedToken}
-                                >
-                                    {loader ? "Pending..." : `Withdraw`}
-                                    {loader && <ButtonCircularProgress />}
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    color="secondary"
-                                    onClick={() => setOpenWithdraw(false)}
-                                    style={{  fontSize: "15px",background:"#8c0087",color:"white" }}
-                                >
-                                    Close
-                                </Button>
-                                </Grid>
-                                <Typography
-                                    variant="body2"
-                                    align="center"
-                                    style={{ color: "#f22" }}
-                                >
-                                    <span>{withdrawError}</span>
-                                </Typography>
-
-                            </Box>
-                        </Container>
-
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
+           
         </>
 
     )

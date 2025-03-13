@@ -1010,7 +1010,7 @@ variant="standard"
                     From:
 
                   </Typography>
-                  <Typography variant="h5">
+                  <Typography variant="h4">
                     {user?.userData?.name
                       ? user?.userData?.name
                       : sortAddress(
@@ -1053,7 +1053,7 @@ variant="standard"
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
                      To:
                      </Typography>
-                  <Typography variant="h5">
+                  <Typography variant="h4">
                     {userData?.name
                       ? userData.name
                       : userData?.ethAccount?.address
@@ -1079,11 +1079,21 @@ variant="standard"
                   </Typography>
                   </Box>
 
+
+                  <Box display="flex" alignItems="center" marginBottom="15px">
+                    <Typography variant="h3" sx={{marginRight:"5px"}}>
+                    Transaction Hash:
+                    </Typography>
+                  <Typography variant="h4">
+                  {serialNumber}
+                                    </Typography>
+                  </Box>
+
                   <Box display="flex" alignItems="center" marginBottom="15px">
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
                       Note:
                     </Typography>
-                  <Typography variant="h5">
+                  <Typography variant="h4">
                     {donationMessage ? donationMessage : "No Note"}
                   </Typography>
                   </Box>
@@ -1092,7 +1102,7 @@ variant="standard"
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
                       Date:
                     </Typography>
-                  <Typography variant="h5">
+                  <Typography variant="h4">
                     {cDate}
                   </Typography>
                   </Box>
@@ -1107,18 +1117,15 @@ variant="standard"
                   >
                     <Grid item xs={3} align="center">
                       <Typography variant="h5" style={{ color: "rgb(158, 91, 209)" }}>
-                        {CEO_NAME}
+                       {/* {CEO_NAME} */}
                       </Typography>
-                      <Typography variant="body2">ماس للحوالات المصرفية</Typography>
+                      <Typography variant="body2">{/* اس للحوالات المصرفية*/}</Typography>
                     </Grid>
                     <Grid item xs={6} align="center">
-                      <Typography style={{fontSize:"14px"}}>Digital Transfer</Typography>
+                      <Typography style={{fontSize:"14px"}}>{/*Digital Transfer*/}</Typography>
                     </Grid>
                     <Grid item xs={3} align="center">
-                      <Typography variant="h5">Transaction Hash:</Typography>
-                      <Typography variant="body2" component="label">
-                        {serialNumber}
-                      </Typography>
+                      
                     </Grid>
                   </Grid>
                 </Box>

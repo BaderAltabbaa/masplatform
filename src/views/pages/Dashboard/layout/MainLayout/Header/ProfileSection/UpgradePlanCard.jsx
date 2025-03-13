@@ -12,6 +12,8 @@ import { tokensDetails, websiteName } from "src/constants";
 import { sortAddress } from "src/utils";
 // import { CopyToClipboard } from "react-copy-to-clipboard";
 import axios from "axios";
+import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
+
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import DataLoading from "src/component/DataLoading";
@@ -509,6 +511,11 @@ const UpgradePlanCard = () => {
                 gap: "10px",
               }}
               >
+                <Box display="flex" justifyContent="space-evenly" sx={{cursor:"pointer"}}
+                          onClick={() => navigate("/profilesettings")}>
+                            <IconSettings stroke={1.5} size="1.3rem" />
+<Typography variant="body2">Account Settings</Typography> 
+                </Box>
                 {/* Start User Type */}
                 <Typography align='center' variant="h3"
                   style={{ textTransform: "capitalize" }}

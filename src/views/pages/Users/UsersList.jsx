@@ -175,7 +175,7 @@ export default function UsersList() {
         {/* Start Title */}
         
         <Box className={classes.masBoxFlex}
-        sx={{display:"flex" ,flexDirection:"column" ,justifyContent:"center",alignContent:"center"}}
+        sx={{display:"flex" ,justifyContent:"center",alignContent:"center"}}
         >
           <ButtonwithAnimation  >Users</ButtonwithAnimation>
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}
