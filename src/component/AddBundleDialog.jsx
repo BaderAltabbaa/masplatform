@@ -307,6 +307,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               className={classes.input}
               placeholder={"Enter Bundle Title"}
               disabled={isEdit}
+              inputProps={{maxLength: 16}}
+
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -325,6 +327,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               className={classes.input}
               placeholder={"Enter Bundle Name"}
               disabled={isEdit}
+              inputProps={{maxLength: 16}}
+
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -397,6 +401,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               placeholder={"Enter a details about your bundle"}
               disabled={isEdit}
               multiline={true}
+              inputProps={{maxLength: 50}}
+
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -415,21 +421,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           value={watch("coinName")}
           onChange={(event) => setValue("coinName", event.target.value)}
           disabled={isEdit}
-          MenuProps={{
-            PaperProps: {
-              sx: {
-                backgroundColor: '#f5f5f5', // Background color of the dropdown
-                borderRadius: '0px 0 20px 20px',
-              },
-            },
-            MenuListProps: {
-              sx: {
-                padding: '10px 0',
-                backgroundColor:"rgb(255, 255, 255)",
-              
-              },
-            },
-          }}
+         
         >
           {tokensDetails.map((item, index) => (
             <MenuItem

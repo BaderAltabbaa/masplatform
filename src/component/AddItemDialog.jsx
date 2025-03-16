@@ -243,6 +243,7 @@ function removeImage(index) {
               className={classes.input}
               placeholder={"Enter item Title"}
               disabled={isEdit}
+              inputProps={{maxLength: 16}}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -261,6 +262,8 @@ function removeImage(index) {
               className={classes.input}
               placeholder={"Enter item Name"}
               disabled={isEdit}
+              inputProps={{maxLength: 16}}
+
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -334,6 +337,8 @@ function removeImage(index) {
               placeholder={"Enter a details about your item"}
               disabled={isEdit}
               multiline={true}
+              inputProps={{maxLength: 50}}
+
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>

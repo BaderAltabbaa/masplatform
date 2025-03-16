@@ -32,6 +32,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import bwipjs from 'bwip-js';
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
+import { transform } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -500,12 +501,12 @@ useEffect(() => {
               </Dialog>
               
               <Dialog open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
-                  <DialogTitle id="successed-dialog-title">successed Purchase</DialogTitle>
+                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#8c0087"}}>successed Purchase</DialogTitle>
                   <DialogContent>
                       <Typography variant="body1"> your purchase successed.... You can dawnload your bill now.</Typography>
                       <Box textAlign="center" mt={2}>
-                          <Button onClick={downloadPDF} color="secondary" variant="contained">Download Bill</Button>
-                          <Button onClick={handleCancel} color="primary">Cancel</Button>
+                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:"#8c0087",color:"white" }}>Download Bill</Button>
+                          <Button onClick={handleCancel} sx={{color:"#8c0087"}}>Cancel</Button>
                       </Box>
                   </DialogContent>
               </Dialog>
@@ -513,14 +514,16 @@ useEffect(() => {
               <Dialog open={showPurchaseDialog} onClose={() => {}} aria-labelledby="bill-dialog-title" maxWidth="sm" fullWidth={true}>
             <DialogTitle id="bill-dialog-title">Your Bill Preview</DialogTitle>
             <DialogContent>
-            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom>
+            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:"#8c0087"}}> 
             Successful Purchase
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom align="center">
             Your purchase was successful. You can view your bill below:
             </Typography>
             <Box textAlign="center" mt={2}>
-            <Button onClick={handlePreviewBill} color="secondary" variant="contained">show your Bill now</Button>
+            <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:" #8c0087",color:"white" ,"&:hover":{
+              backgroundColor:"rgb(99, 0, 96)"
+            } }}>View Bill now</Button>
             </Box>
             </DialogContent>
             </Dialog>
@@ -932,10 +935,10 @@ useEffect(() => {
           flexDirection: "row",
           alignItems:"center",
           justifyContent:"center",
-          gap: 1, // Adds spacing between images
+          gap: 0, // Adds spacing between images
           overflowX: "auto", // Allows horizontal scrolling if there are too many images
           padding: 1, // Adds some padding at the bottom
-          background:"#2f0032",
+          background:" #2f0032",
           borderRadius:"10px",
           boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
 
@@ -952,6 +955,9 @@ useEffect(() => {
               flexShrink: 0, // Prevents images from shrinking
               cursor: "pointer",
               borderRadius: 1, // Optional: Adds rounded corners
+              "&:hover":{
+      transform:"scale(1.07)"
+    }
             }}
             onClick={() => handleImageClick(url)}
           >
@@ -962,7 +968,8 @@ useEffect(() => {
               style={{
                 objectFit: "cover",
     borderRadius:"10px",
-    border:"2px solid white"
+    border:"2px solid white",
+    margin:"0 2px"
               }}
               className="itemSmallImage"
             />)}
@@ -974,17 +981,39 @@ useEffect(() => {
   <Box mt={3} className={classes.itemText} textAlign="center">
     <Typography variant="h3">{itemData.itemTitle}</Typography>
   </Box>
-  <Box mt={2} className={classes.deskiText}>
-    <Typography variant="h4" align="left" color="#000"  style={{ color: "rgb(128, 0, 128)", fontWeight: "bold", marginTop: 5 }}>
+  <Box mt={2} display="flex" sx={{justifyContent:"space-between" ,
+  "@media(max-width:1000px)":{
+    justifyContent:"start",
+    flexDirection:"column"
+  }}}>
+    <div>
+  <Typography variant="h4" align="center" color="#000"  style={{  fontWeight: "bold", marginTop: 5 }}>
+      Name: <span> </span>
+      <span>
+       {itemData.itemName}
+      </span>
+    </Typography>
+    <Typography variant="h4" align="center" color="#000"  style={{ color: "rgb(128, 0, 128)", fontWeight: "bold", marginTop: 5 }}>
       Price: <span> </span>
       <span>
         {itemData.donationAmount} {itemData.coinName}
       </span>
     </Typography>
-        <Typography variant="h4" align="left" color="#000" style={{marginTop: 5}}>
+    </div>
+    <div>
+        <Typography variant="h4" align="center" color="#000" style={{marginTop: 5}}>
           Details: <span> </span>
       <span> {itemData.details} </span>
         </Typography>
+        <Typography variant="h4" align="center  " color="#000" style={{marginTop: 5}}>
+          Owner: <span> </span>
+      <span> {userName} </span>
+        </Typography>
+        <Typography variant="h4" align="center" color="#000" style={{marginTop: 5}}>
+        Speciality: <span> </span>
+      <span> {userSpeciality} </span>
+        </Typography>
+        </div>
   </Box>
    {/* Buy Now and Cancel Buttons */}
    {auth.userLoggedIn && (

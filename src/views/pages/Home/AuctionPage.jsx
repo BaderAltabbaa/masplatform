@@ -8,6 +8,8 @@ import "./style.css";
 import SectionCard from "../../../component/ui/sectionCard/SectionCard";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import NFTSection from './NFT/NFTSection'
+import { create } from "lodash";
+import { Category } from "@mui/icons-material";
 
 
 const AuctionPage = ({ staticSections }) => {
@@ -51,7 +53,35 @@ const AuctionPage = ({ staticSections }) => {
     };
   }, []);
 
- 
+ const Categories = [
+  {name:"Art",
+   image:"/assets/Images/15.jpg"
+  },
+  {name:"Sports",
+    image:"/assets/Images/14.jpg"
+   },
+   {name:"Collectors",
+    image:"/assets/Images/5.jpg"
+   },
+   {name:"Fashion",
+    image:"/assets/Images/17.jpg"
+   },
+   {name:"Video",
+    image:"/assets/Images/22.jpg"
+   },
+   {name:"Music",
+    image:"/assets/Images/1.jpg"
+   },
+   {name:"Cars",
+    image:"/assets/Images/4.jpg"
+   },
+   {name:"Coding",
+    image:"/assets/Images/6.jpg"
+   },
+   {name:"Crypto",
+    image:"/assets/Images/7.jpg"
+   },
+ ]
 
   return (
     <>
@@ -61,6 +91,7 @@ const AuctionPage = ({ staticSections }) => {
       {BundlesSection()}
       {ItemsSection()}
       {NFTsection()}
+      {popularCategory()}
     </>
   );
 
@@ -192,7 +223,7 @@ const AuctionPage = ({ staticSections }) => {
 
   function CreatorsSection() {
     const item = staticSections.find((i) => i?.title === "Users");
-    console.log(item)
+    console.log("creator",item)
     return (
       <>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
@@ -213,6 +244,45 @@ const AuctionPage = ({ staticSections }) => {
       </>
      
     );
+  }
+
+  function popularCategory() {
+    return(
+      <Box sx={{padding:"30px 150px", 
+        "@media(max-width:1200px)":{
+padding:"30px 200px"
+      }, "@media(max-width:800px)":{
+        padding:"30px 100px"
+      }
+      }} display="flex" flexDirection="column" alignItems="center">
+        <Typography align="center" variant="h1" color="white">Popular Categories</Typography>
+        <Box sx={{padding:"20px", background:"linear-gradient(to top right,#900098,#4d0051)"
+        ,margin:"20px",borderRadius:"20px",width:"100%"
+        ,display:"flex",alignItems:"center",
+        justifyContent:"center",boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",
+          "@media(max-width:1200px)":{
+            display:"grid",
+            gridTemplateColumns:"1fr 1fr 1fr"
+          }, "@media(max-width:800px)":{
+            gridTemplateColumns:"1fr 1fr"
+          },
+         
+        }}>
+
+    {Categories.map((category ,index) => (
+
+<Box alignItems="center" display="flex" flexDirection="column" m={2} key={index} sx={{ "&:hover":{
+            transform:"scale(1.1)"
+          }}}>
+<img src={category.image} width="70px" height="70px" style={{objectFit:"cover" ,borderRadius:"50%",marginBottom:"10px",boxShadow:"2px 5px 10px rgba(0, 0, 0, 0.6)"}} />
+  <Typography color="white" sx={{fontWeight:"bold"}}>{category.name}</Typography>
+</Box>
+    ))}
+
+        </Box>
+
+      </Box>
+    )
   }
 
   async function auctionNftListHandler() {

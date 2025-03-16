@@ -8,7 +8,7 @@ import { Box ,Typography,Button} from "@mui/material"
 import '/src/views/pages/Profile/buymas.css' 
 import { toast } from "react-toastify";
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {  Dialog, DialogContent, DialogContentText, IconButton,  Container, Input, InputAdornment, Grid, } from '@mui/material'
+import {  Dialog, DialogContent, DialogContentText, IconButton,  Container, Input, InputAdornment, Grid,TextField } from '@mui/material'
 import { isMobile } from "react-device-detect";
 import { makeStyles } from "@mui/styles";
 import { VerifyOtp } from "src/component/Modals/VerifyOtp";
@@ -669,9 +669,11 @@ const Wallet = () => {
                         />
                         <Container maxWidth="md">
                             <Box mt={4}>
-                                <Input
+                                <TextField
                                     placeholder="Wallet Address"
                                     value={withdrawAddress}
+                                    variant="standard"
+
                                     className={classes.input_fild2}
                                     onChange={(e) => setWithdrawAddress(e.target.value)}
                                     sx={{
@@ -681,17 +683,23 @@ const Wallet = () => {
                                         },
                                         "& .MuiInput-input::placeholder": {
                                             color:"white"
-                                        }
+                                        }, "& .MuiInput-underline:before": {
+                                          borderBottomColor: "white", // Underline color before focus
+                                        },
+                                        "& .MuiInput-underline:after": {
+                                          borderBottomColor: "white", // Underline color after focus
+                                        },
                                       }}
 
                                 />
                             </Box>
                             <Box mt={4}>
-                                <Input
+                                <TextField
                                     value={withdrawAmount}
                                     placeholder={"Minimum amount 10 " + selectedToken?.name?.toString()}
                                     className={classes.input_fild2}
                                     type="number"
+                                    variant="standard"
                                     inputProps={{
                                         min:0
                                     }}
@@ -702,6 +710,12 @@ const Wallet = () => {
                                         },
                                         "& .MuiInput-input::placeholder": {
                                             color:"white"
+                                        },
+                                        "& .MuiInput-underline:before": {
+                                          borderBottomColor: "white", // Underline color before focus
+                                        },
+                                        "& .MuiInput-underline:after": {
+                                          borderBottomColor: "white", // Underline color after focus
                                         },
                                         
                                     }}

@@ -80,8 +80,22 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
   // Handle item click
   const handleItemClick = (item) => {
     if (!isEdit) {
-      selectItem(item._id);
-      setSelectedItemName(item.bundleName); // Update selected item name
+      const isChosen = formBundles.includes(item._id);
+      if (isChosen){
+        selectItem(item._id);
+        setSelectedItemName('');
+        setValue("title", "");
+      }
+      else{
+        if (item.bundleName && item.bundleName.length >= 3) {
+        setValue("bundleIds", [item._id]);
+        setSelectedItemName(item.bundleName);
+        setValue("title", item.bundleName); // Update the title field in the form\
+        }else{
+          toast.error("Bundle name must be at least 3 characters long.");
+
+        }
+      }
     }
   };
 
@@ -301,9 +315,8 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
               {...register("title")}
               className={classes.input}
               placeholder={"Enter Title"}
-              disabled={isEdit}
+              disabled={true}
               value={selectedItemName} // Bind the selected item's name to the input
-              onChange={(e) => setSelectedItemName(e.target.value)} // Allow manual editing if needed
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
