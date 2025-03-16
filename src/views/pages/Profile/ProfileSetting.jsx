@@ -39,6 +39,7 @@ import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { object } from "yup";
 
 const useStyles = makeStyles((theme) => ({
   LoginBox: {
@@ -227,11 +228,7 @@ const useStyles = makeStyles((theme) => ({
       opacity: "0",
     },
   },
-  Box: {
-    width: "100%",
-    height: isMobile ? "80px" : "200px",
-    background: "linear-gradient(to right , #280026,#5d0164)",
-  },
+ 
   newsec: {
     display: "flex",
     "@media(max-width:560px)": {
@@ -1122,13 +1119,21 @@ export default function ProfileSettings() {
       {/* Start Cover */}
       <Grid className={classes.CoverBox}>
         <Box
-          className={classes.Box}
-          // style={cover
-          //   ? { backgroundImage: `url(${cover})`, }
-          //   : null}
+         sx={{
+      width: "100%",
+      height: "300px", // Adjust height as needed
+      overflow: "hidden", // Ensure the image doesn't overflow
+    }}
         >
+        <img src={cover? `${cover}` : null} style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover", // Ensures the image covers the entire box
+      }}/>
         </Box>
-        <Box className={classes.coverEdit} style={{ cursor: "pointer!important" }}>
+        
+      </Grid>
+      <Box className={classes.coverEdit} style={{ cursor: "pointer!important" }}>
           Edit Cover
           <FiEdit />
           <input
@@ -1142,7 +1147,6 @@ export default function ProfileSettings() {
             }}
           />
         </Box>
-      </Grid>
       {/* End Cover */}
 
       <Container maxWidth="md" className={classes.homeSetting}>
@@ -1161,13 +1165,14 @@ export default function ProfileSettings() {
                 profilePic
                   ? {
                       padding: "4px",
-                      border: "dotted 2px #fff",
+                      border: "solid 2px #fff",
                       display: "block",
                       width: "fit-content",
                       margin: "auto",
+                      objectFit:"cover"
                     }
                   : {
-                      border: "dotted 2px #fff !important",
+                      border: "solid 2px #fff !important",
                       marginTop: "3px",
                       display: "block",
                       width: "fit-content",

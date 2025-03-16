@@ -23,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
   profilebg: {
     boxShadow: " 0 1.5px 3px 0 rgba(0, 0, 0, 0.16)",
     backgroundImage: " linear-gradient(to bottom,rgb(79, 8, 105),rgb(60, 0, 60))",
-    height: "200px",
+    height: "300px",
     width: "100%",
   },
   bgimg: {
     width: "100%",
     height: "100%",
+    objectFit:"cover"
   },
   profileText: {
     "& h3": {
@@ -235,7 +236,7 @@ export default function Profile({ data, isabout }) {
           About the creator:
         </Typography>
       )}
-      <Box className={classes.profilebg} mt={3}>
+      <Box className={classes.profilebg}>
         {data?.coverPic && (
           <img
             src={data?.coverPic ? data?.coverPic : "images/bg.png"}

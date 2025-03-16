@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "8px",
+    marginBottom: "10px",
     "& h6": {
       fontSize: "28px",
       color: "#000",
@@ -171,11 +171,10 @@ export default function UsersList() {
      
 <Box className={classes.paddingContainer} >
 
-      <Box className={classes.LoginBox} mb={5} >
+      <Box className={classes.LoginBox}  >
         {/* Start Title */}
         
         <Box className={classes.masBoxFlex}
-        sx={{display:"flex" ,justifyContent:"center",alignContent:"center"}}
         >
           <ButtonwithAnimation  >Users</ButtonwithAnimation>
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}

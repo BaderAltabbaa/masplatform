@@ -21,6 +21,7 @@ import ProfileSection from './ProfileSection';
 // assets
 import { IconMenu2 } from '@tabler/icons-react';
 import Buttons from './Buttons';
+import { Typography } from '@mui/material';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -46,7 +47,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
         }}
        
       >
-        <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
+        <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 ,display:"flex",flexDirection:"row" ,alignItems:"center"}}>
        
         <Avatar
         onClick={() => navigate("/profile")}
@@ -61,7 +62,8 @@ const Header = ({ handleLeftDrawerToggle }) => {
                   border: 'solid 2px rgb(255, 255, 255)',
                   cursor: "pointer"
                 }}
-              />          
+              />  
+              <Typography variant='h4' color='white' sx={{marginLeft:"8px"}}>{user.userData?.name}</Typography>        
         </Box>
         <ButtonBase sx={{ 
           borderRadius: '8px', overflow: 'hidden',

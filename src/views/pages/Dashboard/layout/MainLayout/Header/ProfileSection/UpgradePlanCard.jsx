@@ -309,9 +309,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    border: "1px solid #DDD",
+    background:"linear-gradient(to bottom right, #760072, #2d013a)",
     borderRadius: "15px",
-    padding: "4px 10px"
+    padding: "5px 10px",
   },
 }));
 const UpgradePlanCard = () => {
@@ -511,13 +511,7 @@ const UpgradePlanCard = () => {
                 gap: "10px",
               }}
               >
-                <Box display="flex" justifyContent="space-evenly" sx={{cursor:"pointer"}}
-                          onClick={() => navigate("/profilesettings")}>
-                            <IconSettings stroke={1.5} size="1.3rem" />
-<Typography variant="body2">Account Settings</Typography> 
-                </Box>
-                {/* Start User Type */}
-                <Typography align='center' variant="h3"
+                  <Typography align='center' variant="h3"
                   style={{ textTransform: "capitalize" }}
                 >
                   {user.userData?.name
@@ -548,9 +542,16 @@ const UpgradePlanCard = () => {
                     />
                   )}
                 </Typography>
+                <Box display="flex" justifyContent="space-evenly" sx={{cursor:"pointer"}}
+                          onClick={() => navigate("/profilesettings")}>
+                           
+<Button className="primaryButton" variant="body2"> <IconSettings stroke={1.5} size="1.3rem" /> Account Settings</Button> 
+                </Box>
+                {/* Start User Type */}
+              
                 {/* End User Type */}
                 {/* Start Wallet Address */}
-                <Typography align='center' variant="body2"
+                <Typography align='center' variant="body2" color='white'
                   component="p" className={classes.title}>
                   {sortAddress(user?.userData?.ethAccount?.address)} &nbsp;
                   {user?.userData?.ethAccount?.address && (
@@ -565,7 +566,7 @@ const UpgradePlanCard = () => {
                 {/* End Wallet Address */}
 
                 {/* Start Subscribe */}
-                <Typography align='center' variant="body2" component="p" className={classes.title}>
+                <Typography align='center' variant="body2" component="p" className={classes.title} color='white'> 
                   {user &&
                     user.userData &&
                     user.userData?.followers?.length
@@ -575,7 +576,7 @@ const UpgradePlanCard = () => {
                 {/* End Subscribe */}
                 {/* Start refferall */}
                 <Typography align='center' variant="body2"
-                  component="p" className={classes.title}>
+                  component="p" className={classes.title} color='white'>
                   Referral code : {user?.userData?.referralCode} &nbsp;
                   <CopyToClipboard
   text={user?.userData?.referralCode}

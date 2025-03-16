@@ -126,7 +126,7 @@ export default function sales() {
                         </Box>
                     )}
                 </Box>
-                <Box className={classes.LoginBox} mb={5}>
+             {/* <Box className={classes.LoginBox} mb={5}> 
                     <Box className={classes.masBoxFlex}>
                         <Typography variant="h6" style={{fontSize:"1.8rem" ,color:"#43005e"}}>Users</Typography>
                     </Box>
@@ -165,7 +165,7 @@ export default function sales() {
                             </Box>
                         )}
                     </Box>
-                </Box>
+                </Box> */}
             </div>
         </MainCard>
 

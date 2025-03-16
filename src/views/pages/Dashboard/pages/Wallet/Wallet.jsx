@@ -14,6 +14,7 @@ import { makeStyles } from "@mui/styles";
 import { VerifyOtp } from "src/component/Modals/VerifyOtp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; 
 import axios from "axios"
+import zIndex from "@mui/material/styles/zIndex"
 
 
 
@@ -167,6 +168,7 @@ const useStyles = makeStyles((theme) => ({
     dilogBody: {
         paddingBottom: "20px",
         position: "relative",
+        zIndex: 1,
         "& small": {
             position: "absolute",
             bottom: "13px",
@@ -279,6 +281,50 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         margin:"3px 0"
       },
+      dialogWrapper: {
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: "20px",
+        background: " #30003c",
+        padding: "5px",
+        zIndex:"1"
+      },
+      dialogAnimatedBackground: {
+        content: '""',
+        background: "conic-gradient(transparent 270deg, rgb(196, 1, 218), transparent)",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        aspectRatio: "1 / 1",
+        width: "100%",
+        animation: "$rotate 3s linear infinite",
+        zIndex: 0, // Ensure the background is behind the content
+      },
+      dialogInnerBlurEffect: {
+        content: '""',
+        background: " #30003c",
+        borderRadius: "inherit",
+        position: "absolute",
+        inset: "var(--offset)",
+        height: "calc(100% - 2 * var(--offset))",
+        width: "calc(100% - 2 * var(--offset))",
+        backdropFilter: "blur(40px)",
+        zIndex: 0, // Ensure the blur effect is behind the content
+      },
+      "@keyframes rotate": {
+        from: {
+          transform: "translate(-50%, -50%) scale(2.5) rotate(0turn)",
+        },
+        to: {
+          transform: "translate(-50%, -50%) scale(2.5) rotate(1turn)",
+        },
+      },
+      dilogBody: {
+        position: "relative",
+        zIndex: 1, // Ensure the content is above the background and blur effect
+      },
+      
 }));
 
 
@@ -449,15 +495,15 @@ const Wallet = () => {
                <div className="tableWrapper">
                <div className="tableAnimatedBackground"></div>
                <div className="tableInnerBlurEffect"></div>
-   <Box sx={{backgroundColor:"#30003c" , padding:"20px 40px" ,borderRadius:"20px",position:"relative"}}>
-    <Typography variant="h2" color="white" align="center" mb={5}>My Ballance</Typography>
+   <Box sx={{backgroundColor:" #30003c" , padding:"20px 40px" ,borderRadius:"20px",position:"relative"}}>
+    <Typography variant="h2" color="white" align="center" mb={3}>My Ballance</Typography>
     <BalanceBox
         availableBalance={availableBalance1}
         tokensDetails={tokensDetails}
         />
        
 
-        <Typography variant="h2" color="white" align="center" mb={5} mt={2}>My Total Earings</Typography>
+        <Typography variant="h2" color="white" align="center" mb={3} mt={2}>My Total Earings</Typography>
     <BalanceBox
         availableBalance={totalEarning1}
         tokensDetails={tokensDetails}
@@ -481,69 +527,81 @@ const Wallet = () => {
         </Box>
 
 
-<Dialog
-                open={openDeposit}
-                fullWidth="sm"
-                maxWidth="sm"
-                onClose={handleCloseDepositModal}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                style={isMobile ? { height: "70%" } : { heihgt: "100%" }}
+        <Dialog
+      open={openDeposit}
+      fullWidth="sm"
+      maxWidth="sm"
+      onClose={handleCloseDepositModal}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      style={isMobile ? { height: "70%" } : { height: "100%" }}
+      PaperProps={{
+        sx: {
+          borderRadius: "20px",
+          overflow: "hidden",
+          position: "relative",
+          backgroundColor: "transparent", // Remove default background
+        },
+      }}
+    >
+      <div className={classes.dialogWrapper}>
+        <div className={classes.dialogAnimatedBackground}></div>
+        <div className={classes.dialogInnerBlurEffect}></div>
+        <DialogContent className={classes.dilogBody}>
+          <DialogContentText id="alert-dialog-description">
+            <Typography
+              variant="h3"
+              align="center"
+              style={{ color: "white", marginBottom: "20px" }}
             >
-                <DialogContent className={classes.dilogBody}>
-                    <DialogContentText id="alert-dialog-description">
-                        <Typography
-                            variant="h3"
-                            align="center"
-                            style={{ color: " #2d013a", marginBottom: "20px" }}
-                        >
-                            Deposit
-                        </Typography>
-                        <Typography
-                            variant="h5"
-                            align="center"
-                            style={{ color: "#000", marginBottom: "10px" }}
-                        >
-                            Please make sure you use BSC (BNB Smart Chain) and send only supperted tokens (MAS, USDT, BUSD)
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            align="center"
-                            style={{ color: "#000" }}
-                        ></Typography>
-                        <Container maxWidth="md">
-                            <Box mt={4}>
-                                <Input
-                                    value={user.userData?.ethAccount?.address}
-                                    placeholder="Wallet Address"
-                                    className={classes.input_fild2}
-                                    startAdornment={
-                                        <InputAdornment position="end">
-                                            <CopyToClipboard text={user.userData?.ethAccount?.address}>
-                                                <Button onClick={() => toast.info("Copied")} sx={{color:"#2d013a"}}>
-                                                    COPY
-                                                </Button>
-                                            </CopyToClipboard>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </Box>
-                            <Box mt={2} mb={4}>
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    color="secondary"
-                                    onClick={() => setOpenDeposit(false)}
-                                    style={{  fontSize: "15px",background:"#8c0087",color:"white" }}
-                                >
-                                    Close
-                                </Button>
-                            </Box>
-
-                        </Container>
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
+              Deposit
+            </Typography>
+            <Typography
+              variant="h5"
+              align="center"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              Please make sure you use BSC (BNB Smart Chain) and send only supported tokens (MAS, USDT, BUSD)
+            </Typography>
+            <Container maxWidth="md">
+              <Box mt={4}>
+                <Input
+                  value={user.userData?.ethAccount?.address}
+                  placeholder="Wallet Address"
+                  className={classes.input_fild2}
+                  sx={{
+                    color: "white", // Change the text color here
+                    "& .MuiInput-input": {
+                      color: "white", // Ensure the input text color is white
+                    },
+                  }}
+                  startAdornment={
+                    <InputAdornment position="end">
+                      <CopyToClipboard text={user.userData?.ethAccount?.address}>
+                        <Button onClick={() => toast.info("Copied")} sx={{ color: "white" }}>
+                          COPY
+                        </Button>
+                      </CopyToClipboard>
+                    </InputAdornment>
+                  }
+                />
+              </Box>
+              <Box mt={2} mb={4}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="secondary"
+                  onClick={handleCloseDepositModal}
+                  style={{ fontSize: "15px", background: "#8c0087", color: "white" }}
+                >
+                  Close
+                </Button>
+              </Box>
+            </Container>
+          </DialogContentText>
+        </DialogContent>
+      </div>
+    </Dialog>
 
 
 
@@ -572,20 +630,32 @@ const Wallet = () => {
                 disableBackdropClick={loader}
                 disableEscapeKeyDown={loader}
                 style={isMobile ? { height: "70%" } : { height: "100%" }}
+                PaperProps={{
+                    sx: {
+                      borderRadius: "20px",
+                      overflow: "hidden",
+                      position: "relative",
+                      backgroundColor: "transparent", // Remove default background
+                    },
+                  }}
             >
+
+<div className={classes.dialogWrapper}>
+        <div className={classes.dialogAnimatedBackground}></div>
+        <div className={classes.dialogInnerBlurEffect}></div>
                 <DialogContent className={classes.dilogBody}>
                     <DialogContentText id="alert-dialog-description">
                         <Typography
                             variant="h3"
                             align="center"
-                            style={{ color: "#2d013a", marginBottom: "10px" }}
+                            style={{ color: "white", marginBottom: "10px" }}
                         >
                             Withdraw
                         </Typography>
                         <Typography
                             variant="body2"
                             align="center"
-                            style={{ color: "#000" , marginBottom:"20px"}}
+                            style={{ color: "white" , marginBottom:"20px"}}
                         >
                             <>
                                 Please make sure the Wallet address is BEP20 <br />
@@ -604,6 +674,15 @@ const Wallet = () => {
                                     value={withdrawAddress}
                                     className={classes.input_fild2}
                                     onChange={(e) => setWithdrawAddress(e.target.value)}
+                                    sx={{
+                                        color: "white", // Change the text color here
+                                        "& .MuiInput-input": {
+                                          color: "white", // Ensure the input text color is white
+                                        },
+                                        "& .MuiInput-input::placeholder": {
+                                            color:"white"
+                                        }
+                                      }}
 
                                 />
                             </Box>
@@ -616,7 +695,16 @@ const Wallet = () => {
                                     inputProps={{
                                         min:0
                                     }}
-                                    sx={{marginBottom:"20px"}}
+                                    sx={{marginBottom:"20px",
+                                        color: "white", // Change the text color here
+                                        "& .MuiInput-input": {
+                                          color: "white", // Ensure the input text color is white
+                                        },
+                                        "& .MuiInput-input::placeholder": {
+                                            color:"white"
+                                        },
+                                        
+                                    }}
                                     min={10}
                                     onChange={(e) => setWithdrawAmount(e.target.value)}
                                     endAdornment={
@@ -636,7 +724,7 @@ const Wallet = () => {
                                 <Typography
                                     variant="body2"
                                     align="left"
-                                    style={{ color: "#000" }}
+                                    style={{ color: "white" }}
                                 >
                                     <span onClick={() => MAxWithdrawAmount()} >
                                         Available: {availableBalance[selectedToken.databaseKey]?.toFixed(2)} {selectedToken.name}
@@ -649,7 +737,7 @@ const Wallet = () => {
                                 <Typography
                                     variant="body2"
                                     align="left"
-                                    style={{ color: "#000" ,lineHeight:"30px"}}
+                                    style={{ color: "white" ,lineHeight:"30px"}}
                                 >
                                     <span>Withdraw fees: {withdrawAmount ? <span>{withdrawFees} {selectedToken.name}</span> : user.userData?.withdrawFees + "%"} </span>
                                     <br />
@@ -693,6 +781,7 @@ const Wallet = () => {
 
                     </DialogContentText>
                 </DialogContent>
+                </div>
             </Dialog>
         
 </MainCard>

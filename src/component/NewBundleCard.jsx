@@ -42,8 +42,7 @@ const useStyles = makeStyles((theme) => ({
     margin:"0 10px"
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height:"150px",
     cursor: "pointer",
   },
   expand: {
@@ -246,7 +245,8 @@ export default function BundleCard({ data }) {
   }, []);
 
   return (
-    <Card style={{background: "linear-gradient(to top right,rgb(115, 0, 121), #180226)" ,width:"100%" ,minWidth:"230px", margin:"5px"}}>
+    <Box sx={{ transform: 'scale(0.85)' }}>
+    <Card style={{background: "linear-gradient(to top right,rgb(115, 0, 121), #180226)" ,width:"100%" ,maxWidth:"260px", margin:"5px"}}>
       <CardHeader
         avatar={
           <Avatar
@@ -278,15 +278,19 @@ export default function BundleCard({ data }) {
       {isVideo ? (
         <div
         
-          style={{ cursor: "pointer", background: '#000'}}
+          style={{ cursor: "pointer", background: '#000' }}
+          className={classes.media}
+
           onClick={() =>
             isSubscribed || isUserBundle
               ? navigate("/bundles-details?" + BundleData?._id)
               : handleClickOpen2()
           }
         >
+
           <ReactPlayer
             url={BundleData.mediaUrl}
+            
             muted
             playing
             width="100%"
@@ -340,14 +344,14 @@ export default function BundleCard({ data }) {
         <Typography
           variant="h5"
           component="h5"
-          style={{ color: "#fff", fontWeight: "bold" }}
+          style={{ color: "#fff", fontWeight: "bold" ,marginBottom:"10px"}}
         >
           {BundleData.bundleName}
         </Typography>
         <Typography
           variant="h5"
           component="h5"
-          style={{ color: "#fff", fontWeight: "bold" }}
+          style={{ color: "#fff", fontWeight: "bold" ,marginBottom:"10px"}}
         >
           {"( "}
           {BundleData?.donationAmount
@@ -362,11 +366,11 @@ export default function BundleCard({ data }) {
           variant="body2"
           color="#fff"
           component="p"
-          
+          sx={{marginBottom:"10px"}}
         >
           {BundleData?.details}
         </Typography>
-      
+        
    
         <IconButton
           aria-label="add to favorites"
@@ -404,8 +408,7 @@ export default function BundleCard({ data }) {
             View
           </Button>
         )}
-     
-      </CardContent>
+</CardContent>     
 
       {/* edit */}
       <Dialog
@@ -766,5 +769,6 @@ export default function BundleCard({ data }) {
         bundleData={data}
       />
     </Card>
+    </Box>
   );
 }

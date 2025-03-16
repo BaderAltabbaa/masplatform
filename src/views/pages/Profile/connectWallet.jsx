@@ -756,18 +756,8 @@ const ConnectWallet = () => {
     </div>
   ) : (
           <>
-            <Button
-            className="primaryButton"
-              onClick={() => setShowConnectDialog(true)}
-              variant="contained"
-              color="secondary"
-              sx={{marginBottom:"20px"}}
-             
-            >
-              Connect Wallet
-              
-            </Button>
-            {showConnectDialog && (
+           
+            
               <div>
                 <p>Choose a wallet:</p>
                 <Button
@@ -803,17 +793,16 @@ const ConnectWallet = () => {
                   Vantoum
                 </Button>
                 <Button
-                  onClick={() => setShowConnectDialog(false)}
                   variant="contained"
                   color="secondary"
                   className="primaryButton"
                   sx={{ margin: "10px" }} 
 
                 >
-                  Cancel
+                  Tronlink
                 </Button>
               </div>
-            )}
+            
           </>
         )}
       </div>

@@ -384,13 +384,13 @@ export const theme = (customization) => {
     // PageBackGround:"#f7f2c5",
 
 
-    CarBackGround :"linear-gradient(to top right,rgb(144, 0, 152),rgb(77, 0, 81))",
+    CarBackGround :"linear-gradient(to top right,#900098,#4d0051)",
     BoxBackGround :"linear-gradient(to right, rgba(54, 26, 58, 0.533), #180226)",
     // BoxBackGround :"linear-gradient(to top right,#0bab8f,#a8d1d3)",
     // BoxBackGround :"linear-gradient(to top right,#67554d, #c98a77 , #986b5f ,#f7f2c5)",
 
 
-    BoxBackGroundReseve :"linear-gradient(to top right,rgb(117, 1, 123),#3a013d)",
+    BoxBackGroundReseve :"linear-gradient(to top right,#75017b,#3a013d)",
 
 
 

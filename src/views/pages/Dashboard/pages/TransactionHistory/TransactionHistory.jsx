@@ -190,7 +190,7 @@ export default function TransactionHistory() {
   }, [page]);
   return (
 
-    <Box className={classes.LoginBox} mb={5} mt={10}> 
+    <Box className={classes.LoginBox} mb={5} mt={3}> 
 
       {transactionsList && transactionsList.length === 0 ? (
         <Box align="center" mt={4} mb={5}>

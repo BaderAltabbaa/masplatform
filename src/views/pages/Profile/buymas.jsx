@@ -448,7 +448,10 @@ useEffect(() => {
       </Box>
       <br />
     <div>
-              <p style={{marginBottom:"10px"}}>External wallet: {metaMaskAddress} USDT Balance in External wallet: {usdtBalanceInUSDT.toFixed(3)}</p>
+      {metaMaskAddress?  <div><p style={{marginBottom:"10px"}}>External wallet: {metaMaskAddress}</p> <p style={{marginBottom:"10px"}}> USDT Balance in External wallet: {usdtBalanceInUSDT.toFixed(3)}</p></div>
+      :
+      <></>
+}
               
               {/*<p>FDUSD Balance in External wallet: {fdusdBalanceInFDUSD.toFixed(3)}</p>*/}
             </div>

@@ -16,6 +16,7 @@ import { Pagination } from '@mui/material';
 import Cardbundle from "../../../../../component/ui/Card/Cardbundle";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import MainCard from "../../ui-component/cards/MainCard";
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 
@@ -132,8 +133,8 @@ export default function Subscriptions() {
         )}
      
       </MainCard>
-      <MainCard title="Users">
        
+       <Box display="flex" alignItems="center" justifyContent="center" mb={2}><ButtonwithAnimation>Users</ButtonwithAnimation></Box>
         <Box>
           <Grid container>
             {userList.map((data, i) => {
@@ -161,7 +162,6 @@ export default function Subscriptions() {
           )}
         </Box>
       
-      </MainCard>
     </div>
   );
 
