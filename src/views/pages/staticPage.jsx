@@ -65,8 +65,8 @@ export default function StaticPage() {
 
     return (title && content) ? (
         <Container maxWidth="xl" sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
-             <div style={{display:"flex" ,flexDirection:"column",alignItems:"center", padding:"40px"}}>
-              <div style={{marginBottom:"40px"}}>
+             <div style={{display:"flex" ,flexDirection:"column",alignItems:"center", padding:"20px 40px"}}>
+              <div style={{marginBottom:"20px"}}>
               <ButtonwithAnimation>{title}</ButtonwithAnimation>  
               </div>
               <div>

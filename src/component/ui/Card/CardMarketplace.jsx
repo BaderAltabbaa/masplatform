@@ -892,47 +892,83 @@ useEffect(() => {
         aria-labelledby="max-width-dialog-title"
         disableBackdropClick={isLoading}
         disableEscapeKeyDown={isLoading}
+        PaperProps={{
+          sx:{
+            backgroundColor:"rgb(189, 189, 189)"
+          }
+        }}
       >
-        <DialogContent>
+        <DialogContent sx={{overflow:"hidden"}}>
         <Box sx={{
           display:"flex" ,
           flexDirection:"column",
-          alignItems:"center",
-          backgroundColor:"rgb(234, 232, 232)",
-          padding:"20px",
-          borderRadius:"20px",
-          boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
-          "@media(max-width:800px)":{
-            backgroundColor:"#2f0032"
-          }
+         
+         
           }}>
+             <Box mb={1} textAlign="center">
+    <Button style={{background:"#2f0032",color:"white" ,fontWeight:"bold",fontSize:"20px"}}>{itemData.itemTitle}</Button>
+  </Box>
       {/* Big Image */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          marginBottom: 2,
+          marginBottom: 1,
+          justifyContent:"space-between"
         }}
       >
+        
         <img
           src={selectedImage? selectedImage : itemData.mediaUrl1}
           alt="Selected"
           style={{
             width: "100%",
-            maxWidth: "400px",
-            height: "250px",
+            maxWidth: "500px",
+            height: "400px",
             objectFit: "cover",
             borderRadius:"20px",
             boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
 
           }}
         />
+        <Box mt={2} display="flex" sx={{justifyContent:"space-between" ,
+  "@media(max-width:1000px)":{
+    justifyContent:"start",
+    flexDirection:"column"
+  }}}>
+    <div  style={{marginLeft:"10px" ,border:"2px solid grey" ,borderRadius:"20px",padding:"15px"}}>
+  <Typography variant="h4" align="left" color="#000"  style={{  fontWeight: "bold", marginTop: 20 }}>
+      Name: <span> </span>
+      <span>
+       {itemData.itemName}
+      </span>
+    </Typography>
+    <Typography variant="h4" align="left" color="#000"  style={{ color: "rgb(128, 0, 128)", fontWeight: "bold", marginTop: 20 }}>
+      Price: <span> </span>
+      <span>
+        {itemData.donationAmount} {itemData.coinName}
+      </span>
+    </Typography>
+    
+        <Typography variant="h4" align="left" color="#000" style={{marginTop: 20}}>
+          Details: <span> </span>
+      <span> {itemData.details} </span>
+        </Typography>
+        <Typography variant="h4" align="left" color="#000" style={{marginTop: 20}}>
+          Owner: <span> </span>
+      <span> {userName} </span>
+        </Typography>
+        <Typography variant="h4" align="left" color="#000" style={{marginTop: 20}}>
+        Speciality: <span> </span>
+      <span> {userSpeciality} </span>
+        </Typography>
+        </div>
+        </Box>
       </Box>
 
       <Box
         sx={{
+          
           display: "flex",
-          flexDirection: "row",
           alignItems:"center",
           justifyContent:"center",
           gap: 0, // Adds spacing between images
@@ -976,62 +1012,29 @@ useEffect(() => {
           </Box>
         ))}
       </Box>
-    </Box>
+   
 
-  <Box mt={3} className={classes.itemText} textAlign="center">
-    <Typography variant="h3">{itemData.itemTitle}</Typography>
-  </Box>
-  <Box mt={2} display="flex" sx={{justifyContent:"space-between" ,
-  "@media(max-width:1000px)":{
-    justifyContent:"start",
-    flexDirection:"column"
-  }}}>
-    <div>
-  <Typography variant="h4" align="center" color="#000"  style={{  fontWeight: "bold", marginTop: 5 }}>
-      Name: <span> </span>
-      <span>
-       {itemData.itemName}
-      </span>
-    </Typography>
-    <Typography variant="h4" align="center" color="#000"  style={{ color: "rgb(128, 0, 128)", fontWeight: "bold", marginTop: 5 }}>
-      Price: <span> </span>
-      <span>
-        {itemData.donationAmount} {itemData.coinName}
-      </span>
-    </Typography>
-    </div>
-    <div>
-        <Typography variant="h4" align="center" color="#000" style={{marginTop: 5}}>
-          Details: <span> </span>
-      <span> {itemData.details} </span>
-        </Typography>
-        <Typography variant="h4" align="center  " color="#000" style={{marginTop: 5}}>
-          Owner: <span> </span>
-      <span> {userName} </span>
-        </Typography>
-        <Typography variant="h4" align="center" color="#000" style={{marginTop: 5}}>
-        Speciality: <span> </span>
-      <span> {userSpeciality} </span>
-        </Typography>
-        </div>
+ 
+  
   </Box>
    {/* Buy Now and Cancel Buttons */}
    {auth.userLoggedIn && (
-   <Box mt={3} mb={3} textAlign="center" display="flex" justifyContent="space-around">
-    <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#8c0087",color:"white" }} >
-      Cancel
-    </Button>
-    &nbsp;&nbsp;
+   <Box mt={2} mb={0} textAlign="center" display="flex" justifyContent="right">
+   
     <Button
       className={classes.BuyButton}
       onClick={() => setOpenBillingDialog(true)}
       color="secondary"  // This gives the button a distinctive color, usually the primary theme color
       variant="contained"  // This makes the button have a filled style
       disabled={isLoading}
-      style={{background:"#8c0087",color:"white" }}
+      style={{background:"#2f0032",color:"white" }}
     >
       {isLoading ? "pending..." : "Buy Now"}
       {isLoading && <ButtonCircularProgress />}
+    </Button>
+    &nbsp;&nbsp;
+    <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
+      Cancel
     </Button>
   </Box>
   )}

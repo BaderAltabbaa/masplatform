@@ -651,8 +651,7 @@ const useStyles = makeStyles(() => ({
   },
 
   submitButton: {
-    backgroundColor: "rgb(192, 72, 72)",
-    color: "#fff",
+
     "&:hover": {
       boxShadow: "0px 0px 0px 0px",
       backgroundColor: "rgba(81, 0, 94, 0.95) !important",

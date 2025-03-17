@@ -166,13 +166,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   bunbox: {
-    justifyContent: "center",
-
-    "@media(max-width:600px)": {
+  
       display: "flex",
       justifyContent: "center",
     },
-  },
+  
 }));
 
 export default function Bundles() {
@@ -229,7 +227,7 @@ export default function Bundles() {
           ""
         )}
 
-        <Grid container spacing={2}  >
+        <Grid container spacing={2} className={classes.bunbox}  >
           {bundleList.map((data, i) => {
             return (
               <Grid item key={i} lg={3} md={4} sm={6} xm={12}>

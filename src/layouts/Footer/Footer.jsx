@@ -19,6 +19,7 @@ const { data: socialLinks } = useSWR(Apiconfigs.listSocial, fetcher, { suspense:
 const [open, setOpen] = useState(false);
 const [openForm, setOpenForm] = useState(false);
 
+console.log("soc",socialLinks);
 const [selectedItem, setSelectedItem] = useState(null);
 
 const handleClickOpen = (item) => {
@@ -103,7 +104,6 @@ finally {
 const handleCloseSnackbar = () => {
   setOpenSnackBar(false);
 };
-
 
 return (
   <Container maxWidth="sm">
@@ -305,7 +305,7 @@ return (
           <div style={styles.iconsContainer} className="iconContainer">
          
           <div  style={styles.iconContainer} >
-          <Link to={socialLinks[3]?.link} target="_blank" rel="noreferrer">
+          <Link to={socialLinks[0]?.link} target="_blank" rel="noreferrer">
               <FaFacebook  style={styles.icon}/>
             </Link>
 

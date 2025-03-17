@@ -21,7 +21,7 @@ import Cardbundle from "../../../component/ui/Card/Cardbundle";
 const useStyles = makeStyles(() => ({
  
   container: {
-    padding: "50px 0px",
+    padding: "20px 0px",
   },
   heading: {
     padding: "1.5px 0 0",
@@ -111,7 +111,7 @@ const AllBundlesPage = () => {
       ) : (
         // <section>
         <Container maxWidth='xl'>
-          <div style={{ display: "flex", justifyContent: "center",marginBottom  : "50px"}}>
+          <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
                   <ButtonwithAnimation>ALL BUNDLES</ButtonwithAnimation>
                 
                 </div>

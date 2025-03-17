@@ -20,7 +20,7 @@ import CardMarketplace from "../../../component/ui/Card/CardMarketplace";
 const useStyles = makeStyles(() => ({
  
   container: {
-    padding: "50px 0px",
+    padding: "20px 0px",
   },
   heading: {
     padding: "1.5px 0 0",
@@ -103,7 +103,7 @@ const AllItemsPage = () => {
         <section>
           {auth.userLoggedIn && auth.userData?._id && (
             <>
-              <div style={{ display: "flex", justifyContent: "center",marginBottom  : "50px"}}>
+              <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
                                <ButtonwithAnimation>ALL ITEMS</ButtonwithAnimation>
                              
                              </div>

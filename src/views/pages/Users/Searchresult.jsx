@@ -20,7 +20,7 @@ import CardCreators from "../../../component/ui/Card/CardCreators";
 const useStyles = makeStyles(() => ({
 
   container: {
-    padding: "50px 0px",
+    padding: "20px 0px",
 
 
   },
@@ -120,7 +120,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
         <DataLoading />
       ) : (
         <Container maxWidth="xl">
-            <div style={{ display: "flex", justifyContent: "center",marginBottom  : "50px"}}>
+            <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
                         <ButtonwithAnimation  > Creators</ButtonwithAnimation>
                       
                       </div>
