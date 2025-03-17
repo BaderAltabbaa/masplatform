@@ -62,6 +62,7 @@ const useStyles = makeStyles(() => ({
     marginRight : "10px",
     // backgroundColor: "#fff",
     height: 450,
+    transform:"scale(0.8)",
     
    
     margin: "0 10px",
@@ -69,7 +70,7 @@ const useStyles = makeStyles(() => ({
     backgroundImage:
       "linear-gradient(to top right,rgb(126, 34, 121), rgb(64, 0, 75))",
     "&:hover": {
-      transform: "scale(1.03)",
+      transform: "scale(0.85)",
       transition: "all 0.4s ease-in-out 0s",
     },
   },

@@ -209,7 +209,7 @@ export default function SignUp() {
               value={username}
               error={!uservalid}
               helperText={!uservalid && "Please enter username"}
-
+              inputProps={{maxLength: 16}}
               onChange={(e) => {
                 setusername(e.target.value);
                 setuservalid(e.target.value.length > 2);

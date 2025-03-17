@@ -10,9 +10,11 @@ import {
   MenuItem,
   Button,
   IconButton,
-  Box,
+  Box,Popover
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
+import { ArrowDropDown, ArrowUpward } from "@mui/icons-material";
+
 import { useController, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -287,9 +289,10 @@ function removeImage(index) {
               disabled={isEdit}
               type={"number"}
               endAdornment={
-                <Box sx={{ position: 'relative', top: '-18px' }}>
-                  <CoinSelector/>
-                </Box>
+                <CoinSelector
+             watch={watch} // Pass the `watch` function from react-hook-form
+             setValue={setValue} // Pass the `setValue` function from react-hook-form
+             isEdit={isEdit}/>
               }
             />
           </Grid>
@@ -349,50 +352,132 @@ function removeImage(index) {
     );
   }
 
-  function CoinSelector() {
-    return (
-      <InputAdornment position="end">
-        <Select
-          className={classes.select}
-          value={watch("coinName")}
-          onChange={(event) => setValue("coinName", event.target.value)}
-          disabled={isEdit}
-          MenuProps={{
-            PaperProps: {
-              sx: {
-                backgroundColor: '#f5f5f5', // Background color of the dropdown
-                borderRadius: '0px 0 20px 20px',
-                borderBottom:"2px solid #8c0087" 
-              },
-            },
-            MenuListProps: {
-              sx: {
-                padding: '10px 0',
-                backgroundColor:"rgb(255, 255, 255)",
-              
-              },
-            },
-          }}
-        >
-          {tokensDetails.map((item, index) => (
-            <MenuItem
-              key={index}
-              value={item.name}
-              style={{
-                padding: "10px 0px",
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <p style={{ margin: 5, width: 50 }}>{item.name}</p>
-              <img src={'/' +item.img} style={{ width: 25 }} />
-            </MenuItem>
-          ))}
-        </Select>
-      </InputAdornment>
-    );
-  }
+ function CoinSelector({watch, setValue, isEdit}) {
+     const [anchorEl, setAnchorEl] = useState(null); // Anchor element for the popover
+   const open = Boolean(anchorEl); // Whether the popover is open
+ 
+   // Open the popover
+   const handleOpen = (event) => {
+     if (!isEdit) {
+       setAnchorEl(event.currentTarget);
+     }
+   };
+ 
+   // Close the popover
+   const handleClose = () => {
+     setAnchorEl(null);
+   };
+ 
+   // Handle token selection
+   const handleTokenSelect = (tokenName ,tokenImg) => {
+     setValue("coinName", tokenName); // Update the form value
+     setValue("coinImg", tokenImg);
+     handleClose(); // Close the popover
+   };
+ 
+     // Get the selected coin's image
+     const selectedCoin = tokensDetails.find((item) => item.name === watch("coinName"));
+     const selectedCoinImg = selectedCoin ? selectedCoin.img : "";
+ 
+   return (
+     <>
+     <Box  display="flex"
+         alignItems="center"
+         sx={{
+           border: "1px solid #ccc", // Optional: Add a border for better visibility
+           borderRadius: "20px", // Optional: Add border radius
+           padding: "4px 8px", // Adjust padding to control spacing
+           width: "auto", // Ensure the Box takes full width
+         }}>
+ 
+          {/* Start Adornment: Coin Image */}
+          {selectedCoinImg && (
+           <img
+             src={'/' + selectedCoinImg}
+             alt={watch("coinName")}
+             style={{ width: 25, marginRight: 8 }} // Adjust marginRight to control spacing
+           />
+         )}
+ 
+       {/* Input Field */}
+         <Input
+           value={watch("coinName") || ""} // Display the selected token name
+           onClick={handleOpen} // Open the popover when clicked
+           readOnly // Make the input read-only
+           disableUnderline // Remove the underline
+           sx={{
+             flex: 1, // Allow the input to take up remaining space
+             "& .MuiInput-input": {
+               cursor: "pointer", // Show pointer cursor on hover
+               padding: 0, // Remove default padding
+             },
+           }}
+         />
+          <Button
+           onClick={handleOpen}
+           disabled={isEdit}
+           sx={{
+             padding: "6px 8px", // Adjust button padding
+             minWidth: "auto", // Reduce button width
+             marginLeft: "8px", // Adjust marginLeft to control spacing
+           }}
+         >
+               <ArrowDropDown></ArrowDropDown>
+               </Button>
+               </Box>
+ 
+       
+ 
+       {/* Popover to display the list of tokens */}
+       <Popover
+         open={open}
+         anchorEl={anchorEl}
+         onClose={handleClose}
+         anchorOrigin={{
+           vertical: "bottom",
+           horizontal: "right",
+         }}
+         transformOrigin={{
+           vertical: "top",
+           horizontal: "right",
+         }}
+         sx={{
+           "& .MuiPopover-paper": {
+             borderRadius: 20, // Add rounded corners
+             boxShadow: 3, // Add a shadow
+           },
+         }}
+       >
+         <Box
+           display="flex"
+           flexDirection="row"
+           flexWrap="wrap"
+           padding={2}
+           maxWidth={400} // Adjust the max width as needed
+         >
+           {tokensDetails.map((item, index) => (
+             <MenuItem
+               key={index}
+               onClick={() => handleTokenSelect(item.name)} // Handle token selection
+               style={{
+                 padding: "1px",
+                 display: "flex",
+                 alignItems: "center",
+                 flex: "1 1 auto",
+               }}
+             >  <Box sx={{display:"flex", alignItems:"center", margin:"0 2px"}}>
+                |<img src={'/' + item.img} style={{ width: 25, marginRight: 2 }} />
+                <p style={{ margin: "0" }}>{item.name}</p>
+                </Box>
+             </MenuItem>
+             
+           ))}
+         </Box>
+       </Popover>
+     </>
+   );
+   }
+
 
   async function createitem(data) {
     try {
@@ -570,7 +655,7 @@ const useStyles = makeStyles(() => ({
     color: "#fff",
     "&:hover": {
       boxShadow: "0px 0px 0px 0px",
-      backgroundColor: "rgba(192, 72, 72, 0.95) !important",
+      backgroundColor: "rgba(81, 0, 94, 0.95) !important",
     },
   },
 

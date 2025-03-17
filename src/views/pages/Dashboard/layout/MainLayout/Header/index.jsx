@@ -63,7 +63,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                   cursor: "pointer"
                 }}
               />  
-              <Typography variant='h4' color='white' sx={{marginLeft:"8px"}}>{user.userData?.name}</Typography>        
+              <Typography variant='h4' color='white' sx={{margin:"0 8px"}}>{user.userData?.name}</Typography>        
         </Box>
         <ButtonBase sx={{ 
           borderRadius: '8px', overflow: 'hidden',
