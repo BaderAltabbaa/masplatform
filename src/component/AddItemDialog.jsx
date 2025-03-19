@@ -174,7 +174,7 @@ function removeImage(index) {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ background:"#8c0087",color:'white',margin:"0 5px"}}
+          style={{ background:"#2f0032",color:'white',margin:"0 5px"}}
 
         >
           Cancel
@@ -183,7 +183,7 @@ function removeImage(index) {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          style={{ background:"#8c0087",color:'white',margin:"0 5px"}}
+          style={{ background:"#2f0032",color:'white',margin:"0 5px"}}
 
           className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
@@ -569,7 +569,7 @@ export default AdditemDialog;
 const useStyles = makeStyles(() => ({
   inputContainer: {
     borderWidth: 2,
-    borderColor: " #8c0087",
+    borderColor: "#2f0032",
     borderStyle: "solid",
     borderRadius: 5,
     padding: "10px",

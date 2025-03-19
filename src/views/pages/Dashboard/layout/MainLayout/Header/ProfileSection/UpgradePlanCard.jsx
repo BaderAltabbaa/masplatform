@@ -689,7 +689,7 @@ const UpgradePlanCard = () => {
                 size="large"
                 color="secondary"
                 onClick={handleCloseShareModal}
-                style={{ fontSize: "15px",background:"#8c0087",color:"white" }}
+                style={{ fontSize: "15px",background:"#2f0032",color:"white" }}
 
               >
                 Close

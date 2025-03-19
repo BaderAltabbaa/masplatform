@@ -270,7 +270,7 @@ export default function Login() {
               variant="contained"
               size="large"
               color="secondary"
-              style={{ background:"#8c0087",color:'white'}}
+              style={{ background:"#2f0032",color:'white'}}
 
               onClick={() => setOpenAuction(true)}
             >
@@ -482,7 +482,7 @@ export default function Login() {
                 onClick={() => setOpenAuction(false)}
                 color="primary"
                 size="large"
-                style={{ background:"#8c0087",color:'white'}}
+                style={{ background:"#2f0032",color:'white'}}
 
                 disabled={process}
               >
@@ -497,7 +497,7 @@ export default function Login() {
                   // placeAuctionOrder
                   // setOpenAuction(false)
                 }
-                style={{ background:"#8c0087",color:'white'}}
+                style={{ background:"#2f0032",color:'white'}}
 
                 color="secondary"
                 size="large"

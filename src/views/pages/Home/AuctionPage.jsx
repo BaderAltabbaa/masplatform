@@ -9,7 +9,7 @@ import SectionCard from "../../../component/ui/sectionCard/SectionCard";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import NFTSection from './NFT/NFTSection'
 import { create } from "lodash";
-import { Category } from "@mui/icons-material";
+import MostPopular from "./MostPopular";
 
 
 const AuctionPage = ({ staticSections }) => {
@@ -81,6 +81,39 @@ const AuctionPage = ({ staticSections }) => {
    {name:"Crypto",
     image:"/assets/Images/7.jpg"
    },
+   {name:"Education",
+    image:"/assets/Images/2.jpg"
+   },
+   {name:"Trading",
+    image:"/assets/Images/22.jpg"
+   },
+   {name:"Analytics",
+    image:"/assets/Images/1.jpg"
+   },
+   {name:"News",
+    image:"/assets/Images/5.jpg"
+   },
+   {name:"Gaming",
+    image:"/assets/Images/6.jpg"
+   },
+   {name:"Privacy ",
+    image:"/assets/Images/7.jpg"
+   },
+   {name:"Startups",
+    image:"/assets/Images/8.jpg"
+   },
+   {name:"Web3",
+    image:"/assets/Images/10.jpg"
+   },
+   {name:"Security",
+    image:"/assets/Images/11.jpg"
+   },
+   {name:"Wallets",
+    image:"/assets/Images/12.jpg"
+   },
+   {name:"Metaverse",
+    image:"/assets/Images/13.jpg"
+   },
  ]
 
   return (
@@ -91,6 +124,7 @@ const AuctionPage = ({ staticSections }) => {
       {BundlesSection()}
       {ItemsSection()}
       {NFTsection()}
+      <MostPopular/>
       {popularCategory()}
     </>
   );
@@ -246,6 +280,8 @@ const AuctionPage = ({ staticSections }) => {
     );
   }
 
+
+  {/*  */}
   function popularCategory() {
     return(
       <Box sx={{padding:"30px 150px", 
@@ -256,23 +292,41 @@ padding:"30px 200px"
       }
       }} display="flex" flexDirection="column" alignItems="center">
         <Typography align="center" variant="h1" color="white">Popular Categories</Typography>
-        <Box sx={{padding:"20px", background:"linear-gradient(to top right,#900098,#4d0051)"
-        ,margin:"20px",borderRadius:"20px",width:"100%"
-        ,display:"flex",alignItems:"center",
-        justifyContent:"center",boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",
-          "@media(max-width:1200px)":{
-            display:"grid",
-            gridTemplateColumns:"1fr 1fr 1fr"
-          }, "@media(max-width:800px)":{
-            gridTemplateColumns:"1fr 1fr"
-          },
-         
+        <Box mt={2} sx={{ background:"linear-gradient(to top right,#900098,#4d0051)",
+        boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",borderRadius:"20px", display: "grid",
+        gridTemplateRows: "repeat(2, 150px)", // 2 rows, each 100px tall
+        gridTemplateColumns: "repeat(10, 1fr)", // 10 columns, equal width
+        gap: "10px", // Spacing between items
+        padding: "10px",
+        "@media(max-width:1200px)":{
+          gridTemplateColumns: "repeat(9, 1fr)", 
+        },
+        "@media(max-width:1100px)":{
+          gridTemplateColumns: "repeat(7, 1fr)", 
+        },
+        "@media(max-width:1000px)":{
+          gridTemplateColumns: "repeat(6, 1fr)", 
+        },
+        "@media(max-width:900px)":{
+          gridTemplateColumns: "repeat(5, 1fr)", 
+        },
+        "@media(max-width:800px)":{
+          gridTemplateColumns: "repeat(4, 1fr)", 
+        },
+        "@media(max-width:700px)":{
+          gridTemplateColumns: "repeat(3, 1fr)", 
+        },
+        "@media(max-width:600px)":{
+          gridTemplateColumns: "repeat(2, 1fr)", 
+        }
+        
         }}>
 
     {Categories.map((category ,index) => (
 
 <Box alignItems="center" display="flex" flexDirection="column" m={2} key={index} sx={{ "&:hover":{
-            transform:"scale(1.1)"
+            transform:"scale(1.1)",
+            transition:"ease-out 500ms"
           }}}>
 <img src={category.image} width="70px" height="70px" style={{objectFit:"cover" ,borderRadius:"50%",marginBottom:"10px",boxShadow:"2px 5px 10px rgba(0, 0, 0, 0.6)"}} />
   <Typography color="white" sx={{fontWeight:"bold"}}>{category.name}</Typography>

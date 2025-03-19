@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material//Dialog";
-import DialogTitle from "@mui/material//DialogTitle";
-import DialogContent from "@mui/material//DialogContent";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
 import {
   Grid,
   Input,
@@ -9,10 +9,10 @@ import {
   Select,
   MenuItem,
   Button,
-  Box, Popover
-  
+  Box,
+  Popover,
 } from "@mui/material";
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,7 +21,6 @@ import Apiconfigs from "../Apiconfig/Apiconfigs";
 import { tokensDetails } from "../constants/index";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LinearProgress from "@mui/material/LinearProgress";
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReactPlayer from "react-player";
 import { toast } from "react-toastify";
@@ -32,6 +31,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   const classes = useStyles();
   const [mediaUrl, setMediaUrl] = useState(isEdit ? bundleData.mediaUrl : "");
   const [uploadCounter, setUploadCounter] = useState(0);
+  const [categoryDialogOpen, setCategoryDialogOpen] = useState(false); // State for category dialog
 
   // Yup inputs validation
   const schema = yup.object({
@@ -45,6 +45,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       .min(1, "Enter donation amount please")
       .positive("the price should be positive number"),
     coinName: yup.string().required("Enter coin name"),
+    category: yup.string().required("Select a category"), // Add category validation
   });
 
   // React hook form for handle form data
@@ -66,6 +67,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       duration: isEdit ? +bundleData.duration.split(" ")[0] : 0,
       details: isEdit ? bundleData.details : "",
       coinName: isEdit ? bundleData.coinName : "MAS",
+      category: isEdit ? bundleData.category : "", // Initialize category
     },
   });
 
@@ -73,8 +75,78 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     setMediaUrl(isEdit ? bundleData.mediaUrl : "");
   }, [show]);
 
-  /* Main Return */
+  // List of categories
+  const categories = [
+    "Analytics",
+    "Agriculture",
+    "Architecture",
+    "Art",
+    "Artificial Intelligence",
+    "Blockchain",
+    "Cars",
+    "Cloud Computing",
+    "Coding",
+    "Collectors",
+    "Crypto",
+    "Cybersecurity",
+    "Data Science",
+    "Digital Marketing",
+    "E-commerce",
+    "Education",
+    "Fashion",
+    "Finance",
+    "Gaming",
+    "Health & Fitness",
+    "History",
+    "Internet of Things",
+    "Machine Learning",
+    "Metaverse",
+    "Mobile Development",
+    "Music",
+    "News",
+    "Photography",
+    "Privacy",
+    "Productivity",
+    "Psychology",
+    "Real Estate",
+    "Robotics",
+    "Security",
+    "Social Media",
+    "Software Development",
+    "Space Exploration",
+    "Sports",
+    "Startups",
+    "Sustainability",
+    "Trading",
+    "Travel",
+    "UI/UX Design",
+    "Video",
+    "Virtual Reality",
+    "Wallets",
+    "Web3",
+    "Writing",
+    "Yoga",
+    "Zoology",
+   
+  ];
 
+  // Open category dialog
+  const handleOpenCategoryDialog = () => {
+    setCategoryDialogOpen(true);
+  };
+
+  // Close category dialog
+  const handleCloseCategoryDialog = () => {
+    setCategoryDialogOpen(false);
+  };
+
+  // Handle category selection
+  const handleCategorySelect = (category) => {
+    setValue("category", category); // Update the form value
+    handleCloseCategoryDialog(); // Close the dialog
+  };
+
+  /* Main Return */
   return (
     <Dialog
       fullWidth={true}
@@ -84,7 +156,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       aria-labelledby="max-width-dialog-title"
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
       >
         {isEdit ? "Edit Bundle" : "Create a Bundle"}
       </DialogTitle>
@@ -98,6 +170,24 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           {FormButtons()}
         </Grid>
       </DialogContent>
+
+      {/* Category Selection Dialog */}
+      <Dialog open={categoryDialogOpen} onClose={handleCloseCategoryDialog}>
+        <DialogTitle align="center" color="#2f0032" sx={{fontSize:"18px"}}>Select a Category</DialogTitle>
+        <DialogContent>
+          <Box display="flex" flexDirection="column">
+            {categories.map((category, index) => (
+              <Button
+                key={index}
+                onClick={() => handleCategorySelect(category)}
+                style={{ margin: "5px 0" ,color:"#2f0032"}}
+              >
+                {category}
+              </Button>
+            ))}
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 
@@ -123,9 +213,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         className={classes.mediaBox}
       >
         {isVideo ? (
-          <div
-            style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}
-          >
+          <div style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}>
             <ReactPlayer
               url={mediaUrl}
               playing
@@ -145,19 +233,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         )}
         <div className={classes.mediaBoxInfo}>
           <div>
-            <p
-              style={{
-                color: "#777",
-                fontWeight: "600",
-                margin: 0,
-                fontSize: 14,
-              }}
-            >
-              Filename
-            </p>
-            <p style={{ marginTop: 5, fontWeight: "500" }}>
-              {name ? name : ""}
-            </p>
+            <p style={{ color: "#777", fontWeight: "600", margin: 0, fontSize: 14 }}>Filename</p>
+            <p style={{ marginTop: 5, fontWeight: "500" }}>{name ? name : ""}</p>
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <DeleteIcon
@@ -171,20 +248,19 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <div className={classes.uploadCounter}>
             <p>Uploading {uploadCounter}%</p>
             <LinearProgress
-               variant="determinate"
-               value={uploadCounter}  
-               sx={{
-                marginTop:"10px",
-                 width: "100%", // Take full width of the parent container
-                 height: 10, // Set a visible height
-                 borderRadius: 5, // Optional: Add rounded corners
-                 backgroundColor: " #e0e0e0", // Background color
-                 "& .MuiLinearProgress-bar": {
-                   backgroundColor: "rgb(67, 0, 90)", // Progress bar color
-                 },
-               }}
+              variant="determinate"
+              value={uploadCounter}
+              sx={{
+                marginTop: "10px",
+                width: "100%",
+                height: 10,
+                borderRadius: 5,
+                backgroundColor: " #e0e0e0",
+                "& .MuiLinearProgress-bar": {
+                  backgroundColor: "rgb(67, 0, 90)",
+                },
+              }}
             />
-            
           </div>
         )}
       </Box>
@@ -204,20 +280,17 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ fontSize: "15px",background:"#8c0087",color:"white" ,margin:"0 5px"}}
-
+          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
         >
           Cancel
         </Button>
         <Button
-        color="primary"
+          color="primary"
           variant="contained"
           onClick={onSubmit}
           size="large"
-          // className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
-          style={{ fontSize: "15px",background:"#8c0087",color:"white" ,margin:"0 5px"}}
-
+          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
         >
           {isEdit ? "Edit" : "Create"}
         </Button>
@@ -263,30 +336,27 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
-             <div style={{display:"flex" ,justifyContent:"center", alignItems:"center" ,border:"1px solid rgb(184, 180, 180)",padding:"60px 10px",borderRadius:"10px"
-            }}>
-            <div className={classes.uploadIcon}>
-              <CloudUploadIcon />
-            </div>
-            <div style={{ margin: 15, textAlign: "left" }}>
-              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>
-                Select Image/Video
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>Drag And Drop Files</p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Accept All Video/Image Formats
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Max File Size: 1024 MP
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Min Width Size: 300px
-              </p>
-              <p style={{ margin: "5px 0px 0px 0px" }}>
-                Min Height Size: 160px
-              </p>
-            </div>
-            
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid rgb(184, 180, 180)",
+                padding: "60px 10px",
+                borderRadius: "10px",
+              }}
+            >
+              <div className={classes.uploadIcon}>
+                <CloudUploadIcon />
+              </div>
+              <div style={{ margin: 15, textAlign: "left" }}>
+                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>Select Image/Video</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Drag And Drop Files</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Accept All Video/Image Formats</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Max File Size: 1024 MP</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Min Width Size: 300px</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>Min Height Size: 160px</p>
+              </div>
             </div>
           </Button>
         </label>
@@ -303,14 +373,13 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["bundleTitle"] ? "red" : "rgba(45, 34, 45, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Bundle Title</label>
+            <label style={{ color: " #2d013a" }}>Bundle Title</label>
             <Input
               {...register("bundleTitle")}
               className={classes.input}
               placeholder={"Enter Bundle Title"}
               disabled={isEdit}
-              inputProps={{maxLength: 16}}
-
+              inputProps={{ maxLength: 16 }}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -323,14 +392,13 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["bundleName"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Bundle Name</label>
+            <label style={{ color: " #2d013a" }}>Bundle Name</label>
             <Input
               {...register("bundleName")}
               className={classes.input}
               placeholder={"Enter Bundle Name"}
               disabled={isEdit}
-              inputProps={{maxLength: 16}}
-
+              inputProps={{ maxLength: 16 }}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -343,7 +411,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Amount</label>
+            <label style={{ color: " #2d013a" }}>Amount</label>
             <Input
               {...register("donationAmount")}
               className={classes.input}
@@ -354,11 +422,12 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               disabled={isEdit}
               type={"number"}
               endAdornment={
-             <CoinSelector
-             watch={watch} // Pass the `watch` function from react-hook-form
-             setValue={setValue} // Pass the `setValue` function from react-hook-form
-             isEdit={isEdit}/>
-             }
+                <CoinSelector
+                  watch={watch}
+                  setValue={setValue}
+                  isEdit={isEdit}
+                />
+              }
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -372,7 +441,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Duration</label>
+            <label style={{ color: " #2d013a" }}>Duration</label>
             <Input
               {...register("duration")}
               inputProps={{
@@ -382,14 +451,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               placeholder={"Enter Duration"}
               disabled={isEdit}
               type={"number"}
-              endAdornment={
-                <p style={{ margin: "0px 10px", fontSize: 14 }}>days</p>
-              }
+              endAdornment={<p style={{ margin: "0px 10px", fontSize: 14 }}>days</p>}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {typeof watch("duration") === "number" &&
-              errors["duration"]?.message}
+            {typeof watch("duration") === "number" && errors["duration"]?.message}
           </p>
         </>
         <>
@@ -398,149 +464,164 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Details</label>
+            <label style={{ color: " #2d013a" }}>Details</label>
             <Input
               {...register("details")}
               className={classes.input}
               placeholder={"Enter a details about your bundle"}
               disabled={isEdit}
               multiline={true}
-              inputProps={{maxLength: 50}}
-
+              inputProps={{ maxLength: 50 }}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
             {errors["details"]?.message}
           </p>
         </>
+        <>
+          <Grid
+            sm={12}
+            className={classes.inputContainer}
+            style={{ borderColor: errors["category"] ? "red" : "rgba(140, 0, 135, 0)" }}
+          >
+            <label style={{ color: " #2d013a" }}>Category</label>
+            <Input
+              {...register("category")}
+              className={classes.input}
+              placeholder={"Select a category"}
+              disabled={isEdit}
+              readOnly
+              onClick={handleOpenCategoryDialog}
+              endAdornment={
+                <InputAdornment position="end">
+                  <ArrowDropDown />
+                </InputAdornment>
+              }
+            />
+          </Grid>
+          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
+            {errors["category"]?.message}
+          </p>
+        </>
       </Grid>
     );
   }
 
-  function CoinSelector({watch, setValue, isEdit}) {
-    const [anchorEl, setAnchorEl] = useState(null); // Anchor element for the popover
-  const open = Boolean(anchorEl); // Whether the popover is open
+  function CoinSelector({ watch, setValue, isEdit }) {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
 
-  // Open the popover
-  const handleOpen = (event) => {
-    if (!isEdit) {
-      setAnchorEl(event.currentTarget);
-    }
-  };
+    const handleOpen = (event) => {
+      if (!isEdit) {
+        setAnchorEl(event.currentTarget);
+      }
+    };
 
-  // Close the popover
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
-  // Handle token selection
-  const handleTokenSelect = (tokenName ,tokenImg) => {
-    setValue("coinName", tokenName); // Update the form value
-    setValue("coinImg", tokenImg);
-    handleClose(); // Close the popover
-  };
+    const handleTokenSelect = (tokenName, tokenImg) => {
+      setValue("coinName", tokenName);
+      setValue("coinImg", tokenImg);
+      handleClose();
+    };
 
-    // Get the selected coin's image
     const selectedCoin = tokensDetails.find((item) => item.name === watch("coinName"));
     const selectedCoinImg = selectedCoin ? selectedCoin.img : "";
 
-  return (
-    <>
-    <Box  display="flex"
-        alignItems="center"
-        sx={{
-          border: "1px solid #ccc", // Optional: Add a border for better visibility
-          borderRadius: "20px", // Optional: Add border radius
-          padding: "4px 8px", // Adjust padding to control spacing
-          width: "auto", // Ensure the Box takes full width
-        }}>
-
-         {/* Start Adornment: Coin Image */}
-         {selectedCoinImg && (
-          <img
-            src={'/' + selectedCoinImg}
-            alt={watch("coinName")}
-            style={{ width: 25, marginRight: 8 }} // Adjust marginRight to control spacing
-          />
-        )}
-
-      {/* Input Field */}
-        <Input
-          value={watch("coinName") || ""} // Display the selected token name
-          onClick={handleOpen} // Open the popover when clicked
-          readOnly // Make the input read-only
-          disableUnderline // Remove the underline
-          sx={{
-            flex: 1, // Allow the input to take up remaining space
-            "& .MuiInput-input": {
-              cursor: "pointer", // Show pointer cursor on hover
-              padding: 0, // Remove default padding
-            },
-          }}
-        />
-         <Button
-          onClick={handleOpen}
-          disabled={isEdit}
-          sx={{
-            padding: "6px 8px", // Adjust button padding
-            minWidth: "auto", // Reduce button width
-            marginLeft: "8px", // Adjust marginLeft to control spacing
-          }}
-        >
-              <ArrowDropDown></ArrowDropDown>
-              </Button>
-              </Box>
-
-      
-
-      {/* Popover to display the list of tokens */}
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        sx={{
-          "& .MuiPopover-paper": {
-            borderRadius: 20, // Add rounded corners
-            boxShadow: 3, // Add a shadow
-          },
-        }}
-      >
+    return (
+      <>
         <Box
           display="flex"
-          flexDirection="row"
-          flexWrap="wrap"
-          padding={2}
-          maxWidth={400} // Adjust the max width as needed
+          alignItems="center"
+          sx={{
+            border: "1px solid #ccc",
+            borderRadius: "20px",
+            padding: "4px 8px",
+            width: "auto",
+          }}
         >
-          {tokensDetails.map((item, index) => (
-            <MenuItem
-              key={index}
-              onClick={() => handleTokenSelect(item.name)} // Handle token selection
-              style={{
-                padding: "1px",
-                display: "flex",
-                alignItems: "center",
-                flex: "1 1 auto",
-              }}
-            >  <Box sx={{display:"flex", alignItems:"center", margin:"0 2px"}}>
-               |<img src={'/' + item.img} style={{ width: 25, marginRight: 2 }} />
-               <p style={{ margin: "0" }}>{item.name}</p>
-               </Box>
-            </MenuItem>
-            
-          ))}
+          {selectedCoinImg && (
+            <img
+              src={"/" + selectedCoinImg}
+              alt={watch("coinName")}
+              style={{ width: 25, marginRight: 8 }}
+            />
+          )}
+          <Input
+            value={watch("coinName") || ""}
+            onClick={handleOpen}
+            readOnly
+            disableUnderline
+            sx={{
+              flex: 1,
+              "& .MuiInput-input": {
+                cursor: "pointer",
+                padding: 0,
+              },
+            }}
+          />
+          <Button
+            onClick={handleOpen}
+            disabled={isEdit}
+            sx={{
+              padding: "6px 8px",
+              minWidth: "auto",
+              marginLeft: "8px",
+            }}
+          >
+            <ArrowDropDown />
+          </Button>
         </Box>
-      </Popover>
-    </>
-  );
+
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          sx={{
+            "& .MuiPopover-paper": {
+              borderRadius: 20,
+              boxShadow: 3,
+            },
+          }}
+        >
+          <Box
+            display="flex"
+            flexDirection="row"
+            flexWrap="wrap"
+            padding={2}
+            maxWidth={400}
+          >
+            {tokensDetails.map((item, index) => (
+              <MenuItem
+                key={index}
+                onClick={() => handleTokenSelect(item.name, item.img)}
+                style={{
+                  padding: "1px",
+                  display: "flex",
+                  alignItems: "center",
+                  flex: "1 1 auto",
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", margin: "0 2px" }}>
+                  |<img src={"/" + item.img} style={{ width: 25, marginRight: 2 }} />
+                  <p style={{ margin: "0" }}>{item.name}</p>
+                </Box>
+              </MenuItem>
+            ))}
+          </Box>
+        </Popover>
+      </>
+    );
   }
 
   async function createBundle(data) {
@@ -557,6 +638,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       formData.append("details", data.details);
       formData.append("donationAmount", data.donationAmount);
       formData.append("coinName", data.coinName);
+      formData.append("category", data.category); // Add category to form data
 
       const res = await axios({
         method: "POST",
@@ -610,7 +692,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   }
 
   function isVideoType(url) {
-   //return url.includes("video");
+    //return url.includes("video");
   }
 };
 

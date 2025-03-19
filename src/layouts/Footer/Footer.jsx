@@ -4,7 +4,7 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { Dialog, DialogTitle, DialogContent, DialogContentText ,TextField,Button,Container,Typography,Snackbar } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { CgFacebook } from "react-icons/cg";
-import { FaTelegram, FaTwitterSquare, FaDiscord, FaFacebook } from "react-icons/fa";
+import { FaTelegram, FaTwitterSquare, FaDiscord, FaFacebook,FaInstagram,FaWhatsapp } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
 import { SiAppstore, SiGoogleplay } from "react-icons/si";
 import './footer.css';
@@ -304,9 +304,26 @@ return (
           <h3 style={{ ...styles.sectionHeader, marginBottom: "20px" }}>Join The Community</h3>
           <div style={styles.iconsContainer} className="iconContainer">
          
+         
+          <div  style={styles.iconContainer} >
+          <Link to={socialLinks[2]?.link} target="_blank" rel="noreferrer">
+              <AiOutlineClose  style={styles.icon}/>
+            </Link>
+
+            </div>
+         
+         
           <div  style={styles.iconContainer} >
           <Link to={socialLinks[0]?.link} target="_blank" rel="noreferrer">
-              <FaFacebook  style={styles.icon}/>
+              <FaInstagram  style={styles.icon}/>
+            </Link>
+
+            </div>
+
+
+            <div  style={styles.iconContainer} >
+          <Link to={socialLinks[0]?.link} target="_blank" rel="noreferrer">
+              <FaWhatsapp  style={styles.icon}/>
             </Link>
 
             </div>
@@ -323,12 +340,7 @@ return (
 
             
 
-            <div  style={styles.iconContainer} >
-          <Link to={socialLinks[2]?.link} target="_blank" rel="noreferrer">
-              <AiOutlineClose  style={styles.icon}/>
-            </Link>
-
-            </div>
+            
         
             <div  style={styles.iconContainer} >
           <Link to={socialLinks[1]?.link} target="_blank" rel="noreferrer">

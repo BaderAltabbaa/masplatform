@@ -211,7 +211,7 @@ export default function Bundles() {
             variant="contained"
             size="large"
             color=""
-            style={{background:"#8c0087",color:'white'}}
+            style={{background:"#2f0032",color:'white'}}
             onClick={() => updateState({ OpenAuction: true })}
           >
             add a bundle

@@ -11,7 +11,7 @@ import {
   Box,
   Typography,
   useMediaQuery,
-  
+
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { AiOutlineLogout } from "react-icons/ai";
@@ -62,14 +62,14 @@ const menuLinks = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  
-    
-  
- 
-  
- 
 
-  
+
+
+
+
+
+
+
   flexButton: {
     display: "flex",
     justifyContent: "flex-between",
@@ -105,9 +105,9 @@ const useStyles = makeStyles((theme) => ({
     width: "300px",
     overflowY: "scroll",
     "@media(max-width:1250px)": {
-       top:"0px"
+      top: "0px"
     },
-  
+
   },
 
   searchBox: {
@@ -132,6 +132,12 @@ export default function Header() {
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
+  };
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
   };
 
 
@@ -174,6 +180,7 @@ export default function Header() {
   const setsearch = auth?.setsearch;
   const [notify, setNotify] = useState([]);
   const [openNotifications, setOpenNotifications] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const fetchUserAsyncInsideHook = async () => {
@@ -283,13 +290,95 @@ export default function Header() {
   window.addEventListener("click", function (event) {
     setsearch("");
   });
+
+
+  const ProfileDropdown = ({ onClose, unreadChats, unReadNotification }) => {
+
+    return (
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '100%',
+          left: '50%', // Center it horizontally
+          transform: 'translateX(-50%)', // Adjust for exact centering
+          backgroundColor: '#cdc8c8',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+          borderRadius: '4px',
+          padding: '10px',
+          zIndex: 1000,
+        }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <Button
+            onClick={() => {
+              navigate("/chat/t");
+              onClose();
+            }}
+            startIcon={
+              <Badge badgeContent={unreadChats} >
+                <BsChat />
+              </Badge>
+            }
+            sx={{color:"#43005e"}}
+          >
+            Chat
+          </Button>
+          <Button
+            onClick={() => {
+              readNotificationhandler();
+              setOpenNotifications(true);
+            }}
+            startIcon={
+              <Badge badgeContent={auth.unReadNotification} color="primary">
+                <NotificationsIcon />
+              </Badge>
+            }
+            sx={{color:"#43005e"}}
+          >
+            Notifications
+          </Button>
+          <Button
+            onClick={() => {
+              navigate("/buymas");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+          >
+            Buy a Mas
+          </Button>
+          <Button
+            onClick={() => {
+              navigate("/profile");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+          >
+            My Profile
+          </Button>
+        </Box>
+      </Box>
+    );
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   // start Search result
   const SearchResult = () => {
     return (
       <Box className={classes.searchResults}>
         {/* Start Title */}
         <Box style={{ height: '54px', marginBottom: "14px", color: '#fafafa', backgroundImage: 'linear-gradient(to bottom,rgb(116, 23, 108), #480048)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Typography variant="h4" style={{color:"white"}}>
+          <Typography variant="h4" style={{ color: "white" }}>
             Search Result
           </Typography>
         </Box>
@@ -335,7 +424,7 @@ export default function Header() {
         <header className="header  " >
           <div className='logo1_contanier '>
             <Link to={"/"}>
-            <img className="logo1" src="\assets\Images\bader-logo.svg" alt="Logo11" />
+              <img className="logo1" src="\assets\Images\bader-logo.svg" alt="Logo11" />
             </Link>
           </div>
 
@@ -346,7 +435,7 @@ export default function Header() {
                 <Box className={classes.searchBox} >
                   <InputBase
                     placeholder="Search.."
-                    style={{ color: "#000",paddingLeft:"8px" }}
+                    style={{ color: "#000", paddingLeft: "8px" }}
                     value={search}
                     onChange={(e) => setsearch(e.target.value)}
                     classes={{
@@ -376,7 +465,7 @@ export default function Header() {
 
 
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
-            <ul className=''style={{display:"flex" ,alignItems:"center", marginBottom:"10px"}}>
+            <ul className='' style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
               <li><Link to="/bundles">Explore</Link></li>
               <li><Link to="/items">Marketplace</Link></li>
               <li><Link to="/creators">Creators</Link></li>
@@ -385,196 +474,229 @@ export default function Header() {
               <li><Link to="/corporate/metaverse">Metaverse</Link></li>
               <li className='test'><Link to="/buymas">Buy a Mas</Link></li>
               <li className='test'><Link to="/connectWallet">Connect Wallet</Link></li>
-              
+
               <li className='test'><Link to="/profile">Create on MAS</Link></li>
-             
+
               {
-                    auth.userLoggedIn ? <></> :
-             
-              <li className='test'><Link to="/login">Login</Link></li>}
+                auth.userLoggedIn ? <></> :
+
+                  <li className='test'><Link to="/login">Login</Link></li>}
 
 
             </ul>
 
-            <div style={{display:"flex"}}>
-            <div className="search-container2">
-              {isSearchVisible && (
+            <div style={{ display: "flex" ,alignItems:"center" }}>
+              <div className="search-container2">
+                {isSearchVisible && (
 
-                <Box className={classes.searchBox} >
-                  <InputBase
-                    placeholder="Search.."
-                    style={{ color: "#000",paddingLeft:"8px" }}
-                    value={search}
-                    onChange={(e) => setsearch(e.target.value)}
-                    classes={{
-                      root: inputRoot,
-                      input: inputInput,
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                    sx={{
-                      "& .MuiInputBase-input": {
-                        textAlign: "center", // Center the text
-                      },
-                    }}
+                  <Box className={classes.searchBox} >
+                    <InputBase
+                      placeholder="Search.."
+                      style={{ color: "#000", paddingLeft: "8px" }}
+                      value={search}
+                      onChange={(e) => setsearch(e.target.value)}
+                      classes={{
+                        root: inputRoot,
+                        input: inputInput,
+                      }}
+                      inputProps={{ "aria-label": "search" }}
+                      sx={{
+                        "& .MuiInputBase-input": {
+                          textAlign: "center", // Center the text
+                        },
+                      }}
 
-                  />
+                    />
 
-                  {search !== "" && <SearchResult />}
+                    {search !== "" && <SearchResult />}
 
-                </Box>
-
-              )}
-              <FaSearch
-                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
-                onClick={toggleSearch}
-              />
-            </div>
-            {ProfileId ? (
-              <Grid item >
-                <Box className={flexButton}>
-                  {ProfileId && (
-                    <Box>
-                      <Tooltip title="Chat" placement="bottom">
-                        <IconButton onClick={() => navigate("/chat/t")}>
-                          <Badge badgeContent={Object.keys(auth.unreadChats).length} overlap="rectangular" color="primary">
-                            <BsChat style={{ color: " #43005e" }} />
-                          </Badge>
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  )}
-                  {ProfileId && (
-                    <Box>
-
-                      <Tooltip title="Notification" placement="bottom">
-                        <IconButton
-                          onClick={() => {
-                            readNotificationhandler();
-                            setOpenNotifications(true);
-                          }}
-                        >
-
-                          <Badge
-                            badgeContent={auth.unReadNotification}
-                            overlap="rectangular"
-                            color="primary"
-                          >
-                            <NotificationsIcon
-                              style={{ color: " #43005e" }}
-                              size="12px"
-                            />
-                          </Badge>
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  )}
-                  {
-                    auth.userLoggedIn ? <>
-                      <Tooltip
-                        title="My Profile"
-                        placement="bottom"
-                      >
-                        <Avatar onClick={() => navigate("/profile")}
-                          alt={auth.userData?.userName}
-                          src={auth.userData?.profilePic}
-                          style={{ cursor: 'pointer', border: 'solid 3px  #43005e' }} />
-                      </Tooltip>
-
-                    </> :
-                      <Button
-                      className="primaryButton "
-                 fullWidth
-                variant="contained"
-                size="large"
-                        // className={classes.createButton}
-                        onClick={() => navigate("/profile")}
-                      >
-                        Create on MAS
-                      </Button>
-                  }
-                  <Box>
-                    {auth.userLoggedIn ? (
-
-                      <Tooltip
-                        title="Logout"
-                        placement="bottom"
-                      >
-                        <IconButton onClick={() => setIsLogoutOpen(true)}>
-                          <AiOutlineLogout />
-                        </IconButton>
-                      </Tooltip>
-                    ) : (
-                      <Button
-                        onClick={() => navigate('/login')}
-                        variant="contained"
-                        size="22px"
-                        color="secondary"
-                        style={{ marginRight: '10px' }}
-                      >
-                        Login
-                      </Button>
-
-                    )}
                   </Box>
-                  {!isMeduimScreen &&
-                    (
-                      <Box className="hidden md:flex ">
+
+                )}
+                <FaSearch
+                  style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
+                  onClick={toggleSearch}
+                />
+              </div>
+
+
+
+              {auth.userLoggedIn ? <Box sx={{
+                position: 'relative',
+                "@media(max-width:1250px)": {
+                  display: "none"
+                }
+              }}
+                ref={dropdownRef}>
+                <Tooltip title="My Profile" placement="bottom">
+                  <IconButton onClick={toggleDropdown}>
+                    <Avatar
+                      alt={auth.userData?.userName}
+                      src={auth.userData?.profilePic}
+                      style={{ cursor: 'pointer', border: 'solid 3px #43005e' }}
+                    />
+                  </IconButton>
+                </Tooltip>
+                {isDropdownOpen && (
+                  <ProfileDropdown
+                    onClose={() => setDropdownOpen(false)}
+                    unreadChats={Object.keys(auth.unreadChats).length}
+                    unReadNotification={auth.unReadNotification}
+                  />
+                )}
+              </Box> : <></>}
+
+
+              {ProfileId ? (
+                <Grid item >
+                  <Box display="flex" justifyContent="center" alignItems="center">
+                    {ProfileId && (
+                      <Box sx={{
+                        display: "none",
+                        "@media(max-width:1250px)": {
+                          display: "block"
+                        }
+                      }} >
+                        <Tooltip title="Chat" placement="bottom">
+                          <IconButton onClick={() => navigate("/chat/t")}>
+                            <Badge badgeContent={Object.keys(auth.unreadChats).length} overlap="rectangular" color="primary">
+                              <BsChat style={{ color: " #43005e" }} />
+                            </Badge>
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    )}
+                    {ProfileId && (
+                      <Box sx={{
+                        display: "none",
+                        "@media(max-width:1250px)": {
+                          display: "block"
+                        }
+                      }}>
+
+                        <Tooltip title="Notification" placement="bottom">
+                          <IconButton
+                            onClick={() => {
+                              readNotificationhandler();
+                              setOpenNotifications(true);
+                            }}
+                          >
+
+                            <Badge
+                              badgeContent={auth.unReadNotification}
+                              overlap="rectangular"
+                              color="primary"
+                            >
+                              <NotificationsIcon
+                                style={{ color: " #43005e" }}
+                                size="12px"
+                              />
+                            </Badge>
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    )}
+                    {
+                      auth.userLoggedIn ? <>
+                        <Tooltip
+                          title="My Profile"
+                          placement="bottom"
+                        >
+                          <Avatar onClick={() => navigate("/profile")}
+                            alt={auth.userData?.userName}
+                            src={auth.userData?.profilePic}
+                            style={{ cursor: 'pointer', border: 'solid 3px  #43005e' }}
+                            sx={{
+                              display: "none",
+                              "@media(max-width:1250px)": {
+                                display: "block"
+                              }
+                            }} />
+                        </Tooltip>
+
+                      </> :
                         <Button
-                             className="primaryButton"
-                             
-                            variant="contained"
-                            size="large"
-                          onClick={() => navigate('/buymas')}
-                         
-                        
-                        
+                          className="primaryButton "
+                          fullWidth
+                          variant="contained"
+                          size="large"
+                          // className={classes.createButton}
+                          onClick={() => navigate("/profile")}
+                        >
+                          Create on MAS
+                        </Button>
+                    }
+                    <Box>
+                      {auth.userLoggedIn ? (
+
+                        <Tooltip
+                          title="Logout"
+                          placement="bottom"
+                        >
+                          <IconButton onClick={() => setIsLogoutOpen(true)}>
+                            <AiOutlineLogout />
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Button
+                          onClick={() => navigate('/login')}
+                          variant="contained"
+                          size="22px"
+                          color="secondary"
                           style={{ marginRight: '10px' }}
                         >
-                          buy a mas
-                        </Button>
-                        <Button
-                          onClick={() => navigate('/connectWallet')}
-                          className="primaryButton"
-                             
-                            variant="contained"
-                        >
-                          connect wallet
+                          Login
                         </Button>
 
-                      </Box>
-                    )
-                  }
-                </Box>
-              </Grid>
-            )
-              : (
-                <div className='btn_group test2'>
-                  <Link style={{ color: "white" }} to="/profile" className=' Create_on_MAS'> <Button className="primaryButton"
-                             fullWidth
-                            variant="contained"> Create on MAS</Button></Link>
+                      )}
+                    </Box>
+                    {!isMeduimScreen &&
+                      (
+                        
+                         
+                          <Button
+                            onClick={() => navigate('/connectWallet')}
+                            className="primaryButton"
 
-                  <Link style={{ color: "white" }} to="/login">
-                    <Button  
-                     className="primaryButton p"
-                             fullWidth
                             variant="contained"
-                           
-                            >LogIn</Button>
+                          >
+                            connect wallet
+                          </Button>
 
-                  </Link>
-                  <Link style={{ color: "white" }} to="/buymas" className="primaryButton "
-                             
-                            variant="contained"><Button className="primaryButton"
-                            
-                           variant="contained">Buy A Mas</Button></Link>
-                  <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton"
-                             
-                            variant="contained">Connect Wallet</Button></Link>
+                        
+                      )
+                    }
+                  </Box>
+                </Grid>
+              )
+                : (
+                  <div className='btn_group test2'>
+                    <Link style={{ color: "white" }} to="/profile" className=' Create_on_MAS'> <Button className="primaryButton"
+                      fullWidth
+                      variant="contained"> Create on MAS</Button></Link>
+
+                    <Link style={{ color: "white" }} to="/login">
+                      <Button
+                        className="primaryButton p"
+                        fullWidth
+                        variant="contained"
+
+                      >LogIn</Button>
+
+                    </Link>
+                    <Link style={{ color: "white" }} to="/buymas" className="primaryButton "
+
+                      variant="contained"><Button className="primaryButton"
+
+                        variant="contained">Buy A Mas</Button></Link>
+                    <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton"
+
+                      variant="contained">Connect Wallet</Button></Link>
 
 
-                </div>
-              )}
-</div>
+                  </div>
+                )}
+            </div>
 
 
 
@@ -628,10 +750,10 @@ export default function Header() {
                 variant="contained"
                 size="small"
                 color='white'
-                style={{ fontSize: "15px",background:"#8c0087",color:"white" ,margin:"0 5px"}}
+                style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
 
                 mr={2}
-               
+
                 fullWidth
                 onClick={() => setIsLogoutOpen(false)}
               >
@@ -641,10 +763,10 @@ export default function Header() {
                 variant="contained"
                 size="small"
                 color='white'
-                style={{ fontSize: "15px",background:"#8c0087",color:"white",margin:"0 5px" }}
+                style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
 
 
-               
+
                 fullWidth
                 onClick={() => {
                   auth.logOut();

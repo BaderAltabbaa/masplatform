@@ -210,7 +210,7 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="primary"
-            style={{ marginRight: "10px",background:"#8c0087",color:'white' }}
+            style={{ marginRight: "10px",background:"#2f0032",color:'white' }}
             onClick={() => updateState({ openShareAudience: true })}
           >
             add a Photos
@@ -219,7 +219,7 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="secondary"
-            style={{ background:"#8c0087",color:'white'}}
+            style={{ background:"#2f0032",color:'white'}}
 
             onClick={() => updateState({ OpenAuction: true })}
           >
@@ -672,7 +672,7 @@ export const AdditemPopup = ({ open, handleClose, callbackFun }) => {
           onClick={() => handleClose(false)}
           color="primary"
           size="large"
-          style={{ background:"#8c0087",color:'white'}}
+          style={{ background:"#2f0032",color:'white'}}
 
         >
           cancel

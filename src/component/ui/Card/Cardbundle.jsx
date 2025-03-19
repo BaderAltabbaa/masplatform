@@ -122,8 +122,7 @@ function Cardbundle({
     let profilePic =
       BundleData?.userId?.profilePic ||
       BundleData?.userDetail?.profilePic ||
-      `https://avatars.dicebear.com/api/miniavs/${userName}.svg`;
-    
+"/assets/Images/profile.jpg"    
       useEffect(() => {
         const videoExtensions = ["mp4", "avi", "wmv", "mov", "mkv", "flv", "webm", "mpeg", "3gp", "ogv"];
       
@@ -510,7 +509,7 @@ function Cardbundle({
                     variant="contained"
                     size="large"
                     color="primary"
-                    style={{background:"#8c0087",color:"white" }}
+                    style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
                     Cancel
@@ -521,7 +520,7 @@ function Cardbundle({
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{background:"#8c0087",color:"white" }}
+                    style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
                     Save Changes
@@ -688,7 +687,7 @@ function Cardbundle({
               <Button 
               className={classes.LoginButton} 
               onClick={handleClose2}
-              style={{background:"#8c0087",color:"white" }}
+              style={{background:"#2f0032",color:"white" }}
 
               >
                 Cancel
@@ -699,7 +698,7 @@ function Cardbundle({
                 onClick={() => {
                   navigate("/login");
                 }}
-                style={{background:"#8c0087",color:"white" }}
+                style={{background:"#2f0032",color:"white" }}
 
               >
                 Login
@@ -714,7 +713,7 @@ function Cardbundle({
                   variant="contained"
                   color="secondary"
                   size="large"
-                  style={{ background:" #8c0087",color:'white'}}
+                  style={{ background:"#2f0032",color:'white'}}
 
                   onClick={() => {
                     handleClose2();
@@ -731,7 +730,7 @@ function Cardbundle({
                       variant="contained"
                       color="secondary"
                       size="large"
-                      style={{ background:"#8c0087",color:'white'}}
+                      style={{ background:"#2f0032",color:'white'}}
 
                       onClick={subscribeToBundleHandler}
                       disabled={isLoading}
@@ -782,7 +781,7 @@ function Cardbundle({
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary" style={{background:"#8c0087",color:"white" }} >
+              <Button variant="contained" size="large" color="secondary" style={{background:"#2f0032",color:"white" }} >
                 Donate now
               </Button>
             </Box>

@@ -39,7 +39,7 @@ function CardCreators({
 
 // clean
   const userCardData = data;
-  console.log(data)
+  console.log("ha",data)
   const navigate = useNavigate();
  
   const auth = useContext(UserContext);
@@ -106,7 +106,7 @@ function CardCreators({
       setisLike(userCardData?.likesUsers?.includes(auth.userData?._id));
       setisSubscribed(userCardData?.followers?.includes(auth.userData?._id));
     }
-    console.log(userCardData?._id)
+    console.log("user",userCardData)
 
   }, [])
   return (
@@ -122,7 +122,7 @@ function CardCreators({
     navigate("/user-profile/" + userCardData.userName);
   }}
 >
-  <img src={userCardData.profilePic} alt={title} style={{height:"210px",maxHeight: "210px"}}/>
+  <img src={userCardData.profilePic? userCardData.profilePic : "/assets/Images/profile.jpg"} alt={title} style={{height:"210px",maxHeight: "210px"}}/>
   <div className="contentContainer">
     <h3
       onClick={(event) => {

@@ -226,7 +226,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ fontSize: "15px", background: "#8c0087", color: "white", margin: "0 10px" }}
+          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 10px" }}
         >
           Cancel
         </Button>
@@ -235,7 +235,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          style={{ fontSize: "15px", background: "#8c0087", color: "white", margin: "0 10px" }}
+          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 10px" }}
         >
           {isEdit ? "Edit" : "Share"}
         </Button>
@@ -392,7 +392,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
                 <div
                   className={classes.bundleCardStyle}
                   style={{
-                    backgroundColor: isChosen ? "rgb(85, 0, 82)" : "#8c0087",
+                    backgroundColor: isChosen ? "rgb(85, 0, 82)" : "#2f0032",
                     cursor: "pointer",
                       color: "white"
                   }}

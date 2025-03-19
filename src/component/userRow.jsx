@@ -65,8 +65,7 @@ const handleCloseBalance = () => {
           {/* {index + 1} */}
           <Avatar
             style={{ width: "40px", height: "40px", backgroundColor: "#999" ,borderRadius:"20px" }}
-            src={row.profilePic ? row.profilePic :
-              `https://avatars.dicebear.com/api/miniavs/${row._id}.svg`}
+            src={row.profilePic ? row.profilePic : "/assets/Images/profile.jpg"}
             alt=""
           />
         </TableCell>

@@ -53,7 +53,7 @@ export default function UsersCard({
               style={{ cursor: "pointer", marginBottom: "5px" }}
             >
               <img
-                src={users.profilePic || `https://avatars.dicebear.com/api/miniavs/${users?.userName}.svg`}
+                src={users.profilePic || `/assets/Images/profile.jpg`}
                 style={{ height: "50px", width: "50px" ,borderRadius:"50%" }}
               />
             </figure>

@@ -259,7 +259,7 @@ export default function Profile({ data, isabout }) {
                   })
                 }
                 src={data?.profilePic ? data.profilePic
-                  : `https://avatars.dicebear.com/api/miniavs/${data?.userName}.svg`
+                  : "/assets/Images/profile.jpg"
                 }
                 className={classes.avatar}
               />
@@ -381,7 +381,7 @@ export default function Profile({ data, isabout }) {
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{ background:"#8c0087",color:'white'}}
+                    style={{ background:"#2f0032",color:'white'}}
 
                     onClick={() => {
                       if (auth?.userData?._id) {
@@ -407,7 +407,7 @@ export default function Profile({ data, isabout }) {
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{ background:"#8c0087",color:'white'}}
+                    style={{ background:"#2f0032",color:'white'}}
                     onClick={() => {
                       if (auth?.userData?._id) {
                         if (auth?.userData?._id !== data?._id) {
@@ -433,7 +433,7 @@ export default function Profile({ data, isabout }) {
                     size="large"
                     color="secondary"
                     onClick={subscribeToUserHandler}
-                    style={{ background:"#8c0087",color:'white'}}
+                    style={{ background:"#2f0032",color:'white'}}
 
                   >
                     {isSubscribed ? 'Subscribed' : 'Subscribe'}

@@ -145,8 +145,7 @@ const CardMarketplace = ({data}) => {
   let profilePic =
     itemData?.userId?.profilePic ||
     itemData?.userDetail?.profilePic ||
-    `https://avatars.dicebear.com/api/miniavs/${userName}.svg`;
-  
+"/assets/Images/profile.jpg"  
   const groupedImages = [
     [itemData.mediaUrl1, itemData.mediaUrl2, itemData.mediaUrl3],
     [itemData.mediaUrl4, itemData.mediaUrl5, itemData.mediaUrl6],
@@ -476,7 +475,7 @@ useEffect(() => {
               >
                   <DialogTitle id="billing-dialog-title">Billing Information</DialogTitle>
                   <DialogContent>
-                      <Typography variant="body1" sx={{color:"#8c0087"}}>Please enter your billing information below:</Typography>
+                      <Typography variant="body1" sx={{color:"#2f0032"}}>Please enter your billing information below:</Typography>
                       {error && <Typography color="error">{error}</Typography>}  
                       {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2","serialNumber"].map((item) => (
                           <TextField
@@ -494,19 +493,19 @@ useEffect(() => {
                   </DialogContent>
                   <br />
                   <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
-                      <Button onClick={onClose} sx={{color:"#8c0087"}}>Cancel</Button>
-                      <Button onClick={handleBuy} color="secondary" variant="contained" style={{background:"#8c0087",color:"white" }}>Buy Now</Button>
+                      <Button onClick={onClose} sx={{color:"#2f0032"}}>Cancel</Button>
+                      <Button onClick={handleBuy} color="secondary" variant="contained" style={{background:"#2f0032",color:"white" }}>Buy Now</Button>
                   </Box>
                   <br />
               </Dialog>
               
               <Dialog open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
-                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#8c0087"}}>successed Purchase</DialogTitle>
+                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}>successed Purchase</DialogTitle>
                   <DialogContent>
                       <Typography variant="body1"> your purchase successed.... You can dawnload your bill now.</Typography>
                       <Box textAlign="center" mt={2}>
-                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:"#8c0087",color:"white" }}>Download Bill</Button>
-                          <Button onClick={handleCancel} sx={{color:"#8c0087"}}>Cancel</Button>
+                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:"#2f0032",color:"white" }}>Download Bill</Button>
+                          <Button onClick={handleCancel} sx={{color:"#2f0032"}}>Cancel</Button>
                       </Box>
                   </DialogContent>
               </Dialog>
@@ -514,14 +513,14 @@ useEffect(() => {
               <Dialog open={showPurchaseDialog} onClose={() => {}} aria-labelledby="bill-dialog-title" maxWidth="sm" fullWidth={true}>
             <DialogTitle id="bill-dialog-title">Your Bill Preview</DialogTitle>
             <DialogContent>
-            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:"#8c0087"}}> 
+            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}> 
             Successful Purchase
             </Typography>
             <Typography variant="body1" gutterBottom align="center">
             Your purchase was successful. You can view your bill below:
             </Typography>
             <Box textAlign="center" mt={2}>
-            <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:" #8c0087",color:"white" ,"&:hover":{
+            <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:" #2f0032",color:"white" ,"&:hover":{
               backgroundColor:"rgb(99, 0, 96)"
             } }}>View Bill now</Button>
             </Box>
@@ -792,7 +791,7 @@ useEffect(() => {
                     variant="contained"
                     size="large"
                     color="primary"
-                    style={{background:"#8c0087",color:"white" }}
+                    style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
                     Cancel
@@ -803,7 +802,7 @@ useEffect(() => {
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{background:"#8c0087",color:"white" }}
+                    style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
                     Save Changes
@@ -883,189 +882,223 @@ useEffect(() => {
           </DialogContentText>
         </DialogContent>
       </Dialog>
+      
+      
       {/* buy now */}
       <Dialog
-        fullWidth
-        maxWidth="md"
-        open={open2}
-        onClose={handleClose2}
-        aria-labelledby="max-width-dialog-title"
-        disableBackdropClick={isLoading}
-        disableEscapeKeyDown={isLoading}
-        PaperProps={{
-          sx:{
-            backgroundColor:"rgb(189, 189, 189)"
-          }
-        }}
-      >
-        <DialogContent sx={{overflow:"hidden"}}>
-        <Box sx={{
-          display:"flex" ,
-          flexDirection:"column",
-         
-         
-          }}>
-             <Box mb={1} textAlign="center">
-    <Button style={{background:"#2f0032",color:"white" ,fontWeight:"bold",fontSize:"20px"}}>{itemData.itemTitle}</Button>
-  </Box>
+  fullWidth
+  maxWidth="md"
+  open={open2}
+  onClose={handleClose2}
+  aria-labelledby="max-width-dialog-title"
+  disableBackdropClick={isLoading}
+  disableEscapeKeyDown={isLoading}
+  PaperProps={{
+    sx: {
+      backgroundColor: "rgb(189, 189, 189)",
+      borderRadius: "10px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+    },
+  }}
+>
+  <DialogContent sx={{ overflow:{xs: "auto", sm: "hidden"} , padding: { xs: 2, sm: 3 } }}>
+    {/* Title Box */}
+    <Box display="flex" justifyContent="center">
+    <Box
+      mb={2}
+      sx={{
+        color: "white",
+        backgroundColor: "#2f0032",
+        padding: "5px",
+        borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+        width: "fit-content",
+        textAlign: "center",
+        display:"flex",
+        justifyContent:"center"
+      }}
+    >
+      <Typography sx={{ fontSize: { xs: "20px", sm: "25px" }, fontWeight: "bold" }}>
+        {itemData.itemTitle}
+      </Typography>
+    </Box></Box>
+
+    {/* Big Image and Details */}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" }, // Stack on small screens, row on larger screens
+        gap: { xs: 2, md: 3 }, // Add spacing between elements
+        width: "100%",
+      }}
+    >
       {/* Big Image */}
       <Box
         sx={{
+          flex: 1,
           display: "flex",
-          marginBottom: 1,
-          justifyContent:"space-between"
+          justifyContent: "center",
         }}
       >
-        
         <img
-          src={selectedImage? selectedImage : itemData.mediaUrl1}
+          src={selectedImage ? selectedImage : itemData.mediaUrl1}
           alt="Selected"
           style={{
             width: "100%",
-            maxWidth: "500px",
-            height: "400px",
+            maxWidth: "370px",
+            height: "300px", // Make height responsive
             objectFit: "cover",
-            borderRadius:"20px",
-            boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
-
+            borderRadius: "20px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
           }}
         />
-        <Box mt={2} display="flex" sx={{justifyContent:"space-between" ,
-  "@media(max-width:1000px)":{
-    justifyContent:"start",
-    flexDirection:"column"
-  }}}>
-    <div  style={{marginLeft:"10px" ,border:"2px solid grey" ,borderRadius:"20px",padding:"15px"}}>
-  <Typography variant="h4" align="left" color="#000"  style={{  fontWeight: "bold", marginTop: 20 }}>
-      Name: <span> </span>
-      <span>
-       {itemData.itemName}
-      </span>
-    </Typography>
-    <Typography variant="h4" align="left" color="#000"  style={{ color: "rgb(128, 0, 128)", fontWeight: "bold", marginTop: 20 }}>
-      Price: <span> </span>
-      <span>
-        {itemData.donationAmount} {itemData.coinName}
-      </span>
-    </Typography>
-    
-        <Typography variant="h4" align="left" color="#000" style={{marginTop: 20}}>
-          Details: <span> </span>
-      <span> {itemData.details} </span>
-        </Typography>
-        <Typography variant="h4" align="left" color="#000" style={{marginTop: 20}}>
-          Owner: <span> </span>
-      <span> {userName} </span>
-        </Typography>
-        <Typography variant="h4" align="left" color="#000" style={{marginTop: 20}}>
-        Speciality: <span> </span>
-      <span> {userSpeciality} </span>
-        </Typography>
-        </div>
-        </Box>
       </Box>
 
+      {/* Details Box */}
       <Box
         sx={{
-          
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2, // Add spacing between items
+          backgroundColor: " #2f0032",
+          borderRadius: "20px",
+          padding: { xs: "10px", sm: "15px" },
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+        }}
+      >
+        {[
+          { label: "Name", value: itemData.itemName },
+          { label: "Price", value: `${itemData.donationAmount} ${itemData.coinName}` },
+          { label: "Details", value: itemData.details },
+          { label: "Owner", value: userName },
+          { label: "Speciality", value: userSpeciality },
+        ].map((item, index) => (
+          <Typography
+            key={index}
+            variant="h4"
+            align="left"
+            sx={{
+              color: "#000",
+              fontWeight: "bold",
+              backgroundColor: "rgb(189, 189, 189)",
+              borderRadius: "20px",
+              padding: "5px",
+            }}
+          >
+            {item.label}: <span>{item.value}</span>
+          </Typography>
+        ))}
+      </Box>
+    </Box>
+
+    {/* Thumbnail Images */}
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        mt: 2,
+      }}
+    >
+      <Box
+        sx={{
           display: "flex",
           alignItems:"center",
           justifyContent:"center",
           gap: 0, // Adds spacing between images
+          flexWrap:"wrap",
           overflowX: "auto", // Allows horizontal scrolling if there are too many images
           padding: 1, // Adds some padding at the bottom
           background:" #2f0032",
           borderRadius:"10px",
+          width: "fit-content", // Ensures the Box only takes up as much space as its content
           boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
-
-          "@media(max-width:800px)":{
-            display:"grid",
-            gridTemplateColumns:"1fr 1fr 1fr"
-          }
+          maxWidth: "100%", // Prevents the Box from exceeding the parent container's width
         }}
       >
         {groupedImages.flat().map((url, idx) => (
           <Box
             key={idx}
             sx={{
-              flexShrink: 0, // Prevents images from shrinking
+              flexShrink: 0,
               cursor: "pointer",
-              borderRadius: 1, // Optional: Adds rounded corners
-              "&:hover":{
-      transform:"scale(1.07)"
-    }
+              borderRadius: "10px",
+              "&:hover": {
+                transform: "scale(1.07)",
+              },
             }}
             onClick={() => handleImageClick(url)}
           >
             {url && (
-            <img
-              src={url}
-              alt={`Thumbnail ${idx}`}
-              style={{
-                objectFit: "cover",
-    borderRadius:"10px",
-    border:"2px solid white",
-    margin:"0 2px"
-              }}
-              className="itemSmallImage"
-            />)}
+              <img
+                src={url}
+                alt={`Thumbnail ${idx}`}
+                style={{
+                  width: "60px", // Fixed width for thumbnails
+                  height: "60px", // Fixed height for thumbnails
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                  border: "2px solid white",
+                    margin:"0 2px"
+                }}
+              />
+            )}
           </Box>
         ))}
       </Box>
-   
-
- 
-  
-  </Box>
-   {/* Buy Now and Cancel Buttons */}
-   {auth.userLoggedIn && (
-   <Box mt={2} mb={0} textAlign="center" display="flex" justifyContent="right">
-   
-    <Button
-      className={classes.BuyButton}
-      onClick={() => setOpenBillingDialog(true)}
-      color="secondary"  // This gives the button a distinctive color, usually the primary theme color
-      variant="contained"  // This makes the button have a filled style
-      disabled={isLoading}
-      style={{background:"#2f0032",color:"white" }}
-    >
-      {isLoading ? "pending..." : "Buy Now"}
-      {isLoading && <ButtonCircularProgress />}
-    </Button>
-    &nbsp;&nbsp;
-    <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
-      Cancel
-    </Button>
-  </Box>
-  )}
-  <BillingDialog
-  open={openBillingDialog}
-  onClose={() => setOpenBillingDialog(false)}
-  onSuccessfulPurchase={handleCloseParentDialog} 
-/>
-
-  
-
-  {/* Login and Subscribe Buttons */}
-  {!auth.userLoggedIn && (
-    <Box mt={3} mb={3} textAlign="center" display="flex" justifyContent="space-around">
-      <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#8c0087",color:"white" }} >
-        Cancel
-      </Button>
-      &nbsp;&nbsp;
-      <Button
-        className={classes.LoginButton}
-        onClick={() => {
-          navigate("/login");
-        }}
-        style={{background:"#8c0087",color:"white" }}
-
-      >
-        Login
-      </Button>
     </Box>
-  )}
-</DialogContent>
+
+    {/* Buttons */}
+   {/* Buy Now and Cancel Buttons */}
+ {auth.userLoggedIn && (
+    <Box mt={2} mb={0} textAlign="center" display="flex" justifyContent="right">
+    
+     <Button
+       className={classes.BuyButton}
+       onClick={() => setOpenBillingDialog(true)}
+       color="secondary"  // This gives the button a distinctive color, usually the primary theme color
+       variant="contained"  // This makes the button have a filled style
+       disabled={isLoading}
+       style={{background:"#2f0032",color:"white" }}
+     >
+       {isLoading ? "pending..." : "Buy Now"}
+       {isLoading && <ButtonCircularProgress />}
+     </Button>
+     &nbsp;&nbsp;
+     <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
+       Cancel
+     </Button>
+   </Box>
+   )}
+   <BillingDialog
+   open={openBillingDialog}
+   onClose={() => setOpenBillingDialog(false)}
+   onSuccessfulPurchase={handleCloseParentDialog} 
+ />
+ 
+   
+ 
+   {/* Login and Subscribe Buttons */}
+   {!auth.userLoggedIn && (
+     <Box mt={3} mb={3} textAlign="center" display="flex" justifyContent="right">
+       <Button
+         className={classes.LoginButton}
+         onClick={() => {
+           navigate("/login");
+         }}
+         style={{background:"#2f0032",color:"white" }}
+ 
+       >
+         Login
+       </Button>
+       &nbsp;&nbsp;
+       <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
+         Cancel
+       </Button>
+     </Box>
+   )}
+  </DialogContent>
       {/* New Image Dialog */}
       <Dialog
         open={openImageDialog}
@@ -1124,7 +1157,7 @@ useEffect(() => {
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary"  style={{background:"#8c0087",color:"white" }} >
+              <Button variant="contained" size="large" color="secondary"  style={{background:"#2f0032",color:"white" }} >
                 Donate now
               </Button>
             </Box>

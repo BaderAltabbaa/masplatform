@@ -66,6 +66,10 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
 
   const getuser = async (cancelTokenSource) => {
     setIsLoading(true);
+    console.log("Starting API request...");
+  console.log("Page:", page);
+  console.log("Search:", search);
+  console.log("Cancel Token:", cancelTokenSource && cancelTokenSource.token);
     axios({
       method: "GET",
       url: Apiconfigs.latestUserList,
@@ -84,6 +88,10 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
     })
       .then(async (res) => {
         setIsLoading(false);
+        console.log("API Response:", res);
+        console.log("Status Code:", res.data.statusCode);
+        console.log("Result Docs:", res.data.result.docs);
+        console.log("Total Pages:", res.data.result.pages);
         if (res.data.statusCode === 200) {
           if (res.data.result.docs) {
             setNoOfPages(res.data.result.pages);
