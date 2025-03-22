@@ -24,6 +24,8 @@ import { tokensDetails } from "../constants/index";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"
 import LinearProgress from "@mui/material/LinearProgress";
+import { useTranslation } from 'react-i18next';
+
 
 import { toast } from "react-toastify";
 
@@ -32,7 +34,8 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
   const classes = useStyles();
   const [mediaUrl, setMediaUrl] = useState(isEdit ? itemData.mediaUrl : "");
   const [mediaUrls, setMediaUrls] = useState(isEdit && Array.isArray(itemData.mediaUrls) ? itemData.mediaUrls : []);
-
+       const {t} = useTranslation();
+ 
 
   const [uploadCounter, setUploadCounter] = useState(0);
 
@@ -80,6 +83,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
 
   return (
     <Dialog
+    dir="ltr"
       fullWidth={true}
       maxWidth={"md"}
       open={show}
@@ -89,7 +93,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
       <DialogTitle
         style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem"}}
       >
-        {isEdit ? "Edit item" : "Create an item"}
+        {isEdit ? t("Edit item") : t("Create an item")}
       </DialogTitle>
       <DialogContent style={{ padding: 40 }}>
   <Grid container spacing={5}>
@@ -116,7 +120,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }}>
             <div className={classes.mediaBoxHeader}>
-                Upload your images here
+                {t("Upload your images here")}
             </div>
             {mediaUrls.map((url, index) => (
                 <Box key={index} className={classes.mediaPreview}>
@@ -133,7 +137,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
             ))}
             {uploadCounter > 0 && (
           <div className={classes.uploadCounter}>
-              <p>Uploading {uploadCounter}%</p>
+              <p>{t("Uploading")} {uploadCounter}%</p>
            <LinearProgress
                        variant="determinate"
                        value={uploadCounter}  
@@ -177,7 +181,7 @@ function removeImage(index) {
           style={{ background:"#2f0032",color:'white',margin:"0 5px"}}
 
         >
-          Cancel
+          {t("Cancel")}
         </Button>
         <Button
           variant="contained"
@@ -188,7 +192,7 @@ function removeImage(index) {
           className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
         >
-          {isEdit ? "Edit" : "Create"}
+          {isEdit ? t("Edit") : t("Create")}
         </Button>
       </Grid>
     );
@@ -239,11 +243,11 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["itemTitle"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>item Title</label>
+            <label style={{color:' #2d013a'}}>{t("item Title")}</label>
             <Input
               {...register("itemTitle")}
               className={classes.input}
-              placeholder={"Enter item Title"}
+              placeholder={t("Enter item Title")}
               disabled={isEdit}
               inputProps={{maxLength: 16}}
             />
@@ -258,11 +262,11 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["itemName"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>item Name</label>
+            <label style={{color:' #2d013a'}}>{t("item Name")}</label>
             <Input
               {...register("itemName")}
               className={classes.input}
-              placeholder={"Enter item Name"}
+              placeholder={t("Enter item Name")}
               disabled={isEdit}
               inputProps={{maxLength: 16}}
 
@@ -278,7 +282,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Amount</label>
+            <label style={{color:' #2d013a'}}>{t("Amount")}</label>
             <Input
               {...register("donationAmount")}
               className={classes.input}
@@ -302,7 +306,7 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Duration</label>
+            <label style={{color:' #2d013a'}}>{t("Duration")}</label>
             <Input
               {...register("duration")}
               className={classes.input}
@@ -313,7 +317,7 @@ function removeImage(index) {
               disabled={isEdit}
               type={"number"}
               endAdornment={
-                <p style={{ margin: "0px 10px", fontSize: 14 }}>days</p>
+                <p style={{ margin: "0px 10px", fontSize: 14 }}>{t("Days")}</p>
               }
             />
           </Grid>
@@ -328,11 +332,11 @@ function removeImage(index) {
             className={classes.inputContainer}
             style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{color:' #2d013a'}}>Details</label>
+            <label style={{color:' #2d013a'}}>{t("Details")}</label>
             <Input
               {...register("details")}
               className={classes.input}
-              placeholder={"Enter a details about your item"}
+              placeholder={t("Enter your item's details")}
               disabled={isEdit}
               multiline={true}
               inputProps={{maxLength: 50}}

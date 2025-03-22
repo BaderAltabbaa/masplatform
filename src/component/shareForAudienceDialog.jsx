@@ -23,9 +23,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ReactPlayer from "react-player";
 import { toast } from "react-toastify";
 import { Pagination } from "@mui/material";
+import { useTranslation } from 'react-i18next';
+
 
 const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [state, setState] = useState({
     mediaUrl: "",
     uploadCounter: 0,
@@ -109,6 +112,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
 
   return (
     <Dialog
+    dir="ltr"
       fullWidth={true}
       maxWidth={"md"}
       open={show}
@@ -124,7 +128,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
       <DialogTitle
         style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
       >
-        {isEdit ? "Edit Audience" : "Share For Audience"}
+        {isEdit ? t("Edit Audience") : t("Share For Audience")}
       </DialogTitle>
       <DialogContent style={{ padding: 40, paddingTop: 10 }}>
         <Grid container spacing={5}>
@@ -178,7 +182,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
         )}
         <div className={classes.mediaBoxInfo}>
           <div>
-            <p style={{ color: "#777", fontWeight: "600", margin: 0, fontSize: 14 }}>Filename</p>
+            <p style={{ color: "#777", fontWeight: "600", margin: 0, fontSize: 14 }}>{t("Filename")}</p>
             <p style={{ marginTop: 5, fontWeight: "500" }}>{name ? name : ""}</p>
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -191,7 +195,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
         </div>
         {uploadCounter > 0 && (
           <div className={classes.uploadCounter}>
-             <p>Uploading {uploadCounter}%</p>
+             <p>{t("Uploading")} {uploadCounter}%</p>
             <LinearProgress
             variant="determinate"
             value={uploadCounter}  
@@ -228,7 +232,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           size="large"
           style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 10px" }}
         >
-          Cancel
+          {t("Cancel")}
         </Button>
         <Button
           color="primary"
@@ -237,7 +241,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           size="large"
           style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 10px" }}
         >
-          {isEdit ? "Edit" : "Share"}
+          {isEdit ? t("Edit") : t("Share")}
         </Button>
       </Grid>
     );
@@ -286,12 +290,12 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
                 <CloudUploadIcon />
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
-                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>Select Image/Video</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Drag And Drop Files</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Accept All Video/Image Formats</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Max File Size: 1024 MP</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Min Width Size: 300px</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Min Height Size: 160px</p>
+              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Drag And Drop Files")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Accept All Video/Image Formats")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Max File Size: 1024 MP")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Width Size: ")}300px</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Height Size: ")}160px</p>
               </div>
             </div>
           </Button>
@@ -310,11 +314,11 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors.title ? "red" : "rgba(43, 31, 42, 0)" }}
           >
-            <label style={{ color: "#2d013a" }}>Title</label>
+            <label style={{ color: "#2d013a" }}>{t("Title")}</label>
             <Input
               {...register("title")}
               className={classes.input}
-              placeholder={"Enter Title"}
+              placeholder={t("Enter Bundle Title")}
               disabled={true}
               value={selectedItemName} // Bind the selected item's name to the input
             />
@@ -324,11 +328,11 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           </p>
         </>
         <Grid sm={12} className={classes.inputContainer}>
-          <label style={{ color: "#2d013a" }}>Type</label>
+          <label style={{ color: "#2d013a" }}>{t("Type")}</label>
           <Input
             {...register("type")}
             className={classes.input}
-            placeholder={"Enter Type"}
+            placeholder={t("Enter Bundle Type")}
             disabled={true}
             endAdornment={
               <Box sx={{ position: 'relative', top: '-15px' }}> {/* Adjust `top` value as needed */}
@@ -343,11 +347,11 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors.details ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{ color: "#2d013a" }}>Details</label>
+            <label style={{ color: "#2d013a" }}>{t("Details")}</label>
             <Input
               {...register("details")}
               className={classes.input}
-              placeholder={"Enter details"}
+              placeholder={t("Enter Bundle Details")}
               multiline={true}
             />
           </Grid>

@@ -315,6 +315,7 @@ export default function Login() {
       </Box>
       {OpenAuction && (
         <Dialog
+        dir="ltr"
           fullWidth="sm"
           maxWidth="sm"
           open={OpenAuction}
@@ -325,7 +326,7 @@ export default function Login() {
           <DialogTitle className={classes.dailogTitle}
                   style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
 >
-            Make a new auction
+            {t("Make a new auction")}
           </DialogTitle>
           <DialogContent>
             {auth.isErrorInWalletConnect && (
@@ -338,7 +339,7 @@ export default function Login() {
               <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
                   <label style={{ margin: "0px", padding: "0px" }}>
-                    Title:
+                    {t("Title")}:
                   </label>
                   <TextField
                     id="standard-basic"
@@ -352,7 +353,7 @@ export default function Login() {
             <Box mb={2}>
               <Grid container spacing={0}>
                 <Grid item xs={12} md={12}>
-                  <label>Upload a photo or video:</label>
+                  <label>{t("Upload a photo or video")}:</label>
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <Box className={classes.UploadBox}>
@@ -385,8 +386,10 @@ export default function Login() {
                                 setimage("");
                                 setimageurl("");
                               }}
+                              style={{ background:"#2f0032",color:'white'}}
+
                             >
-                              Remove
+                              {t("Remove")}
                             </Button>
                           </Box>
                         </>
@@ -397,7 +400,7 @@ export default function Login() {
                             color="primary"
                             component="span"
                           >
-                            Upload &nbsp;
+                            {t("Upload")} &nbsp;
                             <CloudUploadIcon />
                           </Button>
                         </label>
@@ -410,7 +413,7 @@ export default function Login() {
             <Box mb={2}>
               <Grid container spacing={0}>
                 <Grid item xs={12} md={12}>
-                  <label>Details:</label>
+                  <label>{t("Details")}:</label>
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <Box>
@@ -431,7 +434,7 @@ export default function Login() {
             <Box mb={2}>
               <Grid container spacing={0}>
                 <Grid item xs={12} md={4}>
-                  <label>Expiry time:</label>
+                  <label>{t("Expiry time")}:</label>
                 </Grid>
                 <Grid item xs={12} md={8} className={classes.dlflex}>
                   <TextField
@@ -453,7 +456,7 @@ export default function Login() {
             <Box mb={2}>
               <Grid container spacing={0}>
                 <Grid item xs={12} md={4}>
-                  <label>Starting bid:</label>
+                  <label>{t("Starting bid")}:</label>
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <Input
@@ -490,7 +493,7 @@ export default function Login() {
 
                 disabled={process}
               >
-                cancel
+                {t("Cancel")}
               </Button>
               &nbsp;&nbsp;
               {/* {account ? ( */}
@@ -507,7 +510,7 @@ export default function Login() {
                 size="large"
                 disabled={process}
               >
-                {!process ? "Place Auction" : message}
+                {!process ? t("Place Auction") : message}
                 {process && <ButtonCircularProgress />}
               </Button>
             </Box>

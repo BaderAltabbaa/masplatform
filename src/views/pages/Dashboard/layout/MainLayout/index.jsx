@@ -47,6 +47,9 @@ const MainLayout = () => {
     dispatch({ type: SET_MENU, opened: !leftDrawerOpened });
   };
 
+  const isRtl = document.documentElement.dir === 'rtl';
+
+
   return (
     <>
       <Box sx={{ display: 'flex', padding: '0' }} dir='ltr'>
@@ -64,12 +67,13 @@ const MainLayout = () => {
           }}
         >
           {/* TopBar */}
+          <Box dir={isRtl? 'ltr': 'rtl'}>
           <TopBar
             sx={{
               position: 'absolute',
               top: '0',
             }}
-          />
+          /></Box>
 
           {/* Toolbar with Header */}
           <Toolbar>

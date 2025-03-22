@@ -1,4 +1,6 @@
 import React, { useEffect, useState ,useRef } from "react";
+import { useTranslation } from 'react-i18next';
+
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -33,7 +35,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   const [mediaUrl, setMediaUrl] = useState(isEdit ? bundleData.mediaUrl : "");
   const [uploadCounter, setUploadCounter] = useState(0);
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false); // State for category dialog
-  
+  const {t} = useTranslation();
 
   // Yup inputs validation
   const schema = yup.object({
@@ -159,11 +161,12 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       open={show}
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
+      dir='ltr'
     >
       <DialogTitle
         style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
       >
-        {isEdit ? "Edit Bundle" : "Create a Bundle"}
+        {isEdit ? t("Edit Bundle") : t("Create A Bundle")}
       </DialogTitle>
       <DialogContent style={{ padding:"0 40px" }}>
         <Grid container spacing={5}>
@@ -178,7 +181,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
 
       {/* Category Selection Dialog */}
       <Dialog open={categoryDialogOpen} onClose={handleCloseCategoryDialog}>
-        <DialogTitle align="center" color="#2f0032" sx={{fontSize:"18px"}}>Select a Category</DialogTitle>
+        <DialogTitle align="center" color="#2f0032" sx={{fontSize:"18px"}}>{t("Select a Category")}</DialogTitle>
         <DialogContent>
           <Box display="flex" flexDirection="column">
             {categories.map((category, index) => (
@@ -238,7 +241,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         )}
         <div className={classes.mediaBoxInfo}>
           <div>
-            <p style={{ color: "#777", fontWeight: "600", margin: 0, fontSize: 14 }}>Filename</p>
+            <p style={{ color: "#777", fontWeight: "600", margin: 0, fontSize: 14 }}>{t("Filename")}</p>
             <p style={{ marginTop: 5, fontWeight: "500" }}>{name ? name : ""}</p>
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -251,7 +254,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         </div>
         {uploadCounter > 0 && (
           <div className={classes.uploadCounter}>
-            <p>Uploading {uploadCounter}%</p>
+            <p>{t("Uploading")} {uploadCounter}%</p>
             <LinearProgress
               variant="determinate"
               value={uploadCounter}
@@ -287,7 +290,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           size="large"
           style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
         >
-          Cancel
+          {t("Cancel")}
         </Button>
         <Button
           color="primary"
@@ -297,7 +300,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           disabled={isEdit && !dirtyFields.file}
           style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
         >
-          {isEdit ? "Edit" : "Create"}
+          {isEdit ? t("Edit") : t("Create")}
         </Button>
       </Grid>
     );
@@ -354,13 +357,13 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               <div className={classes.uploadIcon}>
                 <CloudUploadIcon />
               </div>
-              <div style={{ margin: 15, textAlign: "left" }}>
-                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>Select Image/Video</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Drag And Drop Files</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Accept All Video/Image Formats</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Max File Size: 1024 MP</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Min Width Size: 300px</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>Min Height Size: 160px</p>
+              <div style={{ margin: 15, textAlign: "center" }}>
+                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Drag And Drop Files")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Accept All Video/Image Formats")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Max File Size: 1024 MP")}</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Width Size: ")}300px</p>
+                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Height Size: ")}160px</p>
               </div>
             </div>
           </Button>
@@ -378,11 +381,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["bundleTitle"] ? "red" : "rgba(45, 34, 45, 0)" }}
           >
-            <label style={{ color: " #2d013a" }}>Bundle Title</label>
+            <label style={{ color: " #2d013a" }}>{t("Bundle Title")}</label>
             <Input
               {...register("bundleTitle")}
               className={classes.input}
-              placeholder={"Enter Bundle Title"}
+              placeholder={t("Enter Bundle Title")}
               disabled={isEdit}
               inputProps={{ maxLength: 16 }}
             />
@@ -397,11 +400,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["bundleName"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{ color: " #2d013a" }}>Bundle Name</label>
+            <label style={{ color: " #2d013a" }}>{t("Bundle Name")}</label>
             <Input
               {...register("bundleName")}
               className={classes.input}
-              placeholder={"Enter Bundle Name"}
+              placeholder={t("Enter Bundle Name")}
               disabled={isEdit}
               inputProps={{ maxLength: 16 }}
             />
@@ -415,11 +418,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{ color: " #2d013a" }}>Category</label>
+            <label style={{ color: " #2d013a" }}>{t("Category")}</label>
             <Input
               {...register("category")}
               className={classes.input}
-              placeholder={"Select a category"}
+              placeholder={t("Select a Category")}
               disabled={isEdit}
               readOnly
               onClick={handleOpenCategoryDialog}
@@ -436,14 +439,14 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{ color: " #2d013a" }}>Amount</label>
+            <label style={{ color: " #2d013a" }}>{t("Amount")}</label>
             <Input
               {...register("donationAmount")}
               className={classes.input}
               inputProps={{
                 min: 0,
               }}
-              placeholder={"Enter Donation Amount"}
+              placeholder={t("Enter Donation Amount")}
               disabled={isEdit}
               type={"number"}
                 endAdornment={CoinSelector()}
@@ -462,17 +465,17 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{ color: " #2d013a" }}>Duration</label>
+            <label style={{ color: " #2d013a" }}>{t("Duration")}</label>
             <Input
               {...register("duration")}
               inputProps={{
                 min: 0,
               }}
               className={classes.input}
-              placeholder={"Enter Duration"}
+              placeholder={t("Enter Duration")}
               disabled={isEdit}
               type={"number"}
-              endAdornment={<p style={{ margin: "0px 10px", fontSize: 14 }}>days</p>}
+              endAdornment={<p style={{ margin: "0px 10px", fontSize: 14 }}>{t("Days")}</p>}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -485,11 +488,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             className={classes.inputContainer}
             style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
           >
-            <label style={{ color: " #2d013a" }}>Details</label>
+            <label style={{ color: " #2d013a" }}>{t("Details")}</label>
             <Input
               {...register("details")}
               className={classes.input}
-              placeholder={"Enter a details about your bundle"}
+              placeholder={t("Enter a details about your bundle")}
               disabled={isEdit}
               multiline={true}
               inputProps={{ maxLength: 50 }}
