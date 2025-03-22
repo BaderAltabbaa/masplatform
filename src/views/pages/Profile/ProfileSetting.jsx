@@ -17,6 +17,8 @@ import {
 } from '@mui/material'; 
 import { makeStyles } from '@mui/styles'; 
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { UserContext } from "src/context/User";
@@ -679,6 +681,7 @@ export default function ProfileSettings() {
   const user = useContext(UserContext);
   const classes = useStyles();
   const navigate = useNavigate();
+      const {t} = useTranslation();
 
   const [isLoading, setIsloading] = useState(false);
   const [name, setname] = useState(user.userProfileData?.name);
@@ -1134,7 +1137,7 @@ export default function ProfileSettings() {
         
       </Grid>
       <Box className={classes.coverEdit} style={{ cursor: "pointer!important" }}>
-          Edit Cover
+          {t("Edit Cover")}
           <FiEdit />
           <input
             style={{ cursor: "pointer" }}
@@ -1180,7 +1183,7 @@ export default function ProfileSettings() {
                     }
               }
             />
-               <Box
+               <Box dir='ltr'
               style={{
                 width: "fit-content",
                 margin: "15px auto",
@@ -1201,7 +1204,7 @@ export default function ProfileSettings() {
                   alignItems: "center",
                 }}
               >
-                <FiEdit style={{ marginRight: "8px" }} /> Edit Picture
+                <FiEdit style={{ marginRight: "8px" }} /> {t("Edit Picture")}
               </label>
               <input
                 type="file"
@@ -1222,7 +1225,7 @@ export default function ProfileSettings() {
         <Box mt={0} style={{ marginTop: "-15px" }}>
           <Grid  container spacing={1} alignItems="center" >
             <Grid item xs={12} >
-              <label className={classes.title}>NickName</label>
+              <label className={classes.title}>{t("NickName")}</label>
             </Grid>
             <Grid item xs={12} className={classes.parentOfInput}>
               <TextField
@@ -1242,7 +1245,7 @@ export default function ProfileSettings() {
         <Box mt={2} >
           <Grid container spacing={1} alignItems="center" >
             <Grid item xs={12}>
-              <label className={classes.title}>Speciality</label>
+              <label className={classes.title}>{t("Speciality")}</label>
             </Grid>
             <Grid item xs={12} className={classes.parentOfInput}>
               <TextField
@@ -1264,7 +1267,7 @@ export default function ProfileSettings() {
         <Box mt={2}>
           <Grid container spacing={1} alignItems="center">
             <Grid item xs={12} >
-              <label className={classes.title}>About me</label>
+              <label className={classes.title}>{t("About me")}</label>
             </Grid>
 
             <Grid item xs={12} className={classes.parentOfInput}>
@@ -1292,7 +1295,7 @@ export default function ProfileSettings() {
         <Box mt={2}>
   <Grid container spacing={1} alignItems="center">
     <Grid item xs={12}>
-      <label className={classes.title}>Email</label>
+      <label className={classes.title}>{t("Email")}</label>
     </Grid>
     <Grid item xs={12} className={classes.parentOfInput}>
       {editingEmail ? (
@@ -1357,7 +1360,7 @@ export default function ProfileSettings() {
         <Box mt={2}>
          <Grid container spacing={1} alignItems="center">
           <Grid item xs={12} md={0}>
-          <label  className={classes.title}>Phone Number</label>
+          <label  className={classes.title}>{t("Phone Number")}</label>
          </Grid>
          <Grid   item xs={12} className={classes.parentOfInput}>
       {editingPhone ? (
@@ -1423,7 +1426,7 @@ export default function ProfileSettings() {
         <Box mt={2}>
           <Grid container spacing={1} alignItems="center">
             <Grid item xs={12}>
-              <label  className={classes.title} mb={1}>Profile URL</label>
+              <label  className={classes.title} mb={1}>{t("Profile URL")}</label>
             </Grid>
             <Grid item xs={12} className={classes.linkBox} mt={1} >
               <span >
@@ -1445,7 +1448,7 @@ export default function ProfileSettings() {
           <Grid container spacing={1} alignItems="center"
           >
             <Grid  item xs={12} >
-              <label  className={classes.title}>Wallet Address</label>
+              <label  className={classes.title}>{t("Wallet Address")}</label>
             </Grid>
             <Grid item xs={12} className={classes.linkBox} mt={1}>
               <span >
@@ -1466,7 +1469,7 @@ export default function ProfileSettings() {
         <Box mt={2}>
           <Grid container style={{ display: "block" }} alignItems="center">
             <Grid item xs={12}>
-              <label  className={classes.title}>Referral</label>
+              <label  className={classes.title}>{t("Referral")}</label>
             </Grid>
             <Grid item xs={12} className={classes.linkBox} mt={1}>
               <span >{user.userData?.referralCode}</span>
@@ -1498,7 +1501,7 @@ export default function ProfileSettings() {
                 disabled={isLoading}
                 className={classes.btnOutPro}
               >
-                Cancel
+                {t("Cancel")}
               </Button>
             </Box>
              {/* start Deletion Button */}
@@ -1516,7 +1519,7 @@ export default function ProfileSettings() {
           color: "white",
         }}
       >
-        {isLoading ? "Delete..." : "Delete"}
+        {isLoading ? "Delete..." : t("Delete")}
                </Button>
                <Dialog
         open={openDeleteDialog}
@@ -1524,15 +1527,15 @@ export default function ProfileSettings() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Confirmation</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t("Confirmation")}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete your profile?
+            {t("Are you sure you want to delete your profile?")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button
             onClick ={deleteProfile}
@@ -1540,7 +1543,7 @@ export default function ProfileSettings() {
             variant="contained"
             disabled={isLoading}
           >
-            {isLoading ? "Deleting..." : "Confirm"}
+            {isLoading ? t("Deleting...") : t("Confirm")}
           </Button>
         </DialogActions>
                </Dialog>
@@ -1562,7 +1565,7 @@ export default function ProfileSettings() {
           color: "white",
         }}
       >
-        {isLoading ? 'deactivate...' : 'deactivate'}
+        {isLoading ? 'deactivate...' : t('Deactivate')}
              </Button>
              <Dialog
         open={openDeactivateDialog}
@@ -1573,12 +1576,12 @@ export default function ProfileSettings() {
         <DialogTitle id="alert-dialog-title">{'Confirmation'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to deactivate your profile?
+            {t("Are you sure you want to deactivate your profile?")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button
             buttonText="Deactivate"
@@ -1588,7 +1591,7 @@ export default function ProfileSettings() {
             variant="contained"
             disabled={isLoading}
           >
-            {isLoading ? 'deactivat...' : 'Confirm'}
+            {isLoading ? 'deactivat...' : t('Confirm')}
             
           </Button>
         </DialogActions>
@@ -1662,7 +1665,7 @@ export default function ProfileSettings() {
             disabled={isLoading}
             
           >
-            {isLoading ? 'KYC...' : 'Confirm'}
+            {isLoading ? 'KYC...' : t('Confirm')}
             
           </Button>
         </DialogActions>
@@ -1683,7 +1686,7 @@ export default function ProfileSettings() {
                   color: "white",
                 }}
               >
-                {isLoading ? "Updating..." : "Update"}
+                {isLoading ? t("Updating...") : t("Update")}
                 {isLoading && <ButtonCircularProgress />}
               </Button>
             </Box>

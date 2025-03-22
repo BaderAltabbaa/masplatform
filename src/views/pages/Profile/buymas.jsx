@@ -6,6 +6,8 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";  // Custom API config file
 import { UserContext } from "src/context/User";  // Custom context for user
 import { tokensDetails } from "src/constants";  // Constants for tokens
 import BalanceBox from "src/component/ui/BalanceBox";  // Custom component for balance display
+import { useTranslation } from 'react-i18next';
+
 
 import {
   Box,
@@ -87,6 +89,8 @@ const ConnectWallet = () => {
   const [metaMaskAddress, setMetaMaskAddress] = useState('');
   const [coin, setCoin] = useState('MAS');
   const [price, setPrice] = useState(null);
+        const {t} = useTranslation();
+  
 
   const usdtContractAddress = '0x55d398326f99059fF775485246999027B3197955';
   const usdtContractABI = [
@@ -358,12 +362,12 @@ useEffect(() => {
        <div className="tableAnimatedBackground"></div>
        <div className="tableInnerBlurEffect"></div>
       <Box className="buybox" sx={{maxWidth:"100%", width:"800px" ,display:"flex" ,flexDirection:"column",alignItems:"center" ,backgroundColor:"#30003c", borderRadius:"20px"}}>
-    <Box className={classes.balanceContainer}>
+    <Box dir='ltr' className={classes.balanceContainer}>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px',marginTop:"20px" }}>
-        <h2>Buy $MAS Coin</h2>
+        <h2>{t("Buy $MAS Coin")}</h2>
       </div>
-      <Typography variant="h5" component="h5" sx={{ color:"white",marginBottom:"10px"}}>
-        YOUR Balance
+      <Typography  variant="h5" component="h5" sx={{ color:"white",marginBottom:"10px"}}>
+        {t("Your Balance")}
       </Typography>
       <BalanceBox
         availableBalance={availableBalance}
@@ -372,7 +376,7 @@ useEffect(() => {
     </Box>
       <br />
       <Box className={classes.inputContainer}>
-        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Enter Amount :</Typography>
+        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>{t("Enter Amount")} :</Typography>
         <TextField
         variant="standard"
           className={classes.textBox}
@@ -409,7 +413,7 @@ useEffect(() => {
       </Box>
       <br />
       <Box className={classes.inputContainer}>
-        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>Mas Amount :</Typography>
+        <Typography className={classes.label} variant="subtitle1" sx={{ color:"white"}}>{t("Mas Amount ")}:</Typography>
         <TextField
         variant="standard"
           className={classes.textBox}
@@ -443,12 +447,12 @@ useEffect(() => {
           onClick={buymas}
           disabled={!web3 || !contract || loading}
         >
-          {loading ? 'Processing...' : 'Swap'}
+          {loading ? t('Processing...') : t('Swap')}
         </Button>
       </Box>
       <br />
     <div>
-      {metaMaskAddress?  <div><p style={{marginBottom:"10px"}}>External wallet: {metaMaskAddress}</p> <p style={{marginBottom:"10px"}}> USDT Balance in External wallet: {usdtBalanceInUSDT.toFixed(3)}</p></div>
+      {metaMaskAddress?  <div><p style={{marginBottom:"10px"}}>{t("External wallet")}: {metaMaskAddress}</p> <p style={{marginBottom:"10px"}}> {t("USDT Balance in External wallet")}: {usdtBalanceInUSDT.toFixed(3)}</p></div>
       :
       <></>
 }

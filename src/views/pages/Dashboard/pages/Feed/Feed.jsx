@@ -7,6 +7,8 @@ import NoDataFound from "src/component/NoDataFound";
 import axios from "axios";
 import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import MainCard from "../../ui-component/cards/MainCard";
+import { useTranslation } from 'react-i18next';
+
 
 
 const useStyles = makeStyles(() => ({
@@ -41,6 +43,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Login() {
+        const {t} = useTranslation();
+  
   const [state, setState] = useState({
     allFeed: [],
     page: 1,
@@ -59,7 +63,7 @@ export default function Login() {
   }, [state.page]);
 
   return (
-        <MainCard title="My feed" >
+        <MainCard title={t("My feed")} >
     
     <Box className={classes.LoginBox} mb={5}>
       <Box className={classes.masBoxFlex}>

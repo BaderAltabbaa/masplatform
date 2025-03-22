@@ -23,6 +23,8 @@ import { UserContext } from "src/context/User";  // Custom context for user data
 import { sortAddress } from "src/utils";  // Utility function for sorting addresses
 import './buymas.css'; 
 import { ButtonwithAnimation } from '../../../component/ui/Button/button';
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -75,6 +77,8 @@ const ConnectWallet = () => {
   const [chargeDialogOpen, setChargeDialogOpen] = useState(false);
   const [usdtChargeAmount, setUsdtChargeAmount] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+        const {t} = useTranslation();
+  
   
 
 
@@ -716,9 +720,9 @@ const ConnectWallet = () => {
 <div className="tableInnerBlurEffect"></div>
            <Box className="buybox" sx={{maxWidth:"100%", width:"800px" ,display:"flex" ,flexDirection:"column",alignItems:"center" ,backgroundColor:"rgb(48, 0, 60)", borderRadius:"20px"}}>
      
-      <div className={classes.balanceBox}>
+      <div className={classes.balanceBox} dir='ltr'>
         <Typography variant="h5" component="h5" mb={2} sx={{    color:"white"}}>
-          YOUR Balance
+          {t("Your Balance")}
         </Typography>
         <BalanceBox
           availableBalance={availableBalance}
@@ -727,7 +731,7 @@ const ConnectWallet = () => {
         />
       </div>
       <div className={classes.walletConnect}>
-  <h2 style={{marginBottom:"10px"}}>Wallet Connection</h2>
+  <h2 style={{marginBottom:"10px"}}>{t("Wallet Connection")}</h2>
   {connected ? (
     <div>
       <Button
@@ -747,19 +751,19 @@ const ConnectWallet = () => {
         sx={{marginBottom:"10px"}}
 
       >
-        Charge Your Account with USDT
+        {t("Charge Your Account with USDT")}
       </Button>
-            <p>USDT Balance: {usdtBalance} USDT</p>
-            <p>FDUSD Balance: {fdusdBalance} FDUSD</p>
-            <p>MAS Balance: {MASBalance} MAS</p>
-            <p>Wallet is connected!</p>
+            <p>{t("USDT Balance")}: {usdtBalance} USDT</p>
+            <p>{t("FDUSD Balance")}: {fdusdBalance} FDUSD</p>
+            <p>{t("MAS Balance")}: {MASBalance} MAS</p>
+            <p>{t("Wallet is connected")}!</p>
     </div>
   ) : (
           <>
            
             
               <div>
-                <p>Choose a wallet:</p>
+                <p>{t("Choose a wallet")}:</p>
                 <Button
                   onClick={() => handleConnect('Metamask')}
                   variant="contained"
@@ -810,7 +814,7 @@ const ConnectWallet = () => {
       </div>
        {/* Charge Dialog */}
        <Dialog open={chargeDialogOpen} onClose={handleCloseChargeDialog}>
-        <DialogTitle>Charge Your Account with USDT</DialogTitle>
+        <DialogTitle>{t("Charge Your Account with USDT")}</DialogTitle>
         <DialogContent>
           <TextField
             label="Enter USDT Amount"
@@ -833,7 +837,7 @@ const ConnectWallet = () => {
             color="secondary"
             className={classes.button}
           >
-            Cancel
+            {t("Cancel")}
           </Button>
           <Button
             onClick={handleAcceptCharge}
@@ -841,13 +845,13 @@ const ConnectWallet = () => {
             color="secondary"
             className={classes.button}
           >
-            Accept
+            {t("Accept")}
           </Button>
         </DialogActions>
       </Dialog>
       {/*Dialog for the success message*/}
 <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
-  <DialogTitle>The transaction in processing... see your transaction history</DialogTitle>
+  <DialogTitle>{t("The transaction in processing... see your transaction history")}</DialogTitle>
   <DialogContent>
     
   </DialogContent>

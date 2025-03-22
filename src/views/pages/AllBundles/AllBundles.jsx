@@ -17,6 +17,8 @@ import DataLoading from "src/component/DataLoading";
 import NoDataFound from "src/component/NoDataFound"; 
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import Cardbundle from "../../../component/ui/Card/Cardbundle";
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles(() => ({
  
@@ -68,6 +70,8 @@ const AllBundlesPage = () => {
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+    const {t} = useTranslation();
+  
 
   const listAllNftHandler = async () => {
     await axios({
@@ -112,7 +116,7 @@ const AllBundlesPage = () => {
         // <section>
         <Container maxWidth='xl'>
           <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
-                  <ButtonwithAnimation>ALL BUNDLES</ButtonwithAnimation>
+                  <ButtonwithAnimation>{t("ALL BUNDLES")}</ButtonwithAnimation>
                 
                 </div>
              
@@ -173,7 +177,7 @@ const AllBundlesPage = () => {
                   })}
                 </Grid>
               {/* </Container> */}
-              <Box mb={2} mt={2} display="flex" justifyContent="center">
+              <Box mb={2} mt={2} display="flex" justifyContent="center" dir="ltr">
                 <Pagination
                     count={pages}
                     page={page}

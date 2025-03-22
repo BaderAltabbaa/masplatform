@@ -30,6 +30,8 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs.js";
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { VerifyOtp } from "src/component/Modals/VerifyOtp";
 import './register.css'
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -104,6 +106,7 @@ export default function SignUp() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
+            const {t} = useTranslation();
 
 
   const [username, setusername] = useState("");
@@ -189,18 +192,18 @@ export default function SignUp() {
 
 
   return (
-    <div className='SignupStyle'>
+    <div dir="ltr" className='SignupStyle'>
       
       <section className="section2">
         <form>
-          <span className="reg-header">CREATE YOUR ACCOUNT</span>
+          <span className="reg-header">{t("CREATE YOUR ACCOUNT")}</span>
           <div className="mar">
 
             <TextField
               className="auth-input"
               variant="standard"
               fullWidth
-              label="User Name"
+              label={t("Username")}
               required
               autoComplete="off"
               sx={{ '& .MuiFormHelperText-root':{
@@ -208,7 +211,7 @@ export default function SignUp() {
               }}}
               value={username}
               error={!uservalid}
-              helperText={!uservalid && "Please enter username"}
+              helperText={!uservalid && t("Please enter username")}
               inputProps={{maxLength: 16}}
               onChange={(e) => {
                 setusername(e.target.value);
@@ -223,10 +226,10 @@ export default function SignUp() {
               className="auth-input"
               variant="standard"
               fullWidth
-              label="Email"
+              label={t("Email")}
               required
               error={!emailvalid}
-              helperText={!emailvalid && "Please enter valid email address"}
+              helperText={!emailvalid && t("Please enter valid email address")}
               value={email}
               autoComplete="off"
               sx={{ '& .MuiFormHelperText-root':{
@@ -249,7 +252,7 @@ export default function SignUp() {
                 className="auth-input"
                 variant="standard"
                 fullWidth
-                label="Phone Number"
+                label={t("Phone Number")}
                 defaultCountry="US"
                 disableFormatting
                 required
@@ -258,7 +261,7 @@ export default function SignUp() {
                 color:"red"
               }}}
                 error={!phonevalid}
-                helperText={!phonevalid && "Please enter valid phone number"}
+                helperText={!phonevalid && t("Please enter valid phone number")}
                 value={phone}
                 type="tel"
                 onChange={(e) => {
@@ -282,11 +285,11 @@ export default function SignUp() {
               sx={{ '& .MuiFormHelperText-root':{
                 color:"red"
               }}}
-              label="password"
+              label={t("Password")}
               type={show ? "text" : "password"}
               error={!passvalid}
               helperText={
-                !passvalid && "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+                !passvalid && t("Password must contain at least 8 characters, one uppercase, one number and one special case character")
               }
               InputProps={{
                 endAdornment: (
@@ -321,7 +324,7 @@ export default function SignUp() {
               sx={{ '& .MuiFormHelperText-root':{
                 color:"red"
               }}}
-              label="Referral Code"
+              label={t("Referral Code")}
               name="Referral"
               onChange={(e) => setReferralCode(e.target.value)}
             />
@@ -336,10 +339,10 @@ export default function SignUp() {
                 }}
                 disabled={loader || !uservalid || !emailvalid || !phonevalid || !passvalid}
               >
-                Sign up {loader && <ButtonCircularProgress/>} </Button>
+                {t("Sign up")} {loader && <ButtonCircularProgress/>} </Button>
         
           <div className="register">
-            <p>Already have an account? <Link to="/login">Log in</Link></p> {/* استخدام Link هنا */}
+            <p>{t("Already have an account?")} <Link to="/login">{t("Login")}</Link></p> {/* استخدام Link هنا */}
           </div>
 
 

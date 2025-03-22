@@ -117,7 +117,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BannerSection({ bannerDetails, bannerDuration }) {
   const classes = useStyles();
+
   return (
+    <Box dir={'ltr'}>
     <Carousel
       axis={"horizontal"}
       autoPlay
@@ -184,5 +186,6 @@ export default function BannerSection({ bannerDetails, bannerDuration }) {
         </Box>
       ))}
     </Carousel>
+    </Box>
   );
 }

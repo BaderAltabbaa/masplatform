@@ -7,6 +7,8 @@ import {
 } from "@mui/material";
 import { sortAddress } from "src/utils";
 import { makeStyles } from '@mui/styles';
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles(() => ({
   borderBotm: {
@@ -32,6 +34,8 @@ export default function UsersCard({
   setIsLoading1,
 }) {
   const classes = useStyles();
+        const {t} = useTranslation();
+  
   const handleCloseFunction = () => {
     navigate("/user-profile/" + users.userName)
     setIsLoading1(false);
@@ -39,7 +43,7 @@ export default function UsersCard({
   };
 
   return (
-    <Box className={classes.main} onClick={handleCloseFunction}>
+    <Box dir='ltr' className={classes.main} onClick={handleCloseFunction}>
       <Grid
         container
         direction="row"
@@ -80,7 +84,7 @@ export default function UsersCard({
             </Box>
             <Box>
               <Typography variant="span" component="span">
-                subscribers
+                {t("Subscribers")}
               </Typography>
             </Box>
           </Box>

@@ -33,6 +33,8 @@ import autoTable from 'jspdf-autotable';
 import bwipjs from 'bwip-js';
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { transform } from "lodash";
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,7 +73,8 @@ const CardMarketplace = ({data}) => {
   const navigate = useNavigate();
   const classes = useStyles();
   const auth = useContext(UserContext);
-  
+  const {t} = useTranslation();
+
 
   const [isLike, setisLike] = useState(false);
   const [nbLike, setnbLike] = useState(0);
@@ -473,9 +476,9 @@ useEffect(() => {
                   maxWidth="sm"
                   fullWidth={true}
               >
-                  <DialogTitle id="billing-dialog-title">Billing Information</DialogTitle>
+                  <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
                   <DialogContent>
-                      <Typography variant="body1" sx={{color:"#2f0032"}}>Please enter your billing information below:</Typography>
+                      <Typography variant="body1" sx={{color:"#2f0032"}}>{t("Please enter your billing information below:")}</Typography>
                       {error && <Typography color="error">{error}</Typography>}  
                       {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2","serialNumber"].map((item) => (
                           <TextField
@@ -493,36 +496,36 @@ useEffect(() => {
                   </DialogContent>
                   <br />
                   <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
-                      <Button onClick={onClose} sx={{color:"#2f0032"}}>Cancel</Button>
-                      <Button onClick={handleBuy} color="secondary" variant="contained" style={{background:"#2f0032",color:"white" }}>Buy Now</Button>
+                      <Button onClick={onClose} sx={{color:"#2f0032"}}>{t("Cancel")}</Button>
+                      <Button onClick={handleBuy} color="secondary" variant="contained" style={{background:"#2f0032",color:"white" }}>{t("Buy Now")}</Button>
                   </Box>
                   <br />
               </Dialog>
               
               <Dialog open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
-                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}>successed Purchase</DialogTitle>
+                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}>{t("successed Purchase")}</DialogTitle>
                   <DialogContent>
-                      <Typography variant="body1"> your purchase successed.... You can dawnload your bill now.</Typography>
+                      <Typography variant="body1"> {t("Your purchase was successful. You can download your bill now.")}</Typography>
                       <Box textAlign="center" mt={2}>
-                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:"#2f0032",color:"white" }}>Download Bill</Button>
-                          <Button onClick={handleCancel} sx={{color:"#2f0032"}}>Cancel</Button>
+                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:"#2f0032",color:"white" }}>{t("Download Bill")}</Button>
+                          <Button onClick={handleCancel} sx={{color:"#2f0032"}}>{t("Cancel")}</Button>
                       </Box>
                   </DialogContent>
               </Dialog>
       
               <Dialog open={showPurchaseDialog} onClose={() => {}} aria-labelledby="bill-dialog-title" maxWidth="sm" fullWidth={true}>
-            <DialogTitle id="bill-dialog-title">Your Bill Preview</DialogTitle>
+            <DialogTitle id="bill-dialog-title">{t("Bill Preview")}</DialogTitle>
             <DialogContent>
             <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}> 
-            Successful Purchase
+            {t("Successful Purchase")}
             </Typography>
             <Typography variant="body1" gutterBottom align="center">
-            Your purchase was successful. You can view your bill below:
+            {t("Your purchase was successful. You can view your bill below:")}
             </Typography>
             <Box textAlign="center" mt={2}>
             <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:" #2f0032",color:"white" ,"&:hover":{
               backgroundColor:"rgb(99, 0, 96)"
-            } }}>View Bill now</Button>
+            } }}>{t("View Bill now")}</Button>
             </Box>
             </DialogContent>
             </Dialog>
@@ -539,7 +542,7 @@ useEffect(() => {
             </DialogContent>
             <br />
             <Box textAlign="center" mt={2}>
-                <Button onClick={handleCancel} color="primary">Close</Button>
+                <Button onClick={handleCancel} color="primary">{t("Close")}</Button>
                 </Box>
                 <br />
                 
@@ -564,7 +567,7 @@ useEffect(() => {
     setOpen2(false); // This assumes `setOpen2` is the state setter for controlling the visibility of the parent dialog
   };
   return (
-    <Box
+    <Box dir="ltr"
   className="card-3"
   sx={{
      
@@ -667,7 +670,7 @@ useEffect(() => {
               disabled={isBuyed && activeBuy}
               onClick={() => (activeBuy ? {} : handleClickOpen2())}
             >
-              {activeBuy ? "Bought" : "Renew"}
+              {activeBuy ? t("Bought") : t("Renew")}
             </Button>
           )}
         {auth?.userData?._id !== userId && !isBuyed && (
@@ -678,7 +681,7 @@ useEffect(() => {
             fontSize: "12px",
             padding: "2px 3px",
           }} onClick={handleClickOpen2}>
-            Details
+            {t("Details")}
           </Button>
         )}
         {auth.userData && auth.userLoggedIn && auth.userData._id === userId && (
@@ -692,7 +695,7 @@ useEffect(() => {
             }}
             onClick={() => navigate("/items-details?" + itemData?._id)}
           >
-            View
+            {t("View")}
           </Button>
         )}
          <div
@@ -729,7 +732,7 @@ useEffect(() => {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <label> Donation Amount</label>
+                  <label>{t("Donation Amount")}</label>
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <TextField
@@ -748,33 +751,33 @@ useEffect(() => {
             >
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} md={4}>
-                  <label> Duration</label>
+                  <label>{t("Duration")}</label>
                 </Grid>
                 <Grid item xs={12} md={8} className={classes.donation}>
-                  <span>7 Days</span>
-                  <span>14 Days</span>
-                  <span>30 Days</span>
-                  <span>60 Days</span>
-                  <span>1 Year</span>
-                  <span>Forever</span>
+                  <span>7 {t("Days")}</span>
+                  <span>14 {t("Days")}</span>
+                  <span>30 {t("Days")}</span>
+                  <span>60 {t("Days")}</span>
+                  <span>1 {t("Year")}</span>
+                  <span>{t("Forever")}</span>
                 </Grid>
               </Grid>
             </Box>
 
             <Box align="center">
-              <label> Services:</label>
+              <label> {t("Services")}:</label>
               <Typography
                 variant="body2"
                 componant="p"
                 style={{ color: "#000", fontSize: "20px" }}
               >
-                I will send you a special video every <br />
-                month specially for you! (edit)
+                {t("I will send you a special video every")} <br />
+                {t("month specially for you! (edit)")}
               </Typography>
             </Box>
             <Box mt={2} className={classes.changepic}>
               <small>
-                Change/upload a photo or video
+                {t("Change/upload a photo or video")}
                 <input type="file" />
               </small>
               <img src="/images/Rectangle.png" alt="" />
@@ -783,7 +786,7 @@ useEffect(() => {
               <Grid container alignItems="center" spacing={2}>
                 <Grid item md={4}>
                   <Link style={{ color: "#000" }} onClick={handleClose}>
-                    Delete this item
+                    {t("Delete this item")}
                   </Link>
                 </Grid>
                 <Grid item md={4}>
@@ -794,7 +797,7 @@ useEffect(() => {
                     style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </Grid>
                 <Grid item md={4}>
@@ -805,7 +808,7 @@ useEffect(() => {
                     style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
-                    Save Changes
+                    {t("Save Changes")}
                   </Button>
                 </Grid>
               </Grid>
@@ -829,14 +832,14 @@ useEffect(() => {
               align="center"
               style={{ color: "#792034", margiBottom: "10px" }}
             >
-              item I
+              {t("item")} I
             </Typography>
             <Typography
               variant="h6"
               align="center"
               style={{ color: "#000", borderBottom: "solid 0.5px #e5e3dd" }}
             >
-              My basic supporter
+              {t("My basic supporter")}
             </Typography>
 
             <Box align="center" mt={3}>
@@ -845,7 +848,7 @@ useEffect(() => {
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Donation amount: </span>10
+                <span style={{ color: "#707070" }}>{t("Donation amount")}: </span>10
                 MAS
               </Typography>
               <Typography
@@ -853,27 +856,27 @@ useEffect(() => {
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Duration: </span>One month
+                <span style={{ color: "#707070" }}>{t("Duration")}: </span>{t("One month")}
               </Typography>
               <Typography
                 variant="h6"
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Number of buyers:</span>
+                <span style={{ color: "#707070" }}>{t("Number of buyers")}:</span>
                 100
               </Typography>
             </Box>
 
             <Box align="center">
-              <label> Services:</label>
+              <label> {t("Services")}:</label>
               <Typography
                 variant="body2"
                 componant="p"
                 style={{ color: "#000", fontSize: "20px" }}
               >
-                I will send you a special video every <br />
-                month specially for you!
+               {t("I will send you a special video every")} <br />
+               {t("month specially for you!")}
               </Typography>
             </Box>
             <Box mt={2} className={classes.changepic}>
@@ -901,7 +904,7 @@ useEffect(() => {
     },
   }}
 >
-  <DialogContent sx={{ overflow:{xs: "auto", sm: "hidden"} , padding: { xs: 2, sm: 3 } }}>
+  <DialogContent sx={{ overflow:{xs: "auto", sm: "hidden"} , padding: { xs: 2, sm: 3 } }} dir="ltr">
     {/* Title Box */}
     <Box display="flex" justifyContent="center">
     <Box
@@ -968,11 +971,11 @@ useEffect(() => {
         }}
       >
         {[
-          { label: "Name", value: itemData.itemName },
-          { label: "Price", value: `${itemData.donationAmount} ${itemData.coinName}` },
-          { label: "Details", value: itemData.details },
-          { label: "Owner", value: userName },
-          { label: "Speciality", value: userSpeciality },
+          { label: t("Name"), value: itemData.itemName },
+          { label: t("Price"), value: `${itemData.donationAmount} ${itemData.coinName}` },
+          { label: t("Details"), value: itemData.details },
+          { label: t("Owner"), value: userName },
+          { label: t("Speciality"), value: userSpeciality },
         ].map((item, index) => (
           <Typography
             key={index}
@@ -1062,12 +1065,12 @@ useEffect(() => {
        disabled={isLoading}
        style={{background:"#2f0032",color:"white" }}
      >
-       {isLoading ? "pending..." : "Buy Now"}
+       {isLoading ? t("Pending...") : t("Buy Now")}
        {isLoading && <ButtonCircularProgress />}
      </Button>
      &nbsp;&nbsp;
      <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
-       Cancel
+       {t("Cancel")}
      </Button>
    </Box>
    )}
@@ -1090,11 +1093,11 @@ useEffect(() => {
          style={{background:"#2f0032",color:"white" }}
  
        >
-         Login
+         {t("Login")}
        </Button>
        &nbsp;&nbsp;
        <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
-         Cancel
+         {t("Cancel")}
        </Button>
      </Box>
    )}
@@ -1131,21 +1134,21 @@ useEffect(() => {
         <DialogContent className={classes.dilogBody}>
           <DialogContentText id="alert-dialog-description">
             <Typography variant="h4" align="center" style={{ color: "#000" }}>
-              Enter an amount
+              {t("Enter an amount")}
             </Typography>
             <Box mt={4}>
               <Input
                 placeholder="300"
                 className={classes.input_fild2}
                 endAdornment={
-                  <InputAdornment position="end">Select a token</InputAdornment>
+                  <InputAdornment position="end">{t("Select a token")}</InputAdornment>
                 }
               />
             </Box>
 
             <Box mt={4}>
               <Typography variant="h4" align="center" style={{ color: "#000" }}>
-                Send a message
+                {t("Send a message")}
               </Typography>
               <TextField
                 id="outlined-multiline-static"
@@ -1158,10 +1161,10 @@ useEffect(() => {
             </Box>
             <Box mt={2} mb={4}>
               <Button variant="contained" size="large" color="secondary"  style={{background:"#2f0032",color:"white" }} >
-                Donate now
+                {t("Donate now")}
               </Button>
             </Box>
-            <small>ETH fees and ETH fees and apply. apply.</small>
+            <small>{t("ETH fees and ETH fees and apply. apply.")}</small>
           </DialogContentText>
         </DialogContent>
       </Dialog>

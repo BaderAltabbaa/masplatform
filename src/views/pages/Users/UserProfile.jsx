@@ -15,6 +15,8 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import axios from "axios";
 import DataLoading from "src/component/DataLoading";
 import { ButtonwithAnimation } from '../../../component/ui/Button/button';
+import { useTranslation } from 'react-i18next';
+
 
 
 const useStyles = makeStyles(() => ({}));
@@ -23,6 +25,7 @@ const fetcher = (url) => axios.get(url).then((res) => res.data.result);
 
 function UserProfile() {
   const classes = useStyles();
+      const {t} = useTranslation();
 
   const { username } = useParams();
   const { data: userData } = useSWR(Apiconfigs.getUser + username, fetcher, {
@@ -41,9 +44,9 @@ function UserProfile() {
       />
       <Container maxWidth="xl">
         <Box align="center" mt={3}>
-        <ButtonwithAnimation>Bundles</ButtonwithAnimation>  
+        <ButtonwithAnimation>{t("Bundles")}</ButtonwithAnimation>  
         </Box>
-        <Grid container style={{ margin: "30px auto" }}>
+        <Grid container style={{ margin: "30px auto" }} dir="ltr">
           {userDetails?.bundleDetails?.map((data, i) => {
             return (
               <Grid

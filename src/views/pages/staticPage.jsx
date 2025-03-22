@@ -11,6 +11,8 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import axios from "axios";
 import MetaverseCard from "./MetaverseCard";
 import { ButtonwithAnimation } from "src/component/ui/Button/button";
+import { useTranslation } from 'react-i18next';
+
 
 import IMG1 from "./img/card 1.jpeg"
 import IMG2 from "./img/card2.jpeg"
@@ -45,6 +47,8 @@ export default function StaticPage() {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [datas, setdatas] = useState();
+          const {t} = useTranslation();
+    
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [location.pathname]);
@@ -67,7 +71,7 @@ export default function StaticPage() {
         <Container maxWidth="xl" sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
              <div style={{display:"flex" ,flexDirection:"column",alignItems:"center", padding:"20px 40px"}}>
               <div style={{marginBottom:"20px"}}>
-              <ButtonwithAnimation>{title}</ButtonwithAnimation>  
+              <ButtonwithAnimation>{t(title)}</ButtonwithAnimation>  
               </div>
               <div>
             <Grid container spacing={2}>
@@ -89,7 +93,7 @@ export default function StaticPage() {
                             />
                         </Grid>
                     })
-                    : <div> no Item</div>
+                    : <div> {t("no Item")}</div>
                 }
             </Grid>
             </div>

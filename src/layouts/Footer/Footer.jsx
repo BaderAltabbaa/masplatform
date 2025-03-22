@@ -11,6 +11,8 @@ import './footer.css';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import NoDataFound from "src/component/NoDataFound";
+import { useTranslation } from 'react-i18next';
+
 
 const Footer = () => {
 const fetcher = url => axios.get(url).then(res => res.data.result);
@@ -18,6 +20,8 @@ const { data: staticContent } = useSWR(Apiconfigs.staticContentList, fetcher, { 
 const { data: socialLinks } = useSWR(Apiconfigs.listSocial, fetcher, { suspense: true })
 const [open, setOpen] = useState(false);
 const [openForm, setOpenForm] = useState(false);
+const {t} = useTranslation();
+
 
 console.log("soc",socialLinks);
 const [selectedItem, setSelectedItem] = useState(null);
@@ -110,7 +114,7 @@ return (
     
     <form onSubmit={handleSubmit}>
       <TextField
-        label="Email"
+        label={t("Email")}
         type="email"
         fullWidth
         margin="normal"
@@ -119,7 +123,7 @@ return (
         required
       />
       <TextField
-        label="Subject"
+        label={t("Subject")}
         fullWidth
         margin="normal"
         value={subject}
@@ -127,7 +131,7 @@ return (
         required
       />
       <TextField
-        label="Message"
+        label={t("Message")}
         fullWidth
         margin="normal"
         multiline
@@ -137,7 +141,7 @@ return (
         required
       />
       <Button type="submit" variant="contained"  fullWidth sx={{backgroundColor:"#43005e",marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(99, 0, 139)"}}}>
-        Submit
+        {t("Submit")}
       </Button>
     </form>
 
@@ -200,7 +204,7 @@ return (
             }}
           />
           </Link> 
-          <h3 style={{ fontSize: "28px", fontWeight: "bold" }}>MAS Platform</h3>
+          <h3 style={{ fontSize: "28px", fontWeight: "bold" }}>{t( "MAS Platform")}</h3>
         </div>
 
 
@@ -301,7 +305,7 @@ return (
 
         {/* Community Section */}
         <div >
-          <h3 style={{ ...styles.sectionHeader, marginBottom: "20px" }}>Join The Community</h3>
+          <h3 style={{ ...styles.sectionHeader, marginBottom: "20px" }}>{t("Join The Community")}</h3>
           <div style={styles.iconsContainer} className="iconContainer">
          
          

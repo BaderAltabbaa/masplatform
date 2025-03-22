@@ -28,6 +28,8 @@ import { isMobile } from 'react-device-detect';
 import theme from "../../../theme";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import './UsersList.css'; 
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -120,6 +122,7 @@ const useStyles = makeStyles(() => ({
 
 export default function UsersList() {
   const classes = useStyles();
+  const {t} = useTranslation();
   const auth = useContext(UserContext);
   const [allUserList, setAllUserList] = useState([]);
   const [page, setPage] = useState(1);
@@ -167,7 +170,7 @@ export default function UsersList() {
   return (
     <Container maxWidth='xl'
     sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}
-    >
+    dir="ltr" >
      
 <Box className={classes.paddingContainer} >
 
@@ -176,7 +179,7 @@ export default function UsersList() {
         
         <Box className={classes.masBoxFlex}
         >
-          <ButtonwithAnimation  >Users</ButtonwithAnimation>
+          <ButtonwithAnimation  >{t("Users")}</ButtonwithAnimation>
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}
           <Box variant="h6" sx={{ display: "flex", justifyContent: "end", width: "100%" ,
             "@media(max-width:850px)":{
@@ -187,7 +190,7 @@ export default function UsersList() {
             
             
           <TextField
-  placeholder="Find User"
+  placeholder={t("Find User")}
   variant="standard"
   className={classes.input_fild2}
   value={filterData.searchKey}
@@ -272,19 +275,19 @@ export default function UsersList() {
                 <TableHead sx={{ background: "linear-gradient(to right,rgba(77, 20, 96, 0.96),rgb(44, 0, 47))"  }}>
                   <TableRow>
                     <TableCell className={classes.ranking} align="Center" style={{ color: "white", padding: "1px", width: "10px !important", textAlign: "center" }}>
-                      Img
+                      {t("Img")}
                     </TableCell>
                     <TableCell className={classes.profile} align="Center" style={{ color: "white", textAlign: "center" }}>
-                      Name
+                      {t("Name")}
                     </TableCell>
                     <TableCell align="Center" style={{ color: "white", textAlign: "center" }}>
-                      Action
+                      {t("Action")}
                     </TableCell>
                     <TableCell align="Center" style={{ color: "white", textAlign: "center" }}>
-                      Wallet Address
+                      {t("Wallet Address")}
                     </TableCell>
                     <TableCell align="Center" style={{ color: "white", textAlign: "center" }}>
-                      Sepeciality
+                      {t("Speciality")}
                     </TableCell>
                   </TableRow>
                 </TableHead>

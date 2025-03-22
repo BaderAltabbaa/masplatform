@@ -78,7 +78,6 @@ const MainCard = React.forwardRef(
         
         {darkTitle && title && <CardHeader sx={headerSX} title={<ButtonwithAnimation>{title}</ButtonwithAnimation>} action={secondary} />}
 
-        {/* content & header divider */}
       
 
         {/* card content */}

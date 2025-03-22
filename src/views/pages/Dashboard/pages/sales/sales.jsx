@@ -9,6 +9,8 @@ import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import { Pagination } from "@mui/material";
 import MainCard from "../../ui-component/cards/MainCard";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles(() => ({
     subscriptionBox: {
@@ -65,6 +67,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function sales() {
+          const {t} = useTranslation();
+    
     const classes = useStyles();
     const [state, setState] = useState({
         sales: [],
@@ -88,7 +92,7 @@ export default function sales() {
     }, [state.userPage]);
 
     return (
-        <MainCard title="Sold Items" >
+        <MainCard title={t("Sold Items")} >
 
             <div className={classes.subscriptionBox}>
                 <Box className={classes.LoginBox} >

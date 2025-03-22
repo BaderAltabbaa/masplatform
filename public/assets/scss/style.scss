@@ -126,3 +126,13 @@
     transform: translateX(10px);
   }
 }
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}

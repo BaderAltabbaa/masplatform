@@ -53,6 +53,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { toast } from 'react-toastify';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import zIndex from '@mui/material/styles/zIndex';
+import { useTranslation } from 'react-i18next';
+
 
 
 // ==============================|| PROFILE MENU - UPGRADE PLAN CARD ||============================== //
@@ -334,6 +336,8 @@ const UpgradePlanCard = () => {
 
   const [availableBalance, setAvailableBalance] = useState({});
   const [totalEarning, setTotalEarning] = useState({});
+        const {t} = useTranslation();
+  
 
 
   if (user.isLogin && !user.userData) {
@@ -545,7 +549,7 @@ const UpgradePlanCard = () => {
                 <Box display="flex" justifyContent="space-evenly" sx={{cursor:"pointer"}}
                           onClick={() => navigate("/profilesettings")}>
                            
-<Button className="primaryButton" variant="body2"> <IconSettings stroke={1.5} size="1.3rem" /> Account Settings</Button> 
+<Button className="primaryButton" variant="body2"> <IconSettings stroke={1.5} size="1.3rem" /> {t("Account Settings")}</Button> 
                 </Box>
                 {/* Start User Type */}
               
@@ -571,13 +575,13 @@ const UpgradePlanCard = () => {
                     user.userData &&
                     user.userData?.followers?.length
                     ? user.userData?.followers?.length
-                    : "0"} Subscriber{user.userData?.followers?.length > 1 ? "s" : ""}
+                    : "0"} {t("Subscriber")}{user.userData?.followers?.length > 1 ? t("s") : ""}
                 </Typography>
                 {/* End Subscribe */}
                 {/* Start refferall */}
                 <Typography align='center' variant="body2"
                   component="p" className={classes.title} color='white'>
-                  Referral code : {user?.userData?.referralCode} &nbsp;
+                  {t("Referral code")} : {user?.userData?.referralCode} &nbsp;
                   <CopyToClipboard
   text={user?.userData?.referralCode}
   onCopy={() => toast.success("Referral code Copied")}
@@ -590,7 +594,7 @@ const UpgradePlanCard = () => {
 
                 {/* Start Share */}
                 <Button style={{ marginTop: "8px", width: "225px", borderRadius: "15px", background: "linear-gradient(180deg, #8c0087 0%,rgb(48, 0, 48) 100%)", color: "#FFF" }} onClick={() => setOpenShare(true)}>
-                  Share
+                  {t("Share")}
                 </Button>
                 {/* End Share */}
               </Box>
@@ -623,7 +627,7 @@ const UpgradePlanCard = () => {
               align="center"
               style={{ color: "#000", margiBottom: "10px",fontWeight: "bold",fontSize:"1.2rem" }}
             >
-              Hooray!
+              {t("Hooray!")}
             </Typography>
             <Typography
               variant="body2"
@@ -631,7 +635,7 @@ const UpgradePlanCard = () => {
               style={{ color: "#000" }}
             >
 
-              You can share your link now anywhere!
+              {t("You can share your link now anywhere!")}
             </Typography>
 
             <Box mt={3}>
@@ -646,7 +650,7 @@ const UpgradePlanCard = () => {
                       <CopyToClipboard text={profilePageURL}>
                         <Button onClick={() => toast.info("Copied")}
                           style={{color: "rgb(97, 0, 93)"}}>
-                          COPY
+                          {t("Copy")}
                         </Button>
                       </CopyToClipboard>
                     </InputAdornment>
@@ -692,7 +696,7 @@ const UpgradePlanCard = () => {
                 style={{ fontSize: "15px",background:"#2f0032",color:"white" }}
 
               >
-                Close
+                {t("Close")}
               </Button>
             </Box>
           </DialogContentText>

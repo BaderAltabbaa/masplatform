@@ -18,6 +18,8 @@ import { DonationPopUp } from 'src/component/Modals/DonationPopUp'
 import { toast } from "react-toastify";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { FiCopy } from "react-icons/fi";
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles((theme) => ({
   profilebg: {
@@ -128,6 +130,8 @@ export default function Profile({ data, isabout }) {
   const [openDonation, setOpenDonation] = useState(false);
   const userCardData = data;
   const [isSubscribed, setisSubscribed] = useState(false);
+        const {t} = useTranslation();
+  
 
   // start Handle subscribe function
   const subscribeToUserHandler = async () => {
@@ -305,7 +309,7 @@ export default function Profile({ data, isabout }) {
               <Box mt={2} mb={1}>
                 {data?.ethAccount?.address && (
                   <Typography className={classes.walletAndRefferal} variant="h6" >
-                    Wallet Address :  {sortAddress(data?.ethAccount?.address)}&nbsp;
+                    {t("Wallet Address")} :  {sortAddress(data?.ethAccount?.address)}&nbsp;
                     <CopyToClipboard
                       text={data?.ethAccount?.address}
                       style={{ cursor: "pointer" }}
@@ -322,7 +326,7 @@ export default function Profile({ data, isabout }) {
               <Box mt={2} mb={1} className={classes.textname}>
                 {/* {data?.referralCode && ( */}
                 <Typography variant="h6" className={classes.walletAndRefferal} style={{ color: '#000' }}>
-                  Referral : {data?.referralCode}&nbsp;
+                  {t("Referral")} : {data?.referralCode}&nbsp;
                   <CopyToClipboard
                     text={data?.referralCode}
                     style={{ cursor: "pointer" }}
@@ -353,7 +357,7 @@ export default function Profile({ data, isabout }) {
                       }}
                       disabled={isLoading}
                     >
-                      {isSubscribe ? "unsubscribe" : "subscribe"}
+                      {isSubscribe ? t("Unsubscribe") : t("Subscribe")}
                       {isLoading && <ButtonCircularProgress />}
                     </Button>
                   )}
@@ -371,7 +375,7 @@ export default function Profile({ data, isabout }) {
                       }}
                       disabled={isLoading}
                     >
-                      {isSubscribe ? "unsubscribe" : "subscribe"}
+                      {isSubscribe ? t("Unsubscribe") : t("Subscribe")}
                       {isLoading && <ButtonCircularProgress />}
                     </Button>
                   )}
@@ -398,7 +402,7 @@ export default function Profile({ data, isabout }) {
                       }
                     }}
                   >
-                    Donate
+                    {t("Donate")}
                   </Button>
                   {/* End Donate Button */}
 
@@ -423,7 +427,7 @@ export default function Profile({ data, isabout }) {
                       }
                     }}
                   >
-                    Chat
+                    {t("Chat")}
                   </Button>
                   {/* End Chat Button */}
 
@@ -436,7 +440,7 @@ export default function Profile({ data, isabout }) {
                     style={{ background:"#2f0032",color:'white'}}
 
                   >
-                    {isSubscribed ? 'Subscribed' : 'Subscribe'}
+                    {isSubscribed ? t('Subscribed') : t('Subscribe')}
                   </Button>
                   {/* End Subscribe Button */}
                 </Box>

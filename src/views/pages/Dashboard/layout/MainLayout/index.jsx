@@ -49,7 +49,7 @@ const MainLayout = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', padding: '0' }}>
+      <Box sx={{ display: 'flex', padding: '0' }} dir='ltr'>
         <CssBaseline />
 
         {/* AppBar (Header) */}

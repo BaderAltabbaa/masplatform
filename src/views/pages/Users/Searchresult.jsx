@@ -16,6 +16,8 @@ import UserDetailsCard from "src/component/UserCard";
 import NoDataFound from "src/component/NoDataFound";  // Custom component
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import CardCreators from "../../../component/ui/Card/CardCreators";
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles(() => ({
 
@@ -63,6 +65,8 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
   const [page, setPage] = useState(1);
   const [noOfPages, setNoOfPages] = useState(1);
   const [userListToDisplay, setUserListToDisplay] = useState([]);
+      const {t} = useTranslation();
+  
 
   const getuser = async (cancelTokenSource) => {
     setIsLoading(true);
@@ -129,7 +133,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
       ) : (
         <Container maxWidth="xl">
             <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
-                        <ButtonwithAnimation  > Creators</ButtonwithAnimation>
+                        <ButtonwithAnimation  > {t("Creators")}</ButtonwithAnimation>
                       
                       </div>
           {userListToDisplay.length === 0 ? (
@@ -176,7 +180,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
           </Grid>
         </Container>
       )}
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" dir="ltr">
         {noOfPages > 1 && (
           <Pagination
             count={noOfPages}

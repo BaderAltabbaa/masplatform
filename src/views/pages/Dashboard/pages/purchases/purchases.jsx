@@ -1,4 +1,5 @@
 
+import { useTranslation } from 'react-i18next';
 
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid } from '@mui/material';
@@ -66,6 +67,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function purchases() {
+        const {t} = useTranslation();
+  
   const classes = useStyles();
   const [state, setState] = useState({
     purchases: [],
@@ -89,7 +92,7 @@ export default function purchases() {
   }, [state.userPage]);
 
   return (
-    <MainCard title="Purchased Items" >
+    <MainCard title={t("Purchased Items")} >
  <div className={classes.subscriptionBox}>
       <Box className={classes.LoginBox} >
        
@@ -131,7 +134,7 @@ export default function purchases() {
       </Box>
       <Box className={classes.LoginBox} >
         <Box className={classes.masBoxFlex}>
-                        <Typography variant="h6" style={{fontSize:"1.8rem" ,color:"#43005e"}}>Users</Typography>
+                        <Typography variant="h6" style={{fontSize:"1.8rem" ,color:"#43005e"}}>{t("Users")}</Typography>
         </Box>
         <Box>
           <Grid container spacing={2}>

@@ -24,6 +24,8 @@ import NoDataFound from "src/component/NoDataFound";
 import { toast } from "react-toastify";
 import { Pagination } from "@mui/material"; 
 import MainCard from "../../ui-component/cards/MainCard";
+import { useTranslation } from 'react-i18next';
+
 
 const useStyles = makeStyles((theme) => ({
   input_fild: {
@@ -135,6 +137,8 @@ export default function Login() {
   const [imageurl, setimageurl] = useState("");
   const [detail, setdetail] = useState("");
   const [bid, setbid] = useState("");
+        const {t} = useTranslation();
+  
   const [process, setprocess] = useState(false);
   const [message, setmessage] = useState("");
   const [fire, setfire] = useState(false);
@@ -257,7 +261,7 @@ export default function Login() {
   }, [page]);
 
   return (
-     <MainCard title="My Auctions" >
+     <MainCard title={t("My Auctions")} >
 
     
     <Box className={classes.LoginBox} mb={5}>
@@ -274,7 +278,7 @@ export default function Login() {
 
               onClick={() => setOpenAuction(true)}
             >
-              Make a new auction
+              {t("Make a new auction")}
             </Button>
           </Box>
         )}

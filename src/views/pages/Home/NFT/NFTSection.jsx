@@ -3,8 +3,12 @@ import LandingSection from '../LandingSection/LandingSection'
 import Typography from '../../../../component/ui/typography/typography'
 import './NFT.css'
 import {  useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
+
+
 const NFTSection = () => {
   const navigate = useNavigate();
+  const {t} = useTranslation();
 
   const onClickFun=()=>{
     navigate("/auctions")
@@ -21,7 +25,7 @@ const NFTSection = () => {
         <p className="" style={{ 
 
 }}>
- COMING SOON
+ {t("COMING SOON")}
 </p>
          
        

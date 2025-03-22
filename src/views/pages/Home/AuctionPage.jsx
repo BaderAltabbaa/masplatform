@@ -10,6 +10,7 @@ import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import NFTSection from './NFT/NFTSection'
 import { create } from "lodash";
 import MostPopular from "./MostPopular";
+import { useTranslation } from 'react-i18next';
 
 
 const AuctionPage = ({ staticSections }) => {
@@ -20,6 +21,8 @@ const AuctionPage = ({ staticSections }) => {
   const [allNFT1List, setAllNFT1List] = useState([]);
   const [userListToDisplay, setUserListToDisplay] = useState([]);
   const [isLoadingAuctions, setIsLaodingAuctions] = useState(false);
+    const {t} = useTranslation();
+  
 
 
   useEffect(() => {
@@ -54,64 +57,64 @@ const AuctionPage = ({ staticSections }) => {
   }, []);
 
  const Categories = [
-  {name:"Art",
+  {name:t("Art"),
    image:"/assets/Images/15.jpg"
   },
-  {name:"Sports",
+  {name:t("Sports"),
     image:"/assets/Images/14.jpg"
    },
-   {name:"Collectors",
+   {name:t("Collectors"),
     image:"/assets/Images/5.jpg"
    },
-   {name:"Fashion",
+   {name:t("Fashion"),
     image:"/assets/Images/17.jpg"
    },
-   {name:"Video",
+   {name:t("Video"),
     image:"/assets/Images/22.jpg"
    },
-   {name:"Music",
+   {name:t("Music"),
     image:"/assets/Images/1.jpg"
    },
-   {name:"Cars",
+   {name:t("Cars"),
     image:"/assets/Images/4.jpg"
    },
-   {name:"Coding",
+   {name:t("Coding"),
     image:"/assets/Images/6.jpg"
    },
-   {name:"Crypto",
+   {name:t("Crypto"),
     image:"/assets/Images/7.jpg"
    },
-   {name:"Education",
+   {name:t("Education"),
     image:"/assets/Images/2.jpg"
    },
-   {name:"Trading",
+   {name:t("Trading"),
     image:"/assets/Images/22.jpg"
    },
-   {name:"Analytics",
+   {name:t("Analytics"),
     image:"/assets/Images/1.jpg"
    },
-   {name:"News",
+   {name:t("News"),
     image:"/assets/Images/5.jpg"
    },
-   {name:"Gaming",
+   {name:t("Gaming"),
     image:"/assets/Images/6.jpg"
    },
-   {name:"Privacy ",
+   {name:t("Privacy"),
     image:"/assets/Images/7.jpg"
    },
-   {name:"Startups",
+   {name:t("Startups"),
     image:"/assets/Images/8.jpg"
    },
-   {name:"Web3",
+   {name:t("Web3"),
     image:"/assets/Images/10.jpg"
    },
-   {name:"Security",
+   {name:t("Security"),
     image:"/assets/Images/11.jpg"
    },
-   {name:"Wallets",
+   {name:t("Wallets"),
     image:"/assets/Images/12.jpg"
    },
-   {name:"Metaverse",
+   {name:t("Metaverse"),
     image:"/assets/Images/13.jpg"
    },
  ]
@@ -209,7 +212,7 @@ const AuctionPage = ({ staticSections }) => {
     return (
     <>
       <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-      <Link to={"/bundles"}  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  > Bundles</ButtonwithAnimation></Link>
+      <Link to={"/bundles"}  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  >{t("Bundles")}</ButtonwithAnimation></Link>
     
     </div>
 
@@ -235,7 +238,7 @@ const AuctionPage = ({ staticSections }) => {
   <>
   
   <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-    <Link to={"/items"}  style={{ textDecoration: "none", outline: "none" }}>  <ButtonwithAnimation> Marketplace</ButtonwithAnimation></Link>
+    <Link to={"/items"}  style={{ textDecoration: "none", outline: "none" }}>  <ButtonwithAnimation> {t("Marketplace")}</ButtonwithAnimation></Link>
     
      </div>
       {allNFT1List.length !=0 && 
@@ -261,7 +264,7 @@ const AuctionPage = ({ staticSections }) => {
     return (
       <>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-        <Link to={"/creators"}  style={{ textDecoration: "none", outline: "none" }}>   <ButtonwithAnimation> Creator</ButtonwithAnimation></Link>
+        <Link to={"/creators"}  style={{ textDecoration: "none", outline: "none" }}>   <ButtonwithAnimation> {t("Creators")}</ButtonwithAnimation></Link>
           
           </div>
 
@@ -291,9 +294,13 @@ padding:"30px 200px"
         padding:"30px 100px"
       }
       }} display="flex" flexDirection="column" alignItems="center">
-        <Typography align="center" variant="h1" color="white">Popular Categories</Typography>
+        <Typography align="center" variant="h1" color="white">{t("Popular Categories")}</Typography>
         <Box mt={2} sx={{ background:"linear-gradient(to top right,#900098,#4d0051)",
-        boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",borderRadius:"20px", display: "grid",
+        boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",
+        borderRadius:"20px", 
+        }}>
+        
+        <Box mt={1} sx={{ display: "grid",
         gridTemplateRows: "repeat(2, 150px)", // 2 rows, each 100px tall
         gridTemplateColumns: "repeat(10, 1fr)", // 10 columns, equal width
         gap: "10px", // Spacing between items
@@ -334,7 +341,7 @@ padding:"30px 200px"
     ))}
 
         </Box>
-
+        </Box>
       </Box>
     )
   }

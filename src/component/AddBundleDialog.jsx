@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,6 +8,7 @@ import {
   InputAdornment,
   Select,
   MenuItem,
+  FormControl,
   Button,
   Box,
   Popover,
@@ -32,6 +33,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   const [mediaUrl, setMediaUrl] = useState(isEdit ? bundleData.mediaUrl : "");
   const [uploadCounter, setUploadCounter] = useState(0);
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false); // State for category dialog
+  
 
   // Yup inputs validation
   const schema = yup.object({
@@ -146,6 +148,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     handleCloseCategoryDialog(); // Close the dialog
   };
 
+
+  
+
   /* Main Return */
   return (
     <Dialog
@@ -160,7 +165,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       >
         {isEdit ? "Edit Bundle" : "Create a Bundle"}
       </DialogTitle>
-      <DialogContent style={{ padding: 40 }}>
+      <DialogContent style={{ padding:"0 40px" }}>
         <Grid container spacing={5}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -405,6 +410,26 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             {errors["bundleName"]?.message}
           </p>
         </>
+        <Grid
+            sm={12}
+            className={classes.inputContainer}
+            style={{ borderColor: "rgba(140, 0, 135, 0)" }}
+          >
+            <label style={{ color: " #2d013a" }}>Category</label>
+            <Input
+              {...register("category")}
+              className={classes.input}
+              placeholder={"Select a category"}
+              disabled={isEdit}
+              readOnly
+              onClick={handleOpenCategoryDialog}
+              endAdornment={
+                <InputAdornment position="end" sx={{cursor:"pointer"}}>
+                  <ArrowDropDown />
+                </InputAdornment>
+              }
+            />
+          </Grid>
         <>
           <Grid
             sm={12}
@@ -421,13 +446,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               placeholder={"Enter Donation Amount"}
               disabled={isEdit}
               type={"number"}
-              endAdornment={
-                <CoinSelector
-                  watch={watch}
-                  setValue={setValue}
-                  isEdit={isEdit}
-                />
-              }
+                endAdornment={CoinSelector()}
+
+              
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -479,151 +500,42 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           </p>
         </>
         <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["category"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>Category</label>
-            <Input
-              {...register("category")}
-              className={classes.input}
-              placeholder={"Select a category"}
-              disabled={isEdit}
-              readOnly
-              onClick={handleOpenCategoryDialog}
-              endAdornment={
-                <InputAdornment position="end">
-                  <ArrowDropDown />
-                </InputAdornment>
-              }
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["category"]?.message}
-          </p>
+         
+         
         </>
       </Grid>
     );
   }
 
-  function CoinSelector({ watch, setValue, isEdit }) {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-
-    const handleOpen = (event) => {
-      if (!isEdit) {
-        setAnchorEl(event.currentTarget);
-      }
-    };
-
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-
-    const handleTokenSelect = (tokenName, tokenImg) => {
-      setValue("coinName", tokenName);
-      setValue("coinImg", tokenImg);
-      handleClose();
-    };
-
-    const selectedCoin = tokensDetails.find((item) => item.name === watch("coinName"));
-    const selectedCoinImg = selectedCoin ? selectedCoin.img : "";
-
+  function CoinSelector() {
     return (
-      <>
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{
-            border: "1px solid #ccc",
-            borderRadius: "20px",
-            padding: "4px 8px",
-            width: "auto",
-          }}
+      <InputAdornment position="end">
+        <Select
+          className={classes.select}
+          value={watch("coinName")}
+          onChange={(event) => setValue("coinName", event.target.value)}
+          disabled={isEdit}
         >
-          {selectedCoinImg && (
-            <img
-              src={"/" + selectedCoinImg}
-              alt={watch("coinName")}
-              style={{ width: 25, marginRight: 8 }}
-            />
-          )}
-          <Input
-            value={watch("coinName") || ""}
-            onClick={handleOpen}
-            readOnly
-            disableUnderline
-            sx={{
-              flex: 1,
-              "& .MuiInput-input": {
-                cursor: "pointer",
-                padding: 0,
-              },
-            }}
-          />
-          <Button
-            onClick={handleOpen}
-            disabled={isEdit}
-            sx={{
-              padding: "6px 8px",
-              minWidth: "auto",
-              marginLeft: "8px",
-            }}
-          >
-            <ArrowDropDown />
-          </Button>
-        </Box>
-
-        <Popover
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          sx={{
-            "& .MuiPopover-paper": {
-              borderRadius: 20,
-              boxShadow: 3,
-            },
-          }}
-        >
-          <Box
-            display="flex"
-            flexDirection="row"
-            flexWrap="wrap"
-            padding={2}
-            maxWidth={400}
-          >
-            {tokensDetails.map((item, index) => (
-              <MenuItem
-                key={index}
-                onClick={() => handleTokenSelect(item.name, item.img)}
-                style={{
-                  padding: "1px",
-                  display: "flex",
-                  alignItems: "center",
-                  flex: "1 1 auto",
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center", margin: "0 2px" }}>
-                  |<img src={"/" + item.img} style={{ width: 25, marginRight: 2 }} />
-                  <p style={{ margin: "0" }}>{item.name}</p>
-                </Box>
-              </MenuItem>
-            ))}
-          </Box>
-        </Popover>
-      </>
+          {tokensDetails.map((item, index) => (
+            <MenuItem
+              key={index}
+              value={item.name}
+              style={{
+                padding: "5px",
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+              }}
+            >
+              <p style={{ margin: 0, width: 50 }}>{item.name}</p>
+              <img src={"/"+ item.img} style={{ width: 25 }} />
+            </MenuItem>
+          ))}
+        </Select>
+      </InputAdornment>
     );
   }
-
+  
   async function createBundle(data) {
     try {
       const formData = new FormData();

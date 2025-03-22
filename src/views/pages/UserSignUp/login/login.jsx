@@ -28,6 +28,9 @@ import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { toast } from "react-toastify";
 import { isMobile } from "react-device-detect";
 import './login.css'
+import { useTranslation } from 'react-i18next';
+
+
 
 
 
@@ -123,6 +126,8 @@ export default function Login() {
   const [verificationSent, setVerificationSent] = useState(false);
   const [code, setcode] = useState("");
   const [resendTimer, setresendTimer] = useState();
+    const {t} = useTranslation();
+  
 
   useEffect(() => {
     if (user.userLoggedIn) {
@@ -267,10 +272,10 @@ export default function Login() {
 
   }, [])
   return (
-    <div className="Loginstyle">
+    <div dir="ltr" className="Loginstyle">
     <section className="section1">
    <form onSubmit={Login}>
-       <span className="Logintitle">LOGIN</span>
+       <span className="Logintitle">{t("LOGIN")}</span>
        <div className="">
           
            <TextField
@@ -284,14 +289,14 @@ export default function Login() {
               color:"red"
             }
             }}
-           label="Email"
+           label={t("Email")}
                 error={!emailvalid}
                 // placeholder={email}  
                 variant="standard"
                 autoComplete="off"
                
                 type="email"
-                helperText={!emailvalid && "Incorrect Email."}
+                helperText={!emailvalid && t("Incorrect Email.")}
                 value={email}
                 onBlur={(e) => setemailvalid(isValidEmail(e.target.value))}
                 onChange={(e) => {
@@ -312,12 +317,12 @@ export default function Login() {
             }
             }}
              fullWidth
-             label="Password"
+             label={t("Password")}
              variant="standard"
                 type={showpass ? "text" : "password"}
                 error={!passvalid}
                 helperText={
-                  !passvalid && "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+                  !passvalid && t("Password must contain at least 8 characters, one uppercase, one number and one special case character")
                 }
                 InputProps={{
                   endAdornment: (
@@ -346,10 +351,10 @@ export default function Login() {
        </div>
        <div className="forget">
            <label>
-               <input type="checkbox" /> Remember Me
+               <input type="checkbox" /> {t("Remember Me")}
            </label>
          
-           <Link to="/Forget">Forget Password</Link>
+           <Link to="/Forget">{t("Forget Password")}</Link>
        </div>
 
       
@@ -362,13 +367,13 @@ export default function Login() {
                 onClick={Login}
                 disabled={loader || !passvalid || !emailvalid}
               >
-                Log in{loader && <ButtonCircularProgress />}
+                {t("Login")}{loader && <ButtonCircularProgress />}
               </Button>
      
      
      
        <div className="register">
-           <p>Don't have an account? <Link  to="/create-account">Sign up</Link></p>
+           <p>{t("Don't have an account?")} <Link  to="/create-account">{t("Sign up")}</Link></p>
        </div>
    </form>
    
@@ -376,278 +381,6 @@ export default function Login() {
 </div>
 
 
-    // <Box className={classes.root}>
-    // <Box className={classes.splash}
-    //     style={{
-    //       padding:"20px",
-    //       display: 'flex',
-    //       flexDirection: 'column',
-    //       justifyContent: 'center',
-    //       flex: 1,
-    //       backgroundSize: 'cover',
-    //       backgroundImage: `url(${splash})`
-    //     }}
-    //   >
-    //     <Link to='/'>
-    //       <img src="/images/footer-logo.svg" alt="home page" width="200" />
-    //     </Link>
-    //     <Typography variant="h1" style={{ color: "#fffc", fontSize: '5rem', fontWeight: 'bold' }}>
-    //       Unleash Your Creativity
-    //     </Typography>
-
-
-    //   </Box>
-    //   <Box className={classes.loginBox}>
-
-    //     <Container maxWidth="sm" style={{ backgroundColor: "#e5e5f7f8", padding: '20px' }}>
-    //       <Typography variant="h2" align='center' mb={40}>
-    //         Login to your account
-    //       </Typography>
-    //       <form onSubmit={Login}>
-
-    //         <Box>
-    //           <label className={classes.labelText}>Your Email Account</label>
-    //           <TextField
-    //             error={!emailvalid}
-    //             placeholder={email}
-    //             variant='outlined'
-    //             className={classes.inputText}
-    //             type="email"
-    //             helperText={!emailvalid && "Incorrect Email."}
-    //             value={email}
-    //             onBlur={(e) => setemailvalid(isValidEmail(e.target.value))}
-    //             onChange={(e) => {
-    //               setemail(e.target.value);
-    //               setemailvalid(isValidEmail(e.target.value));
-    //             }}
-    //           />
-    //         </Box>
-    //         <Box>
-    //           <label className={classes.labelText}>Your Password</label>
-    //           <TextField
-    //             variant='outlined'
-    //             type={showpass ? "text" : "password"}
-    //             error={!passvalid}
-    //             helperText={
-    //               !passvalid && "Password must contain at least 8 characters, one uppercase, one number and one special case character"
-    //             }
-    //             InputProps={{
-    //               endAdornment: (
-    //                 <InputAdornment position="end">
-    //                   <IconButton
-    //                     aria-label="toggle password visibility"
-    //                     onClick={() => setshowpass(!showpass)}
-    //                   >
-    //                     {showpass ? <Visibility /> : <VisibilityOff />}
-    //                   </IconButton>
-    //                 </InputAdornment>
-    //               ),
-    //             }}
-    //             value={pass}
-    //             onChange={(e) => {
-    //               setpass(e.target.value);
-    //               setpassvalid(isValidPassword(e.target.value));
-    //             }}
-    //             onBlur={(e) => setpassvalid(isValidPassword(e.target.value))}
-    //             className={classes.inputText}
-    //           />
-    //         </Box>
-    //         <Box className={classes.btnflex} mt={5}>
-    //           <span
-    //             style={{ color: "brown", cursor: "pointer" }}
-    //             onClick={() => setOpenForgotPassword(true)}
-    //           >
-    //             Forgot Password ? &nbsp;
-    //           </span>
-    //           <Button
-    //             variant="contained"
-    //             size="large"
-    //             color="primary"
-    //             component={Link}
-    //             to="/create-account"
-    //           >
-    //             Sign Up
-    //           </Button>
-    //           &nbsp;&nbsp;
-
-    //           <Button
-    //             variant="contained"
-    //             size="large"
-    //             color="secondary"
-    //             onClick={Login}
-    //             disabled={loader || !passvalid || !emailvalid}
-    //           >
-    //             Sign In {loader && <ButtonCircularProgress />}
-    //           </Button>
-
-    //         </Box>
-
-    //       </form>
-    //     </Container>
-
-    //     <Dialog
-    //       open={openForgotPassword}
-    //       keepMounted
-    //       fullWidth="sm"
-    //       maxWidth="sm"
-    //       onClose={() => setOpenForgotPassword(false)}
-    //     >
-    //       <DialogContent>
-    //         {verificationSent &&
-    //           <DialogTitle>
-    //             <Typography
-    //               variant="h4"
-    //               style={{ color: "#792034", marginBottom: "10px", textAlign: 'center' }}
-    //             >
-    //               Security verification
-    //             </Typography>
-    //             <Typography
-    //               variant="body2"
-    //               style={{ color: "#999", marginBottom: "10px", textAlign: 'center' }}
-    //             >
-    //               To secure your account, please complete the following verification.
-    //             </Typography>
-    //             <IconButton
-    //               aria-label="close"
-    //               onClick={() => setOpenForgotPassword(false)}
-    //               style={{
-    //                 position: 'absolute',
-    //                 right: 8,
-    //                 top: 8,
-    //                 color: (theme) => theme.palette.grey[500],
-    //               }}
-    //             >
-    //               <CloseIcon />
-    //             </IconButton>
-    //           </DialogTitle>
-    //         }
-    //         <DialogContentText>
-    //           {!verificationSent &&
-    //             <Box mt={3}>
-    //               <Typography
-    //                 variant="h6"
-    //                 style={{ color: "#792034", marginBottom: "5px" }}
-    //               >
-    //                 Forgot Password
-    //               </Typography>
-    //               <Typography
-    //                 variant="body"
-    //                 component="p"
-    //                 style={{ fontSize: "14px" }}
-    //               >
-    //                 Enter the email address associated with your account and we'll
-    //                 send you a code to reset your password.
-    //               </Typography>
-
-    //               <label className={classes.labelText}>Your Email Account</label>
-    //               <TextField
-    //                 placeholder={email}
-    //                 className={classes.inputText}
-    //                 type="email"
-    //                 error={!emailvalid}
-    //                 helperText={
-    //                   !emailvalid && "Incorrect Email."
-    //                 }
-    //                 value={email}
-    //                 onChange={(e) => {
-    //                   setemail(e.target.value);
-    //                   setemailvalid(isValidEmail(email));
-    //                 }}
-    //               />
-
-    //             </Box>
-    //           }
-    //           {verificationSent &&
-    //             <Box mt={3}>
-    //               <TextField
-    //                 fullWidth
-    //                 margin="normal"
-    //                 label="Email Verification Code"
-    //                 name="code"
-    //                 type="number"
-    //                 InputProps={{
-    //                   endAdornment: (
-    //                     <InputAdornment position="end">
-    //                       <Button variant="text" onClick={forgotPasswordHandler} disabled={resendTimer || loader}>
-    //                         {resendTimer ? `Resend in ${resendTimer}s` : 'Get Code'}
-    //                       </Button>
-    //                     </InputAdornment>
-    //                   ),
-    //                   maxLength: 6,
-    //                 }}
-    //                 error={code.length != 6}
-    //                 helperText={
-    //                   "Enter the 6-digit code sent to your email"
-    //                 }
-    //                 value={code}
-    //                 onChange={(e) => setcode(e.target.value)}
-    //               />
-    //               <TextField
-    //                 type={showpass ? "text" : "password"}
-    //                 hintText="At least 8 characters"
-    //                 fullWidth
-    //                 name="newPassword"
-    //                 label="Enter your new password"
-    //                 error={!passvalid}
-    //                 onBlur={() => { setpassvalid(isValidPassword(pass)) }}
-    //                 value={pass}
-    //                 onChange={(e) => { setpass(e.target.value); setpassvalid(isValidPassword(pass)) }}
-    //                 InputProps={{
-    //                   endAdornment: (
-    //                     <InputAdornment position="end">
-    //                       <IconButton
-    //                         aria-label="toggle password visibility"
-    //                         onClick={() => setshowpass(!showpass)}
-    //                       >
-    //                         {showpass ? <Visibility /> : <VisibilityOff />}
-    //                       </IconButton>
-    //                     </InputAdornment>
-    //                   ),
-    //                 }}
-    //               />
-    //               <FormHelperText>
-    //                 {!isValidPassword(pass) && (
-    //                   <span>
-    //                     Must be at least 8 characters long<br />
-    //                     Must have at least 1 uppercase letter<br />
-    //                     Must have at least 1 lowercase letter<br />
-    //                     Must have at least 1 digit<br />
-    //                     Must have at least 1 special case character<br />
-    //                   </span>
-    //                 )}
-    //               </FormHelperText>
-    //             </Box>
-    //           }
-    //         </DialogContentText>
-    //       </DialogContent>
-    //       <DialogActions>
-    //         {!verificationSent &&
-    //           <Button
-    //             variant="contained"
-    //             size="large"
-    //             color="secondary"
-    //             onClick={forgotPasswordHandler}
-    //             disabled={resetloader || !emailvalid}
-    //           >
-    //             Continue {resetloader && <ButtonCircularProgress />}
-    //           </Button>
-    //         }
-    //         {verificationSent &&
-    //           <Button
-    //             variant="contained"
-    //             color="secondary"
-    //             type="submit"
-    //             disabled={resetloader || code.length != 6 || !passvalid}
-    //             onClick={resetPaswordHandler}
-    //           >
-    //             Submit and Reset
-    //             {resetloader && <ButtonCircularProgress />}
-    //           </Button>
-    //         }
-    //       </DialogActions>
-    //     </Dialog>
-
-    //   </Box>
-    // </Box>
+    
   );
 }

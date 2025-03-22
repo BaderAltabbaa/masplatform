@@ -18,6 +18,7 @@ import {
 import { makeStyles } from '@mui/styles'; // Still using makeStyles, although using styled API is more recommended in MUI v5
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; // Correct icon import
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"; // Correct icon import
+import { useTranslation } from 'react-i18next';
 
 import { UserContext } from "src/context/User";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   LoginBox: {
-    paddingTop: "20px",
+    paddingTop: "0px",
     "& h6": {
       
       "& span": {
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "30px",
+    marginBottom: "20px",
     [theme.breakpoints.down("xs")]: {
       display: "block",
     },
@@ -174,6 +175,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Bundles() {
+  const {t} = useTranslation();
   const [state, setState] = useState({
     OpenAuction: false,
     openShareAudience: false,
@@ -186,15 +188,16 @@ export default function Bundles() {
     setState((prevState) => ({ ...prevState, ...data }));
 
   const classes = useStyles();
+      
 
   useEffect(() => {
     getBundleListHandler().catch(console.error);
   }, [page]);
 
   return (
-    <MainCard title="My Bundles" >
+    <MainCard title={t('My Bundles')} >
 
-    <Box className={classes.LoginBox} mb={5}>
+    <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6" color="black"></Typography>
         <Box display="flex" sx={{}}>
@@ -205,7 +208,7 @@ export default function Bundles() {
             style={{ marginRight: "10px" }}
             onClick={() => updateState({ openShareAudience: true })}
           >
-            share for audience
+            {t("share for audience")}
           </Button>
           <Button
             variant="contained"
@@ -214,13 +217,13 @@ export default function Bundles() {
             style={{background:"#2f0032",color:'white'}}
             onClick={() => updateState({ OpenAuction: true })}
           >
-            add a bundle
+            {t("add a bundle")}
           </Button>
         </Box>
       </Box>
       <Box>
         {!bundleList[0] ? (
-          <Box align="center" mt={4} mb={5}>
+          <Box align="center" mt={2} mb={5}>
             <NoDataFound />
           </Box>
         ) : (
@@ -230,7 +233,7 @@ export default function Bundles() {
         <Grid container spacing={2} className={classes.bunbox}  >
           {bundleList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={2.4} md={4} sm={6} xm={12}>
                 <Cardbundle data={data}/>
                 {/* <BundleCard data={data} index={i} isDays={true} /> */}
               </Grid>
@@ -283,7 +286,7 @@ export default function Bundles() {
       },
       params: {
         page,
-        limit: 4,
+        limit: 5,
       },
     })
       .then(async (res) => {

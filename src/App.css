@@ -106,3 +106,12 @@
   .clip-path-half-circle {
     clip-path: ellipse(100% 50% at 50% 100%);
   }
+  .rtl {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .ltr {
+    direction: ltr;
+    text-align: left;
+  }

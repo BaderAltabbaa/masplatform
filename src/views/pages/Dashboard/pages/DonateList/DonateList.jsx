@@ -25,6 +25,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 
 import {
   Box,
@@ -155,6 +157,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DonateList() {
   const classes = useStyles();
+        const {t} = useTranslation();
+  
   const navigate = useNavigate();
   const [donateList, setDonateList] = useState([]);
   const [loadingDonations, setLoadingDonations] = useState(false);
@@ -216,19 +220,19 @@ export default function DonateList() {
                 <TableRow>
                   
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Payment date
+                    {t("Payment date")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Amount
+                   {t("Amount")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Beneficiary
+                    {t("Beneficiary")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Receipt Id
+                    {t("Receipt Id")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Status
+                    {t("Status")}
                   </TableCell>
                 </TableRow>
               </TableHead>

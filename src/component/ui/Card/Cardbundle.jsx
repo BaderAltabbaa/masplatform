@@ -16,6 +16,12 @@ import { makeStyles } from '@mui/styles';
 import { Link } from "react-router-dom";
 import AddBundleDialog from "../../AddBundleDialog";
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
+import { FiCopy } from "react-icons/fi";
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +68,8 @@ function Cardbundle({
   
     const auth = useContext(UserContext);
     const classes = useStyles();
-  
+    const {t} = useTranslation();
+
     const [isLike, setisLike] = useState(false);
     const [nbLike, setnbLike] = useState(0);
     const [openSubscribe, setOpenSubscribe] = useState(false);
@@ -230,7 +237,7 @@ function Cardbundle({
     }, []);
   
   return (
-    <Box
+    <Box dir="ltr"
   className="card-3"
   sx={{
      
@@ -303,14 +310,22 @@ function Cardbundle({
  
    <div className="contentContainer">
 
-
+<Box display="flex" alignItems="center">
    <Typography
           variant="h6"
           component="h6"
-          style={{ color: "white", fontWeight: "bold" }}
+          style={{ color: "white", fontWeight: "bold" ,margin:"0 5px" }}
         >
           {BundleData.bundleName}
         </Typography>
+        <FiCopy color="white" cursor="pointer" onClick={() => {
+                    navigator.clipboard.writeText(
+                      `${pageURL}/bundles-details?${BundleData?._id}`
+                    );
+                    toast.info("Copied")}} />
+
+        
+        </Box>
   <Typography
           variant="h6"
           component="h6"
@@ -376,7 +391,7 @@ function Cardbundle({
               disabled={isSubscribed && activeSubscribe}
               onClick={() => (activeSubscribe ? {} : handleClickOpen2())}
             >
-              {activeSubscribe ? "Subscribed" : "Renew"}
+              {activeSubscribe ? t("Subscribed") : t("Renew")}
             </Button>
           )}
         {auth?.userData?._id !== userId && !isSubscribed && (
@@ -390,7 +405,7 @@ function Cardbundle({
           padding: "2px",
         }}
           onClick={handleClickOpen2}>
-            Details
+            {t("Details")}
           </Button>
         )}
     
@@ -408,7 +423,7 @@ function Cardbundle({
             }}
             onClick={() => navigate("/bundles-details?" + BundleData?._id)}
           >
-            View
+            {t("View")}
           </Button>
         )}</div>   
 
@@ -447,7 +462,7 @@ function Cardbundle({
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <label> Donation Amount</label>
+                <label>{t("Donation Amount")}</label>
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <TextField
@@ -466,22 +481,22 @@ function Cardbundle({
             >
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} md={4}>
-                  <label> Duration</label>
+                <label>{t("Duration")}</label>
                 </Grid>
                 <Grid item xs={12} md={8} className={classes.donation}>
-                  <span>7 Days</span>
-                  <span>14 Days</span>
-                  <span>30 Days</span>
-                  <span>60 Days</span>
-                  <span>1 Year</span>
-                  <span>Forever</span>
+                <span>7 {t("Days")}</span>
+                  <span>14 {t("Days")}</span>
+                  <span>30 {t("Days")}</span>
+                  <span>60 {t("Days")}</span>
+                  <span>1 {t("Year")}</span>
+                  <span>{t("Forever")}</span>
                 </Grid>
               </Grid>
             </Box>
 
             <Box align="center">
-              <label> Services:</label>
-              <Typography
+            <label> {t("Services")}:</label>
+            <Typography
                 variant="body2"
                 componant="p"
                 style={{ color: "#000", fontSize: "20px" }}
@@ -492,8 +507,8 @@ function Cardbundle({
             </Box>
             <Box mt={2} className={classes.changepic}>
               <small>
-                Change/upload a photo or video
-                <input type="file" />
+              {t("Change/upload a photo or video")}
+              <input type="file" />
               </small>
               <img src="/images/Rectangle.png" alt="" />
             </Box>
@@ -501,7 +516,7 @@ function Cardbundle({
               <Grid container alignItems="center" spacing={2}>
                 <Grid item md={4}>
                   <Link style={{ color: "#000" }} onClick={handleClose}>
-                    Delete this bundle
+                    {t("Delete this bundle")}
                   </Link>
                 </Grid>
                 <Grid item md={4}>
@@ -512,7 +527,7 @@ function Cardbundle({
                     style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </Grid>
                 <Grid item md={4}>
@@ -523,7 +538,7 @@ function Cardbundle({
                     style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
-                    Save Changes
+                    {t("Save Changes")}
                   </Button>
                 </Grid>
               </Grid>
@@ -547,14 +562,14 @@ function Cardbundle({
               align="center"
               style={{ color: "rgb(71, 0, 89)", margiBottom: "10px" }}
             >
-              Bundle 
+              {t("Bundle")} 
             </Typography>
             <Typography
               variant="h6"
               align="center"
               style={{ color: "#000", borderBottom: "solid 0.5px #e5e3dd" }}
             >
-              My basic supporter
+              {t("My basic supporter")}
             </Typography>
 
             <Box align="center" mt={3}>
@@ -563,7 +578,7 @@ function Cardbundle({
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Donation amount: </span>10
+                <span style={{ color: "#707070" }}>{t("Donation amount")}: </span>10
                 MAS
               </Typography>
               <Typography
@@ -571,27 +586,27 @@ function Cardbundle({
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: " #707070" }}>Duration: </span>One month
-              </Typography>
+                <span style={{ color: "#707070" }}>{t("Duration")}: </span>{t("One month")}
+                </Typography>
               <Typography
                 variant="h6"
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Number of subscribers:</span>
+                <span style={{ color: "#707070" }}>{t("Number of subscribers")}:</span>
                 100
               </Typography>
             </Box>
 
             <Box align="center">
-              <label> Services:</label>
-              <Typography
+            <label> {t("Services")}:</label>
+            <Typography
                 variant="body2"
                 componant="p"
                 style={{ color: "#000", fontSize: "20px" }}
               >
-                I will send you a special video every <br />
-                month specially for you!
+               {t("I will send you a special video every")} <br />
+               {t("month specially for you!")}
               </Typography>
             </Box>
             <Box mt={2} className={classes.changepic}>
@@ -640,7 +655,7 @@ function Cardbundle({
                           fullWidth
                           onClick={downLoadFile}
                         >
-                          Download
+                          {t("Download")}
                         </Button>
                       </Grid>
                     </Box>
@@ -661,18 +676,18 @@ function Cardbundle({
 
           <Box mt={2} className={classes.deskiText}>
             <Typography variant="h4" align="left" color="textSecondary">
-              Donation amount:
+              {t("Donation amount")}:
               <span>
                 {BundleData.donationAmount} {BundleData.coinName}
               </span>
             </Typography>
             <Typography variant="h4" align="left" color="textSecondary">
-              Duration: <span> {BundleData.duration}</span>
+              {t("Duration")}: <span> {BundleData.duration}</span>
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} md={3} lg={2}>
                 <Typography variant="h4" align="left" color="textSecondary">
-                  Details:
+                  {t("Details")}:
                 </Typography>
               </Grid>
               <Grid item xs={12} md={9} lg={10}>
@@ -690,7 +705,7 @@ function Cardbundle({
               style={{background:"#2f0032",color:"white" }}
 
               >
-                Cancel
+                {t("Cancel")}
               </Button>
               &nbsp;&nbsp;
               <Button
@@ -701,7 +716,7 @@ function Cardbundle({
                 style={{background:"#2f0032",color:"white" }}
 
               >
-                Login
+                {t("Login")}
               </Button>
             </Box>
           )}
@@ -720,7 +735,8 @@ function Cardbundle({
                   }}
                   disabled={isLoading}
                 >
-                  Cancel
+                {t("Cancel")}
+
                 </Button>
                 &nbsp;&nbsp;&nbsp;
                 {auth.userData &&
@@ -735,7 +751,7 @@ function Cardbundle({
                       onClick={subscribeToBundleHandler}
                       disabled={isLoading}
                     >
-                      {isLoading ? "pending..." : "Subscribe now"}
+                      {isLoading ? t("pending...") : t("Subscribe now")}
                       {isLoading && <ButtonCircularProgress />}
                     </Button>
                   )}
@@ -755,21 +771,21 @@ function Cardbundle({
         <DialogContent className={classes.dilogBody}>
           <DialogContentText id="alert-dialog-description">
             <Typography variant="h4" align="center" style={{ color: "#000" }}>
-              Enter an amount
+            {t("Enter an amount")}
             </Typography>
             <Box mt={4}>
               <Input
                 placeholder="300"
                 className={classes.input_fild2}
                 endAdornment={
-                  <InputAdornment position="end">Select a token</InputAdornment>
+                  <InputAdornment position="end">{t("Select a token")}</InputAdornment>
                 }
               />
             </Box>
 
             <Box mt={4}>
               <Typography variant="h4" align="center" style={{ color: "#000" }}>
-                Send a message
+              {t("Send a message")}
               </Typography>
               <TextField
                 id="outlined-multiline-static"
@@ -782,10 +798,10 @@ function Cardbundle({
             </Box>
             <Box mt={2} mb={4}>
               <Button variant="contained" size="large" color="secondary" style={{background:"#2f0032",color:"white" }} >
-                Donate now
+              {t("Donate now")}
               </Button>
             </Box>
-            <small>ETH fees and ETH fees and apply. apply.</small>
+            <small>{t("ETH fees and ETH fees and apply. apply.")}</small>
           </DialogContentText>
         </DialogContent>
       </Dialog>

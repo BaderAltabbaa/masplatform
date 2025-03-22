@@ -3,6 +3,8 @@ import axios from "axios";  // For making API calls
 import Apiconfigs from "src/Apiconfig/Apiconfigs";  // Custom API configurations
 import { useNavigate } from "react-router-dom";  // For navigation
 import { UserContext } from "src/context/User";  // For accessing user context
+import { useTranslation } from 'react-i18next';
+
 
 // Material UI imports for UI components
 import { 
@@ -147,6 +149,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransactionHistory() {
+        const {t} = useTranslation();
+  
   const classes = useStyles();
   const navigate = useNavigate();
   const auth = useContext(UserContext);
@@ -212,25 +216,25 @@ export default function TransactionHistory() {
                 <TableRow>
                   
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Payment date
+                    {t("Payment date")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Amount
+                    {t("Amount")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    From
+                   {t("From")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    To
+                    {t("To")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Type
+                    {t("Type")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                  TransactionsHash
+                  {t("Transactions Hash")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
-                    Status
+                    {t("Status")}
                   </TableCell>
                 </TableRow>
               </TableHead>

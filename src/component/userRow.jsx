@@ -13,6 +13,8 @@ import { color } from 'framer-motion';
 import { UserContext } from "src/context/User";
 import BalanceBox from './ui/BalanceBox';
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -31,6 +33,8 @@ const useStyles = makeStyles(() => ({
 export default function ChildTableUser({ row, index }) {
   const classes = useStyles();
   // const {t} = useTranslation();
+        const {t} = useTranslation();
+  
   const [openDonation, setOpenDonation] = useState(false)
   const [openBalance, setOpenBalance]  = useState(false)
   const navigate = useNavigate()
@@ -110,7 +114,7 @@ const handleCloseBalance = () => {
 
          style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
        >
-              Check Balance
+              {t("Check Balance")}
        </Button>
           : <Button
             className={classes.createButton}
@@ -118,7 +122,7 @@ const handleCloseBalance = () => {
 
             style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
           >
-                 Transfer Funds
+                 {t("Transfer Funds")}
           </Button>}
          
          
@@ -183,15 +187,15 @@ const handleCloseBalance = () => {
         userData={row}
       />
 
-<Dialog open={openBalance} onClose={handleCloseBalance} maxWidth="sm" fullWidth>
+<Dialog open={openBalance} onClose={handleCloseBalance} maxWidth="sm" fullWidth >
 <DialogTitle>
-  <Typography variant='h3' color='rgb(33, 0, 46)'>Your Balance</Typography>
-  <DialogContent align="center">
+  <Typography variant='h3' color='rgb(33, 0, 46)'>{t("Your Balance")}</Typography>
+  <DialogContent align="center" dir='ltr'>
     <BalanceBox
     availableBalance={availableBalance}
     tokensDetails={tokensDetails}
     />
- <Link to={"/buymas"}><Button className={classes.createButton} sx={{color:"white" ,marginTop:"20px"}}>Buy MAS</Button></Link>
+ <Link to={"/buymas"}><Button className={classes.createButton} sx={{color:"white" ,marginTop:"20px"}}>{t("Buy MAS")}</Button></Link>
   </DialogContent>
 </DialogTitle>
 

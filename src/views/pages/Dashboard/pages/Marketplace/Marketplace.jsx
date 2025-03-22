@@ -6,6 +6,7 @@
 
 
 
+import { useTranslation } from 'react-i18next';
 
 import React, { useState, useContext, useRef, useEffect } from "react";
 import {
@@ -182,6 +183,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Marketplace() {
+        const {t} = useTranslation();
+  
   const [state, setState] = useState({
     OpenAuction: false,
     openShareAudience: false,
@@ -201,7 +204,7 @@ export default function Marketplace() {
 
   return (
 
-     <MainCard title="My Items" >
+     <MainCard title={t("My Items")} >
  <Box className={classes.LoginBox} mb={5}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6"></Typography>
@@ -213,7 +216,7 @@ export default function Marketplace() {
             style={{ marginRight: "10px",background:"#2f0032",color:'white' }}
             onClick={() => updateState({ openShareAudience: true })}
           >
-            add a Photos
+            {t("add a Photos")}
           </Button>
           <Button
             variant="contained"
@@ -223,7 +226,7 @@ export default function Marketplace() {
 
             onClick={() => updateState({ OpenAuction: true })}
           >
-            add a item
+            {t("add a item")}
           </Button>
         </Box>
       </Box>
@@ -239,7 +242,7 @@ export default function Marketplace() {
         <Grid container spacing={2} className={classes.bunbox}>
           {itemList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={2.4} md={4} sm={6} xm={12}>
                 <CardMarketplace data={data} />
                 {/* <ItemCard data={data} index={i} isDays={true} /> */}
               </Grid>
@@ -293,7 +296,7 @@ export default function Marketplace() {
       },
       params: {
         page,
-        limit: 4,
+        limit: 5,
       },
     })
       .then(async (res) => {

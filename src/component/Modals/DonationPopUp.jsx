@@ -10,6 +10,7 @@ import {
   Input,
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
+import { useTranslation } from 'react-i18next';
 
 import Dialog from "@mui/material//Dialog";
 import DialogContent from "@mui/material//DialogContent";
@@ -743,6 +744,8 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
   const [download, setDownload] = useState(false);
   const [openCertificate, setOpenCertificate] = useState(false);
   const [openSelectToken, setOpenSelectToken] = useState(false);
+  const {t} = useTranslation();
+  
 
   const availableBalance = {
     masBalance : parseFloat(user.userData.masBalance),
@@ -862,14 +865,15 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
         disableBackdropClick={isLoading}
         disableEscapeKeyDown={isLoading}
       >
-        <DialogContent>
+        <DialogContent dir="ltr" >
           <DialogContentText id="alert-dialog-description">
             <Typography
               variant="h4"
               align="center"
               style={{ color: " #2d013a", marginBottom: "10px" }}
+              dir="rtl"
             >
-             Send donation to {userData.userName}
+             {t("Send donation to")} {userData.userName}
             </Typography>
 
             <BalanceBox 
@@ -883,9 +887,9 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
                 
                 <Grid item xs={12} sx={{marginBottom:"20px"}}>
                 <Box mt={4}>
-                <Input
+                <Input 
                   value={donationAmount}
-                  placeholder={"Minimum amount 1 "+selectedToken?.name?.toString()}
+                  placeholder={t("Minimum amount 1 ")+selectedToken?.name?.toString()}
                   className={classes.input_fild2}
                   type="number"
                   inputProps={{
@@ -908,9 +912,10 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
                   variant="body2"
                   align="left"
                   style={{ color: "#000" }}
+                  dir='rtl'
                 > 
                   <span onClick={() => MAxAmount()} >
-                    Available: {availableBalance[selectedToken.databaseKey].toFixed(2)} {selectedToken.name} 
+                    {t("Available")}: {availableBalance[selectedToken.databaseKey].toFixed(2)} {selectedToken.name} 
                   </span>
                 </Typography>
                 
@@ -926,7 +931,7 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
                 <Grid item xs={12}>
                   <TextField
 variant="standard"
-                  placeholder="Donation Note"
+                  placeholder={t("Donation Note")}
                     multiline
                     maxRows={3}
                     className={classes.input_fild2}
@@ -944,8 +949,9 @@ variant="standard"
               variant="body2"
               align="left"
               style={{ color: "#000" }}
+              dir='rtl'
             > 
-              <span>Transaction fees: {donationAmount ? (parseFloat(donationAmount)*parseFloat(user.userData.withdrawFees)/100) : user.userData.withdrawFees+"%"} {selectedToken.name}</span>
+              <span>{t("Transaction fees")}: {donationAmount ? (parseFloat(donationAmount)*parseFloat(user.userData.withdrawFees)/100) : user.userData.withdrawFees+"%"} {selectedToken.name}</span>
               <br/>
               { 
                   donationAmount ? <strong>{userData.name} Will receive: {parseFloat(donationAmount) - (parseFloat(user.userData.withdrawFees)*parseFloat(donationAmount)/100)} {selectedToken.name}</strong> : ""
@@ -962,7 +968,7 @@ variant="standard"
                   className={classes.btnCansel}
 
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                   <Button
                   className={classes.btnTransfer}
@@ -973,7 +979,7 @@ variant="standard"
                     disabled={ isLoading  || donationAmount < 1 || selectedToken == "select"}
                     onClick={donationWithoutBlockchainHandler}
                   >
-                    Transfer Funds {isLoading && <ButtonCircularProgress />}
+                    {t("Transfer Funds")} {isLoading && <ButtonCircularProgress />}
                   </Button>
                   </Box>
                 </Grid>
@@ -999,7 +1005,7 @@ variant="standard"
                 <Box className={classes.heading}>
                   <img src="\assets\Images\masfooter-logo.svg" />
                   <Typography variant="h2" color="white" align="center">
-                  Transaction Receipt
+                  {t("Transaction Receipt")}
                   </Typography>
                   <img src="\assets\Images\masfooter-logo.svg"  alt=""/>
                 </Box>
@@ -1007,7 +1013,7 @@ variant="standard"
 
                   <Box display="flex" alignItems="center" marginBottom="15px"> 
                   <Typography variant="h3" sx={{marginRight:"5px"}}>
-                    From:
+                    {t("From")}:
 
                   </Typography>
                   <Typography variant="h4">
@@ -1023,7 +1029,7 @@ variant="standard"
 
                   <Box display="flex" alignItems="start" marginBottom="15px" flexDirection="column">
                   <Typography variant="h3" sx={{marginRight:"5px"}}>
-                     Sender Wallet Address:
+                     {t("Sender Wallet Address")}:
                      </Typography>
                   <Typography  sx={{fontSize:"15px" ,
                     "@media(max-width: 800px)":{
@@ -1041,7 +1047,7 @@ variant="standard"
                   <Box display="flex" alignItems="center" marginBottom="15px">
                   <Typography variant="h3" sx={{marginRight:"5px"}}
                   >
-                  Amount:     
+                  {t("Amount")}:     
                   </Typography>            
                      <Typography variant="h4">
                       {donationAmount + ``}
@@ -1051,7 +1057,7 @@ variant="standard"
 
                     <Box display="flex" alignItems="center" marginBottom="15px">
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
-                     To:
+                     {t("To")}:
                      </Typography>
                   <Typography variant="h4">
                     {userData?.name
@@ -1064,7 +1070,7 @@ variant="standard"
 
                   <Box display="flex" alignItems="start" marginBottom="15px" flexDirection="column">
                   <Typography variant="h3" sx={{marginRight:"5px"}}>
-                    Receiver Wallet Address:
+                    {t("Receiver Wallet Address")}:
                      </Typography>
                   <Typography sx={{fontSize:"15px" ,
                     "@media(max-width: 800px)":{
@@ -1082,7 +1088,7 @@ variant="standard"
 
                   <Box display="flex" alignItems="center" marginBottom="15px">
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
-                    Transaction Hash:
+                    {t("Transaction Hash")}:
                     </Typography>
                   <Typography variant="h4">
                   {serialNumber}
@@ -1091,7 +1097,7 @@ variant="standard"
 
                   <Box display="flex" alignItems="center" marginBottom="15px">
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
-                      Note:
+                      {t("Note")}:
                     </Typography>
                   <Typography variant="h4">
                     {donationMessage ? donationMessage : "No Note"}
@@ -1100,7 +1106,7 @@ variant="standard"
 
                   <Box display="flex" alignItems="center" marginBottom="15px">
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
-                      Date:
+                      {t("Date")}:
                     </Typography>
                   <Typography variant="h4">
                     {cDate}
@@ -1149,7 +1155,7 @@ variant="standard"
                 }
               }}
             >
-              download <FiDownload /> {download && <ButtonCircularProgress />}
+              {t("Download")} <FiDownload /> {download && <ButtonCircularProgress />}
             </Button>
           </Box>
         </Dialog>
@@ -1165,7 +1171,7 @@ variant="standard"
       >
         <DialogContent>
           <DialogTitle align="center" className={classes.dailogTitle} sx={{color:" #2d013a" ,fontSize:"20px",fontWeight:"bold"}}>
-            Select a token
+            {t("Select a token")}
           </DialogTitle>
           {tokensDetails.map((data, i) => {
             return (

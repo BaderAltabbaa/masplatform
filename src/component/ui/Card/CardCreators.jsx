@@ -7,6 +7,8 @@ import { Badge, Box, IconButton, Tooltip } from "@mui/material";
 import { BsChat } from "react-icons/bs";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
+import { useTranslation } from 'react-i18next';
+
 
 
 function CardCreators({
@@ -25,6 +27,7 @@ function CardCreators({
     };
   const [copyMessage, setCopyMessage] = useState("");
   const [menuVisible, setMenuVisible] = useState(false); 
+  const {t} = useTranslation();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(title);
@@ -110,7 +113,7 @@ function CardCreators({
 
   }, [])
   return (
-    <Box
+    <Box dir="ltr"
   className="card-3"
   sx={{
      
@@ -156,7 +159,7 @@ function CardCreators({
             className="primary"
             style={{padding:"5px"}}
           >
-            {isSubscribed ? "Subscribed" : "Subscribe"}
+            {isSubscribed ? t("Subscribed") : t("Subscribe")}
           </button>
           <span
             style={{
@@ -168,9 +171,9 @@ function CardCreators({
           >
             {nbSubscribed
               ? nbSubscribed > 0
-                ? nbSubscribed + " subs"
-                : "0 sub"
-              : "0 sub"}
+                ? nbSubscribed + t("subs")
+                : "0" +t("sub")
+              : "0" +t("sub")}
           </span>
         </div>
      

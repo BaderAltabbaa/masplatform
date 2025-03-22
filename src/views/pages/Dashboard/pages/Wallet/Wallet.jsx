@@ -15,6 +15,8 @@ import { VerifyOtp } from "src/component/Modals/VerifyOtp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; 
 import axios from "axios"
 import zIndex from "@mui/material/styles/zIndex"
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -348,6 +350,8 @@ const Wallet = () => {
                const [availableBalance, setAvailableBalance] = useState({});
            const [totalEarning, setTotalEarning] = useState({});
              const [selectedToken, setSelectedToken] = useState(tokensDetails[0]);
+                   const {t} = useTranslation();
+             
  
  
              const classes = useStyles();
@@ -485,7 +489,7 @@ const Wallet = () => {
 
     return(
 <>
-<MainCard title="My Wallet">
+<MainCard title={t("My Wallet")}>
     <Box sx={{
         padding:"0 150px",
         "@media(max-width: 1200px)":{
@@ -496,14 +500,14 @@ const Wallet = () => {
                <div className="tableAnimatedBackground"></div>
                <div className="tableInnerBlurEffect"></div>
    <Box sx={{backgroundColor:" #30003c" , padding:"20px 40px" ,borderRadius:"20px",position:"relative"}}>
-    <Typography variant="h2" color="white" align="center" mb={3}>My Ballance</Typography>
+    <Typography variant="h2" color="white" align="center" mb={3}>{t("My Balance")}</Typography>
     <BalanceBox
         availableBalance={availableBalance1}
         tokensDetails={tokensDetails}
         />
        
 
-        <Typography variant="h2" color="white" align="center" mb={3} mt={2}>My Total Earings</Typography>
+        <Typography variant="h2" color="white" align="center" mb={3} mt={2}>{t("My Total Earings")}</Typography>
     <BalanceBox
         availableBalance={totalEarning1}
         tokensDetails={tokensDetails}
@@ -515,10 +519,10 @@ const Wallet = () => {
                 gap:"20px"
             }
         }}>
-            <Link to={"/buymas"}><Button className="primaryButton">Buy MAS</Button></Link>
-            <Link to={"/connectWallet"}><Button className="primaryButton">Connect Wallet</Button></Link>
-          <Link> <Button className="primaryButton"  onClick={() => setOpenWithdraw(true)}>WithDraw</Button></Link> 
-          <Link>  <Button className="primaryButton"  onClick={() => setOpenDeposit(true)}>Deposit</Button></Link>
+            <Link to={"/buymas"}><Button className="primaryButton">{t("Buy MAS")}</Button></Link>
+            <Link to={"/connectWallet"}><Button className="primaryButton">{t("Connect Wallet")}</Button></Link>
+          <Link> <Button className="primaryButton"  onClick={() => setOpenWithdraw(true)}>{t("WithDraw")}</Button></Link> 
+          <Link>  <Button className="primaryButton"  onClick={() => setOpenDeposit(true)}>{t("Deposit")}</Button></Link>
 
 
         </Box>
@@ -554,14 +558,14 @@ const Wallet = () => {
               align="center"
               style={{ color: "white", marginBottom: "20px" }}
             >
-              Deposit
+              {t("Deposit")}
             </Typography>
             <Typography
               variant="h5"
               align="center"
               style={{ color: "white", marginBottom: "10px" }}
             >
-              Please make sure you use BSC (BNB Smart Chain) and send only supported tokens (MAS, USDT, BUSD)
+              {t("Please make sure you use BSC (BNB Smart Chain) and send only supported tokens (MAS, USDT, BUSD)")}
             </Typography>
             <Container maxWidth="md">
               <Box mt={4}>
@@ -579,7 +583,7 @@ const Wallet = () => {
                     <InputAdornment position="end">
                       <CopyToClipboard text={user.userData?.ethAccount?.address}>
                         <Button onClick={() => toast.info("Copied")} sx={{ color: "white" }}>
-                          COPY
+                          {t("Copy")}
                         </Button>
                       </CopyToClipboard>
                     </InputAdornment>
@@ -594,7 +598,7 @@ const Wallet = () => {
                   onClick={handleCloseDepositModal}
                   style={{ fontSize: "15px", background: "#8c0087", color: "white" }}
                 >
-                  Close
+                  {t("Close")}
                 </Button>
               </Box>
             </Container>
@@ -650,7 +654,7 @@ const Wallet = () => {
                             align="center"
                             style={{ color: "white", marginBottom: "10px" }}
                         >
-                            Withdraw
+                            {t("Withdraw")}
                         </Typography>
                         <Typography
                             variant="body2"
@@ -658,8 +662,8 @@ const Wallet = () => {
                             style={{ color: "white" , marginBottom:"20px"}}
                         >
                             <>
-                                Please make sure the Wallet address is BEP20 <br />
-                                (Transaction will be sent in BSC Network)
+                                {t("Please make sure the Wallet address is")} BEP20 <br />
+                                {t("(Transaction will be sent in BSC Network)")}
                             </>
                         </Typography>
                         <BalanceBox
@@ -670,7 +674,7 @@ const Wallet = () => {
                         <Container maxWidth="md">
                             <Box mt={4}>
                                 <TextField
-                                    placeholder="Wallet Address"
+                                    placeholder={t("Wallet Address")}
                                     value={withdrawAddress}
                                     variant="standard"
 
@@ -741,7 +745,7 @@ const Wallet = () => {
                                     style={{ color: "white" }}
                                 >
                                     <span onClick={() => MAxWithdrawAmount()} >
-                                        Available: {availableBalance[selectedToken.databaseKey]?.toFixed(2)} {selectedToken.name}
+                                        {t("Available")}: {availableBalance[selectedToken.databaseKey]?.toFixed(2)} {selectedToken.name}
                                     </span>
                                 </Typography>
 
@@ -753,10 +757,10 @@ const Wallet = () => {
                                     align="left"
                                     style={{ color: "white" ,lineHeight:"30px"}}
                                 >
-                                    <span>Withdraw fees: {withdrawAmount ? <span>{withdrawFees} {selectedToken.name}</span> : user.userData?.withdrawFees + "%"} </span>
+                                    <span>{t("Withdraw fees")}: {withdrawAmount ? <span>{withdrawFees} {selectedToken.name}</span> : user.userData?.withdrawFees + "%"} </span>
                                     <br />
                                     {withdrawAmount ?
-                                        <strong>Total: {parseFloat(withdrawAmount) + parseFloat(withdrawFees)} {selectedToken.name}</strong> : ""
+                                        <strong>{t("Total")}: {parseFloat(withdrawAmount) + parseFloat(withdrawFees)} {selectedToken.name}</strong> : ""
                                     }
                                 </Typography>
                                 <Grid  xs={12} className={classes.buttonContainerStyle}>
@@ -769,7 +773,7 @@ const Wallet = () => {
                                     onClick={withdraw}
                                     disabled={loader || !withdrawAmount || !selectedToken}
                                 >
-                                    {loader ? "Pending..." : `Withdraw`}
+                                    {loader ? t("Pending...") : t(`Withdraw`)}
                                     {loader && <ButtonCircularProgress />}
                                 </Button>
                                 <Button
@@ -779,7 +783,7 @@ const Wallet = () => {
                                     onClick={() => setOpenWithdraw(false)}
                                     style={{  fontSize: "15px",background:"#8c0087",color:"white" }}
                                 >
-                                    Close
+                                    {t("Close")}
                                 </Button>
                                 </Grid>
                                 <Typography

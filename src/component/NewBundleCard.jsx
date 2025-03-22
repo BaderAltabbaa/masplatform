@@ -21,6 +21,7 @@ import {
   Button,
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
+import { useTranslation } from 'react-i18next';
 
 import { Link } from "react-router-dom";
 import Dialog from "@mui/material//Dialog";
@@ -73,6 +74,8 @@ export default function BundleCard({ data }) {
   const [open3, setOpen3] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openEdit, setOpenEdit] = useState(false);
+    const {t} = useTranslation();
+  
   const [isVideo, setisVideo] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -324,7 +327,7 @@ export default function BundleCard({ data }) {
             }}
             style={{ fontSize: 14 }}
           >
-            {"Edit"}
+            {t("Edit")}
           </MenuItem>
         )}
         <MenuItem
@@ -337,7 +340,7 @@ export default function BundleCard({ data }) {
           }}
           style={{ fontSize: 12 }}
         >
-          {"Copy"}
+          {t("Copy")}
         </MenuItem>
       </Menu>
       <CardContent>
@@ -390,14 +393,14 @@ export default function BundleCard({ data }) {
             disabled={isSubscribed && activeSubscribe}
               onClick={() => (activeSubscribe ? {} : handleClickOpen2())}
             >
-              {activeSubscribe ? "Subscribed" : "Renew"}
+              {activeSubscribe ? t("Subscribed") : t("Renew")}
             </Button>
           )}
         {auth?.userData?._id !== userId && !isSubscribed && (
           <Button 
           sx={{ color:"white" ,background:"linear-gradient(to bottom right,rgb(212, 6, 205),rgb(0, 0, 0))",margin:"0 20px"}}
           onClick={handleClickOpen2}>
-            Details
+            {t("Details")}
           </Button>
         )}
         {auth.userData && auth.userLoggedIn && auth.userData._id === userId && (
@@ -405,7 +408,7 @@ export default function BundleCard({ data }) {
           sx={{ color:"white" ,background:"linear-gradient(to bottom right,rgb(212, 6, 205),rgb(0, 0, 0))",margin:"0 20px"}}
             onClick={() => navigate("/bundles-details?" + BundleData?._id)}
           >
-            View
+            {t("View")}
           </Button>
         )}
 </CardContent>     
@@ -424,7 +427,7 @@ export default function BundleCard({ data }) {
             <Typography
               variant="h4"
               align="center"
-              style={{ color: "#792034", margiBottom: "10px" }}
+              style={{ color: "rgb(60, 0, 75)", margiBottom: "10px" }}
             >
               {BundleData.bundleTitle}
             </Typography>
@@ -432,7 +435,7 @@ export default function BundleCard({ data }) {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <label> Donation Amount</label>
+                <label>{t("Donation Amount")}</label>
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <TextField
@@ -451,22 +454,22 @@ export default function BundleCard({ data }) {
             >
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} md={4}>
-                  <label> Duration</label>
+                <label>{t("Duration")}</label>
                 </Grid>
                 <Grid item xs={12} md={8} className={classes.donation}>
-                  <span>7 Days</span>
-                  <span>14 Days</span>
-                  <span>30 Days</span>
-                  <span>60 Days</span>
-                  <span>1 Year</span>
-                  <span>Forever</span>
+                <span>7 {t("Days")}</span>
+                  <span>14 {t("Days")}</span>
+                  <span>30 {t("Days")}</span>
+                  <span>60 {t("Days")}</span>
+                  <span>1 {t("Year")}</span>
+                  <span>{t("Forever")}</span>
                 </Grid>
               </Grid>
             </Box>
 
             <Box align="center">
-              <label> Services:</label>
-              <Typography
+            <label> {t("Services")}:</label>
+            <Typography
                 variant="body2"
                 componant="p"
                 style={{ color: "#000", fontSize: "20px" }}
@@ -477,8 +480,8 @@ export default function BundleCard({ data }) {
             </Box>
             <Box mt={2} className={classes.changepic}>
               <small>
-                Change/upload a photo or video
-                <input type="file" />
+              {t("Change/upload a photo or video")}
+              <input type="file" />
               </small>
               <img src="/images/Rectangle.png" alt="" />
             </Box>
@@ -486,7 +489,7 @@ export default function BundleCard({ data }) {
               <Grid container alignItems="center" spacing={2}>
                 <Grid item md={4}>
                   <Link style={{ color: "#000" }} onClick={handleClose}>
-                    Delete this bundle
+                    {t("Delete this bundle")}
                   </Link>
                 </Grid>
                 <Grid item md={4}>
@@ -494,9 +497,10 @@ export default function BundleCard({ data }) {
                     variant="contained"
                     size="large"
                     color="primary"
+                    style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
-                    Cancel
+                    {t("Cancel")}
                   </Button>
                 </Grid>
                 <Grid item md={4}>
@@ -504,9 +508,10 @@ export default function BundleCard({ data }) {
                     variant="contained"
                     size="large"
                     color="secondary"
+                    style={{background:"#2f0032",color:"white" }}
                     onClick={handleClose}
                   >
-                    Save Changes
+                    {t("Save Changes")}
                   </Button>
                 </Grid>
               </Grid>
@@ -528,16 +533,16 @@ export default function BundleCard({ data }) {
             <Typography
               variant="h4"
               align="center"
-              style={{ color: "#792034", margiBottom: "10px" }}
+              style={{ color: "rgb(71, 0, 89)", margiBottom: "10px" }}
             >
-              Bundle I
+              {t("Bundle")} 
             </Typography>
             <Typography
               variant="h6"
               align="center"
               style={{ color: "#000", borderBottom: "solid 0.5px #e5e3dd" }}
             >
-              My basic supporter
+              {t("My basic supporter")}
             </Typography>
 
             <Box align="center" mt={3}>
@@ -546,7 +551,7 @@ export default function BundleCard({ data }) {
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Donation amount: </span>10
+                <span style={{ color: "#707070" }}>{t("Donation amount")}: </span>10
                 MAS
               </Typography>
               <Typography
@@ -554,27 +559,27 @@ export default function BundleCard({ data }) {
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Duration: </span>One month
-              </Typography>
+                <span style={{ color: "#707070" }}>{t("Duration")}: </span>{t("One month")}
+                </Typography>
               <Typography
                 variant="h6"
                 component="h6"
                 style={{ color: "#000", fontWeight: "400" }}
               >
-                <span style={{ color: "#707070" }}>Number of subscribers:</span>
+                <span style={{ color: "#707070" }}>{t("Number of subscribers")}:</span>
                 100
               </Typography>
             </Box>
 
             <Box align="center">
-              <label> Services:</label>
-              <Typography
+            <label> {t("Services")}:</label>
+            <Typography
                 variant="body2"
                 componant="p"
                 style={{ color: "#000", fontSize: "20px" }}
               >
-                I will send you a special video every <br />
-                month specially for you!
+               {t("I will send you a special video every")} <br />
+               {t("month specially for you!")}
               </Typography>
             </Box>
             <Box mt={2} className={classes.changepic}>
@@ -584,139 +589,149 @@ export default function BundleCard({ data }) {
         </DialogContent>
       </Dialog>
       {/* Subscribe now */}
-      <Dialog
-        fullWidth="sm"
-        maxWidth="sm"
-        open={open2}
-        onClose={handleClose2}
-        aria-labelledby="max-width-dialog-title"
-        disableBackdropClick={isLoading}
-        disableEscapeKeyDown={isLoading}
-      >
-        <DialogContent>
-          <Box className={classes.PhotoBox}>
-            {isVideo ? (
-              <div>
-                <ReactPlayer
-                  url={BundleData.mediaUrl}
-                  controls
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "300px",
-                    height: "50%",
-                  }}
-                />
-                {auth.userData &&
-                  auth.userLoggedIn &&
-                  auth.userData._id !== userId &&
-                  isSubscribed && (
-                    <Box>
-                      <Grid
-                        lg={12}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Button
-                          className={classes.downloadButton}
-                          fullWidth
-                          onClick={downLoadFile}
-                        >
-                          Download
-                        </Button>
-                      </Grid>
-                    </Box>
-                  )}
-              </div>
-            ) : (
-              <img
-                src={BundleData.mediaUrl}
-                alt=""
-                style={{ width: "100%", height: "50%" }}
-              />
-            )}
-          </Box>
-          <Box mt={3} className={classes.bundleText} textAlign="center">
-            <Typography variant="h4">{BundleData.bundleTitle}</Typography>
-          </Box>
-
-          <Box mt={2} className={classes.deskiText}>
-            <Typography variant="h4" align="left" color="textSecondary">
-              Donation amount:
-              <span>
-                {BundleData.donationAmount} {BundleData.coinName}
-              </span>
-            </Typography>
-            <Typography variant="h4" align="left" color="textSecondary">
-              Duration: <span> {BundleData.duration}</span>
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={3} lg={2}>
-                <Typography variant="h4" align="left" color="textSecondary">
-                  Details:
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9} lg={10}>
-                <Typography variant="body2" align="left" color="textSecondary">
-                  {BundleData?.details}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-          {!auth.userLoggedIn && (
-            <Box mt={3} mb={3} textAlign="center">
-              <Button className={classes.LoginButton} onClick={handleClose2} >
-                Cancel
-              </Button>
-              &nbsp;&nbsp;
-              <Button
-                className={classes.LoginButton}
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Login
-              </Button>
-            </Box>
-          )}
-          {auth.userData &&
-            auth.userLoggedIn &&
-            auth.userData._id !== data.userId && (
-              <Box mt={3} mb={3} textAlign="center">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  style={{background:" #8c0087"}}
-                  onClick={() => {
-                    handleClose2();
-                  }}
-                  disabled={isLoading}
-                >
-                  Cancel
-                </Button>
-                &nbsp;&nbsp;&nbsp;
-                {auth.userData &&
-                  auth.userLoggedIn &&
-                  auth.userData._id !== userId && (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      onClick={subscribeToBundleHandler}
-                      disabled={isLoading}
-                      style={{background:" #8c0087"}}
-                    >
-                      {isLoading ? "pending..." : "Subscribe now"}
-                      {isLoading && <ButtonCircularProgress />}
-                    </Button>
-                  )}
-              </Box>
-            )}
-        </DialogContent>
-      </Dialog>
+        <Dialog
+             fullWidth="sm"
+             maxWidth="sm"
+             open={open2}
+             onClose={handleClose2}
+             aria-labelledby="max-width-dialog-title"
+             disableBackdropClick={isLoading}
+             disableEscapeKeyDown={isLoading}
+           >
+             <DialogContent>
+               <Box className={classes.PhotoBox}>
+                 {isVideo ? (
+                   <div>
+                     <ReactPlayer
+                       url={BundleData.mediaUrl}
+                       muted
+                       controls
+                       playing
+                       width="100%"
+                       height="auto"
+                     />
+                     {auth.userData &&
+                       auth.userLoggedIn &&
+                       auth.userData._id !== userId &&
+                       isSubscribed && (
+                         <Box>
+                           <Grid
+                             lg={12}
+                             style={{
+                               display: "flex",
+                               alignItems: "center",
+                               justifyContent: "center",
+                             }}
+                           >
+                             <Button
+                               className={classes.downloadButton}
+                               fullWidth
+                               onClick={downLoadFile}
+                             >
+                               {t("Download")}
+                             </Button>
+                           </Grid>
+                         </Box>
+                       )}
+                   </div>
+                 ) : (
+                   <div style={{width:"100%" ,height:"300px"}}>
+                   <img
+                     src={BundleData.mediaUrl}
+                     alt=""
+                     style={{ width: "100%", height: "300px", objectFit:"fill" }}
+                   /></div>
+                 )}
+               </Box>
+               <Box mt={3} className={classes.bundleText} textAlign="center">
+                 <Typography variant="h4">{BundleData.bundleTitle}</Typography>
+               </Box>
+     
+               <Box mt={2} className={classes.deskiText}>
+                 <Typography variant="h4" align="left" color="textSecondary">
+                   {t("Donation amount")}:
+                   <span>
+                     {BundleData.donationAmount} {BundleData.coinName}
+                   </span>
+                 </Typography>
+                 <Typography variant="h4" align="left" color="textSecondary">
+                   {t("Duration")}: <span> {BundleData.duration}</span>
+                 </Typography>
+                 <Grid container spacing={2}>
+                   <Grid item xs={12} md={3} lg={2}>
+                     <Typography variant="h4" align="left" color="textSecondary">
+                       {t("Details")}:
+                     </Typography>
+                   </Grid>
+                   <Grid item xs={12} md={9} lg={10}>
+                     <Typography variant="body2" align="left" color="textSecondary">
+                       {BundleData?.details}
+                     </Typography>
+                   </Grid>
+                 </Grid>
+               </Box>
+               {!auth.userLoggedIn && (
+                 <Box mt={3} mb={3} textAlign="center">
+                   <Button 
+                   className={classes.LoginButton} 
+                   onClick={handleClose2}
+                   style={{background:"#2f0032",color:"white" }}
+     
+                   >
+                     {t("Cancel")}
+                   </Button>
+                   &nbsp;&nbsp;
+                   <Button
+                     className={classes.LoginButton}
+                     onClick={() => {
+                       navigate("/login");
+                     }}
+                     style={{background:"#2f0032",color:"white" }}
+     
+                   >
+                     {t("Login")}
+                   </Button>
+                 </Box>
+               )}
+               {auth.userData &&
+                 auth.userLoggedIn &&
+                 auth.userData._id !== data.userId && (
+                   <Box mt={3} mb={3} textAlign="center">
+                     <Button
+                       variant="contained"
+                       color="secondary"
+                       size="large"
+                       style={{ background:"#2f0032",color:'white'}}
+     
+                       onClick={() => {
+                         handleClose2();
+                       }}
+                       disabled={isLoading}
+                     >
+                     {t("Cancel")}
+     
+                     </Button>
+                     &nbsp;&nbsp;&nbsp;
+                     {auth.userData &&
+                       auth.userLoggedIn &&
+                       auth.userData._id !== userId && (
+                         <Button
+                           variant="contained"
+                           color="secondary"
+                           size="large"
+                           style={{ background:"#2f0032",color:'white'}}
+     
+                           onClick={subscribeToBundleHandler}
+                           disabled={isLoading}
+                         >
+                           {isLoading ? t("pending...") : t("Subscribe now")}
+                           {isLoading && <ButtonCircularProgress />}
+                         </Button>
+                       )}
+                   </Box>
+                 )}
+             </DialogContent>
+           </Dialog>
 
       <Dialog
         open={open3}
@@ -729,21 +744,21 @@ export default function BundleCard({ data }) {
         <DialogContent className={classes.dilogBody}>
           <DialogContentText id="alert-dialog-description">
             <Typography variant="h4" align="center" style={{ color: "#000" }}>
-              Enter an amount
+            {t("Enter an amount")}
             </Typography>
             <Box mt={4}>
               <Input
                 placeholder="300"
                 className={classes.input_fild2}
                 endAdornment={
-                  <InputAdornment position="end">Select a token</InputAdornment>
+                  <InputAdornment position="end">{t("Select a token")}</InputAdornment>
                 }
               />
             </Box>
 
             <Box mt={4}>
               <Typography variant="h4" align="center" style={{ color: "#000" }}>
-                Send a message
+              {t("Send a message")}
               </Typography>
               <TextField
                 id="outlined-multiline-static"
@@ -755,11 +770,11 @@ export default function BundleCard({ data }) {
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary">
-                Donate now
+              <Button variant="contained" size="large" color="secondary" style={{background:"#2f0032",color:"white" }} >
+              {t("Donate now")}
               </Button>
             </Box>
-            <small>ETH fees and ETH fees and apply. apply.</small>
+            <small>{t("ETH fees and ETH fees and apply. apply.")}</small>
           </DialogContentText>
         </DialogContent>
       </Dialog>

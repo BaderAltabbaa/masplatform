@@ -6,6 +6,8 @@ import axios from "axios";
 import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import MainCard from "../../ui-component/cards/MainCard";
+import { useTranslation } from 'react-i18next';
+
 
 
 const useStyles = makeStyles(() => ({
@@ -56,6 +58,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function SupporterList({ type }) {
+        const {t} = useTranslation();
+  
   const classes = useStyles();
   const [state, setState] = useState({
     userList: [],
@@ -71,7 +75,7 @@ export default function SupporterList({ type }) {
   }, [state.page]);
 
   return (
-    <MainCard title="My Supporter" >
+    <MainCard title={t("My Supporter")} >
   
       <Box className={classes.LoginBox} mb={5}>
         <Box className={classes.masBoxFlex}>

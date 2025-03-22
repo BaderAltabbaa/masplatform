@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import '../login/login.css';
 import { Link } from 'react-router-dom'; // استيراد Link
@@ -9,6 +10,8 @@ import { isValidEmail, isValidPassword } from "src/CommanFunction/Validation";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { toast } from "react-toastify";
+import { useTranslation } from 'react-i18next';
+
 
 function ForgetPassword() {
     const [resetloader, setresetloader] = useState(false);
@@ -16,6 +19,8 @@ function ForgetPassword() {
     const [emailvalid, setemailvalid] = useState(true);
       const [resendTimer, setresendTimer] = useState();
         const [passvalid, setpassvalid] = useState(true);
+            const {t} = useTranslation();
+        
       
     
 
@@ -140,7 +145,7 @@ function ForgetPassword() {
 {!verificationSent &&
                 <Box mt={3}>
                 
-                <span className="Logintitle" style={{marginBottom:"20px"}}> Forget Password</span>
+                <span className="Logintitle" style={{marginBottom:"20px"}}> {t("Forget Password")}</span>
                     <p
                         style={{
                             color: 'white',
@@ -148,14 +153,14 @@ function ForgetPassword() {
                             textAlign: 'center',
                             marginBottom:"20px"
                         }}
-                    >Enter the email address associated with your account and we'll send you a code to reset your password</p>
+                    >{t("Enter the email address associated with your account and we'll send you a code to reset your password")}</p>
                     <div className="">
                         <ion-icon name="mail-outline"></ion-icon>
                         <TextField
                         fullWidth
                            className="auth-input"
                       variant="standard"
-                        label="Your Email Account"
+                        label={t("Your Email Account")}
                             placeholder={email}
                             autoComplete="off"
               sx={{ '& .MuiFormHelperText-root':{
@@ -164,7 +169,7 @@ function ForgetPassword() {
                             type="email"
                             error={!emailvalid}
                             helperText={
-                                !emailvalid && "Incorrect Email."
+                                !emailvalid && t("Incorrect Email.")
                             }
                             value={email}
                             onChange={(e) => {
@@ -254,7 +259,7 @@ function ForgetPassword() {
                 onClick={forgotPasswordHandler}
                 disabled={resetloader || !emailvalid}
               >
-                Continue {resetloader && <ButtonCircularProgress />}
+                {t("Continue")} {resetloader && <ButtonCircularProgress />}
               </Button>
             }
             {verificationSent &&

@@ -33,8 +33,10 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import InputAdornment from "@mui/material/InputAdornment";
 import './TopBar.css'
 import StaticPage from '../../views/pages/staticPage';
+import LanguageSwitcher from '../../component/LangugeSwitcher';
+import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
-import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 
 
 
@@ -125,6 +127,8 @@ export default function Header() {
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const {t} = useTranslation();
+  
 
   const toggleSearch = () => {
     setSearchVisible(!isSearchVisible);
@@ -308,7 +312,23 @@ export default function Header() {
           zIndex: 1000,
         }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <Button
+            onClick={() => {
+              navigate("/profile");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+            startIcon={
+              <Badge>
+                <FaUser/>
+              </Badge>
+            }
+          >
+
+            {t("My Profile")}
+          </Button>
+         
           <Button
             onClick={() => {
               navigate("/chat/t");
@@ -321,7 +341,7 @@ export default function Header() {
             }
             sx={{color:"#43005e"}}
           >
-            Chat
+            {t("Chat")}
           </Button>
           <Button
             onClick={() => {
@@ -335,7 +355,7 @@ export default function Header() {
             }
             sx={{color:"#43005e"}}
           >
-            Notifications
+            {t("Notifications")}
           </Button>
           <Button
             onClick={() => {
@@ -343,18 +363,15 @@ export default function Header() {
               onClose();
             }}
             sx={{color:"#43005e"}}
+            startIcon={
+              <Badge>
+                <FaDollarSign/>
+              </Badge>
+            }
           >
-            Buy a Mas
+            {t("Buy A Mas")}
           </Button>
-          <Button
-            onClick={() => {
-              navigate("/profile");
-              onClose();
-            }}
-            sx={{color:"#43005e"}}
-          >
-            My Profile
-          </Button>
+         
         </Box>
       </Box>
     );
@@ -379,7 +396,7 @@ export default function Header() {
         {/* Start Title */}
         <Box style={{ height: '54px', marginBottom: "14px", color: '#fafafa', backgroundImage: 'linear-gradient(to bottom,rgb(116, 23, 108), #480048)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Typography variant="h4" style={{ color: "white" }}>
-            Search Result
+            {t("Search Result")}
           </Typography>
         </Box>
         {/*End Title */}
@@ -434,7 +451,7 @@ export default function Header() {
 
                 <Box className={classes.searchBox} >
                   <InputBase
-                    placeholder="Search.."
+                    placeholder={t("Search..")}
                     style={{ color: "#000", paddingLeft: "8px" }}
                     value={search}
                     onChange={(e) => setsearch(e.target.value)}
@@ -455,6 +472,7 @@ export default function Header() {
                 style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
                 onClick={toggleSearch}
               />
+              <LanguageSwitcher/>
             </div>
 
             <button className="burger-icon" onClick={toggleMenu}>
@@ -466,21 +484,21 @@ export default function Header() {
 
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
             <ul className='' style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-              <li><Link to="/bundles">Explore</Link></li>
-              <li><Link to="/items">Marketplace</Link></li>
-              <li><Link to="/creators">Creators</Link></li>
-              <li><Link to="/user-list">Transfer</Link></li>
-              <li><Link to="/corporate/metaverse">Games</Link></li>
-              <li><Link to="/corporate/metaverse">Metaverse</Link></li>
-              <li className='test'><Link to="/buymas">Buy a Mas</Link></li>
-              <li className='test'><Link to="/connectWallet">Connect Wallet</Link></li>
+              <li><Link to="/bundles">{t("Explore")}</Link></li>
+              <li><Link to="/items">{t("Marketplace")}</Link></li>
+              <li><Link to="/creators">{t("Creators")}</Link></li>
+              <li><Link to="/user-list">{t("Transfer")}</Link></li>
+              <li><Link to="/corporate/metaverse">{t("Games")}</Link></li>
+              <li><Link to="/corporate/metaverse">{t("Metaverse")}</Link></li>
+              <li className='test'><Link to="/buymas">{t("Buy A Mas")}</Link></li>
+              <li className='test'><Link to="/connectWallet">{t( "Connect Wallet")}</Link></li>
 
-              <li className='test'><Link to="/profile">Create on MAS</Link></li>
+              <li className='test'><Link to="/profile">{t("Create on MAS")}</Link></li>
 
               {
                 auth.userLoggedIn ? <></> :
 
-                  <li className='test'><Link to="/login">Login</Link></li>}
+                  <li className='test'><Link to="/login">{t( "Login")}</Link></li>}
 
 
             </ul>
@@ -491,7 +509,7 @@ export default function Header() {
 
                   <Box className={classes.searchBox} >
                     <InputBase
-                      placeholder="Search.."
+                      placeholder={t("Search..")}
                       style={{ color: "#000", paddingLeft: "8px" }}
                       value={search}
                       onChange={(e) => setsearch(e.target.value)}
@@ -517,6 +535,7 @@ export default function Header() {
                   style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
                   onClick={toggleSearch}
                 />
+                <LanguageSwitcher/>
               </div>
 
 
@@ -623,7 +642,7 @@ export default function Header() {
                           // className={classes.createButton}
                           onClick={() => navigate("/profile")}
                         >
-                          Create on MAS
+                          {t("Create on MAS")}
                         </Button>
                     }
                     <Box>
@@ -645,7 +664,7 @@ export default function Header() {
                           color="secondary"
                           style={{ marginRight: '10px' }}
                         >
-                          Login
+                          {t( "Login")}
                         </Button>
 
                       )}
@@ -660,7 +679,7 @@ export default function Header() {
 
                             variant="contained"
                           >
-                            connect wallet
+                            {t( "Connect Wallet")}
                           </Button>
 
                         
@@ -673,7 +692,7 @@ export default function Header() {
                   <div className='btn_group test2'>
                     <Link style={{ color: "white" }} to="/profile" className=' Create_on_MAS'> <Button className="primaryButton"
                       fullWidth
-                      variant="contained"> Create on MAS</Button></Link>
+                      variant="contained">{t("Create on MAS")}</Button></Link>
 
                     <Link style={{ color: "white" }} to="/login">
                       <Button
@@ -681,17 +700,17 @@ export default function Header() {
                         fullWidth
                         variant="contained"
 
-                      >LogIn</Button>
+                      >{t( "Login")}</Button>
 
                     </Link>
                     <Link style={{ color: "white" }} to="/buymas" className="primaryButton "
 
                       variant="contained"><Button className="primaryButton"
 
-                        variant="contained">Buy A Mas</Button></Link>
+                        variant="contained">{t("Buy A Mas")}</Button></Link>
                     <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton"
 
-                      variant="contained">Connect Wallet</Button></Link>
+                      variant="contained">{t( "Connect Wallet")}</Button></Link>
 
 
                   </div>
@@ -742,7 +761,7 @@ export default function Header() {
         <DialogContent style={{ padding: "20px 50px" }}>
           <Box className={loginModal}>
             <Typography variant="h4" style={{ marginBottom: "12px" }}>
-              Are you sure want to logout!
+              {t("Are you sure want to logout!")}
             </Typography>
 
             <Box mt={1} display="flex">
@@ -757,7 +776,7 @@ export default function Header() {
                 fullWidth
                 onClick={() => setIsLogoutOpen(false)}
               >
-                No
+                {t("No")}
               </Button>
               <Button
                 variant="contained"
@@ -773,7 +792,7 @@ export default function Header() {
                   navigate('/');
                 }}
               >
-                Yes
+                {t("Yes")}
               </Button>
             </Box>
           </Box>

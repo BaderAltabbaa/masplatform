@@ -17,6 +17,8 @@ import Cardbundle from "../../../../../component/ui/Card/Cardbundle";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import MainCard from "../../ui-component/cards/MainCard";
 import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -78,6 +80,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Subscriptions() {
+        const {t} = useTranslation();
+  
   const classes = useStyles();
   const [state, setState] = useState({
     subscriptions: [],
@@ -102,7 +106,7 @@ export default function Subscriptions() {
 
   return (
     <div className={classes.subscriptionBox}>
-    <MainCard title="Bundles">
+    <MainCard title={t("Bundles")}>
 
       
         <Box>
@@ -134,7 +138,7 @@ export default function Subscriptions() {
      
       </MainCard>
        
-       <Box display="flex" alignItems="center" justifyContent="center" mb={2}><ButtonwithAnimation>Users</ButtonwithAnimation></Box>
+       <Box display="flex" alignItems="center" justifyContent="center" mb={2}><ButtonwithAnimation>{t("Users")}</ButtonwithAnimation></Box>
         <Box>
           <Grid container>
             {userList.map((data, i) => {

@@ -15,6 +15,8 @@ import DataLoading from "src/component/DataLoading";
 import NoDataFound from "src/component/NoDataFound";  
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import CardMarketplace from "../../../component/ui/Card/CardMarketplace";
+import { useTranslation } from 'react-i18next';
+
 
 
 const useStyles = makeStyles(() => ({
@@ -59,6 +61,8 @@ const AllItemsPage = () => {
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+      const {t} = useTranslation();
+  
 
   const listAllNft1Handler = async () => {
     await axios({
@@ -104,7 +108,7 @@ const AllItemsPage = () => {
           {auth.userLoggedIn && auth.userData?._id && (
             <>
               <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
-                               <ButtonwithAnimation>ALL ITEMS</ButtonwithAnimation>
+                               <ButtonwithAnimation>{t("ALL ITEMS")}</ButtonwithAnimation>
                              
                              </div>
                           
@@ -145,7 +149,7 @@ const AllItemsPage = () => {
                   ))}
                 </Grid>
               </Container>
-              <Box mb={2} mt={2} display="flex" justifyContent="center">
+              <Box mb={2} mt={2} display="flex" justifyContent="center" dir="ltr">
                 <Pagination
                   count={pages}
                   page={page}

@@ -12,6 +12,7 @@ import axios from "axios";
 import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import MainCard from "../../ui-component/cards/MainCard";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -63,6 +64,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Subscribers({ type }) {
+        const {t} = useTranslation();
+  
   const classes = useStyles();
   const [state, setState] = useState({
     userList: [],
@@ -78,7 +81,7 @@ export default function Subscribers({ type }) {
   }, [state.page]);
 
   return (
-  <MainCard title="My Subscribers" >
+  <MainCard title={t("My Subscribers")} >
       <Box className={classes.LoginBox} mb={5}>
        
         <Box>

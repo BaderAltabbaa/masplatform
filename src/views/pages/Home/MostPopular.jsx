@@ -4,6 +4,8 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { Box ,Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "src/context/User";
+import { useTranslation } from 'react-i18next';
+
 
 
 
@@ -16,6 +18,8 @@ const MostPopular = () => {
       const navigate = useNavigate();
       const auth = useContext(UserContext);
       const [isSubscribed, setisSubscribed] = useState(false);
+          const {t} = useTranslation();
+      
 
         
    
@@ -40,7 +44,7 @@ const MostPopular = () => {
             // Sort users by followers count (most followers first)
             const sortedUsers = res.data.result.docs
             .sort((a, b) => b.followers.length - a.followers.length)
-            .slice(0, 6); // Get top 6 users
+            .slice(0, 8); // Get top 6 users
     
           // Initialize isSubscribed for each user
           const updatedUsers = sortedUsers.map((user) => ({
@@ -109,12 +113,12 @@ const MostPopular = () => {
 
 
 return(
-    <><Box sx={{padding:"30px 150px", 
+    <><Box dir={"ltr"} sx={{padding:"30px 150px", 
            
           }} display="flex" flexDirection="column" alignItems="center">
-                    <Typography align="center" variant="h1" color="white" mb={3}>Popular Creators</Typography>
+                    <Typography align="center" variant="h1" color="white" mb={3}>{t("Popular Creators")}</Typography>
              <Box mt={2} sx={{ display: "grid",
-                    gridTemplateColumns: "1fr 1fr 1fr", 
+                    gridTemplateColumns: "1fr 1fr 1fr 1fr", 
                     gap: "50px", 
                     padding: "10px",
                     "@media(max-width:1200px)":{
@@ -144,8 +148,7 @@ return(
                                 </img> 
                                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" color="white" ml={3}> 
                                  <strong>{user.name}</strong> 
-                                    <span>{user.speciality}</span>
-                                  {user.followers.length} Subscribers
+                                  {user.followers.length} {t("Subscribers")}
                                   </Box>
                             </Box>
                             <Box align="center" sx={{background:"linear-gradient(to top right,rgb(113, 3, 119),rgb(48, 0, 51))"
@@ -165,7 +168,7 @@ return(
               }}
           
           >
-            {user.isSubscribed ? "Subscribed" : "Subscribe"}
+            {user.isSubscribed ? t("Subscribed") : t("Subscribe")}
                                 </Box>
                             </Box>
                         ))
