@@ -438,7 +438,7 @@ export default function Header() {
       >
 
 
-        <header className="header  " >
+        <header style={{display:"flex",backgroundColor:"#cdc8c8" ,padding:"0 10px"}}>
           <div className='logo1_contanier '>
             <Link to={"/"}>
               <img className="logo1" src="\assets\Images\bader-logo.svg" alt="Logo11" />
@@ -483,7 +483,7 @@ export default function Header() {
 
 
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
-            <ul className='' style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+            <ul  style={{ display: "flex", alignItems: "center", marginBottom: "10px" ,padding:"0"}}>
               <li><Link to="/bundles">{t("Explore")}</Link></li>
               <li><Link to="/items">{t("Marketplace")}</Link></li>
               <li><Link to="/creators">{t("Creators")}</Link></li>

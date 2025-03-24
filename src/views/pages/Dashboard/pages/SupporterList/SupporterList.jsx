@@ -74,9 +74,9 @@ export default function SupporterList({ type }) {
     myFollowersHandler().catch(console.error);
   }, [state.page]);
 
-  return (
+  return (<>
     <MainCard title={t("My Supporter")} >
-  
+  </ MainCard>
       <Box className={classes.LoginBox} mb={5}>
         <Box className={classes.masBoxFlex}>
           <Typography variant="h6">
@@ -115,7 +115,7 @@ export default function SupporterList({ type }) {
           )}
         </Box>
       </Box>
-    </ MainCard>
+      </>
   );
 
   async function myFollowersHandler() {

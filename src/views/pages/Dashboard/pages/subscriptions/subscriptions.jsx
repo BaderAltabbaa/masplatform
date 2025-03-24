@@ -107,7 +107,7 @@ export default function Subscriptions() {
   return (
     <div className={classes.subscriptionBox}>
     <MainCard title={t("Bundles")}>
-
+    </MainCard>
       
         <Box>
           <Grid container>
@@ -136,7 +136,7 @@ export default function Subscriptions() {
           </Box>
         )}
      
-      </MainCard>
+     
        
        <Box display="flex" alignItems="center" justifyContent="center" mb={2}><ButtonwithAnimation>{t("Users")}</ButtonwithAnimation></Box>
         <Box>

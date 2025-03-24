@@ -67,7 +67,7 @@ const MainLayout = () => {
           }}
         >
           {/* TopBar */}
-          <Box dir={isRtl? 'ltr': 'rtl'}>
+          <Box>
           <TopBar
             sx={{
               position: 'absolute',

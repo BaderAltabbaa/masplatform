@@ -12,10 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles(() => ({
-  LoginBox: {
-    margin: "10px",
-    
-    paddingTop: "20px",
+  LoginBox: {    
     "& h6": {
       fontWeight: "bold",
       marginBottom: "10px",
@@ -62,13 +59,10 @@ export default function Login() {
     getFeedListHandler().catch(console.error);
   }, [state.page]);
 
-  return (
+  return (<>
         <MainCard title={t("My feed")} >
-    
-    <Box className={classes.LoginBox} mb={5}>
-      <Box className={classes.masBoxFlex}>
-        <Typography variant="h6"></Typography>
-      </Box>
+    </MainCard>
+    <Box className={classes.LoginBox} >
       <Box>
         {allFeed && allFeed.length === 0 ? (
           <Box align="center" mt={4} mb={5}>
@@ -108,7 +102,7 @@ export default function Login() {
         )}
       </Box>
     </Box>
-    </MainCard>
+    </>
   );
 
   async function getFeedListHandler() {

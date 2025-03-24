@@ -10,6 +10,7 @@ import axios from "axios";
 import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import { Pagination } from "@mui/material";  
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
+import CardMarketplace from '../../../../../component/ui/Card/CardMarketplace';
 import MainCard from "../../ui-component/cards/MainCard";
 
 const useStyles = makeStyles(() => ({
@@ -91,8 +92,9 @@ export default function purchases() {
     myFollowingHandler().catch(console.error);
   }, [state.userPage]);
 
-  return (
+  return (<>
     <MainCard title={t("Purchased Items")} >
+      </MainCard>
  <div className={classes.subscriptionBox}>
       <Box className={classes.LoginBox} >
        
@@ -173,7 +175,7 @@ export default function purchases() {
         </Box>
       </Box>
     </div>
-    </MainCard>
+    </>
    
   );
 

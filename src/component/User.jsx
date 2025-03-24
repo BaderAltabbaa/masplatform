@@ -11,13 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles(() => ({
-  borderBotm: {
-    borderBottom: "1px solid #ccc",
-    display: "flex",
-    background: "#fff",
-    width: "275px",
-  },
-
+ 
   main: {
     color: "#999",
     background: "rgb(244, 244, 244)",
@@ -47,9 +41,7 @@ export default function UsersCard({
       <Grid
         container
         direction="row"
-        justifyContent="space-between"
         alignItems="center"
-        spacing={2}
       >
         <Grid item  sx={{width:"160px"}}>
           <Box sx={{display:"flex" ,flexDirection:"column" ,alignItems:"start" }}>

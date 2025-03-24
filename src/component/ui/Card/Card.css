@@ -1,10 +1,11 @@
 
-.card-container {
+.card-containerx {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: #8033a1;
     width: 100%;
-     height: auto;
+     height: 45px;
     border-radius: 12px;
     border-top-right-radius: 30px ;
     border-bottom-right-radius: 30px ;
@@ -16,60 +17,60 @@
    
   }
   
-  .profile-picture2 {
+  .profile-picture2x {
     position: relative;
     height: 45px; /* لجعل الصورة المستطيلة تتداخل مع الصورة الدائرية */
   }
 
-  .circular-image2 {
+  .circular-image2x {
     width:25px;
     height: 25px;
     /* تقليل المسافة بين الصورة الدائرية والمحتوى */
     border-radius: 50% ;
  
   }
-  .profile-img{
+  .profile-imgx{
     width: 40px !important;
     height: 45px !important;
     display: inline-block;
  
   }
   
-  .content2 {
+  .content2x {
     display: flex;
-    flex-grow: 1;
     /* padding: 10px;
     margin-top: 10px; */
    justify-items: center;
    align-items: center;
   }
   
-  .text-content2{
+  .text-content2x{
+    padding: 2px 0;
     display: flex;
     flex-direction: column;
   }
-  .content2 h3 {
+  .content2x h3 {
     font-size: 14px;
     margin: 0;
    
 
   }
   
-  .content2 p {
+  .content2x p {
     font-size: 9px;
     color: #ddd;
     margin:1px 0 0; 
   
   }
 
-  .text-content2 p,.text-content2 h3{
+  .text-content2x p,.text-content2x h3{
     text-align: left;
   }
   
  
 /* استجابة الشاشات المتوسطة */
 @media (max-width: 768px) {
-  .card-container2 {
+  .card-container2x {
     width: 70%; 
     height:150px; 
     flex-direction: column; 
@@ -77,23 +78,19 @@
     padding: 15px;
   }
 
-  .circular-image2 {
+  .circular-image2x {
     width: 40px;
     height: 40px;
     margin: 0 auto 10px; /* توسيط الصورة وإضافة مسافة سفلية */
   }
 
-  .content2 h3 {
+  .content2x h3 {
    margin-top: -10px;
     font-size: 0.9rem;
   }
 
-  .content2 p {
+  .content2x p {
     font-size: 0.7rem;
   }
 }
 
-/* استجابة الشاشات الصغيرة */
-@media (max-width: 480px) {
-  
-}

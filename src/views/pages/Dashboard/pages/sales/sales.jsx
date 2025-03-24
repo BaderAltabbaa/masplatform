@@ -91,9 +91,9 @@ export default function sales() {
         myFollowingHandler().catch(console.error);
     }, [state.userPage]);
 
-    return (
+    return (<>
         <MainCard title={t("Sold Items")} >
-
+ </MainCard>
             <div className={classes.subscriptionBox}>
                 <Box className={classes.LoginBox} >
 
@@ -171,7 +171,7 @@ export default function sales() {
                     </Box>
                 </Box> */}
             </div>
-        </MainCard>
+            </>
 
     );
 

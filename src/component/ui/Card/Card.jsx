@@ -3,12 +3,12 @@ import "./Card.css";
 
 const Card = ({  imgsrc, titel, text,AvatarClick }) => {
   return (
-    <div className="card-container"
+    <div className="card-containerx"
     >
       
-      <div className="content2">
+      <div className="content2x">
         
-        <div className="text-content2">
+        <div className="text-content2x">
           <h3 style={{ 
             fontSize:'14px'
            }}>{titel}</h3>
@@ -16,7 +16,7 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
         </div>
       </div>
       <div
-        className="profile-picture2"
+        className="profile-picture2x"
        
       >
         
@@ -24,7 +24,7 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
             src={imgsrc? imgsrc : "/assets/Images/profile.jpg"}
             alt="profile"
     
-            className="profile-img"
+            className="profile-imgx"
             onClick={AvatarClick}
             style={{cursor :"pointer"}}
           />

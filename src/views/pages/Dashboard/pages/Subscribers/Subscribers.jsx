@@ -80,8 +80,9 @@ export default function Subscribers({ type }) {
     myFollowersHandler().catch(console.error);
   }, [state.page]);
 
-  return (
+  return (<>
   <MainCard title={t("My Subscribers")} >
+    </ MainCard>
       <Box className={classes.LoginBox} mb={5}>
        
         <Box>
@@ -105,7 +106,7 @@ export default function Subscribers({ type }) {
               mt={2}
               display="flex"
               justifyContent="center"
-              style={{ marginTop: 40 }}
+              style={{ marginTop: 10 }}
             >
               <Pagination
                 count={pages}
@@ -116,7 +117,7 @@ export default function Subscribers({ type }) {
           )}
         </Box>
       </Box>
-    </ MainCard>
+      </>
   );
 
   async function myFollowersHandler() {

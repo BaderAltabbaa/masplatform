@@ -18,6 +18,7 @@ import NoDataFound from "src/component/NoDataFound";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import Cardbundle from "../../../component/ui/Card/Cardbundle";
 import { useTranslation } from 'react-i18next';
+import 'src/layouts/TopBar/TopBar.css'
 
 
 const useStyles = makeStyles(() => ({

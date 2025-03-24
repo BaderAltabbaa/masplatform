@@ -22,145 +22,11 @@ import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme) => ({
-    profilebg: {
-        boxShadow: " 0 1.5px 3px 0 rgba(0, 0, 0, 0.16)",
-        backgroundImage: " linear-gradient(to bottom, #c04848, #480048)",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100%",
-        backgroundPosition: "center center",
-        height: " 95px",
-        width: "100%",
-        position: "relative",
-    },
-    profileText: {
-        "& h3": {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "25px",
-            fontWeight: "500",
-            color: "#000",
-            [theme.breakpoints.down("xs")]: {
-                fontSize: "18px",
-            },
-        },
-        "& a": {
-            fontSize: "16px",
-            fontWeight: "700",
-            color: "#707070",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            [theme.breakpoints.down("xs")]: {
-                justifyContent: "flex-start",
-            },
-            "& svg": {
-                paddingRight: "5px",
-            },
-        },
-        "& p": {
-            fontSize: "12px",
-            fontWeight: "500",
-            color: "#444",
-            marginTop: "6px",
-        },
-    },
-    masBox: {
-        backdropFilter: " blur(15px)",
-        border: "solid 0.5px #c6cacf",
-        backgroundColor: "#fff",
-        padding: "10px",
-        "& ul": {
-            display: "flex",
-            padding: "0",
-            justifyContent: "center",
-            "& li": {
-                display: "flex",
-                justifyContent: "center",
-                position: "relative",
-                "&::after": {
-                    content: " ''",
-                    position: "absolute",
-                    height: "70%",
-                    width: "1px",
-                    backgroundColor: "#e5e3dd",
-                    right: "0",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                },
-                "&:last-child::after": {
-                    display: "none",
-                },
-            },
-        },
-    },
-    masBox1: {
-        backdropFilter: " blur(15px)",
-        border: "solid 0.5px #c6cacf",
-        backgroundColor: "#fff",
-        padding: "10px",
-        marginLeft: "-10px",
-        "& ul": {
-            display: "flex",
-            padding: "0",
-            justifyContent: "center",
-            "& li": {
-                display: "flex",
-                justifyContent: "center",
-                position: "relative",
-                "&::after": {
-                    content: " ''",
-                    position: "absolute",
-                    height: "70%",
-                    width: "1px",
-                    backgroundColor: "#e5e3dd",
-                    right: "0",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                },
-                "&:last-child::after": {
-                    display: "none",
-                },
-            },
-        },
-    },
-    masBoxFlex: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginTop: "32px",
-        "& button": {
-            height: "30px",
-            fontSize: "12px",
-        },
-        "@media(max-width:600px)": {
-            marginTop: "0",
-        },
-    },
-    dialogTitle: {
-        textAlign: "Center",
-        "& h2": {
-            color: "#141518",
-            fontSize: "23px",
-        },
-    },
-    tokenList: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "7px",
-        border: "solid 0.5px #e5e3dd;",
-        "&:hover": {
-            backgroundColor: "rgba(209, 91, 91, 0.39)",
-        },
-        "&.active": {
-            backgroundColor: "rgba(209, 91, 91, 0.39)",
-        },
-        "& h3": {
-            color: "#141518",
-            fontSize: "14px",
-        },
-    },
+  
+   
+  
+   
+    
     input_fild2: {
         width: "100%",
         "& input": {
@@ -181,107 +47,20 @@ const useStyles = makeStyles((theme) => ({
             textAlign: "center",
         },
     },
-    dilogBody2: {
-        boxShadow: "0 1.5px 3px 0 rgb(0 0 0 / 16%)",
-        backgroundImage: "linear-gradient(to bottom, #c04848, #480048)",
-        borderRadius: "50px",
-        overflow: "hidden",
-    },
-    dilogBody3: {
-        backgroundColor: "#101010",
-    },
-    table: {
-        "& th": {
-            color: "#fff",
-        },
-        "& td": {
-            color: "#fff",
-        },
-    },
-    input_fild: {
-        backgroundColor: "#ffffff6e",
-
-        border: " solid 0.5px #e5e3dd",
-        color: "#141518",
-        width: "100%",
-        maxWidth: "500px",
-        margin: "0 auto",
-        borderRadius: "20px",
-        "&:hover": {
-            "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "transparent",
-            },
-        },
-        "& .MuiInputBase-input": {
-            color: "#141518",
-            height: "34px",
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "transparent",
-            borderWidth: 0,
-        },
-    },
-    userno: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        "& svg": {
-            paddingRight: "5px",
-        },
-    },
-
-    walletActions: {
-        display: "flex",
-        marginBottom: "20px",
-        "& button": {
-            margin: '10px'
-        },
-        "@media(max-width:600px)": {
-            order: "0",
-            width: " 100%",
-            justifyContent: "space-between",
-        },
-    },
-    textbox: {
-        "@media(max-width:600px)": {
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: 'center'
-        },
-        "& h3": {
-            "@media(max-width:600px)": {
-                width: "100%",
-                textAlign: "center",
-            },
-        },
-        "& h5": {
-            "@media(max-width:600px)": {
-                width: "100%",
-                textAlign: "center",
-            },
-        },
-        "& button": {
-            "@media(max-width:600px)": {
-                width: "100%",
-                textAlign: "center",
-            },
-        },
-    },
-    title: {
-        border: "1px solid #DDD",
-        borderRadius: "15px",
-        padding: "4px 10px"
-    },
-
+    
+   
+    
+    
+   
+   
+    
+   
     buttonContainerStyle: {
         padding: "0px 20px",
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
-        margin:"3px 0"
+        margin:"5px 0"
       },
       dialogWrapper: {
         position: "relative",
@@ -322,10 +101,7 @@ const useStyles = makeStyles((theme) => ({
           transform: "translate(-50%, -50%) scale(2.5) rotate(1turn)",
         },
       },
-      dilogBody: {
-        position: "relative",
-        zIndex: 1, // Ensure the content is above the background and blur effect
-      },
+      
       
 }));
 
@@ -490,8 +266,9 @@ const Wallet = () => {
     return(
 <>
 <MainCard title={t("My Wallet")}>
+</MainCard>
     <Box sx={{
-        padding:"0 150px",
+        padding:"0 100px",
         "@media(max-width: 1200px)":{
             padding:"0"
         }
@@ -802,7 +579,7 @@ const Wallet = () => {
                 </div>
             </Dialog>
         
-</MainCard>
+
 </>    
 )
 }

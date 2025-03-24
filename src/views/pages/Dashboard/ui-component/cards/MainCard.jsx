@@ -47,7 +47,7 @@ const MainCard = React.forwardRef(
         ref={ref}
         {...others}
         sx={{
-          marginTop:"40px",
+          marginTop:"70px",
           border: border ? '1px solid' : 'none',
           borderRadius:"0",
           borderColor: 'divider',
@@ -55,24 +55,18 @@ const MainCard = React.forwardRef(
           ':hover': {
             boxShadow: boxShadow ? shadow || '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'
           },
-          "@media(max-width:900px)":{
-               marginTop:"50px"
-          },
+        
           ...sx
         }}
       >
         {/* card header and action */}
-        {!darkTitle && title && <CardHeader sx={{  '& .MuiCardHeader-title': {
+        {!darkTitle && title && <CardHeader  sx={{  '& .MuiCardHeader-title': {
       fontSize: '1.8rem', // Custom font size
       fontWeight: 'bold', // Custom font weight
       color: ' #43005e',
       display:"flex",
       justifyContent:"center",
-      marginTop:{
-        xs: '20px', // Applies to extra small screens (0px and up)
-        sm: '30px', // Applies to small screens (600px and up)
-        md: '50px', // Applies to medium screens (900px and up)
-      },
+      
     },}}  
     title={<ButtonwithAnimation>{title}</ButtonwithAnimation>} action={secondary} />}
         
@@ -81,12 +75,7 @@ const MainCard = React.forwardRef(
       
 
         {/* card content */}
-        {content && (
-          <CardContent sx={contentSX} className={contentClass}>
-            {children}
-          </CardContent>
-        )}
-        {!content && children}
+       
       </Card>
     );
   }

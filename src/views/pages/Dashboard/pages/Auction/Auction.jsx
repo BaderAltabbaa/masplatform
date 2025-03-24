@@ -260,9 +260,9 @@ export default function Login() {
     myAuctionNftListHandler().catch(console.error);
   }, [page]);
 
-  return (
+  return (<>
      <MainCard title={t("My Auctions")} >
-
+ </MainCard>
     
     <Box className={classes.LoginBox} mb={5}>
       <Box className={classes.masBoxFlex}>
@@ -735,7 +735,7 @@ export default function Login() {
         </Dialog>
       )}
     </Box>
-    </MainCard>
+    </>
   );
 
   async function myAuctionNftListHandler() {

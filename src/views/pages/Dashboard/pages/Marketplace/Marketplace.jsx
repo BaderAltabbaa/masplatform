@@ -68,15 +68,7 @@ const useStyles = makeStyles((theme) => ({
       borderWidth: 0,
     },
   },
-  LoginBox: {
-    paddingTop: "20px",
-    "& h6": {
-    
-      "& span": {
-        fontWeight: "300",
-      },
-    },
-  },
+  
   TokenBox: {
     border: "solid 0.5px #e5e3dd",
     padding: "5px",
@@ -85,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "30px",
+    marginBottom: "20px",
     [theme.breakpoints.down("xs")]: {
       display: "block",
     },
@@ -175,10 +167,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   bunbox: {
-    "@media(max-width:600px)": {
+   
       display: "flex",
       justifyContent: "center",
-    },
+    
   },
 }));
 
@@ -203,8 +195,9 @@ export default function Marketplace() {
   }, [page]);
 
   return (
-
+<>
      <MainCard title={t("My Items")} >
+      </MainCard>
  <Box className={classes.LoginBox} mb={5}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6"></Typography>
@@ -242,7 +235,7 @@ export default function Marketplace() {
         <Grid container spacing={2} className={classes.bunbox}>
           {itemList.map((data, i) => {
             return (
-              <Grid item key={i} lg={2.4} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={3} md={4.2} sm={6} xm={12}>
                 <CardMarketplace data={data} />
                 {/* <ItemCard data={data} index={i} isDays={true} /> */}
               </Grid>
@@ -255,7 +248,7 @@ export default function Marketplace() {
             mt={2}
             display="flex"
             justifyContent="center"
-            style={{ marginTop: 40 }}
+            style={{ marginTop: 10 }}
           >
             <Pagination
               count={pages}
@@ -283,7 +276,7 @@ export default function Marketplace() {
         />
       )}
     </Box>
-     </MainCard>
+    </>
    
   );
 
@@ -296,7 +289,7 @@ export default function Marketplace() {
       },
       params: {
         page,
-        limit: 5,
+        limit: 4,
       },
     })
       .then(async (res) => {

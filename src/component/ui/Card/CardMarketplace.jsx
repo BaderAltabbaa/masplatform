@@ -34,6 +34,8 @@ import bwipjs from 'bwip-js';
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { transform } from "lodash";
 import { useTranslation } from 'react-i18next';
+import "./cardComponent.css";
+
 
 
 const useStyles = makeStyles((theme) => ({

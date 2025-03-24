@@ -46,7 +46,7 @@ i18n
           "Buy A Mas": "الشراء من ماس",
           "Connect Wallet": "ربط المحفظة",
           "MAS Platform": "منصة ماس",
-          "Create on MAS": "انشا عملة ماس",
+          "Create on MAS": "انشاء عملة ماس",
           "Are you sure want to logout!": "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
           "No": "لا",
           "Yes": "ىعم",

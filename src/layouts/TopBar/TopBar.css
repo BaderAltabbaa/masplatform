@@ -10,14 +10,16 @@
 }
 .right{
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-links1{
-  width: 100%;
-  display: flex;
+   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px; 
+  align-items: center;
+  width: 100%;
+  gap: 1rem; 
 }
 
 .nav-links1 ul {
@@ -39,10 +41,7 @@
   color:  #8602ba; /* لون التمرير */
 }
 
-.auth-buttons1 {
-  display: flex;
-  gap: 2px;
-}
+
 
 
 .logo1 {
@@ -135,10 +134,8 @@
 }
 
 @media (max-width: 1250px) {
-  .header {
-    align-items: center;
-    padding:0px 10px;
-    height: auto;
+  header {
+    
     justify-content: space-between;
   }
 
@@ -216,7 +213,6 @@
 
 @media (max-width: 786px) {
   .header {
-    align-items: center;
     height: auto;
 
     justify-content: space-between;
@@ -273,9 +269,7 @@
 /* استجابة الشاشات الصغيرة */
 @media (max-width: 480px) {
   .header {
-    align-items: center;
     height: auto;
-
     justify-content: space-between;
 
    

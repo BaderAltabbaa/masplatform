@@ -60,15 +60,7 @@ const useStyles = makeStyles((theme) => ({
       borderWidth: 0,
     },
   },
-  LoginBox: {
-    paddingTop: "0px",
-    "& h6": {
-      
-      "& span": {
-        fontWeight: "300",
-      },
-    },
-  },
+ 
   TokenBox: {
     border: "solid 0.5px #e5e3dd",
     padding: "5px",
@@ -194,9 +186,9 @@ export default function Bundles() {
     getBundleListHandler().catch(console.error);
   }, [page]);
 
-  return (
+  return (<>
     <MainCard title={t('My Bundles')} >
-
+</MainCard>
     <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6" color="black"></Typography>
@@ -233,7 +225,7 @@ export default function Bundles() {
         <Grid container spacing={2} className={classes.bunbox}  >
           {bundleList.map((data, i) => {
             return (
-              <Grid item key={i} lg={2.4} md={4} sm={6} xm={12}>
+              <Grid item key={i} lg={3} md={4.2} sm={6} xm={12}>
                 <Cardbundle data={data}/>
                 {/* <BundleCard data={data} index={i} isDays={true} /> */}
               </Grid>
@@ -246,7 +238,7 @@ export default function Bundles() {
             mt={2}
             display="flex"
             justifyContent="center"
-            style={{ marginTop: 40 }}
+            style={{ marginTop: 10 }}
           >
             <Pagination
               count={pages}
@@ -274,7 +266,7 @@ export default function Bundles() {
         />
       )}
     </Box>
-    </MainCard>
+    </>
   );
 
   async function getBundleListHandler() {
@@ -286,7 +278,7 @@ export default function Bundles() {
       },
       params: {
         page,
-        limit: 5,
+        limit: 4,
       },
     })
       .then(async (res) => {
@@ -680,6 +672,7 @@ export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {
         </Button>
       </DialogActions>
     </Dialog>
+    
   );
 };
 
