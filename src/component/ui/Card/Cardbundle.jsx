@@ -314,15 +314,15 @@ function Cardbundle({
    <Typography
           variant="h6"
           component="h6"
-          style={{ color: "white", fontWeight: "bold" ,margin:"0 5px" }}
+          style={{ color: "white", fontWeight: "bold" ,margin:"0 5px",fontSize:"16px" }}
         >
           {BundleData.bundleName}
         </Typography>
-        <FiCopy color="white" cursor="pointer" onClick={() => {
+       {/* <FiCopy color="white" cursor="pointer" onClick={() => {
                     navigator.clipboard.writeText(
                       `${pageURL}/bundles-details?${BundleData?._id}`
                     );
-                    toast.info("Copied")}} />
+                    toast.info("Copied")}} />*/} 
 
         
         </Box>

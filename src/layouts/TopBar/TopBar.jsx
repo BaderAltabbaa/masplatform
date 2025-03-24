@@ -313,6 +313,7 @@ export default function Header() {
         }}
       >
         <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <Box>
         <Button
             onClick={() => {
               navigate("/profile");
@@ -328,7 +329,8 @@ export default function Header() {
 
             {t("My Profile")}
           </Button>
-         
+          </Box>
+          <Box>
           <Button
             onClick={() => {
               navigate("/chat/t");
@@ -343,6 +345,8 @@ export default function Header() {
           >
             {t("Chat")}
           </Button>
+          </Box>
+          <Box>
           <Button
             onClick={() => {
               readNotificationhandler();
@@ -357,6 +361,8 @@ export default function Header() {
           >
             {t("Notifications")}
           </Button>
+          </Box>
+          <Box>
           <Button
             onClick={() => {
               navigate("/buymas");
@@ -371,7 +377,7 @@ export default function Header() {
           >
             {t("Buy A Mas")}
           </Button>
-         
+          </Box>
         </Box>
       </Box>
     );
@@ -547,7 +553,6 @@ export default function Header() {
                 }
               }}
                 ref={dropdownRef}>
-                <Tooltip title="My Profile" placement="bottom">
                   <IconButton onClick={toggleDropdown}>
                     <Avatar
                       alt={auth.userData?.userName}
@@ -555,7 +560,6 @@ export default function Header() {
                       style={{ cursor: 'pointer', border: 'solid 3px #43005e' }}
                     />
                   </IconButton>
-                </Tooltip>
                 {isDropdownOpen && (
                   <ProfileDropdown
                     onClose={() => setDropdownOpen(false)}
@@ -723,13 +727,17 @@ export default function Header() {
 
           </nav>
 
-
-
+        
+          
 
         </header>
 
       </AppBar>
 
+      <div style={{position:"fixed",bottom:"10px",right:"10px",zIndex:"1000",fontSize:"50px",color:" #4a004f",background:"#cdc8c8",borderRadius:"50%", width:"50px",height:"50px" ,overflow:"hidden" }}>
+            <FaUser/>
+          </div>
+  
       <Dialog
         open={openNotifications}
         onClose={() => setOpenNotifications(false)}
