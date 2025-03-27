@@ -268,23 +268,35 @@ const Wallet = () => {
 <MainCard title={t("My Wallet")}>
 </MainCard>
     <Box sx={{
-        padding:"0 100px",
-        "@media(max-width: 1200px)":{
-            padding:"0"
-        }
+        padding: "0 5%",
+        maxWidth: "1600px",
+        margin: "0 auto",
+        "@media (max-width: 1200px)": { padding: "0 2%" },
+        "@media (max-width: 600px)": { padding: "0 10px" }
     }}>
-               <div className="tableWrapper">
+               <div className="tableWrapper" style={{ width: "100%", overflow: "hidden" }}>
                <div className="tableAnimatedBackground"></div>
                <div className="tableInnerBlurEffect"></div>
-   <Box sx={{backgroundColor:" #30003c" , padding:"20px 40px" ,borderRadius:"20px",position:"relative"}}>
-    <Typography variant="h2" color="white" align="center" mb={3}>{t("My Balance")}</Typography>
+   <Box sx={{backgroundColor:" #30003c" ,  padding: { xs: "20px 30px", md: "20px 40px" } ,borderRadius:"20px",position:"relative",  width: "100%"}}>
+    <Typography sx={{ 
+        fontSize: { xs: "1.2rem", md: "1.6rem" },
+        color: "white",
+        textAlign: "center",
+        mb: 3 
+      }}>{t("My Balance")}</Typography>
     <BalanceBox
         availableBalance={availableBalance1}
         tokensDetails={tokensDetails}
         />
        
 
-        <Typography variant="h2" color="white" align="center" mb={3} mt={2}>{t("My Total Earings")}</Typography>
+        <Typography sx={{ 
+        fontSize: { xs: "1.5rem", md: "1.6rem" },
+        color: "white",
+        textAlign: "center",
+        mb: 3,
+        mt: 2 
+      }}>{t("My Total Earings")}</Typography>
     <BalanceBox
         availableBalance={totalEarning1}
         tokensDetails={tokensDetails}

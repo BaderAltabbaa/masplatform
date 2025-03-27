@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     maxWidth: '600px',
     width: '100%',
+    backgroundColor:"white"
   },
   box: {
     width: '100%',
@@ -40,35 +41,46 @@ const useStyles = makeStyles((theme) => ({
   kycFormContainer: {
     width: '100%',
     margin: theme.spacing(2),
-    backgroundColor: 'white',  // Add red background
+    backgroundColor: '#cdc8c8',  // Add red background
     padding: theme.spacing(3),  // Add padding to increase size
     borderRadius: theme.shape.borderRadius,
+    boxShadow:"0 4px 8px rgba(0, 0, 0, 0.3)"
   },
   kycForm: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'start',
   },
   kycFormTitle: {
-    color: 'black',  // Set text color to white or any other color you prefer
+    color: '#2f0032',  // Set text color to white or any other color you prefer
   },
   formGroup: {
     margin: theme.spacing(1),
+    display:"flex"
   },
   span: {
     marginRight: theme.spacing(1),
     fontWeight: 'bold',
+    color:"#2f0032",
   },
   input: {
-    width: '100%',
+    width: '500px',
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: `none`,
+   
+    "@media(max-width:800px)":{
+      width:"400px"
+    },
+    "@media(max-width:600px)":{
+      width:"300px"
+    },
   },
   cameraButtons: {
     display: 'flex',
     justifyContent: 'space-around',
     margin: theme.spacing(2),
+    gap:"10px"
   },
   video: {
     width: '100%',
@@ -79,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: theme.spacing(2),
+    gap:"10px"
   },
   cancelButton: {
     marginRight: theme.spacing(1),
@@ -324,7 +337,7 @@ return (
   <Box className={classes.root}>
   <Box className={classes.loginBox}>
     <div className={classes.kycFormContainer}>
-    <Typography variant="h5" align="center" gutterBottom className={classes.kycFormTitle}>
+    <Typography variant="h2" align="center" gutterBottom sx={{color:"#2f0032"}}>
          KYC Form 
      </Typography>
       <form className={classes.kycForm} >
@@ -359,25 +372,28 @@ return (
           </label>
         </div>
       </form>
-    </div>
+    <Box display="flex" justifyContent='center'>
     <Button
         variant="contained"
         color="secondary"
         onClick={handleUpload}
         className={classes.cancelButton}
         disabled={isLoading}
+        sx={{background: "#2f0032", color: "white"}}
       >
        Upload Files
       </Button>
+      </Box>
     <div className={classes.cameraButtons}>
-      <button onClick={startCamera}>Start Camera</button>
-      <button onClick={stopCamera}>Stop Camera</button>
-      <button onClick={takePictureAndSendToBackend}>Take Picture</button>
+      <Button onClick={startCamera} sx={{background: "#54015a", color: "white"}}>Start Camera</Button>
+      <Button onClick={stopCamera} sx={{background: "#54015a", color: "white"}}>Stop Camera</Button>
+      <Button onClick={takePictureAndSendToBackend} sx={{background: "#54015a", color: "white"}}>Take Picture</Button>
       {showCheckMark && (
         <CheckCircleOutlineIcon fontSize="small" style={{ color: green[500] }} />
       )}
     </div>
-    <video ref={videoRef} autoPlay playsInline muted className={classes.video} />
+    </div>
+   {/*<video ref={videoRef} autoPlay playsInline muted className={classes.video} /> */} 
     <div className={classes.buttonContainer}>
       <Button
         variant="contained"
@@ -386,6 +402,7 @@ return (
         to="/"
         className={classes.cancelButton}
         disabled={isLoading}
+        sx={{background: "#2f0032", color: "white"}}
       >
         Cancel
       </Button>
@@ -395,6 +412,7 @@ return (
       onClick={processing}
       className={`${classes.cancelButton} ${classes.redButton}`}
       disabled={isLoading}
+      sx={{background: "#2f0032", color: "white"}}
     >
       Processing
     </Button>

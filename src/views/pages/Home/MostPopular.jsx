@@ -146,8 +146,8 @@ return(
                                style={{width:"80px", height:"80px" ,borderRadius:"50%",cursor:"pointer"}} 
                                alt="profile">
                                 </img> 
-                               <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" color="white" ml={3}> 
-                                 <strong>{user.name}</strong> 
+                               <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" color="white" textAlign="center" ml={3}> 
+                                <Box whiteSpace="nowrap"> <strong>{user.name}</strong> </Box>
                                   {user.followers.length} {t("Subscribers")}
                                   </Box>
                             </Box>

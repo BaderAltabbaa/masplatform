@@ -751,6 +751,7 @@ export default function ProfileSettings() {
         navigate("/profile");
       } else {
         toast.error(res.data.responseMessage);
+      
       }
       setIsloading(false);
     })
@@ -1527,14 +1528,14 @@ export default function ProfileSettings() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{t("Confirmation")}</DialogTitle>
+        <DialogTitle id="alert-dialog-title" sx={{fontSize:"18px"}}>{t("Confirmation")}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {t("Are you sure you want to delete your profile?")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} sx={{color:"#2f0032"}}>
             {t("Cancel")}
           </Button>
           <Button
@@ -1542,6 +1543,7 @@ export default function ProfileSettings() {
             color="secondary"
             variant="contained"
             disabled={isLoading}
+            sx={{background: "#2f0032", color: "white"}}
           >
             {isLoading ? t("Deleting...") : t("Confirm")}
           </Button>
@@ -1573,14 +1575,14 @@ export default function ProfileSettings() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{'Confirmation'}</DialogTitle>
+        <DialogTitle id="alert-dialog-title" sx={{fontSize:"18px"}}>{t('Confirmation')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {t("Are you sure you want to deactivate your profile?")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} sx={{color:"#2f0032"}}>
             {t("Cancel")}
           </Button>
           <Button
@@ -1590,6 +1592,7 @@ export default function ProfileSettings() {
             color="secondary"
             variant="contained"
             disabled={isLoading}
+            sx={{background: "#2f0032", color: "white"}}
           >
             {isLoading ? 'deactivat...' : t('Confirm')}
             

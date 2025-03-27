@@ -36,6 +36,8 @@ import StaticPage from '../../views/pages/staticPage';
 import LanguageSwitcher from '../../component/LangugeSwitcher';
 import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import { MdHeadsetMic } from "react-icons/md";
+import { transform } from 'lodash';
 
 
 
@@ -331,6 +333,7 @@ export default function Header() {
           </Button>
           </Box>
           <Box>
+
           <Button
             onClick={() => {
               navigate("/chat/t");
@@ -346,6 +349,7 @@ export default function Header() {
             {t("Chat")}
           </Button>
           </Box>
+          
           <Box>
           <Button
             onClick={() => {
@@ -734,9 +738,36 @@ export default function Header() {
 
       </AppBar>
 
-      <div style={{position:"fixed",bottom:"10px",right:"10px",zIndex:"1000",fontSize:"50px",color:" #4a004f",background:"#cdc8c8",borderRadius:"50%", width:"50px",height:"50px" ,overflow:"hidden" }}>
-            <FaUser/>
-          </div>
+      {auth.userLoggedIn &&
+      
+             <Box sx={{
+              position:"fixed",
+              bottom:"10px",
+              right:"10px",
+              zIndex:"1000",
+              fontSize:"50px",
+              color:" #4a004f",
+              background:"#cdc8c8",
+              borderRadius:"50%", 
+              width:"60px",
+              height:"60px" ,
+              overflow:"hidden",
+              border:"none",
+              display:"flex",
+              alignItems:"center",
+              justifyContent:"center",
+              fontSize:"40px",
+              boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)",
+              "&:hover":{
+                cursor:"pointer",
+                transform:"scale(1.05)",
+                transition:"ease-in-out 500ms"
+              }
+              }}>
+                  <FaUser/>
+                </Box>
+      }
+
   
       <Dialog
         open={openNotifications}

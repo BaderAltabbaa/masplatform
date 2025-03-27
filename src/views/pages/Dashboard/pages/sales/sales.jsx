@@ -64,6 +64,12 @@ const useStyles = makeStyles(() => ({
         alignItems: "center",
         marginBottom: "30px",
     },
+    bunbox: {
+   
+        display: "flex",
+        justifyContent: "center",
+      
+    },
 }));
 
 export default function sales() {
@@ -98,7 +104,7 @@ export default function sales() {
                 <Box className={classes.LoginBox} >
 
                     <Box>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2}  className={classes.bunbox}>
                             {sales.map((data, i) => {
                                 return (
                                     <Grid item key={i} lg={3} md={4} sm={6} xm={12}>

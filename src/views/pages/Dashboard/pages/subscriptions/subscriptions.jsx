@@ -77,6 +77,12 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     marginBottom: "30px",
   },
+  bunbox: {
+   
+    display: "flex",
+    justifyContent: "center",
+  
+},
 }));
 
 export default function Subscriptions() {
@@ -110,10 +116,10 @@ export default function Subscriptions() {
     </MainCard>
       
         <Box>
-          <Grid container>
+          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
             {subscriptions.map((data, i) => {
               return (
-                <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
+                <Grid item key={i} lg={3} md={4} sm={6} xm={12} style={{ display: "flex", justifyContent: "center" }}>
                   <Cardbundle data={data.nftId}  />
                 </Grid>
               );
@@ -138,12 +144,12 @@ export default function Subscriptions() {
      
      
        
-       <Box display="flex" alignItems="center" justifyContent="center" mb={2}><ButtonwithAnimation>{t("Users")}</ButtonwithAnimation></Box>
+       <Box display="flex" alignItems="center" justifyContent="center" mb={5} mt={5}><ButtonwithAnimation>{t("Users")}</ButtonwithAnimation></Box>
         <Box>
-          <Grid container>
+          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
             {userList.map((data, i) => {
               return (
-                <Grid  key={i} lg={3} md={4} sm={6} xm={12}>
+                <Grid  key={i} lg={3} md={4} sm={6} xm={12} style={{ display: "flex", justifyContent: "center" }}>
                   <CardCreators data={data}  />
                 </Grid>
               );

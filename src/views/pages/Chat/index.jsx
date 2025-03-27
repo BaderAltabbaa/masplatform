@@ -50,15 +50,16 @@ const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        background: "rgba(17, 25, 40, 0.75)",
+        background: "rgba(144, 0, 173, 0.3)",
         position: 'fixed',
         top: '60px',
         paddingTop: '10px',
-        right: '60px',
+        right: '0px',
         bottom: '60px',
         display: "flex",
         justifyContent: 'flex-end',
-        width: '90%',
+        width: '100%',
+        height:"100%",
         "@media(max-width:400px)": {
             width: '100%',
         right: '0',
@@ -118,13 +119,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: "space-between",
         // alignItems: 'stretch',
-        padding: ' 0px',
-        flex: 4,
-        paddingLeft : '200px',
-
-        
-       
-        
         width: isMobile ? '100vw' : `calc(100vw - ${drawerWidth}px )`,
         maxWidth: isMobile ? '100vw' : `calc(100vw - ${drawerWidth}px )`,
         "@media(max-width:768px)": {
@@ -308,11 +302,7 @@ const ChatBox = function ({chat, socket, visible, isOnline}) {
 
     return (
         <>
-        <TopBar 
-        style={{
-           zIndex: '100',
-        }}
-        />
+       
             <Box
         // className=''
             className={classes.main}
@@ -656,78 +646,6 @@ const Mobile = useMediaQuery(useTheme().breakpoints.down("sm"));
        
        </Container>
    </Box>
-        // <Box className={classes.container}>
-        //     <RemoveScrollBar/>
-        //     {/* Start left Section */}
-        //     <Drawer
-        //         className={classes.drawer}
-        //         variant={isMobile ? "persistent" : "permanent"}
-        //         classes={{
-        //             paper: classes.drawerPaper,
-        //         }}
-        //         anchor="left"
-        //         open={chatId == 't'}
-        //     >
-
-        //         <List>
-        //             <ListItem>
-        //                 {isConnected ?
-        //                     <Box padding={1} fontSize={12}>🟢 Online users ({onlineUsers.length})</Box> :
-        //                     <Box padding={1} fontSize={12}>⛔ Chat disconnected, retrying ... </Box>
-        //                 }
-        //             </ListItem>
-        //         </List>
-        //         <Divider/>
-        //         {/* Start Usres */}
-        //         <List dense={true}>
-        //             {!chatList ? <DataLoading/> :
-        //                 chatList.length > 0 && chatList.map((chat) => {
-        //                     let contact = chat.users.find(c => c._id != user.userData._id);
-        //                     let photo = contact?.profilePic ? contact?.profilePic :
-        //                         `https://avatars.dicebear.com/api/miniavs/${contact?.userName}.svg`;
-
-        //                     return (
-        //                         <ListItem button key={chat._id} onClick={() => navigate('/chat/' + chat._id)}>
-        //                             <ListItemAvatar>
-        //                                 <Avatar alt={contact?.userName} src={photo} className={classes.avatar}/>
-        //                             </ListItemAvatar>
-        //                             <ListItemText
-        //                                 primary={contact?.userName}
-        //                                 secondary={onlineUsers.includes(contact?._id) ? 'Online' : 'Active recently'}
-        //                             />
-        //                             <ListItemSecondaryAction style={{marginRight: '13px'}}>
-        //                                 <Badge color="error" overlap="rectangular"
-        //                                        badgeContent={user.unreadChats[chat._id]?.length}></Badge>
-        //                             </ListItemSecondaryAction>
-        //                         </ListItem>
-        //                     )
-        //                 })
-        //             }
-        //         </List>
-        //         {/* End Usres */}
-
-        //     </Drawer>
-        //     {/* End left Section */}
-
-        //     {chatId == 't' ?
-        //         <Box className={classes.main}
-        //              style={{justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
-        //             <Typography component="h2" variant="h2" align='center'>
-        //                 Kick start chat now! <br/> Say Hi 👊 to your MAS community
-        //             </Typography>
-        //         </Box> : null}
-
-        //     {!chatList ? <DataLoading/> :
-        //         chatList.length > 0 && chatList.map((chat) => {
-        //             return <ChatBox
-        //                 key={chat._id}
-        //                 chat={chat}
-        //                 socket={socket}
-        //                 visible={(chat._id === chatId)}
-        //                 isOnline={onlineUsers.includes(chat.users.find(c => c._id != user.userData?._id)?._id)}
-        //             />
-        //         })
-        //     }
-        // </Box>
+       
     );
 }

@@ -65,6 +65,12 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     marginBottom: "30px",
   },
+    bunbox: {
+   
+      display: "flex",
+      justifyContent: "center",
+    
+  },
 }));
 
 export default function purchases() {
@@ -99,10 +105,10 @@ export default function purchases() {
       <Box className={classes.LoginBox} >
        
         <Box>
-          <Grid container spacing={3}>
+          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
             {purchases.map((data, i) => {
               return (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+                <Grid item xs={12} sm={6} md={4} lg={3} key={i}   style={{ display: "flex", justifyContent: "center" }}>
                      <CardCreators
                                 data={data}
                                 chat
@@ -139,10 +145,10 @@ export default function purchases() {
                         <Typography variant="h6" style={{fontSize:"1.8rem" ,color:"#43005e"}}>{t("Users")}</Typography>
         </Box>
         <Box>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
             {userList.map((data, i) => {
               return (
-                <Grid item key={i} lg={3} md={4} sm={6} xm={12} >
+                <Grid item key={i} lg={3} md={4} sm={6} xm={12}  style={{ display: "flex", justifyContent: "center" }}>
                       <CardCreators
                                 data={data}
                                 chat

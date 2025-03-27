@@ -56,6 +56,10 @@ const useStyles = makeStyles(() => ({
       fontSize: "28px",
       color: "#000",
     },
+    "@media(max-width:900px)":{
+      flexDirection:"column"
+
+    }
   },
   paddingContainer: {
     padding: "30px 30px  10px 30px",

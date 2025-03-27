@@ -61,6 +61,12 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     marginBottom: "30px",
   },
+  bunbox: {
+   
+    display: "flex",
+    justifyContent: "center",
+  
+},
 }));
 
 export default function Subscribers({ type }) {
@@ -86,10 +92,10 @@ export default function Subscribers({ type }) {
       <Box className={classes.LoginBox} mb={5}>
        
         <Box>
-          <Grid container>
+          <Grid container className={classes.bunbox} justifyContent="center">
             {userList.map((data, i) => {
               return (
-                <Grid item xs={12} sm={6} md={5} lg={3} key={i}>
+                <Grid item xs={12} sm={6} md={5} lg={3} key={i} style={{ display: "flex", justifyContent: "center" }}>
                     <CardCreators 
                     chat
                     Subscribe

@@ -1086,7 +1086,7 @@ variant="standard"
                   </Box>
 
 
-                  <Box display="flex" alignItems="center" marginBottom="15px">
+                  <Box display="flex" alignItems="start" marginBottom="15px" flexDirection="column">
                     <Typography variant="h3" sx={{marginRight:"5px"}}>
                     {t("Transaction Hash")}:
                     </Typography>

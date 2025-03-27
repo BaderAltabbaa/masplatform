@@ -228,12 +228,14 @@ export const routes = [
 
   {
     path: "/chat",
+    layout: HomeLayout,
     element: () =><Navigate to="/chat/t" />,
   },
 
   {
     path: "/chat/:chatId",
     // layout: HomeLayout,
+    layout: HomeLayout,
     guard: true,
     element: lazy(() => import("src/views/pages/Chat/index")),
   },

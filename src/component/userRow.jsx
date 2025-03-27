@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
     
   },
   createButton: {
-    color: '#fff',
     background: "linear-gradient(to bottom right, #760072, #2d013a)",
     margin: '0px 10px',
   },
@@ -112,7 +111,7 @@ const handleCloseBalance = () => {
          className={classes.createButton}
          onClick={() => handleOpenBalance()}
 
-         style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
+         style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "#ffffff",textAlign:"center" }}
        >
               {t("Check Balance")}
        </Button>
@@ -120,7 +119,7 @@ const handleCloseBalance = () => {
             className={classes.createButton}
             onClick={() => setOpenDonation(true)}
 
-            style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "white",textAlign:"center" }}
+            style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "#ffffff",textAlign:"center" }}
           >
                  {t("Transfer Funds")}
           </Button>}
@@ -195,7 +194,7 @@ const handleCloseBalance = () => {
     availableBalance={availableBalance}
     tokensDetails={tokensDetails}
     />
- <Link to={"/buymas"}><Button className={classes.createButton} sx={{color:"white" ,marginTop:"20px"}}>{t("Buy MAS")}</Button></Link>
+ <Link to={"/buymas"}><Button className={classes.createButton} sx={{color:" #ffffff" ,marginTop:"20px"}}>{t("Buy MAS")}</Button></Link>
   </DialogContent>
 </DialogTitle>
 
