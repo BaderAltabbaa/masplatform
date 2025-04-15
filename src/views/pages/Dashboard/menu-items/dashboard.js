@@ -20,9 +20,18 @@ const dashboard = {
       breadcrumbs: false
 
     },
+    
     {
       id: 'My_Bundles',
       title: 'My Bundles',
+      type: 'item',
+      url: '/profile/My_Bundles',
+      icon: icons.FaBox,
+      breadcrumbs: false
+    },
+    {
+      id: 'My_Bundles',
+      title: 'My Education',
       type: 'item',
       url: '/profile/My_Bundles',
       icon: icons.FaBox,

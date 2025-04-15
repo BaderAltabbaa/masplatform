@@ -11,6 +11,8 @@ import NFTSection from './NFT/NFTSection'
 import { create } from "lodash";
 import MostPopular from "./MostPopular";
 import { useTranslation } from 'react-i18next';
+import Cardbundle from "../../../component/ui/Card/Cardbundle";
+import Services from "./Services";
 
 
 const AuctionPage = ({ staticSections }) => {
@@ -122,7 +124,8 @@ const AuctionPage = ({ staticSections }) => {
   return (
     <>
        
-
+       {ServicesSection()}
+       <Services/>
       {CreatorsSection()}
       {BundlesSection()}
       {ItemsSection()}
@@ -139,71 +142,7 @@ const AuctionPage = ({ staticSections }) => {
       <Box>
      <NFTSection /> 
       
-     </Box>
-
-      // <Container
-      //   maxWidth="100%"
-      //   style={{
-      //     backgroundSize: "cover",
-      //     backgroundImage: item?.background
-      //       ? `url(${item?.background})`
-      //       : "linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)",
-      //     height: "100%",
-      //     display: item?.status === "ACTIVE" ? "block" : "none",
-      //   }}
-      // >
-      //   <div id="auctions_section" className={classes.sectionHeading}>
-      //     <Typography
-      //       variant="h2"
-      //       component="h2"
-      //       onClick={() => navigate("/auctions")}
-      //       style={{
-      //         cursor: "pointer",
-      //         margin: "20px auto",
-      //         fontSize: "66px",
-      //         color: "#fff",
-      //       }}
-      //     >
-      //       NFT Auction
-      //     </Typography>
-      //   </div>
-      //   {!isLoadingAuctions && auctionList.length === 0 ? (
-      //     <Box
-      //       align="center"
-      //       style={{
-      //         margin: "0px",
-      //         display: "flex",
-      //         justifyContent: "center",
-      //         alignContent: "center",
-      //         alignItems: "center",
-      //         minHeight: "300px",
-      //         mixBlendMode: "darken",
-      //         backgroundImage: "url(/images/home/nft-comingsoon-bg.png)",
-      //         backgroundSize: "cover",
-      //         backgroundPosition: "50% 50%",
-      //       }}
-      //       mt={4}
-      //       mb={5}
-      //     >
-      //       <Typography
-      //         variant="h1"
-      //         style={{
-      //           color: "#fffa",
-      //           textAlign: "center",
-      //           fontSize: "10vw",
-      //           textShadow: "rgb(81 13 29) 1px 1px 4px",
-      //         }}
-      //       >
-      //         COMING SOON
-      //       </Typography>
-      //     </Box>
-      //   ) : (
-      //     ""
-      //   )}
-      // </Container>
-
-      
-     
+     </Box> 
     );
   }
 
@@ -227,6 +166,88 @@ const AuctionPage = ({ staticSections }) => {
     
     /> 
   }
+    
+    </>
+     
+    );
+  }
+
+  function ServicesSection() {
+    const item = staticSections.find((i) => i?.title === "Bundles");
+    return (
+    <>
+      <div style={{ display: "flex", justifyContent: "center", margin: "40px 0" }} >
+      <Link to={"/bundles"}  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  >{t("Our Services")}</ButtonwithAnimation></Link>
+    
+    </div>
+    <Box display="flex" justifyContent="center" alignItems='center' mb={3}>
+    <Box 
+  display='flex' 
+  justifyContent='center' 
+  flexWrap='wrap'
+  sx={{
+    background: "linear-gradient(to top right,#900098,#4d0051)",
+    margin: { xs: '10px', sm: '20px' },
+    borderRadius: "30px", 
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+    overflow: "hidden",
+    padding: '10px', // Reduced padding
+    gap: '10px', // Consistent gap between items
+    width: 'fit-content', // Makes container shrink to fit content
+    maxWidth: '100%' // Ensures it doesn't overflow viewport
+  }}
+>
+  {[
+    { img: "/assets/Images/13.jpg", text: t("Creators") },
+    { img: "/assets/Images/1.jpg", text: t("Bundles") },
+    { img: "/assets/Images/18.jpg", text: t("MarketPlace") },
+    { img: "/assets/Images/22.jpg", text: t("Education") },
+    { img: "/assets/Images/14.jpg", text: t("Transfer")}
+  ].map((item, index) => (
+    <Link to='/creators' key={index}>
+      <Box sx={{ 
+        position: 'relative', 
+        display: 'inline-block',
+        margin: '10px',
+        width: { xs: '150px', sm: '200px', md: '230px' },
+        height: { xs: '200px', sm: '280px', md: '300px' },
+        "&:hover": {
+          transform: "scale(1.04)",
+          transition: "ease-out 0.3s" // Reduced for better UX
+        }
+      }}>
+        <img 
+          src={item.img} 
+          alt={item.text} 
+          style={{
+            width: "100%", 
+            height: "100%", 
+            borderRadius: '30px',
+            display: 'block',
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+            objectFit: 'cover' // Ensures images maintain aspect ratio
+          }}
+        />
+        <Box sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          color: "white",
+          fontSize: { xs: '20px', sm: '26px', md: '32px' },
+          fontWeight: "bold",
+          textShadow: "3px 3px 5px rgba(0,0,0,0.6)",
+          textAlign: 'center',
+          width: '100%' // Ensures text stays centered
+        }}>
+          {item.text}
+        </Box>
+      </Box>
+    </Link>
+  ))}
+</Box>
+
+</Box>
     
     </>
      

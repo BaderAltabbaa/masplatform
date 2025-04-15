@@ -494,9 +494,10 @@ export default function Header() {
 
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
             <ul  style={{ display: "flex", alignItems: "center", marginBottom: "10px" ,padding:"0"}}>
-              <li><Link to="/bundles">{t("Explore")}</Link></li>
+            <li><Link to="/creators">{t("Creators")}</Link></li>
+              <li><Link to="/bundles">{t("Bundles")}</Link></li>
               <li><Link to="/items">{t("Marketplace")}</Link></li>
-              <li><Link to="/creators">{t("Creators")}</Link></li>
+              <li><Link to="/bundles">{t("Education")}</Link></li>
               <li><Link to="/user-list">{t("Transfer")}</Link></li>
               <li><Link to="/corporate/metaverse">{t("Games")}</Link></li>
               <li><Link to="/corporate/metaverse">{t("Metaverse")}</Link></li>
