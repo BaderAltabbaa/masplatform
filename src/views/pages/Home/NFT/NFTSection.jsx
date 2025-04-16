@@ -21,8 +21,12 @@ const NFTSection = () => {
         <Typography component='headTitle' onClickFun={onClickFun }>RWA</Typography>
        
      
-        
-        <p className="" style={{ 
+        <p className="" style={{fontSize:"20px", marginBottom:"10px" 
+
+}}>
+ Real World Assets Tokenomics
+</p>
+        <p className="" style={{ marginBottom:"10px"
 
 }}>
  {t("COMING SOON")}

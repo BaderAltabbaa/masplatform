@@ -155,6 +155,12 @@ export default function Header() {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  const [isAboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+
+  const toggleAboutDropdown = () => {
+    setAboutDropdownOpen(!isAboutDropdownOpen)
+  }
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -196,6 +202,8 @@ export default function Header() {
   const [notify, setNotify] = useState([]);
   const [openNotifications, setOpenNotifications] = useState(false);
   const dropdownRef = useRef(null);
+  const aboutDropdownRef = useRef(null);
+
 
   useEffect(() => {
     const fetchUserAsyncInsideHook = async () => {
@@ -396,10 +404,101 @@ export default function Header() {
     );
   };
 
+const AboutUsDropDown = ({onClose}) => {
+  
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: '100%',
+        left: '50%', // Center it horizontally
+        transform: 'translateX(-50%)', // Adjust for exact centering
+        backgroundColor: '#cdc8c8',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+        borderRadius: '4px',
+        padding: '10px',
+        zIndex: 1000,
+      }}
+    >
+      <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <Box>
+        <Button
+            onClick={() => {
+              navigate("/profile");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+           
+          >
+
+            {t("FAQ")}
+          </Button>
+          </Box>
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/profile");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+           
+          >
+
+            {t("Blogs")}
+          </Button>
+          </Box>
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/profile");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+           
+          >
+
+            {t("About us")}
+          </Button>
+          </Box>
+
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/profile");
+              onClose();
+            }}
+            sx={{color:"#43005e"}}
+           
+          >
+
+            {t("Contact us")}
+          </Button>
+          </Box>
+      </Box>
+    </Box>
+    )
+}
+
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target)) {
+        setAboutDropdownOpen(false);
       }
     };
 
@@ -510,6 +609,13 @@ export default function Header() {
               <li><Link to="/user-list">{t("Transfer")}</Link></li>
               <li><Link to="/corporate/metaverse">{t("Games")}</Link></li>
               <li><Link to="/corporate/metaverse">{t("Metaverse")}</Link></li>
+              <li  ref={aboutDropdownRef} onClick={toggleAboutDropdown}><Link>{t("About us")}</Link></li>
+              {isAboutDropdownOpen && (
+                <AboutUsDropDown
+                onClose={() => setAboutDropdownOpen(false)}
+                />
+              )}
+
               <li className='test'><Link to="/buymas">{t("Buy A Mas")}</Link></li>
               <li className='test'><Link to="/connectWallet">{t( "Connect Wallet")}</Link></li>
 

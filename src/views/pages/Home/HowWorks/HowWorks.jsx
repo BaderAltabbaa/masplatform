@@ -50,7 +50,7 @@ const HowWorks = () => {
       </div>
       <div className="HowWorks-image-container">
         <img 
-          src={'assets/Images/25.webp'} 
+          src={'assets/Images/27.jpg'} 
           alt={"How it works"} 
           className="HowWorks-image" 
         />

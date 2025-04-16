@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "100px 0px 0px",
     backgroundImage: "linear-gradient(45deg, #240b36 30%, #c31432 90%)",
     width: "100%",
+    borderRadius:"0 0 50px 50px"
     
   },
   bannerBackground: {
@@ -129,7 +130,7 @@ export default function BannerSection({ bannerDetails, bannerDuration }) {
       showStatus={false}
       showIndicators={false}
       showArrows={false}
-      interval={bannerDuration * 1000}
+      interval={bannerDuration * 500}
     >
       {bannerDetails.map((item) => (
         <Box

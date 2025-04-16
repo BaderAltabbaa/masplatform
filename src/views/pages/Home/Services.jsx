@@ -1,9 +1,10 @@
 import React from 'react'
-import { Typography ,Box} from '@mui/material'
+import { Typography ,Box ,Container} from '@mui/material'
 
 const Services = () => {
   return (
 <>
+<Container  maxWidth="xl">
 <Box display="flex" justifyContent="center" alignItems="center">
 <Box
  display='flex' 
@@ -12,19 +13,18 @@ const Services = () => {
  justifyContent='space-between'
  sx={{
    background: "linear-gradient(to top right,#75017b,#3a013d)",
-   margin: { xs: '10px', sm: '20px' },
+   marginTop: { xs: '10px', sm: '20px' },
    borderRadius: "50px", 
    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
    overflow: "hidden",
-   paddingTop: '0px', // Reduced padding
-   gap: '10px', // Consistent gap between items
-   width: 'fit-content', // Makes container shrink to fit content
-   maxWidth: '100%', // Ensures it doesn't overflow viewport
-   width:"100%"
+   paddingTop: '0px', 
+   gap: '10px', 
+  position:"relative",
+   width: '100%', 
  }}>
             <Box padding="20px">
           <Box textAlign="center">
-        <Typography variant='h1' color='white' m={2}>Services </Typography>
+        <Typography className='headTitle' m={2}>MAS PLATFORM Services </Typography>
         </Box>
 
         <Box textAlign="left" mb={2} ml={1}>
@@ -56,7 +56,7 @@ const Services = () => {
       </div>
       </Box>
       </Box>
-      
+      </Container>
 </>
   )
 }

@@ -13,8 +13,8 @@ import MostPopular from "./MostPopular";
 import { useTranslation } from 'react-i18next';
 import Cardbundle from "../../../component/ui/Card/Cardbundle";
 import Services from "./Services";
-
-
+import HowWorks from "./HowWorks/HowWorks";
+import Solutions from "./Solutions/Solutions";
 const AuctionPage = ({ staticSections }) => {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -125,7 +125,12 @@ const AuctionPage = ({ staticSections }) => {
     <>
        
        {ServicesSection()}
-       <Services/>
+       <Box className="how-sol">
+      
+      <HowWorks/>
+    <Solutions/>
+    
+    </Box>
       {CreatorsSection()}
       {BundlesSection()}
       
@@ -177,25 +182,22 @@ const AuctionPage = ({ staticSections }) => {
     const item = staticSections.find((i) => i?.title === "Bundles");
     return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", margin: "40px 0" }} >
-      <Link  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  >{t("Our Services")}</ButtonwithAnimation></Link>
-    
-    </div>
-    <Box display="flex" justifyContent="center" alignItems='center' mb={3}>
+     
+    <Box display="flex" justifyContent="center" alignItems='center' mt={3}>
     <Box 
   display='flex' 
   justifyContent='center' 
   flexWrap='wrap'
   sx={{
-    background: "linear-gradient(to top right,#900098,#4d0051)",
+    background: "linear-gradient(to top right,#75017b,#3a013d)",
     margin: { xs: '10px', sm: '20px' },
-    borderRadius: "30px", 
+    borderRadius: "50px", 
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
     overflow: "hidden",
     padding: '10px', // Reduced padding
     gap: '10px', // Consistent gap between items
     width: 'fit-content', // Makes container shrink to fit content
-    maxWidth: '100%' // Ensures it doesn't overflow viewport
+    maxWidth: '100%', 
   }}
 >
   {[

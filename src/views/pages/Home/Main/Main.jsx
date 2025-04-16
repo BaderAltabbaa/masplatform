@@ -8,8 +8,15 @@ import './Main.css'
 import { Box } from "@mui/material";
 import HowWorks from "../HowWorks/HowWorks";
 import Solutions from "../Solutions/Solutions";
+import Services from "../Services";
+import { ButtonwithAnimation } from "../../../../component/ui/Button/button";
+import { useTranslation } from 'react-i18next';
+
+
 
 export default function Main() {
+      const {t} = useTranslation();
+  
   const [state, setState] = useState({
     bannerDetails: [],
     bannerDuration: undefined,
@@ -106,13 +113,12 @@ console.log("mm",landingSections)
         />
       )}
 
-      <Box className="how-sol">
-        <HowWorks/>
-      <Solutions/>
-      
-      </Box>
+  <Services/>
+    
 
       <AuctionPage staticSections={staticSections}/>
+
+    
     </Box>
   );
 }

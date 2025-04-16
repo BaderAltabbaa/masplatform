@@ -55,8 +55,7 @@
     
 .how-sol{
   display: flex;
-  padding: 50px;
-  padding-bottom: 20px;
+  padding: 20px;
   justify-content: center;
   
   gap: 60px;

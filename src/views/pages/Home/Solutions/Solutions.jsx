@@ -40,16 +40,18 @@ const Solutions = () => {
 
   return (
 <>
-<div className="HowWorks">
+<div className="Solution">
 <div className="HowWorks-content">
         <Typography component='headTitle'>{sectionData.title} </Typography>
-     
+        </div>
+
+
         
-          <h2 className="HowWorks-subtitle"> 
+          <h2 className="HowWorks-section-title" style={{textAlign:"center" ,color:"white"}}> 
      {sectionData.description}
           </h2>
-       
-      </div>
+        
+      
 
 
       <div className="HowWorks-image-container">
