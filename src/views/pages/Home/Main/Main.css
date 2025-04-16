@@ -83,6 +83,10 @@
       .landingBox{
         padding: 0;
       }
+
+      .how-sol{
+        padding:50px 5px;
+      }
     }
     
     @media (max-width: 480px) {
