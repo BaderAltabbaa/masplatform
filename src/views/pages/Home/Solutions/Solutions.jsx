@@ -1,25 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import Typography from '../../../../component/ui/typography/typography';
 import './Solutions.css'
+import axios from "axios";
+import Apiconfigs from '../../../../Apiconfig/Apiconfigs';
 
-const Solutions = ({description,title,contentFile}) => {
+const Solutions = () => {
+
+  const [sectionData, setSectionData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const getLandingPageSectionsHandler = async () => {
+    try {
+      setLoading(true);
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.landingContentList,
+      });
+      if (res.data.statusCode === 200 && res.data.result.length > 0) {
+        // Get only the first item (index 0) from the array
+        setSectionData(res.data.result[1]);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Failed to load content");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getLandingPageSectionsHandler();
+  }, []);
+
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (!sectionData) return null;
+
   return (
 <>
-<div className="Solution-text-content">
-        <Typography component='headTitle'>{title} </Typography>
+<div className="HowWorks">
+<div className="HowWorks-content">
+        <Typography component='headTitle'>{sectionData.title} </Typography>
      
         
-          <p className="" style={{ 
-
-          }}>
-     {description}
-          </p>
+          <h2 className="HowWorks-subtitle"> 
+     {sectionData.description}
+          </h2>
        
       </div>
 
 
-      <div className="Solution-image-container">
-      {/* <img src={contentFile} alt="" /> */}
+      <div className="HowWorks-image-container">
+      <img 
+          src={'assets/Images/15.jpg'} 
+          alt={"How it works"} 
+          className="HowWorks-image" 
+        />     
+         </div>
       </div>
 </>
   )

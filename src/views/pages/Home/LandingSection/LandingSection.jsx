@@ -20,14 +20,13 @@ export default function LandingSection({ item, index ,children}) {
   return (
     <Container  maxWidth="xl">
       <Box
-     className={`LandingSection ` } 
+     className={`LandingSection`} 
        
     sx={{
      
       background: (theme) => theme.custom.BoxBackGroundReseve
      
     }}
-     style ={{}}
       
     >
       {index % 2 === 0 && <HowWorks title={item?.title} description={item?.description}  contents={item?.contents} img={item?.contentFile}/>}

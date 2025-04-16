@@ -11,6 +11,7 @@ import {
   Box,
   Typography,
   useMediaQuery,
+  TextField
 
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -27,6 +28,7 @@ import User from "src/component/User";
 import NotificationCard from "src/component/NotificationCard";
 import Dialog from "@mui/material//Dialog";
 import DialogContent from "@mui/material//DialogContent";
+import DialogTitle from '@mui/material';
 import NoDataFound from "src/component/NoDataFound";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
@@ -130,8 +132,16 @@ export default function Header() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const {t} = useTranslation();
-  
+  const [openSupport, setOpenSupport] = useState(false);
 
+ const handleOpenSupport = () => {
+  setOpenSupport(true);
+ } 
+
+ const handleCloseSupport = () => {
+  setOpenSupport(false);
+ } 
+ 
   const toggleSearch = () => {
     setSearchVisible(!isSearchVisible);
   };
@@ -741,33 +751,70 @@ export default function Header() {
 
       {auth.userLoggedIn &&
       
-             <Box sx={{
-              position:"fixed",
-              bottom:"10px",
-              right:"10px",
-              zIndex:"1000",
-              fontSize:"50px",
-              color:" #4a004f",
-              background:"#cdc8c8",
-              borderRadius:"50%", 
-              width:"60px",
-              height:"60px" ,
-              overflow:"hidden",
-              border:"none",
-              display:"flex",
-              alignItems:"center",
-              justifyContent:"center",
-              fontSize:"40px",
-              boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)",
-              "&:hover":{
-                cursor:"pointer",
-                transform:"scale(1.05)",
-                transition:"ease-in-out 500ms"
-              }
-              }}>
-                  <FaUser/>
-                </Box>
+      <Box 
+      onClick={handleOpenSupport}
+      sx={{
+        position: "fixed",
+        bottom: "10px",
+        right: "10px",
+        zIndex: "1000",
+        color: "#4a004f",
+        background: "#cdc8c8",
+        borderRadius: "50%", 
+        width: "60px",
+        height: "60px",
+        overflow: "hidden",
+        border: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "40px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.6)",
+        "&:hover": {
+          cursor: "pointer",
+          transform: "scale(1.05)",
+          transition: "ease-in-out 500ms"
+        }
+      }}
+    >
+      <FaUser />
+    </Box>
       }
+
+
+<Dialog open={openSupport} onClose={handleCloseSupport}>
+  
+        <DialogContent>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="message"
+            label="Message"
+            placeholder="Type your message here..."
+            type="text"
+            fullWidth
+            variant="outlined"
+            multiline
+            rows={4}
+            sx={{ mt: 2, mb: 2 }}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button 
+              onClick={handleCloseSupport} 
+              sx={{ mr: 2 }}
+            >
+              Cancel
+            </Button>
+            <Button 
+              variant="contained"
+              color="primary"
+            >
+              Send
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
 
   
       <Dialog
@@ -809,7 +856,7 @@ export default function Header() {
                 variant="contained"
                 size="small"
                 color='white'
-                style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
+                style={{ fontSize: "15px", background: " #2f0032", color: "white", margin: "0 5px" }}
 
                 mr={2}
 

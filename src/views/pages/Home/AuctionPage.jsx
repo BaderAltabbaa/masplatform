@@ -128,6 +128,7 @@ const AuctionPage = ({ staticSections }) => {
        <Services/>
       {CreatorsSection()}
       {BundlesSection()}
+      
       {ItemsSection()}
       {NFTsection()}
       <MostPopular/>
@@ -177,7 +178,7 @@ const AuctionPage = ({ staticSections }) => {
     return (
     <>
       <div style={{ display: "flex", justifyContent: "center", margin: "40px 0" }} >
-      <Link to={"/bundles"}  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  >{t("Our Services")}</ButtonwithAnimation></Link>
+      <Link  style={{ textDecoration: "none", outline: "none" }}> <ButtonwithAnimation  >{t("Our Services")}</ButtonwithAnimation></Link>
     
     </div>
     <Box display="flex" justifyContent="center" alignItems='center' mb={3}>
@@ -200,7 +201,7 @@ const AuctionPage = ({ staticSections }) => {
   {[
     { img: "/assets/Images/13.jpg", text: t("Creators") },
     { img: "/assets/Images/1.jpg", text: t("Bundles") },
-    { img: "/assets/Images/18.jpg", text: t("MarketPlace") },
+    { img: "/assets/Images/25.webp", text: t("MarketPlace") },
     { img: "/assets/Images/22.jpg", text: t("Education") },
     { img: "/assets/Images/14.jpg", text: t("Transfer")}
   ].map((item, index) => (

@@ -6,6 +6,8 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import LandingSection from "src/views/pages/Home/LandingSection/LandingSection";
 import './Main.css'
 import { Box } from "@mui/material";
+import HowWorks from "../HowWorks/HowWorks";
+import Solutions from "../Solutions/Solutions";
 
 export default function Main() {
   const [state, setState] = useState({
@@ -60,7 +62,7 @@ export default function Main() {
       console.log(error);
     }
   };
-console.log(landingSections)
+console.log("mm",landingSections)
   async function getStaticSections() {
     try {
       const res = await axios({
@@ -85,6 +87,9 @@ console.log(landingSections)
   useEffect(() => {
     console.log(bannerDuration);
   }, [bannerDuration]);
+
+
+  
   return (
     <Box className="home" 
    
@@ -100,11 +105,12 @@ console.log(landingSections)
           bannerDuration={bannerDuration}
         />
       )}
+
+      <Box className="how-sol">
+        <HowWorks/>
+      <Solutions/>
       
-      <Box className='landingBox'>
-      {landingSections.map((item, index) => (
-        <LandingSection key={item._id} item={item} index={index} />
-      ))}</Box>
+      </Box>
 
       <AuctionPage staticSections={staticSections}/>
     </Box>
