@@ -37,7 +37,6 @@ import StaticPage from '../../views/pages/staticPage';
 import LanguageSwitcher from '../../component/LangugeSwitcher';
 import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
-import { MdHeadsetMic } from "react-icons/md";
 import { transform } from 'lodash';
 
 
@@ -132,6 +131,7 @@ export default function Header() {
   const menuRef = useRef(null);
   const {t} = useTranslation();
   const [openSupport, setOpenSupport] = useState(false);
+  const isMobileView = useMediaQuery('(max-width: 1250px)');
 
  const handleOpenSupport = () => {
   setOpenSupport(true);
@@ -338,8 +338,13 @@ export default function Header() {
               navigate("/profile");
               onClose();
             }}
-            sx={{color:"#43005e"}}
-            startIcon={
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+                       startIcon={
               <Badge>
                 <FaUser/>
               </Badge>
@@ -361,8 +366,13 @@ export default function Header() {
                 <BsChat />
               </Badge>
             }
-            sx={{color:"#43005e"}}
-          >
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+                     >
             {t("Chat")}
           </Button>
           </Box>
@@ -378,8 +388,13 @@ export default function Header() {
                 <NotificationsIcon />
               </Badge>
             }
-            sx={{color:"#43005e"}}
-          >
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+                     >
             {t("Notifications")}
           </Button>
           </Box>
@@ -389,8 +404,13 @@ export default function Header() {
               navigate("/buymas");
               onClose();
             }}
-            sx={{color:"#43005e"}}
-            startIcon={
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+                       startIcon={
               <Badge>
                 <FaDollarSign/>
               </Badge>
@@ -404,44 +424,55 @@ export default function Header() {
     );
   };
 
-const AboutUsDropDown = ({onClose}) => {
-  
-
-  return (
-    <Box
-      sx={{
-        position: 'absolute',
-        top: '100%',
-        left: '50%', // Center it horizontally
-        transform: 'translateX(-50%)', // Adjust for exact centering
-        backgroundColor: '#cdc8c8',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        borderRadius: '4px',
-        padding: '10px',
-        zIndex: 1000,
-      }}
-    >
+  const AboutUsDropDown = ({ onClose, isMobile }) => {
+    return (
+      <Box
+        sx={{
+          position: isMobile ? 'relative' : 'absolute', // Only relative in mobile
+          top: isMobile ? 'unset' : '100%', // Reset top in mobile
+          left: isMobile ? 'unset' : '50%', // Reset left in mobile
+          transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
+          backgroundColor: '#cdc8c8',
+          borderRadius: isMobile ? '0' : '4px', // Sharp edges in mobile
+          padding: '10px',
+          zIndex: 1000,
+          width: isMobile ? '100%' : 'auto', // Full width in mobile
+          whiteSpace:"nowrap",
+          textAlign:"center"
+        }}
+      >
       <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <Box>
         <Button
             onClick={() => {
-              navigate("/profile");
+              navigate("/FAQ");
               onClose();
             }}
-            sx={{color:"#43005e"}}
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
            
           >
 
             {t("FAQ")}
           </Button>
           </Box>
+
           <Box>
         <Button
             onClick={() => {
-              navigate("/profile");
+              navigate("/Blogs");
               onClose();
             }}
-            sx={{color:"#43005e"}}
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
            
           >
 
@@ -451,10 +482,15 @@ const AboutUsDropDown = ({onClose}) => {
           <Box>
         <Button
             onClick={() => {
-              navigate("/profile");
+              navigate("/About_us");
               onClose();
             }}
-            sx={{color:"#43005e"}}
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
            
           >
 
@@ -465,10 +501,15 @@ const AboutUsDropDown = ({onClose}) => {
           <Box>
         <Button
             onClick={() => {
-              navigate("/profile");
+              navigate("/Contact_Us");
               onClose();
             }}
-            sx={{color:"#43005e"}}
+            sx={{color:"#43005e",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
            
           >
 
@@ -605,16 +646,27 @@ const AboutUsDropDown = ({onClose}) => {
             <li><Link to="/creators">{t("Creators")}</Link></li>
               <li><Link to="/bundles">{t("Bundles")}</Link></li>
               <li><Link to="/items">{t("Marketplace")}</Link></li>
-              <li><Link to="/bundles">{t("Education")}</Link></li>
+              <li><Link to="/education">{t("Education")}</Link></li>
               <li><Link to="/user-list">{t("Transfer")}</Link></li>
               <li><Link to="/corporate/metaverse">{t("Games")}</Link></li>
               <li><Link to="/corporate/metaverse">{t("Metaverse")}</Link></li>
-              <li  ref={aboutDropdownRef} onClick={toggleAboutDropdown}><Link>{t("About us")}</Link></li>
-              {isAboutDropdownOpen && (
-                <AboutUsDropDown
-                onClose={() => setAboutDropdownOpen(false)}
-                />
-              )}
+              <li 
+  ref={aboutDropdownRef} 
+  onClick={toggleAboutDropdown}
+  style={{ 
+    position: 'relative',
+    display: 'flex',
+    flexDirection: isMobileView ? 'column' : 'row' // Only column in mobile
+  }}
+>
+  <Link>{t("About us")}</Link>
+  {isAboutDropdownOpen && (
+    <AboutUsDropDown
+      onClose={() => setAboutDropdownOpen(false)}
+      isMobile={isMobileView} // Pass mobile state
+    />
+  )}
+</li>
 
               <li className='test'><Link to="/buymas">{t("Buy A Mas")}</Link></li>
               <li className='test'><Link to="/connectWallet">{t( "Connect Wallet")}</Link></li>
@@ -863,7 +915,6 @@ const AboutUsDropDown = ({onClose}) => {
         bottom: "10px",
         right: "10px",
         zIndex: "1000",
-        color: "#4a004f",
         background: "#cdc8c8",
         borderRadius: "50%", 
         width: "60px",
@@ -882,12 +933,19 @@ const AboutUsDropDown = ({onClose}) => {
         }
       }}
     >
-      <FaUser />
+      <img src="\assets\Images\support.png" alt="" width='40px' />
     </Box>
       }
 
 
-<Dialog open={openSupport} onClose={handleCloseSupport}>
+<Dialog open={openSupport} onClose={handleCloseSupport} hideBackdrop sx={{"& .MuiDialog-container":{
+  alignItems:"flex-end",
+  justifyContent:"flex-end"
+},
+"& .MuiDialog-paper":{
+   margin: "0px"
+}
+}}>
   
         <DialogContent>
 
@@ -914,6 +972,9 @@ const AboutUsDropDown = ({onClose}) => {
             <Button 
               variant="contained"
               color="primary"
+              sx={{background:"#43005e" ,"&:hover":{
+                background:"rgb(50, 0, 70)"
+              }}}
             >
               Send
             </Button>

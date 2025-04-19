@@ -133,6 +133,34 @@
   display: none;
 }
 
+
+/* Add to your CSS file */
+@media (max-width: 1250px) {
+  /* Ensure dropdown takes full width in mobile */
+  .nav-links1 li[ref="aboutDropdownRef"] {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Make dropdown appear inline (not floating) in mobile */
+  .nav-links1 li[ref="aboutDropdownRef"] > div {
+    position: relative !important;
+    top: unset !important;
+    left: unset !important;
+    transform: none !important;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  /* Adjust spacing for dropdown items */
+  .nav-links1 li[ref="aboutDropdownRef"] button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 1250px) {
   header {
     

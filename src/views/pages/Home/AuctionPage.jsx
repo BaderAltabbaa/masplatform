@@ -15,6 +15,10 @@ import Cardbundle from "../../../component/ui/Card/Cardbundle";
 import Services from "./Services";
 import HowWorks from "./HowWorks/HowWorks";
 import Solutions from "./Solutions/Solutions";
+import FAQmodel from "../../../component/FAQmodel";
+import { useInView } from "react-intersection-observer";
+import "src/views/pages/About/FAQ.css"
+
 const AuctionPage = ({ staticSections }) => {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -123,7 +127,6 @@ const AuctionPage = ({ staticSections }) => {
 
   return (
     <>
-       
        {ServicesSection()}
        <Box className="how-sol">
       
@@ -133,11 +136,11 @@ const AuctionPage = ({ staticSections }) => {
     </Box>
       {CreatorsSection()}
       {BundlesSection()}
-      
       {ItemsSection()}
       {NFTsection()}
       <MostPopular/>
       {popularCategory()}
+      {FAQ()}
     </>
   );
 
@@ -368,6 +371,39 @@ padding:"30px 200px"
         </Box>
       </Box>
     )
+  }
+
+  function FAQ() {
+    
+    const { ref: ref3,inView: inView3 } = useInView({
+      threshold: 0.2, 
+      triggerOnce: true, 
+    });
+  
+    const { ref: ref4,inView: inView4 } = useInView({
+      threshold: 0.01, 
+      triggerOnce: true,  
+    });
+
+
+
+return(
+  <>
+ 
+ <div className="faq-sec">
+    <div className={`faq-top ${inView3 ? 'animate' : ''}`} ref={ref3}>
+      <span className='faq-title'>FAQ</span>
+      <span className='faq-title2'>Frequently Ask Questions.</span>
+      <span className='faq-desc'>here some questions that you ask a lot about</span>
+      <img className='questimg' src="\assets\Images\question.webp" alt="" />
+    </div>
+    <div className={`faq-bottom ${inView4 ? 'animate' : ''}`} ref={ref4}>
+<FAQmodel/>
+ </div>
+ </div>
+
+  </>
+)
   }
 
   async function auctionNftListHandler() {

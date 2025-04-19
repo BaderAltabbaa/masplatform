@@ -40,7 +40,7 @@ const Solutions = () => {
 
   return (
 <>
-<div className="Solution">
+<div className="HowWorks">
 <div className="HowWorks-content">
         <Typography component='headTitle'>{sectionData.title} </Typography>
         </div>

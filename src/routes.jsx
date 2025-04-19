@@ -44,6 +44,14 @@ export const routes = [
       },
 
       {
+       
+        path: 'My_Education',
+        element:lazy(() =>
+          import("src/views/pages/Dashboard/pages/MyEducation/MyEducation")
+        ),
+      },
+
+      {
         path: 'My_Marketplace',
         element:lazy(() =>
           import("src/views/pages/Dashboard/pages/Marketplace/Marketplace")
@@ -291,7 +299,12 @@ export const routes = [
     guard: true,
     element: lazy(() => import("src/views/pages/AllBundles/AllBundles")),
   },
-
+  {
+  path: "/education",
+    layout: HomeLayout,
+    guard: true,
+    element: lazy(() => import("src/views/pages/Education/Education")),
+  },
   {
     path: "/items",
     layout: HomeLayout,
@@ -352,6 +365,31 @@ export const routes = [
   
   element: lazy(() => import("src/views/pages/Landing")),
 },
+{
+  path: "/About_us",
+  layout: HomeLayout,
+  guard: true,
+  element: lazy(() => import("src/views/pages/About/AboutUs")),
+},
+{
+  path: "/Blogs",
+  layout: HomeLayout,
+  guard: true,
+  element: lazy(() => import("src/views/pages/About/Blog")),
+},
+{
+  path: "/Contact_Us",
+  layout: HomeLayout,
+  guard: true,
+  element: lazy(() => import("src/views/pages/About/ContactUs")),
+},
+{
+  path: "/FAQ",
+  layout: HomeLayout,
+  guard: true,
+  element: lazy(() => import("src/views/pages/About/FAQ")),
+},
+
 
   {
     path: "/404",

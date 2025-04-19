@@ -30,10 +30,10 @@ const dashboard = {
       breadcrumbs: false
     },
     {
-      id: 'My_Bundles',
+      id: 'My_Education',
       title: 'My Education',
       type: 'item',
-      url: '/profile/My_Bundles',
+      url: '/profile/My_Education',
       icon: icons.FaBox,
       breadcrumbs: false
     },
