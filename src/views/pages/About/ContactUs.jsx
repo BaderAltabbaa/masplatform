@@ -1,6 +1,6 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
-import "./contactUs.css";
+import "./ContactUs.css";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 
 
