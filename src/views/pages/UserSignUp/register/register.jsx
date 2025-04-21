@@ -519,7 +519,10 @@ export default function SignUp() {
                   sx={{
                   
                     
-                     backgroundColor: 'rgb(112, 2, 146)', 
+                     backgroundColor: '#700292', 
+                     "&:hover":{
+                       backgroundColor: 'rgb(80, 1, 104)'
+                     }
                    
                  }}
                   disabled={

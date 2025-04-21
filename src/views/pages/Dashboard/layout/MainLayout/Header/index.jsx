@@ -54,7 +54,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 src={
                   user.userData && user.userData?.profilePic
                     ? user.userData?.profilePic
-                    : `https://avatars.dicebear.com/api/miniavs/${user?.userData?._id}.svg`
+                    : `/assets/Images/profile.jpg`
                 }
                 style={{
                   width: "50px",

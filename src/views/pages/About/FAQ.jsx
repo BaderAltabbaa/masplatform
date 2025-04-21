@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 
 
+
 export default function FAQ() {
     
     const { ref: ref3,inView: inView3 } = useInView({

@@ -57,13 +57,13 @@
     
 }
 
-.soical-cont i{
+.soical-icon{
     margin-right:40px;
     font-size: 40px;
     color: #c300c6;
 }
 
-.soical-cont i:hover{
+.soical-icon:hover{
     color: #921f94;
 }
 
@@ -102,7 +102,7 @@
     background: linear-gradient(to top right,#75017b,#3a013d);
 }
 
-.contact-card-body i{
+.contact-icons{
    
     font-size: 50px;
     padding: 5px;

@@ -368,7 +368,6 @@ export const routes = [
 {
   path: "/About_us",
   layout: HomeLayout,
-  guard: true,
   element: lazy(() => import("src/views/pages/About/AboutUs")),
 },
 {
@@ -380,13 +379,11 @@ export const routes = [
 {
   path: "/Contact_Us",
   layout: HomeLayout,
-  guard: true,
   element: lazy(() => import("src/views/pages/About/ContactUs")),
 },
 {
   path: "/FAQ",
   layout: HomeLayout,
-  guard: true,
   element: lazy(() => import("src/views/pages/About/FAQ")),
 },
 

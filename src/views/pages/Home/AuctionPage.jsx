@@ -362,7 +362,7 @@ padding:"30px 200px"
             transform:"scale(1.1)",
             transition:"ease-out 500ms"
           }}}>
-<img src={category.image} width="70px" height="70px" style={{objectFit:"cover" ,borderRadius:"50%",marginBottom:"10px",boxShadow:"2px 5px 10px rgba(0, 0, 0, 0.6)"}} />
+<img src={category.image} style={{objectFit:"cover" ,borderRadius:"50%",marginBottom:"10px",boxShadow:"2px 5px 10px rgba(0, 0, 0, 0.6)" , width:"70px", height:"70px"}} />
   <Typography color="white" sx={{fontWeight:"bold"}}>{category.name}</Typography>
 </Box>
     ))}

@@ -1,4 +1,155 @@
-import React, { useEffect, useState, useCallback, useContext, useRef } from "react";
+import React, { useState, useEffect } from 'react';
+import Pusher from 'pusher-js';
+
+const PusherChatNoBackend = () => {
+    const [messages, setMessages] = useState([]);
+    const [message, setMessage] = useState('');
+    const [username] = useState(prompt("Enter your name") || `User${Math.floor(Math.random() * 1000)}`);
+
+    const [otherUser, setOtherUser] = useState('');
+    const [channel, setChannel] = useState(null);
+
+    useEffect(() => {
+        const pusher = new Pusher('YOUR_APP_KEY', {  // Replace with your key
+          cluster: 'YOUR_CLUSTER',                  // Replace with your cluster
+          encrypted: true
+        });
+      
+        // Both users will join the same public channel
+        const channelName = 'public-chat-channel';
+        const pusherChannel = pusher.subscribe(channelName);
+        setChannel(pusherChannel);
+      
+        // Listen for new messages
+        pusherChannel.bind('client-message', (data) => {
+          if (data.sender !== username) {  // Don't show our own messages
+            setMessages(prev => [...prev, data]);
+          }
+        });
+      
+        // Listen for user connections
+        pusherChannel.bind('client-user-connected', (data) => {
+          if (data.username !== username) {
+            setOtherUser(data.username);
+            alert(`${data.username} has joined the chat!`);
+          }
+        });
+      
+        // Notify others when we connect
+        if (pusherChannel) {
+          pusherChannel.trigger('client-user-connected', {
+            username: username
+          });
+        }
+      
+        return () => {
+          pusher.unsubscribe(channelName);
+          pusher.disconnect();
+        };
+      }, [username]);  // ← This was missing - now properly added
+
+
+      const sendMessage = (e) => {
+        e.preventDefault();
+        if (!message.trim() || !channel) return;
+    
+        // Add message to our own screen immediately
+        setMessages(prev => [...prev, {
+          sender: username,
+          message: message,
+          timestamp: new Date().toISOString()
+        }]);
+    
+        // Send to other user via Pusher
+        channel.trigger('client-message', {
+          sender: username,
+          message: message,
+          timestamp: new Date().toISOString()
+        });
+    
+        setMessage('');
+      };
+
+      return (
+        <div style={{
+          maxWidth: '500px',
+          margin: '20px auto',
+          padding: '20px',
+          border: '1px solid #ddd',
+          borderRadius: '8px'
+        }}>
+          <h2>Simple Chat ({username})</h2>
+          {otherUser && <p>Connected with: {otherUser}</p>}
+          
+          <div style={{
+            height: '300px',
+            border: '1px solid #eee',
+            overflowY: 'scroll',
+            marginBottom: '10px',
+            padding: '10px'
+          }}>
+            {messages.map((msg, i) => (
+              <div key={i} style={{
+                marginBottom: '10px',
+                textAlign: msg.sender === username ? 'right' : 'left'
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  padding: '8px 12px',
+                  borderRadius: '12px',
+                  background: msg.sender === username ? '#dcf8c6' : '#f1f0f0'
+                }}>
+                  <strong>{msg.sender}: </strong>
+                  {msg.message}
+                </div>
+                <div style={{
+                  fontSize: '0.7em',
+                  color: '#666',
+                  textAlign: msg.sender === username ? 'right' : 'left'
+                }}>
+                  {new Date(msg.timestamp).toLocaleTimeString()}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <form onSubmit={sendMessage} style={{ display: 'flex' }}>
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type a message..."
+              style={{ flex: 1, padding: '8px' }}
+            />
+            <button 
+              type="submit"
+              style={{ 
+                padding: '8px 15px',
+                marginLeft: '10px',
+                background: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px'
+              }}
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      );
+    };
+    export default PusherChatNoBackend;
+    
+
+    
+
+
+
+
+
+
+
+{/*import React, { useEffect, useState, useCallback, useContext, useRef } from "react";
 import {
     Box,
     Card,
@@ -142,6 +293,7 @@ const useStyles = makeStyles((theme) => ({
 const socket = io(baseURL, {
     auth: {
         token: sessionStorage.getItem("token")
+        
     },
 });
 
@@ -314,7 +466,7 @@ const ChatBox = function ({chat, socket, visible, isOnline}) {
                 marginTop: '80px',
             }}>
 
-            {/* Start User`s avatar */}
+            {/* Start User`s avatar *}
             <Box display='flex' alignItems='center'>
                 <Avatar alt={contact?.userName} src={photo} className={classes.avatar}/>
                 <Box m={1}>
@@ -324,10 +476,10 @@ const ChatBox = function ({chat, socket, visible, isOnline}) {
                     </Typography>
                 </Box>
             </Box>
-            {/* End User`s avatar */}
+            {/* End User`s avatar *}
 
 
-            {/* Start Masseges Box  */}
+            {/* Start Masseges Box  *}
             <Virtuoso
                 style={{}}
                 ref={virtuosoRef}
@@ -382,11 +534,11 @@ const ChatBox = function ({chat, socket, visible, isOnline}) {
                 }}
                 // End msg
             />
-            {/* End Masseges Box  */}
+            {/* End Masseges Box  *}
 
 
             <Box display={images.length > 0 ? 'block' : 'flex'} className={classes.msg}>
-                {/* Start Enter Image */}
+                {/* Start Enter Image *}
                 <ImageUploading
                     multiple
                     value={images}
@@ -458,7 +610,7 @@ const ChatBox = function ({chat, socket, visible, isOnline}) {
                 </ImageUploading>
                 {/*End Enter Image */}
 
-                {/* Start input And Emoji */}
+                {/* Start input And Emoji *}
                 <InputEmoji
                     value={msg}
                     onChange={setMsg}
@@ -467,7 +619,7 @@ const ChatBox = function ({chat, socket, visible, isOnline}) {
                     placeholder="Type a message"
                     className={classes.msgInput}
                 />
-                {/*End input And Emoji */}
+                {/*End input And Emoji *}
 
             </Box>
         </Box>
@@ -501,7 +653,7 @@ const Mobile = useMediaQuery(useTheme().breakpoints.down("sm"));
         },
         params: {
             page: 1,
-            limit: 10
+            limit: 20
         },
     }).then(res => {
         setChatList(res.data.result);
@@ -541,7 +693,7 @@ const Mobile = useMediaQuery(useTheme().breakpoints.down("sm"));
         className={classes.container}
         >
             <RemoveScrollBar/>
-            {/* Start left Section */}
+            {/* Start left Section *}
             
     {Mobile  && (
         <IconButton
@@ -588,7 +740,7 @@ const Mobile = useMediaQuery(useTheme().breakpoints.down("sm"));
                     </ListItem>
                 </List>
                 <Divider/>
-                {/* Start Usres */}
+                {/* Start Usres *}
                 <List dense={true}>
                     {!chatList ? <DataLoading/> :
                         chatList.length > 0 && chatList.map((chat) => {
@@ -618,10 +770,10 @@ const Mobile = useMediaQuery(useTheme().breakpoints.down("sm"));
                         })
                     }
                 </List>
-                {/* End Usres */}
+                {/* End Usres *}
 
             </Drawer>
-            {/* End left Section */}
+            {/* End left Section *}
 
             {chatId == 't' ?
                 <Box className={classes.main}
@@ -649,3 +801,4 @@ const Mobile = useMediaQuery(useTheme().breakpoints.down("sm"));
        
     );
 }
+} */}

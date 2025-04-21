@@ -16,6 +16,8 @@ import NoDataFound from "src/component/NoDataFound";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import CardMarketplace from "../../../component/ui/Card/CardMarketplace";
 import { useTranslation } from 'react-i18next';
+import { useInView } from 'react-intersection-observer';
+import "src/views/pages/About/AboutUs.css"
 
 
 
@@ -62,6 +64,16 @@ const AllItemsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
       const {t} = useTranslation();
+
+       const { ref: ref2,inView: inView2 } = useInView({
+                  threshold: 0.2, 
+                  triggerOnce: true,
+                });
+              
+                const { ref: ref3,inView: inView3 } = useInView({
+                  threshold: 0.2, 
+                  triggerOnce: true, 
+                }); 
   
 
   const listAllNft1Handler = async () => {
@@ -107,6 +119,27 @@ const AllItemsPage = () => {
         <section>
           {auth.userLoggedIn && auth.userData?._id && (
             <>
+
+
+<div className="who-we-are-sec">
+      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <span className="who-title">MAS MarketPlace</span>
+      <span className="who-text1">Buy And Sell Whatever Comes To Your Mind</span>
+      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
+     <a href=""> <button className="learn-btn">Learn More</button></a> 
+        </div>
+        
+        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
+          <img style={{
+            display:"inline",
+            width:"100%",
+            borderRadius:"20px"
+          }} 
+          src="/assets/Images/item.webp" alt="" />
+        </div>
+      </div>
+
+
               <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
                                <ButtonwithAnimation>{t("ALL ITEMS")}</ButtonwithAnimation>
                              

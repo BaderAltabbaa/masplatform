@@ -19,6 +19,8 @@ import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import Cardbundle from "../../../component/ui/Card/Cardbundle";
 import { useTranslation } from 'react-i18next';
 import 'src/layouts/TopBar/TopBar.css'
+import { useInView } from 'react-intersection-observer';
+import "src/views/pages/About/AboutUs.css"
 
 
 const useStyles = makeStyles(() => ({
@@ -72,6 +74,16 @@ const AllBundlesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
     const {t} = useTranslation();
+
+    const { ref: ref2,inView: inView2 } = useInView({
+            threshold: 0.2, 
+            triggerOnce: true,
+          });
+        
+          const { ref: ref3,inView: inView3 } = useInView({
+            threshold: 0.2, 
+            triggerOnce: true, 
+          }); 
   
 
   const listAllNftHandler = async () => {
@@ -116,6 +128,28 @@ const AllBundlesPage = () => {
       ) : (
         // <section>
         <Container maxWidth='xl'>
+
+
+<div className="who-we-are-sec">
+      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <span className="who-title">MAS Bundles</span>
+      <span className="who-text1">Discover Mas Bundles And Choose The Best for You</span>
+      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
+     <a href=""> <button className="learn-btn">Learn More</button></a> 
+        </div>
+        
+        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
+          <img style={{
+            display:"inline",
+            width:"100%",
+            borderRadius:"20px"
+          }} 
+          src="/assets/Images/bundles.jpg" alt="" />
+        </div>
+      </div>
+
+
+
           <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
                   <ButtonwithAnimation>{t("ALL BUNDLES")}</ButtonwithAnimation>
                 

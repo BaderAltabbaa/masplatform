@@ -38,3 +38,7 @@
     .carousel-status{
         display:none
     }
+
+    body{
+        overflow-x: hidden;
+    }

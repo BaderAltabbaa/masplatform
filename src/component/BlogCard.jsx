@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
+import { FaThumbsUp } from "react-icons/fa";
 
 
   
@@ -25,11 +26,11 @@ const { ref, inView } = useInView({
      <div className="lower-blog">
      <span className='blog-card-date'>{date}</span>
      <div className="blog-icons">
-     <i
-              className={`fas fa-thumbs-up ${activeIcon === 'like' ? 'active' : ''}`}
+     <FaThumbsUp
+              className={`${activeIcon === 'like' ? 'active' : ''}`}
               onClick={() => onIconClick(id, 'like')}
-              style={{ color: activeIcon === 'like' ? '#9c9797' : '#c053ff', cursor: 'pointer' }}
-            ></i>
+              style={{ color: activeIcon === 'like' ? '#9c9797' : '#c053ff', cursor: 'pointer' , fontSize:"25px"}}
+            ></FaThumbsUp>
      
     
 

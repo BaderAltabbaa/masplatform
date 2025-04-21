@@ -945,7 +945,17 @@ export default function Header() {
 "& .MuiDialog-paper":{
    margin: "0px"
 }
-}}>
+}}
+PaperProps={{
+  sx: {
+    backgroundImage: 'url(/assets/Images/doodle2.png)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    
+  }
+}}
+>
   
         <DialogContent>
 
@@ -965,14 +975,17 @@ export default function Header() {
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button 
               onClick={handleCloseSupport} 
-              sx={{ mr: 2 }}
+              sx={{ mr: 2 ,
+                color:"#43005e"
+               }}
             >
               Cancel
             </Button>
             <Button 
               variant="contained"
               color="primary"
-              sx={{background:"#43005e" ,"&:hover":{
+              sx={{background:"#43005e" ,
+                "&:hover":{
                 background:"rgb(50, 0, 70)"
               }}}
             >

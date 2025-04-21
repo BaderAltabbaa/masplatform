@@ -624,9 +624,23 @@ function Cardbundle({
         aria-labelledby="max-width-dialog-title"
         disableBackdropClick={isLoading}
         disableEscapeKeyDown={isLoading}
+        PaperProps={{
+          sx: {
+            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            
+          }
+        }}
       >
         <DialogContent>
-          <Box className={classes.PhotoBox}>
+          <Box sx={{
+            background:"rgba(255, 255, 255, 0.68)",
+            padding:"20px",
+            borderRadius:"20px"
+          }}>
+          <Box>
             {isVideo ? (
               <div>
                 <ReactPlayer
@@ -757,6 +771,7 @@ function Cardbundle({
                   )}
               </Box>
             )}
+            </Box>
         </DialogContent>
       </Dialog>
 

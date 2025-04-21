@@ -1,5 +1,100 @@
+import "./AboutUs.css";
+import { ButtonwithAnimation } from "../../../component/ui/Button/button";
+import { useInView } from 'react-intersection-observer';
+import { useTranslation } from 'react-i18next';
+import DoCard from "./cards/DoCard";
+import VisionCard from "./cards/VisionCard";
+import ChooseCard from "./cards/ChooseCard";
+import ContactUs from "./ContactUs";
 
 
 export default function AboutUs() {
+
+    const { t } = useTranslation(); 
+
+    const { ref: ref1,inView: inView1 } = useInView({
+        threshold: 0.2, 
+        triggerOnce: true, 
+      });
+
+    const { ref: ref2,inView: inView2 } = useInView({
+        threshold: 0.2, 
+        triggerOnce: true,
+      });
     
+      const { ref: ref3,inView: inView3 } = useInView({
+        threshold: 0.2, 
+        triggerOnce: true, 
+      }); 
+
+
+      const weDoContent = [
+        { title: "Lorem ipsum dolor sit amet", desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.", src: '/assets/Images/mobile_app.webp' },
+        { title: "Lorem ipsum dolor sit amet", desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.", src: '/assets/Images/bt-altyapi-donusumu-basari-metodolojisi-601x520-removebg-preview.webp' },
+        { title: "Lorem ipsum dolor sit amet", desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.", src: '/assets/Images/—Pngtree—business professional analyzing stock market_20116370.png' },
+      ];
+    
+return(
+    <>
+    <div style={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
+    <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,padding:"20px"}}>
+    <ButtonwithAnimation>About Us</ButtonwithAnimation>
+    <span className='sub-header-text-2'>Our mission is to make your business better through technology</span>
+
+    </div>
+
+    <div className="who-we-are-sec">
+      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <span className="who-title">WHO WE ARE</span>
+      <span className="who-text1">Delivering IT solutions that enable you to work smarter.</span>
+      <span className="who-text2">IT can streamline processes, enhance efficiency, and facilitate communication, making tasks and operations easier and more effective.</span>
+     <a href=""> <button className="learn-btn">Learn More</button></a> 
+        </div>
+        
+        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
+          <img className='small-screen' src="/assets/Images/about2.jpg" alt="" />
+          <img className='big-screen' src="/assets/Images/about.jpg" alt="" />
+        </div>
+      </div>
+
+      <div className="we-do-sec">
+<div className="we-do-content">
+<span className='we-do-title'>What We Do</span>
+<span className='we-do-text'>Let us change the way you think about technology.</span>
+<div className="cards" ref={ref1}>
+<div  className={`card-container ${inView1 ? 'animate' : ''}`}>
+{weDoContent.map((props) => (
+          <DoCard title={props.title} desc={props.desc} src={props.src}/>
+        ) )}
+</div>
+    </div>
+    </div>
+        </div>
+
+
+        <div className="how-it-work-sec">
+      <span className='how-title'>Our Vision</span>
+      <span className='how-decs'>Discover our streamlined approach to boost your brand’s success through innovative strategies and advanced technologies</span>
+      <div className="how-card">
+        <VisionCard></VisionCard>
+      </div>
+     </div>
+
+     <div className="choose-us-sec">
+        <span className='choose-title'>Why Choose Us</span>
+        <span className='choose-desc'>Let us change the way you think about technology.</span>
+      <div className="choose-card">
+        <ChooseCard></ChooseCard>
+      </div>
+     </div>
+
+
+<ContactUs/>
+
+
+    </div>
+    </>
+)
+
+
 }

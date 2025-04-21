@@ -17,6 +17,8 @@ import NoDataFound from "src/component/NoDataFound";  // Custom component
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import CardCreators from "../../../component/ui/Card/CardCreators";
 import { useTranslation } from 'react-i18next';
+import { useInView } from 'react-intersection-observer';
+import "src/views/pages/About/AboutUs.css"
 
 
 const useStyles = makeStyles(() => ({
@@ -66,6 +68,16 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
   const [noOfPages, setNoOfPages] = useState(1);
   const [userListToDisplay, setUserListToDisplay] = useState([]);
       const {t} = useTranslation();
+
+      const { ref: ref2,inView: inView2 } = useInView({
+        threshold: 0.2, 
+        triggerOnce: true,
+      });
+    
+      const { ref: ref3,inView: inView3 } = useInView({
+        threshold: 0.2, 
+        triggerOnce: true, 
+      }); 
   
 
   const getuser = async (cancelTokenSource) => {
@@ -132,10 +144,33 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
         <DataLoading />
       ) : (
         <Container maxWidth="xl">
-            <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
+            
+
+
+                      <div className="who-we-are-sec">
+      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <span className="who-title">MAS Creators</span>
+      <span className="who-text1">Here Are The Most Passionate and Ambitious Creators</span>
+      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
+     <a href=""> <button className="learn-btn">Learn More</button></a> 
+        </div>
+        
+        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
+          <img style={{
+            display:"inline",
+            width:"100%",
+            borderRadius:"20px"
+          }} 
+          src="/assets/Images/creator2.jpg" alt="" />
+        </div>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
                         <ButtonwithAnimation  > {t("Creators")}</ButtonwithAnimation>
                       
                       </div>
+
+                      
           {userListToDisplay.length === 0 ? (
             <Box align="center" mt={4} mb={5}>
               <NoDataFound />
