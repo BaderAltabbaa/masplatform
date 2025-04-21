@@ -25,7 +25,13 @@ const Services = () => {
  }}>
             <Box padding="20px">
           <Box textAlign="center">
-        <Typography className='headTitle' m={2}>MAS PLATFORM Services </Typography>
+        <Typography  sx={{
+         fontSize:"25px",
+         color:"white",
+         fontWeight:"bold",
+         textShadow:"0px 0px 10px white"
+        }}
+         m={2}>MAS PLATFORM Services </Typography>
         </Box>
 
         <Box textAlign="left" mb={2} ml={1}>
