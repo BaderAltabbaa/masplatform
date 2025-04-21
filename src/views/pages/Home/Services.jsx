@@ -1,5 +1,6 @@
 import React from 'react'
 import { Typography ,Box ,Container} from '@mui/material'
+import "src/views/pages/Home/HowWorks/HowWorks.css"
 
 const Services = () => {
   return (
