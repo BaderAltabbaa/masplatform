@@ -162,13 +162,27 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
       dir='ltr'
+      PaperProps={{
+        sx: {
+          backgroundImage: 'url(/assets/Images/doodle2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          
+        }
+      }}
     >
       <DialogTitle
         style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
       >
         {isEdit ? t("Edit Bundle") : t("Create A Bundle")}
       </DialogTitle>
-      <DialogContent style={{ padding:"0 40px" }}>
+      <DialogContent style={{ padding:"0 20px" }}>
+         <Box sx={{
+                    background:"rgba(255, 255, 255, 0.68)",
+                    padding:"5px 20px",
+                    borderRadius:"20px"
+                  }}>
         <Grid container spacing={5}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -177,6 +191,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           </Grid>
           {FormButtons()}
         </Grid>
+        </Box>
       </DialogContent>
 
       {/* Category Selection Dialog */}

@@ -322,6 +322,15 @@ export default function Login() {
           aria-labelledby="max-width-dialog-title"
           disableBackdropClick={process}
           disableEscapeKeyDown={process}
+          PaperProps={{
+            sx: {
+              backgroundImage: 'url(/assets/Images/doodle2.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              
+            }
+          }}
         >
           <DialogTitle className={classes.dailogTitle}
                   style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem" }}
@@ -329,6 +338,11 @@ export default function Login() {
             {t("Make a new auction")}
           </DialogTitle>
           <DialogContent>
+            <Box sx={{
+                        background:"rgba(255, 255, 255, 0.68)",
+                        padding:"20px",
+                        borderRadius:"20px"
+                      }}>
             {auth.isErrorInWalletConnect && (
               <Box mb={3}>
                 <FormHelperText error>{auth.connectWalletError}</FormHelperText>
@@ -481,6 +495,7 @@ export default function Login() {
                 <FormHelperText error>{auth.connectWalletError}</FormHelperText>
               </Box>
             )}
+            </Box>
           </DialogContent>
           <DialogActions>
             <Box>

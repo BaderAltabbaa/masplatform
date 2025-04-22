@@ -362,6 +362,23 @@
     font-size: 15px;
 }
 
+.bunner-animaton{
+    animation: popOut 1s ease-out forwards;
+    opacity: 0; 
+    transform: scale(0.7);
+}
+
+@keyframes popOut {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
   @media (min-width: 768px) {
 
     .sub-header-text-2{font-size: 30px;}
@@ -370,7 +387,7 @@
     .who-we-are-sec{
         display: flex;
         flex-direction: row;
-        padding:50px 90px;
+        padding:20px 90px;
         align-items: center;
         
     }

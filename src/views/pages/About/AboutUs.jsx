@@ -37,9 +37,28 @@ export default function AboutUs() {
 return(
     <>
     <div style={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
-    <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,padding:"20px"}}>
-    <ButtonwithAnimation>About Us</ButtonwithAnimation>
-    <span className='sub-header-text-2'>Our mission is to make your business better through technology</span>
+    <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,padding:"40px 20px"}}   className="bunner-animaton">
+   
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      <img 
+        src="/assets/Images/wave2.png" 
+        alt="Description" 
+        style={{ display: 'block' }}
+      />
+      <div style={{
+         position: 'absolute',
+         top: '50%',
+         left: '50%',
+         transform: 'translate(-50%, -50%)',
+         color: 'white',
+         fontSize: '3rem',
+          fontWeight:"bold",
+         textShadow:"0px 0px 10px white",
+      }}
+    >
+       About Us
+      </div>
+    </div>
 
     </div>
 
@@ -52,8 +71,8 @@ return(
         </div>
         
         <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
-          <img className='small-screen' src="/assets/Images/about2.jpg" alt="" />
-          <img className='big-screen' src="/assets/Images/about.jpg" alt="" />
+          <img className='small-screen' src="/assets/Images/28.jpg" alt="" />
+          <img className='big-screen' src="/assets/Images/28.jpg" alt="" />
         </div>
       </div>
 

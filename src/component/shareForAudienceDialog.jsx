@@ -119,10 +119,12 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
       PaperProps={{
-        style: {
-          height: "95vh",
-          maxHeight: "95vh",
-        },
+        sx: {
+          backgroundImage: 'url(/assets/Images/doodle2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',  
+        }
       }}
     >
       <DialogTitle
@@ -131,6 +133,11 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
         {isEdit ? t("Edit Audience") : t("Share For Audience")}
       </DialogTitle>
       <DialogContent style={{ padding: 40, paddingTop: 10 }}>
+        <Box sx={{
+                    background:"rgba(255, 255, 255, 0.68)",
+                    padding:"20px",
+                    borderRadius:"20px"
+                  }}>
         <Grid container spacing={5}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -139,6 +146,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           </Grid>
           {FormButtons()}
         </Grid>
+        </Box>
       </DialogContent>
     </Dialog>
   );

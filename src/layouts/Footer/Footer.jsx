@@ -1,7 +1,7 @@
 import React ,{Suspense,useState} from "react";
 import useSWR from 'swr';
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import { Dialog, DialogTitle, DialogContent, DialogContentText ,TextField,Button,Container,Typography,Snackbar } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogContentText ,TextField,Button,Container,Typography,Snackbar, Box } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { CgFacebook } from "react-icons/cg";
 import { FaTelegram, FaTwitterSquare, FaDiscord, FaFacebook,FaInstagram,FaWhatsapp } from "react-icons/fa";
@@ -233,12 +233,18 @@ return (
           <h1>{selectedItem?.title}</h1>
           <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleClose}><AiOutlineClose/></div>
           </DialogTitle>
-         <DialogContent sx={{background:"white",borderRadius:"20px"}}>
+         <DialogContent>
+          <Box sx={{
+            background:"rgba(255, 255, 255, 0.68)",
+            padding:"20px",
+            borderRadius:"20px"
+          }}>
     {selectedItem?.description ? ( // Check if description exists
       <DialogContentText>{selectedItem.description}</DialogContentText>
     ) : (
      <div style={{padding:"20px 60px"}}> <NoDataFound /> </div>// Render NoDataFound if no description
     )}
+    </Box>
   </DialogContent>
       </Dialog>
 
@@ -366,7 +372,13 @@ return (
           <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleCloseForm}><AiOutlineClose/></div>
           </DialogTitle>
          <DialogContent>
+          <Box sx={{
+                      background:"rgba(255, 255, 255, 0.68)",
+                      padding:"20px",
+                      borderRadius:"20px"
+                    }}>
           <ContactForm/>
+          </Box>
   </DialogContent>
       </Dialog>
 

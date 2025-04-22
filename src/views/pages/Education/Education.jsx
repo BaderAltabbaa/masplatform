@@ -129,6 +129,35 @@ const Education = () => {
         // <section>
         <Container maxWidth='xl'>
 
+<div style={{
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center",
+            padding:"20px"
+          }}
+          className="bunner-animaton">
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+      <img 
+        src="/assets/Images/wave2.png" 
+        alt="Description" 
+        style={{ display: 'block' }}
+      />
+      <div style={{
+         position: 'absolute',
+         top: '50%',
+         left: '50%',
+         transform: 'translate(-50%, -50%)',
+         color: 'white',
+         fontSize: '3rem',
+          fontWeight:"bold",
+         textShadow:"0px 0px 10px white"
+       
+      }}>
+       Mas Courses
+      </div>
+    </div>
+    </div>
+
 <div className="who-we-are-sec">
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
       <span className="who-title">MAS Education</span>

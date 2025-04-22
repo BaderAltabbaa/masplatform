@@ -13,6 +13,18 @@ import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import MainCard from "../../ui-component/cards/MainCard";
 import { useTranslation } from 'react-i18next';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Avatar,
+  IconButton
+} from '@mui/material';
+import { AccountCircle, Chat, PersonAdd } from '@mui/icons-material';
 
 
 
@@ -92,20 +104,44 @@ export default function Subscribers({ type }) {
       <Box className={classes.LoginBox} mb={5}>
        
         <Box>
-          <Grid container className={classes.bunbox} justifyContent="center">
-            {userList.map((data, i) => {
-              return (
-                <Grid item xs={12} sm={6} md={5} lg={3} key={i} style={{ display: "flex", justifyContent: "center" }}>
-                    <CardCreators 
-                    chat
-                    Subscribe
-
-                    data={data}/>
-                   
-                </Grid>
-              );
-            })}
-          </Grid>
+        <TableContainer component={Paper} >
+  <Table  aria-label="subscribers table">
+    <TableHead sx={{background:"linear-gradient(to top right,#900098,#4d0051)"}}>
+      <TableRow>
+        <TableCell sx={{color:"white"}}>{t("Icon")}</TableCell>
+        <TableCell sx={{color:"white"}} >{t("Username")}</TableCell>
+        <TableCell sx={{color:"white"}} align="center">{t("Actions")}</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {userList.map((subscriber, index) => (
+        <TableRow key={index}>
+          <TableCell component="th" scope="row">
+            <Box display="flex" alignItems="center">
+              <Avatar
+                src={subscriber.profilePic}
+                sx={{ width: 40, height: 40, mr: 2 }}
+              >
+                {!subscriber.profileImage && <AccountCircle />}
+              </Avatar>
+             
+            </Box>
+          </TableCell>
+          <TableCell > {subscriber.name}</TableCell>
+          
+          <TableCell align="center">
+            <IconButton aria-label="chat" color="primary">
+              <Chat  sx={{
+                color:"rgb(60, 0, 60)"
+              }}/>
+            </IconButton>
+           
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
           {pages > 1 && (
             <Box
               mb={2}
@@ -127,6 +163,9 @@ export default function Subscribers({ type }) {
   );
 
   async function myFollowersHandler() {
+    console.log("Making API request to:", Apiconfigs.profileFollowersList); // Log the endpoint
+    console.log("Request params:", { limit: 4, page: page }); // Log request parameters
+    
     await axios({
       method: "GET",
       url: Apiconfigs.profileFollowersList,
@@ -139,12 +178,23 @@ export default function Subscribers({ type }) {
       },
     })
       .then(async (res) => {
+        console.log("API Response:", res); // Log full response
+        console.log("Response data:", res.data); // Log response data
+        
         if (res.data.statusCode === 200) {
+          console.log("Successful response - followers data:", res.data.result.docs); // Log the followers data
           updateState({ userList: res.data.result.docs });
+        } else {
+          console.log("Unexpected status code:", res.data.statusCode); // Log unexpected status
         }
       })
       .catch((err) => {
-        console.log(err.message);
+        console.error("API Error:", err); // Log full error
+        console.log("Error message:", err.message); // Log error message
+        if (err.response) {
+          console.log("Error response data:", err.response.data); // Log response data if available
+          console.log("Error status:", err.response.status); // Log status code
+        }
       });
   }
 }

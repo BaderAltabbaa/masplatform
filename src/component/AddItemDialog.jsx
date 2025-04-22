@@ -89,13 +89,27 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
       open={show}
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
+      PaperProps={{
+        sx: {
+          backgroundImage: 'url(/assets/Images/doodle2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          
+        }
+      }}
     >
       <DialogTitle
         style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem"}}
       >
         {isEdit ? t("Edit item") : t("Create an item")}
       </DialogTitle>
-      <DialogContent style={{ padding: 40 }}>
+      <DialogContent style={{ padding: 10 }}>
+        <Box sx={{
+                    background:"rgba(255, 255, 255, 0.68)",
+                    padding:"20px",
+                    borderRadius:"20px"
+                  }}>
   <Grid container spacing={5}>
     {InputList()}
     <Grid item xs={12} sm={5} style={{ textAlign: 'center' }}>
@@ -106,6 +120,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
     </Grid>
     {FormButtons()}
   </Grid>
+  </Box>
 </DialogContent>
     </Dialog>
   );

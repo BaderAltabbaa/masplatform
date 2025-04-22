@@ -900,13 +900,20 @@ useEffect(() => {
   disableEscapeKeyDown={isLoading}
   PaperProps={{
     sx: {
-      backgroundColor: "rgb(189, 189, 189)",
-      borderRadius: "10px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-    },
+      backgroundImage: 'url(/assets/Images/doodle2.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      
+    }
   }}
 >
   <DialogContent sx={{ overflow:{xs: "auto", sm: "hidden"} , padding: { xs: 2, sm: 3 } }} dir="ltr">
+    <Box sx={{
+            background:"rgba(255, 255, 255, 0.68)",
+            padding:"20px",
+            borderRadius:"20px"
+          }}>
     {/* Title Box */}
     <Box display="flex" justifyContent="center">
     <Box
@@ -920,7 +927,8 @@ useEffect(() => {
         width: "fit-content",
         textAlign: "center",
         display:"flex",
-        justifyContent:"center"
+        justifyContent:"center",
+        
       }}
     >
       <Typography sx={{ fontSize: { xs: "20px", sm: "25px" }, fontWeight: "bold" }}>
@@ -986,7 +994,7 @@ useEffect(() => {
             sx={{
               color: "#000",
               fontWeight: "bold",
-              backgroundColor: "rgb(189, 189, 189)",
+              backgroundColor: "rgb(240, 240, 240)",
               borderRadius: "20px",
               padding: "5px",
             }}
@@ -1103,6 +1111,7 @@ useEffect(() => {
        </Button>
      </Box>
    )}
+   </Box>
   </DialogContent>
       {/* New Image Dialog */}
       <Dialog

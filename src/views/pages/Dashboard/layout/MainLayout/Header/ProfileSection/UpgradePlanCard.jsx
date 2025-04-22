@@ -618,9 +618,22 @@ const UpgradePlanCard = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         style={isMobile ? { height: "70%" } : { height: "100%" }}
-
+        PaperProps={{
+          sx: {
+            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            
+          }
+        }}
       >
         <DialogContent>
+           <Box sx={{
+                      background:"rgba(255, 255, 255, 0.68)",
+                      padding:"20px",
+                      borderRadius:"20px"
+                    }}>
           <DialogContentText id="alert-dialog-description">
             <Typography
               variant="h5"
@@ -700,6 +713,7 @@ const UpgradePlanCard = () => {
               </Button>
             </Box>
           </DialogContentText>
+          </Box>
         </DialogContent>
       </Dialog>
     </>

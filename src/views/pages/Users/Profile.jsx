@@ -21,11 +21,13 @@ import { FiCopy } from "react-icons/fi";
 import { useTranslation } from 'react-i18next';
 
 
+
+
 const useStyles = makeStyles((theme) => ({
   profilebg: {
     boxShadow: " 0 1.5px 3px 0 rgba(0, 0, 0, 0.16)",
     backgroundImage: " linear-gradient(to bottom,rgb(79, 8, 105),rgb(60, 0, 60))",
-    height: "300px",
+    height: "250px",
     width: "100%",
   },
   bgimg: {
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit:"cover"
   },
   profileText: {
+    padding:"0 20px ",
     "& h3": {
       display: "flex",
       alignItems: "center",
@@ -92,10 +95,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    width: " 200px !important",
-    height: " 200px  !important",
+    width: " 220px !important",
+    height: " 220px  !important",
     cursor: "pointer",
-    marginTop: '-150px'
+    marginTop: '-120px',
+    border:"3px solid white"
   },
   textname: {
     "@media(max-width:1025px)": {
@@ -248,14 +252,22 @@ export default function Profile({ data, isabout }) {
           />
         )}
       </Box>
-      <Container
-        maxWidth="lg"
-        style={{ display: "flex", justifyContent: "center" }}
+
+
+      
+      <Box
+                 
+        sx={{ display: "flex", justifyContent:"flex-start",
+      padding:'0 20px' ,
+      flexDirection:{
+        xs: "column",
+        sm:"row",
+        md:"row"
+      }
+    }}
       >
-        <Box className={classes.profileText}>
-          <Grid container spacing={3}>
-            <Grid item xl={12} md={12} align="center">
-              <Avatar
+      <Box>
+<Avatar
                 onClick={() =>
                   history.push({
                     pathname: "/user-profile",
@@ -267,9 +279,23 @@ export default function Profile({ data, isabout }) {
                 }
                 className={classes.avatar}
               />
-              {/* Start Name */}
-              <Typography variant="h3" >
-                {data?.planType === "Gold" && (
+
+</Box>  
+<Box>
+  <div>
+  <div style={{
+    display:"flex",
+    alignItems:"center",
+  }}>
+<span style={{ color: "black", padding: "3px 10px", margin: "0px" ,fontSize:"35px" }}>
+                  {data?.name
+                    ? data.name
+                    : data?.ethAccount?.address
+                      ? sortAddress(data?.ethAccount.address)
+                      : sortAddress(data?.walletAddress)}
+                </span>
+                <Typography variant="h3" >
+                {data?.planType === "Diamond" && (
                   <img
                     src="/images/gold-check.svg"
                     style={{ width: "30px", marginLeft: "5px" }}
@@ -295,15 +321,23 @@ export default function Profile({ data, isabout }) {
                 )}
                 &nbsp;
 
-                <span style={{ color: "#59006c", borderBottom: "1px solid #59006c", padding: "3px 10px", margin: "10px" }}>
-                  {data?.name
-                    ? data.name
-                    : data?.ethAccount?.address
-                      ? sortAddress(data?.ethAccount.address)
-                      : sortAddress(data?.walletAddress)}
-                </span>
+               
               </Typography>
-              {/* End Name */}
+             
+              </div>
+              <div>
+              <Typography
+                variant="body2"
+              
+              >
+                {data ? data.bio : ""}
+              </Typography>
+              </div>
+              </div>
+             
+</Box>
+</Box>
+        <Box className={classes.profileText}>
 
               {/* Start Wallet Adreess */}
               <Box mt={2} mb={1}>
@@ -320,7 +354,7 @@ export default function Profile({ data, isabout }) {
                   </Typography>
                 )}
               </Box>
-              {/* End Wallet Adreess */}
+            
 
               {/* Start Referral Code */}
               <Box mt={2} mb={1} className={classes.textname}>
@@ -336,11 +370,15 @@ export default function Profile({ data, isabout }) {
                 </Typography>
                 {/* )} */}
               </Box>
+              </Box>
               {/* End Referral Code */}
 
 
 
               {/* Start Buttons Chat Donate Subscribe */}
+              <Box sx={{
+                padding:"0 20px"
+              }}>
               {auth?.userData?._id !== data?._id && (
                 <Box mt={2} mb={2} style={{ width: "320px", display: "flex", justifyContent: "space-between" }}>
                   {data?.userType === "Creator" && userType === "User" && (
@@ -445,20 +483,14 @@ export default function Profile({ data, isabout }) {
                   {/* End Subscribe Button */}
                 </Box>
               )}
+              </Box>
               {/* End Buttons Chat Donate Subscribe */}
 
 
-              <Typography
-                variant="body2"
-                style={{ color: "#000", marginTop: "10px" }}
-                align="center"
-              >
-                {data ? data.bio : ""}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
+          
+           
+        
+      
 
       <DonationPopUp
         open={openDonation}

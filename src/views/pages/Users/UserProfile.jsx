@@ -17,15 +17,13 @@ import DataLoading from "src/component/DataLoading";
 import { ButtonwithAnimation } from '../../../component/ui/Button/button';
 import { useTranslation } from 'react-i18next';
 
-
-
 const useStyles = makeStyles(() => ({}));
 
 const fetcher = (url) => axios.get(url).then((res) => res.data.result);
 
 function UserProfile() {
   const classes = useStyles();
-      const {t} = useTranslation();
+  const {t} = useTranslation();
 
   const { username } = useParams();
   const { data: userData } = useSWR(Apiconfigs.getUser + username, fetcher, {
@@ -35,6 +33,10 @@ function UserProfile() {
 
   if (!userData) return <DataLoading />;
   const userDetails = userData[0];
+  
+  // Check if there are bundles to display
+  const hasBundles = userDetails?.bundleDetails?.length > 0;
+
   return (
     <Box>
       <Profile
@@ -43,9 +45,11 @@ function UserProfile() {
         userListToDisplay={userListToDisplay}
       />
       <Container maxWidth="xl">
-        <Box align="center" mt={3}>
-        <ButtonwithAnimation>{t("Bundles")}</ButtonwithAnimation>  
-        </Box>
+        {hasBundles && (
+          <Box align="center" mt={3}>
+            <ButtonwithAnimation>{t("Bundles")}</ButtonwithAnimation>  
+          </Box>
+        )}
         <Grid container style={{ margin: "30px auto" }} dir="ltr">
           {userDetails?.bundleDetails?.map((data, i) => {
             return (

@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 
 const useStyles = makeStyles((theme) => ({
-  root: { padding: "70px 0px",background:"linear-gradient(to right, #280026,rgb(142, 82, 146))"
+  root: {background:"linear-gradient(to right, #280026,#4a004f)"
    },
   bannerimg: {
     overflow: "hidden",
