@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
     },
   },
   LoginBox: {
-    paddingTop: "20px",
+  
     "& h6": {
       fontWeight: "bold",
       marginBottom: "10px",
@@ -102,7 +102,25 @@ export default function Subscribers({ type }) {
   <MainCard title={t("My Subscribers")} >
     </ MainCard>
       <Box className={classes.LoginBox} mb={5}>
-       
+
+        <Box display='flex' alignItems='center' justifyContent='flex-end'>
+
+       <Box sx={{
+        padding:"10px",
+        background:"linear-gradient(to top right,#900098,#4d0051)" ,
+        width:"fit-content",
+        margin:"10px",
+        borderRadius:"10px",
+        color:"white",
+        fontWeight:"bold",
+        fontSize:"1rem",
+       }}> 
+
+       <span>{userList.length} Subscribers</span>
+       </Box>
+
+       </Box>
+
         <Box>
         <TableContainer component={Paper} >
   <Table  aria-label="subscribers table">

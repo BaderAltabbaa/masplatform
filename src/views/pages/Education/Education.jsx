@@ -133,14 +133,14 @@ const Education = () => {
             display:"flex",
             justifyContent:"center",
             alignItems:"center",
-            padding:"20px"
+            padding:"10px"
           }}
           className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
         src="/assets/Images/wave2.png" 
         alt="Description" 
-        style={{ display: 'block' }}
+        style={{ display: 'block' ,transform:" scale(0.7)" }}
       />
       <div style={{
          position: 'absolute',
@@ -148,7 +148,7 @@ const Education = () => {
          left: '50%',
          transform: 'translate(-50%, -50%)',
          color: 'white',
-         fontSize: '3rem',
+         fontSize: '2.5rem',
           fontWeight:"bold",
          textShadow:"0px 0px 10px white"
        
@@ -160,10 +160,8 @@ const Education = () => {
 
 <div className="who-we-are-sec">
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-      <span className="who-title">MAS Education</span>
       <span className="who-text1">Choose The Courses That Match Your Mind</span>
       <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
-     <a href=""> <button className="learn-btn">Learn More</button></a> 
         </div>
         
         <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
@@ -177,10 +175,6 @@ const Education = () => {
       </div>
 
 
-          <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
-                  <ButtonwithAnimation>{t("All Courses")}</ButtonwithAnimation>
-                
-                </div>
              
 
           {auth.userLoggedIn && auth.userData?._id && (

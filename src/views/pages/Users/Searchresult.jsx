@@ -148,7 +148,8 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
             display:"flex",
             justifyContent:"center",
             alignItems:"center",
-            padding:"20px"
+            
+           
           }}
           className="bunner-animaton">
 
@@ -156,7 +157,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
       <img 
         src="/assets/Images/wave2.png" 
         alt="Description" 
-        style={{ display: 'block' }}
+        style={{ display: 'block', transform:" scale(0.7)" }}
       />
       <div style={{
          position: 'absolute',
@@ -164,7 +165,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
          left: '50%',
          transform: 'translate(-50%, -50%)',
          color: 'white',
-         fontSize: '3rem',
+         fontSize: '2.5rem',
           fontWeight:"bold",
          textShadow:"0px 0px 10px white"
        
@@ -177,10 +178,8 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
 
                       <div className="who-we-are-sec">
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-      <span className="who-title">MAS Creators</span>
       <span className="who-text1">Here Are The Most Passionate and Ambitious Creators</span>
       <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
-     <a href=""> <button className="learn-btn">Learn More</button></a> 
         </div>
         
         <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
@@ -193,11 +192,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
         </div>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center",marginBottom  : "20px"}}>
-                        <ButtonwithAnimation  > {t("Creators")}</ButtonwithAnimation>
-                      
-                      </div>
-
+     
                       
           {userListToDisplay.length === 0 ? (
             <Box align="center" mt={4} mb={5}>

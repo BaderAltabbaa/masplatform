@@ -671,7 +671,9 @@ export default function Header() {
               <li className='test'><Link to="/buymas">{t("Buy A Mas")}</Link></li>
               <li className='test'><Link to="/connectWallet">{t( "Connect Wallet")}</Link></li>
 
-              <li className='test'><Link to="/profile">{t("Create on MAS")}</Link></li>
+              { auth.userLoggedIn ? <></> :
+                
+                <li className='test'><Link to="/create-account">{t("Register")}</Link></li>}
 
               {
                 auth.userLoggedIn ? <></> :
@@ -816,9 +818,9 @@ export default function Header() {
                           variant="contained"
                           size="large"
                           // className={classes.createButton}
-                          onClick={() => navigate("/profile")}
+                          onClick={() => navigate("/create-account")}
                         >
-                          {t("Create on MAS")}
+                          {t("Register")}
                         </Button>
                     }
                     <Box>
@@ -866,9 +868,10 @@ export default function Header() {
               )
                 : (
                   <div className='btn_group test2'>
-                    <Link style={{ color: "white" }} to="/profile" className=' Create_on_MAS'> <Button className="primaryButton"
+                    <Link style={{ color: "white" }} to="/create-account" className=' Create_on_MAS'> <Button className="primaryButton"
                       fullWidth
-                      variant="contained">{t("Create on MAS")}</Button></Link>
+                      variant="contained">{t("Register")}</Button>
+                      </Link>
 
                     <Link style={{ color: "white" }} to="/login">
                       <Button
@@ -1001,6 +1004,15 @@ PaperProps={{
         onClose={() => setOpenNotifications(false)}
         scroll='paper'
         fullWidth
+        PaperProps={{
+          sx: {
+            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            
+          }
+        }}
       >
         <DialogContent>
           {notify.length == 0 ? (
@@ -1023,6 +1035,15 @@ PaperProps={{
       <Dialog
         open={isLogOutOpen}
         onClose={() => setIsLogoutOpen(false)}
+        PaperProps={{
+          sx: {
+            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            
+          }
+        }}
       >
         <DialogContent style={{ padding: "20px 50px" }}>
           <Box className={loginModal}>

@@ -6,6 +6,7 @@ import DoCard from "./cards/DoCard";
 import VisionCard from "./cards/VisionCard";
 import ChooseCard from "./cards/ChooseCard";
 import ContactUs from "./ContactUs";
+import { Link } from "react-router-dom";
 
 
 export default function AboutUs() {
@@ -37,13 +38,13 @@ export default function AboutUs() {
 return(
     <>
     <div style={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
-    <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,padding:"40px 20px"}}   className="bunner-animaton">
+    <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,padding:"25px"}}   className="bunner-animaton">
    
     <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
         src="/assets/Images/wave2.png" 
         alt="Description" 
-        style={{ display: 'block' }}
+        style={{ display: 'block' ,transform:" scale(0.7)" }}
       />
       <div style={{
          position: 'absolute',
@@ -51,7 +52,7 @@ return(
          left: '50%',
          transform: 'translate(-50%, -50%)',
          color: 'white',
-         fontSize: '3rem',
+         fontSize: '2.5rem',
           fontWeight:"bold",
          textShadow:"0px 0px 10px white",
       }}
@@ -67,7 +68,7 @@ return(
       <span className="who-title">WHO WE ARE</span>
       <span className="who-text1">Delivering IT solutions that enable you to work smarter.</span>
       <span className="who-text2">IT can streamline processes, enhance efficiency, and facilitate communication, making tasks and operations easier and more effective.</span>
-     <a href=""> <button className="learn-btn">Learn More</button></a> 
+     <Link to="/login"> <button className="learn-btn">Learn More</button></Link>
         </div>
         
         <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
