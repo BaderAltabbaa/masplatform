@@ -52,6 +52,11 @@ function CardCreators({
   const [isSubscribed, setisSubscribed] = useState(false);
   const [nbSubscribed, setnbSubscribed] = useState(0);
   // start Handle subscribe function
+
+
+const userID = auth.userData._id ;
+console.log("bra",userID)
+
   const subscribeToUserHandler = async () => {
     if (auth.userData?._id) {
       await axios({
@@ -151,16 +156,33 @@ function CardCreators({
     >
  
         <div>
-          <button
-            onClick={(event) => {
-              event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
-              subscribeToUserHandler();
-            }}
-            className="primary"
-            style={{padding:"5px"}}
-          >
-            {isSubscribed ? t("Subscribed") : t("Subscribe")}
-          </button>
+
+
+           {  (userID == userCardData._id)? 
+           
+              <button
+
+                className="primary"
+                style={{ padding: "5px" }}
+               
+              >
+                Profile
+              </button> 
+
+:
+
+              <button
+                onClick={(event) => {
+                  event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
+                  subscribeToUserHandler();
+                }}
+                className="primary"
+                style={{ padding: "5px" }}
+              >
+                {isSubscribed ? t("Subscribed") : t("Subscribe")}
+              </button>
+           }
+         
           <span
             style={{
               color: "white",

@@ -1,144 +1,377 @@
-import React, { useState, useEffect } from 'react';
-import Pusher from 'pusher-js';
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, Typography, Grid, Pagination, Avatar, Dialog, DialogTitle, DialogContent, TextField, Button, List, ListItem, ListItemText, ListItemAvatar ,Divider, IconButton,  useMediaQuery,  useTheme,  } from '@mui/material';
+import Apiconfigs from '../../../Apiconfig/Apiconfigs';
+import axios from 'axios';
+import { AccountCircle, Menu, ArrowBack } from '@mui/icons-material';
+import io from 'socket.io-client';
 
-const PusherChatNoBackend = () => {
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState('');
-    const [username] = useState(prompt("Enter your name") || `User${Math.floor(Math.random() * 1000)}`);
+const Chat = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const [state, setState] = useState({
+        userList: [],
+        page: 1,
+        pages: 1,
+    });
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [messagesByUser, setMessagesByUser] = useState({});
+    const [newMessage, setNewMessage] = useState('');
+    const [socket, setSocket] = useState(null);
+    const [mobileOpen, setMobileOpen] = useState(true);
+    const messagesEndRef = useRef(null);
+    const { userList, page, pages } = state;
 
-    const [otherUser, setOtherUser] = useState('');
-    const [channel, setChannel] = useState(null);
+    // Initialize socket connection
+    useEffect(() => {
+        const newSocket = io(Apiconfigs.baseUrl, { 
+            transports: ['websocket'],
+            auth: {
+                token: sessionStorage.getItem("token")
+            }
+        });
+        setSocket(newSocket);
+
+        return () => newSocket.disconnect();
+    }, []);
+
+    // Set up socket event listeners
+    useEffect(() => {
+        if (!socket) return;
+
+        socket.on('connect', () => {
+            console.log('Connected to socket server');
+        });
+
+        socket.on('privateMessage', (message) => {
+            const userId = message.from === socket.id ? message.to : message.from;
+            
+            setMessagesByUser(prev => ({
+                ...prev,
+                [userId]: [
+                    ...(prev[userId] || []),
+                    {
+                        ...message,
+                        senderName: message.from === socket.id ? "You" : 
+                                  (userList.find(u => u._id === message.from)?.username || "Unknown")
+                    }
+                ]
+            }));
+        });
+
+        return () => {
+            socket.off('connect');
+            socket.off('privateMessage');
+        };
+    }, [socket, userList]);
+
+    // Scroll to bottom of messages
+  
+
+    const updateState = (data) => setState(prevState => ({ ...prevState, ...data }));
 
     useEffect(() => {
-        const pusher = new Pusher('YOUR_APP_KEY', {  // Replace with your key
-          cluster: 'YOUR_CLUSTER',                  // Replace with your cluster
-          encrypted: true
-        });
-      
-        // Both users will join the same public channel
-        const channelName = 'public-chat-channel';
-        const pusherChannel = pusher.subscribe(channelName);
-        setChannel(pusherChannel);
-      
-        // Listen for new messages
-        pusherChannel.bind('client-message', (data) => {
-          if (data.sender !== username) {  // Don't show our own messages
-            setMessages(prev => [...prev, data]);
-          }
-        });
-      
-        // Listen for user connections
-        pusherChannel.bind('client-user-connected', (data) => {
-          if (data.username !== username) {
-            setOtherUser(data.username);
-            alert(`${data.username} has joined the chat!`);
-          }
-        });
-      
-        // Notify others when we connect
-        if (pusherChannel) {
-          pusherChannel.trigger('client-user-connected', {
-            username: username
-          });
+        myFollowersHandler().catch(console.error);
+    }, [state.page]);
+
+    const handleUserClick = async (user) => {
+        setSelectedUser(user);
+        if (isMobile) setMobileOpen(false);
+        if (!messagesByUser[user._id]) {
+            await loadChat(user._id);
         }
-      
-        return () => {
-          pusher.unsubscribe(channelName);
-          pusher.disconnect();
-        };
-      }, [username]);  // ← This was missing - now properly added
-
-
-      const sendMessage = (e) => {
-        e.preventDefault();
-        if (!message.trim() || !channel) return;
-    
-        // Add message to our own screen immediately
-        setMessages(prev => [...prev, {
-          sender: username,
-          message: message,
-          timestamp: new Date().toISOString()
-        }]);
-    
-        // Send to other user via Pusher
-        channel.trigger('client-message', {
-          sender: username,
-          message: message,
-          timestamp: new Date().toISOString()
-        });
-    
-        setMessage('');
-      };
-
-      return (
-        <div style={{
-          maxWidth: '500px',
-          margin: '20px auto',
-          padding: '20px',
-          border: '1px solid #ddd',
-          borderRadius: '8px'
-        }}>
-          <h2>Simple Chat ({username})</h2>
-          {otherUser && <p>Connected with: {otherUser}</p>}
-          
-          <div style={{
-            height: '300px',
-            border: '1px solid #eee',
-            overflowY: 'scroll',
-            marginBottom: '10px',
-            padding: '10px'
-          }}>
-            {messages.map((msg, i) => (
-              <div key={i} style={{
-                marginBottom: '10px',
-                textAlign: msg.sender === username ? 'right' : 'left'
-              }}>
-                <div style={{
-                  display: 'inline-block',
-                  padding: '8px 12px',
-                  borderRadius: '12px',
-                  background: msg.sender === username ? '#dcf8c6' : '#f1f0f0'
-                }}>
-                  <strong>{msg.sender}: </strong>
-                  {msg.message}
-                </div>
-                <div style={{
-                  fontSize: '0.7em',
-                  color: '#666',
-                  textAlign: msg.sender === username ? 'right' : 'left'
-                }}>
-                  {new Date(msg.timestamp).toLocaleTimeString()}
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <form onSubmit={sendMessage} style={{ display: 'flex' }}>
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type a message..."
-              style={{ flex: 1, padding: '8px' }}
-            />
-            <button 
-              type="submit"
-              style={{ 
-                padding: '8px 15px',
-                marginLeft: '10px',
-                background: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px'
-              }}
-            >
-              Send
-            </button>
-          </form>
-        </div>
-      );
     };
-    export default PusherChatNoBackend;
+
+    const loadChat = async (userId) => {
+        try {
+            const res = await axios.get(Apiconfigs.viewChat + userId, {
+                headers: {
+                    token: sessionStorage.getItem("token"),
+                },
+                params: {
+                    page: 1,
+                    limit: 50
+                }
+            });
+            
+            setMessagesByUser(prev => ({
+                ...prev,
+                [userId]: res.data.result.length > 0 ? res.data.result.reverse().map(msg => ({
+                    ...msg,
+                    senderName: msg.from === socket?.id ? "You" : 
+                               (userList.find(u => u._id === msg.from)?.username || "Unknown")
+                })) : []
+            }));
+        } catch (err) {
+            console.error("Error loading chat:", err);
+            setMessagesByUser(prev => ({
+                ...prev,
+                [userId]: []
+            }));
+        }
+    };
+
+    const sendMessage = () => {
+        if (!newMessage.trim() || !selectedUser || !socket) return;
+
+        const messageData = {
+            to: selectedUser._id,
+            text: newMessage,
+            timestamp: new Date().toISOString()
+        };
+
+        socket.emit('privateMessage', messageData);
+
+        setMessagesByUser(prev => ({
+            ...prev,
+            [selectedUser._id]: [
+                ...(prev[selectedUser._id] || []),
+                {
+                    ...messageData,
+                    from: socket.id,
+                    senderName: "You"
+                }
+            ]
+        }));
+
+        setNewMessage('');
+    };
+
+    async function myFollowersHandler() {
+        await axios({
+            method: "GET",
+            url: Apiconfigs.profileFollowersList,
+            headers: {
+                token: sessionStorage.getItem("token"),
+            },
+            params: {
+                limit: 10,
+                page: page,
+            },
+        })
+        .then(res => {
+            if (res.data.statusCode === 200) {
+                updateState({ 
+                    userList: res.data.result.docs,
+                    pages: res.data.result.pages
+                });
+            }
+        })
+        .catch(console.error);
+    }
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
+    return (
+        <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)' }}>
+            {/* Users List Sidebar */}
+            <Box sx={{
+                width: { xs: '100%', md: 350 },
+                flexShrink: 0,
+                display: {
+                    xs: mobileOpen ? 'block' : 'none',
+                    md: 'block'
+                },
+                borderRight: '1px solid',
+                borderColor: 'divider',
+                overflowY: 'auto'
+            }}>
+                <Box sx={{ 
+                    p: 2, 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid',
+                    borderColor: 'divider'
+                }}>
+                    <Typography variant="h6">Messages</Typography>
+                    {!isMobile && (
+                        <IconButton onClick={handleDrawerToggle}>
+                            <Menu />
+                        </IconButton>
+                    )}
+                </Box>
+                
+                <List sx={{ overflowY: 'auto' }}>
+                    {userList.map((user) => (
+                        <React.Fragment key={user._id}>
+                            <ListItem 
+                                button 
+                                onClick={() => handleUserClick(user)}
+                                sx={{
+                                    bgcolor: selectedUser?._id === user._id ? 'action.selected' : 'inherit',
+                                    '&:hover': { bgcolor: 'action.hover' }
+                                }}
+                            >
+                                <ListItemAvatar>
+                                    <Avatar
+                                        src={user.profilePic}
+                                        sx={{ width: 48, height: 48 }}
+                                    >
+                                        {!user.profilePic && <AccountCircle />}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={user.username || user.name}
+                                    primaryTypographyProps={{
+                                        style: {
+                                            color: 'black',
+                                            fontWeight: 'medium' // optional: adds slightly bolder text
+                                        }
+                                    }}
+                                    secondary={
+                                        messagesByUser[user._id]?.length > 0 ? 
+                                        messagesByUser[user._id][messagesByUser[user._id].length - 1].text.substring(0, 30) + 
+                                        (messagesByUser[user._id][messagesByUser[user._id].length - 1].text.length > 30 ? '...' : '') : 
+                                        'No messages yet'
+                                    }
+                                    secondaryTypographyProps={{
+                                        noWrap: true,
+                                        color: 'text.secondary'
+                                    }}
+                                />
+                            </ListItem>
+                            <Divider variant="inset" component="li" />
+                        </React.Fragment>
+                    ))}
+                </List>
+                
+                <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
+                    <Pagination 
+                        count={pages} 
+                        page={page} 
+                        onChange={(e, value) => updateState({ page: value })} 
+                       
+                    />
+                </Box>
+            </Box>
+
+            {/* Chat Area */}
+            <Box sx={{
+                flexGrow: 1,
+                display: {
+                    xs: !mobileOpen ? 'flex' : 'none',
+                    md: 'flex'
+                },
+                flexDirection: 'column',
+                height: '100%'
+            }}>
+                {selectedUser ? (
+                    <>
+                        <Box sx={{ 
+                            p: 2, 
+                            display: 'flex', 
+                            alignItems: 'center',
+                            borderBottom: '1px solid',
+                            borderColor: 'divider'
+                        }}>
+                            {isMobile && (
+                                <IconButton onClick={handleDrawerToggle} sx={{ mr: 1 }}>
+                                    <ArrowBack />
+                                </IconButton>
+                            )}
+                            <Avatar
+                                src={selectedUser.profilePic}
+                                sx={{ width: 50, height: 50, mr: 2 }}
+                            >
+                                {!selectedUser.profilePic && <AccountCircle />}
+                            </Avatar>
+                            <Typography variant="h6">
+                                {selectedUser.username || selectedUser.name}
+                            </Typography>
+                        </Box>
+                        
+                        <Box sx={{ 
+                            flexGrow: 1, 
+                            overflowY: 'auto', 
+                            p: 2,
+                            bgcolor: 'background.default'
+                        }}>
+                            <List>
+                                {messagesByUser[selectedUser._id]?.map((msg, index) => (
+                                    <ListItem key={index} alignItems="flex-start" sx={{
+                                        justifyContent: msg.from === socket?.id ? 'flex-end' : 'flex-start'
+                                    }}>
+                                        <Box sx={{
+                                            maxWidth: '80%',
+                                            p: 1.5,
+                                            borderRadius: 2,
+                                            bgcolor: msg.from === socket?.id ? '#4d0051' : 'background.paper',
+                                            color: msg.from === socket?.id ? 'primary.contrastText' : 'text.primary',
+                                            boxShadow: 1
+                                        }}>
+                                           
+                                            <Typography>{msg.text}</Typography>
+                                            <Typography variant="caption" display="block" textAlign="right" sx={{ 
+                                                opacity: 0.6,
+                                                color: msg.from === socket?.id ? 'primary.contrastText' : 'text.secondary'
+                                            }}>
+                                                {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </Typography>
+                                        </Box>
+                                    </ListItem>
+                                ))}
+                                <div ref={messagesEndRef} />
+                            </List>
+                        </Box>
+                        
+                        <Box sx={{ 
+                            p: 2, 
+                            borderTop: '1px solid',
+                            borderColor: 'divider',
+                            bgcolor: 'background.paper'
+                        }}>
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    value={newMessage}
+                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    placeholder="Type a message..."
+                                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                                    size="small"
+                                />
+                                <Button 
+                                    variant="contained" 
+                                    onClick={sendMessage}
+                                    disabled={!newMessage.trim()}
+                                    sx={{
+                                        background:"#4d0051"
+                                    }}
+                                >
+                                    Send
+                                </Button>
+                            </Box>
+                        </Box>
+                    </>
+                ) : (
+                    <Box sx={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        height: '100%',
+                        textAlign: 'center',
+                        p: 3
+                    }}>
+                        <AccountCircle sx={{ fontSize: 80, color: 'action.disabled', mb: 2 }} />
+                        <Typography variant="h6" color="text.secondary">
+                            {isMobile ? 'Select a conversation' : 'Select a conversation to start chatting'}
+                        </Typography>
+                        {!isMobile && (
+                            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                                Choose a user from the sidebar to view messages
+                            </Typography>
+                        )}
+                    </Box>
+                )}
+            </Box>
+        </Box>
+    );
+};
+
+export default Chat;
     
 
     

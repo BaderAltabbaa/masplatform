@@ -39,8 +39,8 @@ export default function ChildTableUser({ row, index }) {
   const navigate = useNavigate()
   const mastoken = tokensDetails[0];
   const user = useContext(UserContext);
-const userNam = user.userData.name;
-  console.log("hrrr",userNam)
+const userID = user.userData._id;
+  console.log("hrrr",userID)
 
 const handleOpenBalance = () => {
       setOpenBalance(true);
@@ -106,7 +106,7 @@ const handleCloseBalance = () => {
         {/* Start Third Row */}
         <TableCell style={{  color : "white" ,textAlign:"center"}} align="Center">
          
-         {(userNam == row.name)? 
+         {(userID == row._id)? 
          <Button
          className={classes.createButton}
          onClick={() => handleOpenBalance()}
