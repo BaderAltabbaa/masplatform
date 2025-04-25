@@ -118,7 +118,7 @@
 .cards{
     display: flex;
     justify-content: center;
-    padding: 0 80px;
+    padding: 0 40px;
 }
 
 .card-container{
@@ -313,8 +313,8 @@
     background: linear-gradient(to right,#77297b,#a751b6);
     border: 2px solid #ffffff; 
     opacity: 0; 
-  transform: translateX(-100%); 
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateX(-100%); 
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 
@@ -360,6 +360,7 @@
 .ccard-desc{
     color: white;
     font-size: 15px;
+    margin-bottom: 10px;
 }
 
 .bunner-animaton{
@@ -410,7 +411,9 @@
         font-size: 40px;
     }
 
-
+.cards {
+    padding: 0 80px;
+}
     
 
 .card-container{
@@ -418,7 +421,7 @@
      
  }
  
- .card-body{
+ .card-body{    
      min-height: 550px;
  }
 

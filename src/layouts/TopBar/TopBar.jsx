@@ -11,7 +11,7 @@ import {
   Box,
   Typography,
   useMediaQuery,
-  TextField
+  TextField, List, ListItem, ListItemText,
 
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -37,7 +37,8 @@ import StaticPage from '../../views/pages/staticPage';
 import LanguageSwitcher from '../../component/LangugeSwitcher';
 import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
-import { transform } from 'lodash';
+import { io } from 'socket.io-client';
+
 
 
 
@@ -131,10 +132,16 @@ export default function Header() {
   const menuRef = useRef(null);
   const {t} = useTranslation();
   const [openSupport, setOpenSupport] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
+  const socketRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const isMobileView = useMediaQuery('(max-width: 1250px)');
 
  const handleOpenSupport = () => {
   setOpenSupport(true);
+  socketRef.current.emit('join_chat', { userId: 'user123' }); // Replace with actual user ID
  } 
 
  const handleCloseSupport = () => {
@@ -185,6 +192,62 @@ export default function Header() {
       window.removeEventListener("resize", handleResize);
     };
   }, []); // No dependencies, runs only once on mount and cleans up on unmount
+
+
+  useEffect(() => {
+    // Initialize socket connection
+    socketRef.current = io(Apiconfigs.baseUrl); // Replace with your server URL
+
+    socketRef.current.on('connect', () => {
+      setIsConnected(true);
+      console.log('Connected to server');
+    });
+
+    socketRef.current.on('disconnect', () => {
+      setIsConnected(false);
+    });
+
+    socketRef.current.on('chat_message', (msg) => {
+      setMessages((prev) => [...prev, msg]);
+    });
+
+    return () => {
+      socketRef.current.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      const newMessage = {
+        text: message,
+        sender: 'user',
+        timestamp: new Date().toISOString(),
+      };
+      
+      // Emit message to server
+      socketRef.current.emit('chat_message', newMessage);
+      
+      // Add to local state immediately for instant feedback
+      setMessages((prev) => [...prev, newMessage]);
+      setMessage('');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
 
 
   // 
@@ -937,63 +1000,151 @@ export default function Header() {
       }}
     >
       <img src="\assets\Images\support.png" alt="" width='40px' />
+      {!isConnected && (
+          <Box sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '12px',
+            height: '12px',
+            backgroundColor: 'red',
+            borderRadius: '50%'
+          }} />
+        )}
     </Box>
       }
 
 
-<Dialog open={openSupport} onClose={handleCloseSupport} hideBackdrop sx={{"& .MuiDialog-container":{
-  alignItems:"flex-end",
-  justifyContent:"flex-end"
-},
-"& .MuiDialog-paper":{
-   margin: "0px"
-}
-}}
-PaperProps={{
-  sx: {
-    backgroundImage: 'url(/assets/Images/doodle2.png)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    
-  }
-}}
->
-  
-        <DialogContent>
-
-          <TextField
-            autoFocus
-            margin="dense"
-            id="message"
-            label="Message"
-            placeholder="Type your message here..."
-            type="text"
-            fullWidth
-            variant="outlined"
-            multiline
-            rows={4}
-            sx={{ mt: 2, mb: 2 }}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button 
-              onClick={handleCloseSupport} 
-              sx={{ mr: 2 ,
-                color:"#43005e"
-               }}
-            >
-              Cancel
-            </Button>
-            <Button 
-              variant="contained"
-              color="primary"
-              sx={{background:"#43005e" ,
-                "&:hover":{
-                background:"rgb(50, 0, 70)"
-              }}}
-            >
-              Send
-            </Button>
+<Dialog 
+        open={openSupport} 
+        onClose={handleCloseSupport} 
+        fullWidth
+        maxWidth="sm"
+        sx={{
+          "& .MuiDialog-container": {
+            alignItems: "flex-end",
+            justifyContent: "flex-end"
+          },
+          "& .MuiDialog-paper": {
+            margin: "0px",
+            height: "60vh",
+            maxHeight: "600px",
+            display: "flex",
+            flexDirection: "column"
+          }
+        }}
+        PaperProps={{
+          sx: {
+            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }
+        }}
+      >
+        <DialogContent sx={{ 
+          flex: 1, 
+          display: 'flex', 
+          flexDirection: 'column',
+          padding: 0
+        }}>
+          <Box sx={{ 
+            p: 2, 
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            borderBottom: '1px solid #eee'
+          }}>
+            <Typography variant="h6" sx={{ color: '#43005e' }}>
+              Support Chat
+            </Typography>
+            <Typography variant="caption" sx={{ color: isConnected ? 'green' : 'red' }}>
+              {isConnected ? 'Online' : 'Offline'}
+            </Typography>
+          </Box>
+          
+          <Box sx={{ 
+            flex: 1, 
+            overflowY: 'auto', 
+            p: 2,
+            backgroundColor: 'rgba(255, 255, 255, 0.8)'
+          }}>
+            <List>
+              {messages.map((msg, index) => (
+                <ListItem 
+                  key={index} 
+                  sx={{ 
+                    justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start',
+                    alignItems: 'flex-start',
+                    py: 1
+                  }}
+                >
+                  <Box sx={{
+                    maxWidth: '80%',
+                    p: 1.5,
+                    borderRadius: 2,
+                    backgroundColor: msg.sender === 'user' ? '#43005e' : '#e0e0e0',
+                    color: msg.sender === 'user' ? 'white' : 'black',
+                    boxShadow: 1
+                  }}>
+                    <ListItemText 
+                      primary={msg.text} 
+                      secondary={new Date(msg.timestamp).toLocaleTimeString()}
+                      secondaryTypographyProps={{
+                        color: msg.sender === 'user' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)'
+                      }}
+                    />
+                  </Box>
+                </ListItem>
+              ))}
+              <div ref={messagesEndRef} />
+            </List>
+          </Box>
+          
+          <Box sx={{ 
+            p: 2,
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            borderTop: '1px solid #eee'
+          }}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="message"
+              label="Type your message"
+              placeholder="Type your message here..."
+              type="text"
+              fullWidth
+              variant="outlined"
+              multiline
+              rows={1}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              sx={{ mb: 2 }}
+            />
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button 
+                onClick={handleCloseSupport} 
+                sx={{ mr: 2, color: "#43005e" }}
+              >
+                Close
+              </Button>
+              <Button 
+                variant="contained"
+                onClick={handleSendMessage}
+                disabled={!message.trim()}
+                sx={{
+                  background: "#43005e",
+                  "&:hover": {
+                    background: "rgb(50, 0, 70)"
+                  },
+                  "&:disabled": {
+                    background: "#e0e0e0",
+                    color: "#9e9e9e"
+                  }
+                }}
+              >
+                Send
+              </Button>
+            </Box>
           </Box>
         </DialogContent>
       </Dialog>

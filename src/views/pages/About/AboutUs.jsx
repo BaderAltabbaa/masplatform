@@ -7,8 +7,7 @@ import VisionCard from "./cards/VisionCard";
 import ChooseCard from "./cards/ChooseCard";
 import ContactUs from "./ContactUs";
 import { Link } from "react-router-dom";
-import "src/views/pages/style.css";
-
+import { useState } from "react";
 
 export default function AboutUs() {
 
@@ -35,6 +34,10 @@ export default function AboutUs() {
         { title: "Lorem ipsum dolor sit amet", desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.", src: '/assets/Images/bt-altyapi-donusumu-basari-metodolojisi-601x520-removebg-preview.webp' },
         { title: "Lorem ipsum dolor sit amet", desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.", src: '/assets/Images/—Pngtree—business professional analyzing stock market_20116370.png' },
       ];
+
+      const [isExpanded , setIsExpanded] = useState(false);
+      const [isExpanded2 , setIsExpanded2] = useState(false);
+
     
 return(
     <>
@@ -93,13 +96,45 @@ return(
         </div>
 
 
-        <div className="how-it-work-sec">
-      <span className='how-title'>Our Vision</span>
+        <div className="how-it-work-sec" style={{
+          marginTop: isExpanded? '50px' : '100px'
+        }}>
+
+
+<div style={{ position: 'relative', display: 'inline-block' }}>
+      <img 
+        src="/assets/Images/wave6.png" 
+        alt="Description" 
+        style={{ display: 'flex',transform:" scale(0.7)"   }}
+      />
+      <div style={{
+         position: 'absolute',
+         top: '50%',
+         left: '50%',
+         transform: 'translate(-50%, -50%)',
+         color: 'white',
+         fontSize: '2.5rem',
+          fontWeight:"bold",
+         textShadow:"0px 0px 10px white",
+      }}
+    >
+
+      <span className='how-title' onClick={() => setIsExpanded(!isExpanded)} style={{cursor:"pointer"}}>
+        Our Vision  {isExpanded ? '−' : '+'} 
+        </span>
+</div>
+</div>
+
+        {isExpanded && (
+          <>
       <span className='how-decs'>Discover our streamlined approach to boost your brand’s success through innovative strategies and advanced technologies</span>
       <div className="how-card">
         <VisionCard></VisionCard>
-      </div>
+      </div> </> )}
+  
+  
      </div>
+
 
      <div className="choose-us-sec">
         <span className='choose-title'>Why Choose Us</span>
@@ -108,6 +143,49 @@ return(
         <ChooseCard></ChooseCard>
       </div>
      </div>
+
+
+     <div className="how-it-work-sec" style={{
+          marginTop: isExpanded2? '50px' : '100px'
+        }}>
+
+
+<div style={{ position: 'relative', display: 'inline-block' }}>
+      <img 
+        src="/assets/Images/wave8.png" 
+        alt="Description" 
+        style={{ display: 'flex' ,transform:" scale(0.7)"  }}
+      />
+      <div style={{
+         position: 'absolute',
+         top: '50%',
+         left: '50%',
+         transform: 'translate(-50%, -50%)',
+         color: 'white',
+         fontSize: '2.5rem',
+          fontWeight:"bold",
+         textShadow:"0px 0px 10px white",
+      }}
+    >
+
+      <span className='how-title' onClick={() => setIsExpanded2(!isExpanded2)} style={{cursor:"pointer"}}>
+        Our Mission  {isExpanded2 ? '−' : '+'} 
+        </span>
+</div>
+</div>
+
+        {isExpanded2 && (
+          <>
+      <span className='how-decs'>Discover our streamlined approach to boost your brand’s success through innovative strategies and advanced technologies</span>
+      <div className="how-card">
+        <VisionCard></VisionCard>
+      </div> </> )}
+  
+  
+     </div>
+
+
+    
 
 
 <ContactUs/>
