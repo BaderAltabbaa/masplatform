@@ -91,7 +91,7 @@
 
 .faq-bottom{
     opacity: 0; 
-    transform: translateX(100%); 
+    transform: translateX(50%); 
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   }
 

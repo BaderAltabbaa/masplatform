@@ -39,6 +39,32 @@
         display:none
     }
 
-    body{
+    html, body {
+        width: 100%;
         overflow-x: hidden;
-    }
+        position: relative;
+      }
+      
+      /* Mobile-specific fixes */
+      @media screen and (max-width: 768px) {
+        /* Prevent horizontal overflow during animations */
+        body {
+          position: relative;
+          width: 100vw;
+        }
+        
+        /* Fix for iOS Safari */
+        @supports (-webkit-touch-callout: none) {
+          body {
+            overflow-x: clip;
+            position: fixed;
+            width: 100%;
+          }
+        }
+        
+        /* Smooth transitions for animated elements */
+        [data-animate] {
+          overflow: hidden;
+          contain: layout;
+        }
+      }

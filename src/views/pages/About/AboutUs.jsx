@@ -7,6 +7,7 @@ import VisionCard from "./cards/VisionCard";
 import ChooseCard from "./cards/ChooseCard";
 import ContactUs from "./ContactUs";
 import { Link } from "react-router-dom";
+import "src/views/pages/style.css";
 
 
 export default function AboutUs() {
