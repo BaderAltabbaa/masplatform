@@ -978,8 +978,8 @@ export default function Header() {
       onClick={handleOpenSupport}
       sx={{
         position: "fixed",
-        bottom: "10px",
-        right: "10px",
+        bottom: "15px",
+        right: "15px",
         zIndex: "1000",
         background: "#cdc8c8",
         borderRadius: "50%", 
@@ -1000,17 +1000,7 @@ export default function Header() {
       }}
     >
       <img src="\assets\Images\support.png" alt="" width='40px' />
-      {!isConnected && (
-          <Box sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            width: '12px',
-            height: '12px',
-            backgroundColor: 'red',
-            borderRadius: '50%'
-          }} />
-        )}
+   
     </Box>
       }
 
@@ -1028,7 +1018,8 @@ export default function Header() {
           "& .MuiDialog-paper": {
             margin: "0px",
             height: "60vh",
-            maxHeight: "600px",
+            maxHeight: "500px",
+            maxWidth:"350px",
             display: "flex",
             flexDirection: "column"
           }
@@ -1079,9 +1070,9 @@ export default function Header() {
                 >
                   <Box sx={{
                     maxWidth: '80%',
-                    p: 1.5,
+                    padding:"5px 10px",
                     borderRadius: 2,
-                    backgroundColor: msg.sender === 'user' ? '#43005e' : '#e0e0e0',
+                    backgroundColor: msg.sender === 'user' ? 'rgb(96, 0, 134)' : '#e0e0e0',
                     color: msg.sender === 'user' ? 'white' : 'black',
                     boxShadow: 1
                   }}>
@@ -1089,7 +1080,8 @@ export default function Header() {
                       primary={msg.text} 
                       secondary={new Date(msg.timestamp).toLocaleTimeString()}
                       secondaryTypographyProps={{
-                        color: msg.sender === 'user' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)'
+                        color: msg.sender === 'user' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
+                        fontSize:"10px"
                       }}
                     />
                   </Box>

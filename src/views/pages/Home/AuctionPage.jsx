@@ -345,7 +345,17 @@ padding:"30px 200px"
           gridTemplateColumns: "repeat(5, 1fr)", 
         },
         "@media(max-width:800px)":{
-          gridTemplateColumns: "repeat(4, 1fr)", 
+          gridTemplateColumns: "repeat(4, 1fr)",
+          height:"400px" ,
+          overflowY:"auto",
+          scrollbarWidth: "none",  // For Firefox
+          "&::-webkit-scrollbar": {
+            display: "none"  // For Chrome, Safari, Opera
+          },
+          // Enable momentum scrolling on iOS
+          WebkitOverflowScrolling: "touch",
+          // Prevent content from being clipped
+          overscrollBehavior: "contain"
         },
         "@media(max-width:700px)":{
           gridTemplateColumns: "repeat(3, 1fr)", 
@@ -392,7 +402,6 @@ return(
  
  <div className="faq-sec">
     <div className={`faq-top ${inView3 ? 'animate' : ''}`} ref={ref3}>
-      <span className='faq-title'>FAQ</span>
       <span className='faq-title2'>Frequently Ask Questions.</span>
       <span className='faq-desc'>here some questions that you ask a lot about</span>
       <img className='questimg' src="\assets\Images\creator2.jpg" alt="" />

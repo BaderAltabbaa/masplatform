@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {
     Container, Grid,
-    
+    Box,
     Typography,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles';
@@ -12,6 +12,11 @@ import axios from "axios";
 import MetaverseCard from "./MetaverseCard";
 import { ButtonwithAnimation } from "src/component/ui/Button/button";
 import { useTranslation } from 'react-i18next';
+import DataLoading from "../../component/DataLoading";
+import "src/views/pages/About/AboutUs.css"
+import { useInView } from 'react-intersection-observer';
+
+
 
 
 import IMG1 from "./img/card 1.jpeg"
@@ -46,29 +51,112 @@ export default function StaticPage() {
     let data = location.state?.data;
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+      const [isLoading, setIsLoading] = useState(true);
     const [datas, setdatas] = useState();
           const {t} = useTranslation();
+
+            const { ref: ref2,inView: inView2 } = useInView({
+                      threshold: 0.2, 
+                      triggerOnce: true,
+                    });
+                  
+                    const { ref: ref3,inView: inView3 } = useInView({
+                      threshold: 0.2, 
+                      triggerOnce: true, 
+                    }); 
     
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-    useEffect(() => {
-        if (!data) {
-            const fetcher = async (url) => axios.get(url).then(res => {
+   useEffect(() => {
+    const fetchData = async () => {
+        try {
+            if (!data) {
+                const res = await axios.get(Apiconfigs.viewStaticPage + `?type=${pageName}`);
                 setTitle(res.data.result.title);
                 setContent(res.data.result.description);
-            });
-            fetcher(Apiconfigs.viewStaticPage + `?type=${pageName}`)
-        } else {
-            setTitle(data.title);
-            setContent(data.html);
+                // Any other state updates from the API response
+            } else {
+                setTitle(data.title);
+                setContent(data.html);
+                // Any other state updates from props
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            // Optionally handle errors (e.g., set error state)
+        } finally {
+            setIsLoading(false); // This will run regardless of success or failure
         }
-    }, [data])
+    };
 
+    setIsLoading(true); // Set loading to true when starting to fetch
+    fetchData();
+}, [data, pageName]); // Make sure to include all dependencies
+
+    
 
     return (title && content) ? (
-        <Container maxWidth="xl" sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}>
+        <Box 
+    sx={{
+     padding:"20px 0",
+      background: (theme) => theme.custom.PageBackGround,
+     
+    }}
+    >
+
+        {isLoading ? (
+             <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+                           <DataLoading />
+                           </Box>
+        ) : ( 
+        <Container maxWidth="xl" >
+
+<div style={{
+            display:"flex",
+            justifyContent:"center",
+            alignItems:"center",
+            padding:"10px"
+          }}
+          className="bunner-animaton">
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+      <img 
+        src="/assets/Images/wave10.png" 
+        alt="Description" 
+        style={{ display: 'block' ,transform:" scale(0.7)"}}
+      />
+      <div style={{
+         position: 'absolute',
+         top: '50%',
+         left: '50%',
+         transform: 'translate(-50%, -50%)',
+         color: 'white',
+         fontSize: '2.5rem',
+          fontWeight:"bold",
+         textShadow:"0px 0px 10px white"
+       
+      }}>
+       {t(title)}
+      </div>
+    </div>
+    </div>
+
+    <div className="who-we-are-sec">
+      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <span className="who-text1">Discover Mas Metaverse</span>
+      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
+        </div>
+        
+        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
+          <img style={{
+            display:"inline",
+            width:"100%",
+            borderRadius:"20px"
+          }} 
+          src="/assets/Images/bundles.jpg" alt="" />
+        </div>
+      </div>
+
              <div style={{display:"flex" ,flexDirection:"column",alignItems:"center", padding:"20px 40px"}}>
               <div style={{marginBottom:"20px"}}>
               <ButtonwithAnimation>{t(title)}</ButtonwithAnimation>  
@@ -99,7 +187,10 @@ export default function StaticPage() {
             </div>
             </div>
 
-        </Container>
+        </Container>)}
+
+       
+        </Box>
     ) : null
 }
 

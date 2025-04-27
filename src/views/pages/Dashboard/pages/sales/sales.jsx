@@ -10,7 +10,16 @@ import { Pagination } from "@mui/material";
 import MainCard from "../../ui-component/cards/MainCard";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import { useTranslation } from 'react-i18next';
-
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+  } from '@mui/material';
+  
 
 const useStyles = makeStyles(() => ({
     subscriptionBox: {
@@ -104,22 +113,42 @@ export default function sales() {
                 <Box className={classes.LoginBox} >
 
                     <Box>
-                        <Grid container spacing={2}  className={classes.bunbox}>
-                            {sales.map((data, i) => {
-                                return (
-                                    <Grid item key={i} lg={3} md={4} sm={6} xm={12}>
-                                        <CardCreators
-                                            data={data}
-                                            chat
-                                            subscriptionBox
-                                            // CardpersonalInfo={CardpersonalInfo}
-                                            Subscribe
-                                        />
-                                    </Grid>
-                                );
-                            })}
-                        </Grid>
-                    </Box>
+                               <TableContainer component={Paper} >
+                                <Table>
+                                  <TableHead sx={{background:"linear-gradient(to top right,#900098,#4d0051)"}}>
+                                    <TableRow>
+                                             <TableCell sx={{color:"white"}}>{t("Title")}</TableCell>
+                                             <TableCell sx={{color:"white"}}>{t("Name")}</TableCell>
+                                             <TableCell sx={{color:"white"}}>{t("Price")}</TableCell>
+                                             <TableCell sx={{color:"white"}}>{t("Status")}</TableCell>
+                                    </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {sales.map((items, i) => {
+                                      return (
+                                       <TableRow key={i}>
+                                        <TableCell>
+                                         {items.title}
+                                        </TableCell>
+                                        <TableCell>
+                                         {items.name}
+                                        </TableCell>
+                                        <TableCell>
+                                         {items.masPrice} MAS
+                                        </TableCell>
+                                        <TableCell>
+                                         {items.status}
+                                        </TableCell>
+                                       </TableRow>)
+                                    })}
+                                    </TableBody>
+                                    </Table>
+                                    </TableContainer>
+                             
+                              
+                                
+                           
+                            </Box>
                     {subsPages > 1 && (
                         <Box
                             mb={2}
@@ -197,8 +226,10 @@ export default function sales() {
                 if (res.data.statusCode === 200) {
                     updateState({
                         sales: res.data.result.docs,
-                        subsPages: res.data.result.pages,
+                        subsPages: res.data.result.totalPages,
                     });
+                    console.log("sale",res.data)
+
                 }
             })
             .catch((err) => {

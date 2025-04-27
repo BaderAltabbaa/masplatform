@@ -98,7 +98,7 @@ const Education = () => {
       .then(async (res) => {
         if (res.data.statusCode === 200) {
           setAllNFTList(res.data.result.docs);
-          setPages(res.data.result.pages)
+          setPages(res.data.result.totalPages)
         }
         setIsLoading(false);
       })
@@ -124,7 +124,9 @@ const Education = () => {
     }}
     >
       {isLoading ? (
-        <DataLoading />
+        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+               <DataLoading />
+               </Box>
       ) : (
         // <section>
         <Container maxWidth='xl'>
@@ -138,7 +140,7 @@ const Education = () => {
           className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave2.png" 
+        src="/assets/Images/wave10.png" 
         alt="Description" 
         style={{ display: 'block' ,transform:" scale(0.7)" }}
       />

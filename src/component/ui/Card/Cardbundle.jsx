@@ -312,9 +312,9 @@ function Cardbundle({
 
 <Box display="flex" alignItems="center">
    <Typography
-          variant="h6"
+          
           component="h6"
-          style={{ color: "white", fontWeight: "bold" ,margin:"0 5px",fontSize:"16px" }}
+          sx={{ color: "white", fontWeight: "bold" ,margin:"0 5px",fontSize:"18px" }}
         >
           {BundleData.bundleName}
         </Typography>
@@ -327,9 +327,8 @@ function Cardbundle({
         
         </Box>
   <Typography
-          variant="h6"
           component="h6"
-          style={{ color: "white", fontWeight: "bold", marginTop: 5 }}
+          style={{ color: "white", fontWeight: "bold", marginTop: 5 ,fontSize:"12px"}}
         >
           {"( "}
           {BundleData?.donationAmount
@@ -680,7 +679,7 @@ function Cardbundle({
               <img
                 src={BundleData.mediaUrl}
                 alt=""
-                style={{ width: "100%", height: "300px", objectFit:"fill" }}
+                style={{ width: "100%", height: "300px", objectFit:"fill" ,borderRadius:"20px" }}
               /></div>
             )}
           </Box>

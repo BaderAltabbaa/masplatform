@@ -125,13 +125,27 @@ return(
                         gridTemplateColumns:"1fr 1fr"
                     },
                     "@media(max-width:900px)":{
-                        gridTemplateColumns:"1fr"
+                        gridTemplateColumns:"1fr",
+                        background:"rgb(84, 0, 90)",
+                        height:"450px",
+                        overflowY:"auto",
+                        borderRadius:"10px",
+                        padding:"15px",
+                          // Hide scrollbar but keep functionality
+      scrollbarWidth: "none",  // For Firefox
+      "&::-webkit-scrollbar": {
+        display: "none"  // For Chrome, Safari, Opera
+      },
+      // Enable momentum scrolling on iOS
+      WebkitOverflowScrolling: "touch",
+      // Prevent content from being clipped
+      overscrollBehavior: "contain"
                     }
                     }}>
    
                     {userListToDisplay.length > 0 ? (
                         userListToDisplay.map((user) => (
-                            <Box sx={{  boxShadow:"0 4px 8px rgba(0, 0, 0, 0.5)",borderRadius:"20px","&:hover":{
+                            <Box sx={{ boxShadow:"0 4px 8px rgba(0, 0, 0, 0.5)",borderRadius:"20px","&:hover":{
                                 transform:"scale(1.05)",
                                 transition:"ease-out 500ms"
                             }}}>

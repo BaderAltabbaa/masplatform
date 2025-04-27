@@ -29,6 +29,7 @@ import theme from "../../../theme";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import './UsersList.css'; 
 import { useTranslation } from 'react-i18next';
+import DataLoading from "../../../component/DataLoading";
 
 
 
@@ -160,7 +161,7 @@ export default function UsersList() {
         rankingOrder.sort((a, b) => b.masBalance - a.masBalance || b.followers.length - a.followers.length)
         setAllUserList(rankingOrder);
         setIsLoadingData(false);
-        setPages(res.data.result.pages)
+        setPages(res.data.result.totalPages)
       }
     } catch (error) {
       console.log(error);
@@ -172,8 +173,22 @@ export default function UsersList() {
   }, [page, filterData]);
 
   return (
-    <Container maxWidth='xl'
-    sx={{background:"linear-gradient(to right,#280026,#4a004f)"}}
+
+<Box 
+    sx={{
+     padding:"20px 0",
+      background: (theme) => theme.custom.PageBackGround,
+     
+    }}
+    >
+
+{isLoadingData ? (
+   <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+                 <DataLoading />
+                 </Box>
+) : (
+
+  <Container maxWidth='xl'
     dir="ltr" >
      
 <Box className={classes.paddingContainer} >
@@ -328,5 +343,10 @@ export default function UsersList() {
     </Box>
 
 </ Container>
+
+)}
+    
+    
+</Box>
   );
 }

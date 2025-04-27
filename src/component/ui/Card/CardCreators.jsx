@@ -146,112 +146,93 @@ console.log("bra",userID)
 
 
     <div
-      className="buttons"
-      style={{
-        display: "flex",
-        flexDirection:"row",
-        alignItems: "center",
-        justifyContent:"space-evenly"
-      }}
-    >
- 
-        <div>
-
-
-           {  (userID == userCardData._id)? 
-           
-              <button
-
-                className="primary"
-                style={{ padding: "5px" }}
-               
-              >
-                Profile
-              </button> 
-
-:
-
-              <button
-                onClick={(event) => {
-                  event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
-                  subscribeToUserHandler();
-                }}
-                className="primary"
-                style={{ padding: "5px" }}
-              >
-                {isSubscribed ? t("Subscribed") : t("Subscribe")}
-              </button>
-           }
-         
-          <span
-            style={{
-              color: "white",
-              fontWeight: "600",
-              fontSize: "10px",
-              padding: "2px",
-            }}
-          >
-            {nbSubscribed
-              ? nbSubscribed > 0
-                ? nbSubscribed + t("subs")
-                : "0" +t("sub")
-              : "0" +t("sub")}
-          </span>
-        </div>
-     
-        
-     
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          position: "relative",
-        }}
+  className="buttons"
+  style={{
+    display: "flex",
+    justifyContent: "space-between", // Changed from space-evenly to space-between
+    alignItems: "center",
+    width: "100%", // Ensure it takes full width
+  }}
+>
+  {/* Left side - Profile/Subscribe button with subscriber count */}
+  <div style={{ display: "flex", alignItems: "center" }}>
+    {userID == userCardData._id ? (
+      <button
+        className="primary"
+        style={{ padding: "5px", marginRight: "8px" }}
       >
-       {chat && (
-        <Box>
+        Profile
+      </button>
+    ) : (
+      <button
+        onClick={(event) => {
+          event.stopPropagation();
+          subscribeToUserHandler();
+        }}
+        className="primary"
+        style={{ padding: "5px", marginRight: "8px" }}
+      >
+        {isSubscribed ? t("Subscribed") : t("Subscribe")}
+      </button>
+    )}
+    
+    <span style={{
+      color: "white",
+      fontWeight: "600",
+      fontSize: "10px",
+    }}>
+      {nbSubscribed
+        ? nbSubscribed > 0
+          ? nbSubscribed + t("subs")
+          : "0" + t("sub")
+        : "0" + t("sub")}
+    </span>
+  </div>
+
+  {/* Right side - Chat and Like buttons */}
+  <div style={{ display: "flex", alignItems: "center" }}>
+    {chat && (
+      <Box>
         <Tooltip title="Chat" placement="bottom">
           <div
             onClick={(event) => {
-              event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
+              event.stopPropagation();
               navigate(`/chat/t${userCardData._id}`);
             }}
+            style={{ marginRight: "10px" }} // Added margin between chat and like
           >
             <Badge
               badgeContent={Object.keys(auth.unreadChats).length}
               overlap="rectangular"
             >
-              <BsChat style={{ color: "white", margin: "2px", fontSize: "13px" }} />
+              <BsChat style={{ color: "white", fontSize: "13px" }} />
             </Badge>
           </div>
         </Tooltip>
       </Box>
-       )} 
+    )}
 
-        <Box
-          style={{
-            cursor: "pointer",
-            margin: "5px 3px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <span style={{ fontSize: "12px", margin: "0 6px", color: "white" }}>
-            {nbLike && nbLike}
-          </span>
-          <FaHeart
-             style={isLike ? {color: ' #FD1D1D' ,fontSize:"14px" } : { color:' #ffffff6e' ,fontSize:"14px" }}
-            onClick={(event) => {
-              event.stopPropagation(); // يمنع تشغيل onClick الخاص بـ Box
-              likeDislikeUserHandler(userCardData._id);
-            }}
-          />
-        </Box>
-      </div>
-    </div>
+    <Box
+      style={{
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <span style={{ fontSize: "12px", margin: "0 6px", color: "white" }}>
+        {nbLike && nbLike}
+      </span>
+      <FaHeart
+        style={isLike ? { color: '#FD1D1D', fontSize: "14px" } : { color: '#ffffff6e', fontSize: "14px" }}
+        onClick={(event) => {
+          event.stopPropagation();
+          likeDislikeUserHandler(userCardData._id);
+        }}
+      />
+    </Box>
   </div>
+  </div>
+</div>
 </Box>
 
 //       <Box className="card-3" onClick={() => {

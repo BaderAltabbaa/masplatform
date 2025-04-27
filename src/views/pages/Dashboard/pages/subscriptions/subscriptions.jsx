@@ -144,33 +144,7 @@ export default function Subscriptions() {
      
      
        
-       <Box display="flex" alignItems="center" justifyContent="center" mb={5} mt={5}><ButtonwithAnimation>{t("Users")}</ButtonwithAnimation></Box>
-        <Box>
-          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
-            {userList.map((data, i) => {
-              return (
-                <Grid  key={i} lg={3} md={4} sm={6} xm={12} style={{ display: "flex", justifyContent: "center" }}>
-                  <CardCreators data={data}  />
-                </Grid>
-              );
-            })}
-          </Grid>
-          {userPages > 1 && (
-            <Box
-              mb={2}
-              mt={2}
-              display="flex"
-              justifyContent="center"
-              style={{ marginTop: 40 }}
-            >
-              <Pagination
-                count={userPages}
-                page={userPage}
-                onChange={(e, v) => updateState({ userPage: v })}
-              />
-            </Box>
-          )}
-        </Box>
+      
       
     </div>
   );
@@ -191,8 +165,9 @@ export default function Subscriptions() {
         if (res.data.statusCode === 200) {
           updateState({
             subscriptions: res.data.result.docs,
-            subsPages: res.data.result.pages,
+            subsPages: res.data.result.totalPages,
           });
+          console.log("bund",res.data)
         }
       })
       .catch((err) => {
@@ -216,7 +191,7 @@ export default function Subscriptions() {
         if (res.data.statusCode === 200) {
           updateState({
             userList: res.data.result.docs,
-            userPages: res.data.result.pages,
+            userPages: res.data.result.totalPages,
           });
         }
       })

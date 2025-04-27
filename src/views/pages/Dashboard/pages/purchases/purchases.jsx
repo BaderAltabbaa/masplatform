@@ -12,6 +12,15 @@ import { Pagination } from "@mui/material";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import CardMarketplace from '../../../../../component/ui/Card/CardMarketplace';
 import MainCard from "../../ui-component/cards/MainCard";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
 
 const useStyles = makeStyles(() => ({
   subscriptionBox: {
@@ -105,24 +114,41 @@ export default function purchases() {
       <Box className={classes.LoginBox} >
        
         <Box>
-          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
-            {purchases.map((data, i) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={i}   style={{ display: "flex", justifyContent: "center" }}>
-                     <CardCreators
-                                data={data}
-                                chat
-
-                                subscriptionBox
-
-                                // CardpersonalInfo={CardpersonalInfo}
-                                Subscribe
-                            />
-                  {/* <ItemCard data={data.nft1Id} key={i} index={i} /> */}
-                </Grid>
-              );
-            })}
-          </Grid>
+           <TableContainer component={Paper} >
+            <Table>
+              <TableHead sx={{background:"linear-gradient(to top right,#900098,#4d0051)"}}>
+                <TableRow>
+                         <TableCell sx={{color:"white"}}>{t("Title")}</TableCell>
+                         <TableCell sx={{color:"white"}}>{t("Name")}</TableCell>
+                         <TableCell sx={{color:"white"}}>{t("Price")}</TableCell>
+                         <TableCell sx={{color:"white"}}>{t("Status")}</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {purchases.map((items, i) => {
+                  return (
+                   <TableRow key={i}>
+                    <TableCell>
+                     {items.title}
+                    </TableCell>
+                    <TableCell>
+                     {items.name}
+                    </TableCell>
+                    <TableCell>
+                     {items.masPrice} MAS
+                    </TableCell>
+                    <TableCell>
+                     {items.status}
+                    </TableCell>
+                   </TableRow>)
+                })}
+                </TableBody>
+                </Table>
+                </TableContainer>
+         
+          
+            
+       
         </Box>
         {subsPages > 1 && (
           <Box
@@ -140,46 +166,7 @@ export default function purchases() {
           </Box>
         )}
       </Box>
-      <Box className={classes.LoginBox} >
-        <Box className={classes.masBoxFlex}>
-                        <Typography variant="h6" style={{fontSize:"1.8rem" ,color:"#43005e"}}>{t("Users")}</Typography>
-        </Box>
-        <Box>
-          <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">
-            {userList.map((data, i) => {
-              return (
-                <Grid item key={i} lg={3} md={4} sm={6} xm={12}  style={{ display: "flex", justifyContent: "center" }}>
-                      <CardCreators
-                                data={data}
-                                chat
-
-                                subscriptionBox
-
-                                // CardpersonalInfo={CardpersonalInfo}
-                                Subscribe
-                            />
-                 
-                </Grid>
-              );
-            })}
-          </Grid>
-          {userPages > 1 && (
-            <Box
-              mb={2}
-              mt={2}
-              display="flex"
-              justifyContent="center"
-              style={{ marginTop: 40 }}
-            >
-              <Pagination
-                count={userPages}
-                page={userPage}
-                onChange={(e, v) => updateState({ userPage: v })}
-              />
-            </Box>
-          )}
-        </Box>
-      </Box>
+      
     </div>
     </>
    
@@ -201,8 +188,9 @@ export default function purchases() {
         if (res.data.statusCode === 200) {
           updateState({
             purchases: res.data.result.docs,
-            subsPages: res.data.result.pages,
+            subsPages: res.data.result.totalPages,
           });
+          console.log("pur",res.data)
         }
       })
       .catch((err) => {
@@ -226,7 +214,7 @@ export default function purchases() {
         if (res.data.statusCode === 200) {
           updateState({
             userList: res.data.result.docs,
-            userPages: res.data.result.pages,
+            userPages: res.data.result.totalPages,
           });
         }
       })

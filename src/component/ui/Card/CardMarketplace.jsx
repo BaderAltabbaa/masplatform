@@ -914,27 +914,7 @@ useEffect(() => {
             padding:"20px",
             borderRadius:"20px"
           }}>
-    {/* Title Box */}
-    <Box display="flex" justifyContent="center">
-    <Box
-      mb={2}
-      sx={{
-        color: "white",
-        backgroundColor: "#2f0032",
-        padding: "5px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-        width: "fit-content",
-        textAlign: "center",
-        display:"flex",
-        justifyContent:"center",
-        
-      }}
-    >
-      <Typography sx={{ fontSize: { xs: "20px", sm: "25px" }, fontWeight: "bold" }}>
-        {itemData.itemTitle}
-      </Typography>
-    </Box></Box>
+   
 
     {/* Big Image and Details */}
     <Box
@@ -981,6 +961,7 @@ useEffect(() => {
         }}
       >
         {[
+          { label: t("Title"), value: itemData.itemTitle },
           { label: t("Name"), value: itemData.itemName },
           { label: t("Price"), value: `${itemData.donationAmount} ${itemData.coinName}` },
           { label: t("Details"), value: itemData.details },

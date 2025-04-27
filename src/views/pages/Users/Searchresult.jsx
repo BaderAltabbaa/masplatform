@@ -81,7 +81,6 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
   
 
   const getuser = async (cancelTokenSource) => {
-    setIsLoading(true);
     console.log("Starting API request...");
   console.log("Page:", page);
   console.log("Search:", search);
@@ -93,7 +92,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
         cancelToken: cancelTokenSource && cancelTokenSource.token,
       },
       params: {
-        limit: 12,
+        limit: 10,
         page: page,
         search: search,
         userType: "Creator",
@@ -110,7 +109,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
         console.log("Total Pages:", res.data.result.pages);
         if (res.data.statusCode === 200) {
           if (res.data.result.docs) {
-            setNoOfPages(res.data.result.pages);
+            setNoOfPages(res.data.result.totalPages);
             setUserListToDisplay(res.data.result.docs);
           }
         }
@@ -141,7 +140,9 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
 
     
       {isLoading ? (
-        <DataLoading />
+       <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+              <DataLoading />
+              </Box>
       ) : (
         <Container maxWidth="xl">
           <div style={{
@@ -155,7 +156,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
 
             <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave2.png" 
+        src="/assets/Images/wave10.png" 
         alt="Description" 
         style={{ display: 'block', transform:" scale(0.7)" }}
       />

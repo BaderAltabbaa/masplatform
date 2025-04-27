@@ -987,6 +987,9 @@ variant="standard"
           </DialogContentText>
         </DialogContent>
       </Dialog>
+
+
+
       {openCertificate && serialNumber && (
         <Dialog
           open={openCertificate}
@@ -998,20 +1001,33 @@ variant="standard"
           }}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          PaperProps={{
+            sx: {
+              backgroundImage: 'url(/assets/Images/doodle2.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              
+            }
+          }}
         >
           <Box id="certificate_UI">
             <DialogContent className={classes.certificate}>
               <Box className={classes.certificateBox}>
-                <Box className={classes.heading}>
-                  <img src="\assets\Images\masfooter-logo.svg" />
-                  <Typography variant="h2" color="white" align="center">
+                
+                <Box className={classes.body} align="start">
+                <Box className={classes.heading} mb={2}>
+                  <img src="\assets\Images\masfooter-logo.svg"  style={{width:"50px"}}/>
+                  <Typography align="center" sx={{color:"white" ,fontSize:"24px" ,fontWeight:"bold" ,
+                    "@media(max-width:700px)":{
+                      fontSize:"16px"
+                    }
+                  }}>
                   {t("Transaction Receipt")}
                   </Typography>
-                  <img src="\assets\Images\masfooter-logo.svg"  alt=""/>
+                  <img src="\assets\Images\masfooter-logo.svg"  style={{width:"50px"}}/>
                 </Box>
-                <Box className={classes.body} align="start" mt={3}>
-
-                  <Box display="flex" alignItems="center" marginBottom="15px"> 
+                  <Box display="flex" alignItems="center" marginBottom="10px"> 
                   <Typography variant="h3" sx={{marginRight:"5px"}}>
                     {t("From")}:
 
