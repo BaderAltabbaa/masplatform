@@ -239,12 +239,7 @@ console.log("bra",userID)
 //         navigate("/user-profile/" + userCardData.userName)
 //       }}>
 //     
-//       <div
-//       className="contentContainer"
-//         style={{
-      
-//         }}
-//       >
+//      
 //         <h3 onClick={() => { navigate("/user-profile/" + userCardData.userName) }} >
 
 
