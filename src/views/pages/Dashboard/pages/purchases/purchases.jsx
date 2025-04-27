@@ -180,7 +180,7 @@ export default function purchases() {
         token: sessionStorage.getItem("token"),
       },
       params: {
-        limit: 4,
+        limit: 6,
         page: subsPage,
       },
     })

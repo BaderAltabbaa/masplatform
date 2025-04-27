@@ -218,7 +218,7 @@ export default function sales() {
                 token: sessionStorage.getItem("token"),
             },
             params: {
-                limit: 4,
+                limit: 6,
                 page: subsPage,
             },
         })
