@@ -238,11 +238,7 @@ console.log("bra",userID)
 //       <Box className="card-3" onClick={() => {
 //         navigate("/user-profile/" + userCardData.userName)
 //       }}>
-//       <img
-//          src={userCardData.profilePic}
-//         alt={title}
-     
-//       />
+//     
 //       <div
 //       className="contentContainer"
 //         style={{
