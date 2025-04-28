@@ -119,7 +119,7 @@ export default function Login() {
     })
       .then(async (res) => {
         if (res.data.statusCode === 200) {
-          updateState({ allFeed: res.data.result.docs, pages: res.data.pages });
+          updateState({ allFeed: res.data.result.docs, pages: res.data.totalPages });
         }
       })
       .catch((err) => {

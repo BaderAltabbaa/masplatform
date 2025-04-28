@@ -40,6 +40,7 @@ import { tokensDetails } from "src/constants";
 import ReactPlayer from "react-player";
 import AdditemDialog from "../../../../../component/AddItemDialog";
 import ShareForAudienceDialog from "../../../../../component/shareForAudienceDialog";
+import AddPhotoDialog from '../../../../../component/AddPhotoDialog';
 import MainCard from '../../ui-component/cards/MainCard'
 import CardMarketplace from "../../../../../component/ui/Card/CardMarketplace";
 
@@ -270,7 +271,7 @@ export default function Marketplace() {
 
       {/* Share For Audience */}
       {openShareAudience && (
-        <ShareForAudienceDialog
+        <AddPhotoDialog
           show={openShareAudience}
           handleClose={() => updateState({ openShareAudience: false })}
         />
@@ -295,7 +296,8 @@ export default function Marketplace() {
       .then(async (res) => {
         if (res.data.statusCode === 200) {
           updateState({ itemList: res.data.result.docs });
-          updateState({ pages: res.data.result.pages });
+          updateState({ pages: res.data.result.totalPages });
+          console.log("mark",itemList)
         }
       })
       .catch((err) => {

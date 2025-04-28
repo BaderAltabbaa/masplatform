@@ -9,10 +9,8 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
       <div className="content2x">
         
         <div className="text-content2x">
-          <h3 style={{ 
-            fontSize:'14px'
-           }}>{titel}</h3>
-          <p>{text}</p>
+          <span className="main-span">{titel}</span>
+          <span className="sub-span">{text}</span>
         </div>
       </div>
       <div

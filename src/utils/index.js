@@ -1,3 +1,4 @@
+import { routes } from "../routes";
 
 export function sortAddress(addr) {
   if (addr) return `${addr.slice(0, 5)}...${addr.slice(addr.length - 5)}`;
@@ -85,3 +86,11 @@ export function nFormatter(num, digits) {
 }
 
 
+export const hideSupportIcon = (pathname) => {
+  
+  const hiddenRoute = [
+    "/chat"
+  ]
+
+  return hiddenRoute.some(route => pathname.startsWith(route))
+}

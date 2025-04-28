@@ -38,7 +38,7 @@ import LanguageSwitcher from '../../component/LangugeSwitcher';
 import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
-
+import { hideSupportIcon } from '../../utils';
 
 
 
@@ -651,6 +651,9 @@ export default function Header() {
       </Box>
     )
   }
+
+const hideicon = hideSupportIcon(location.pathname)
+
   return (
     <>
       <AppBar
@@ -972,7 +975,7 @@ export default function Header() {
 
       </AppBar>
 
-      {auth.userLoggedIn &&
+      {auth.userLoggedIn && !hideicon &&
       
       <Box 
       onClick={handleOpenSupport}
@@ -1072,7 +1075,7 @@ export default function Header() {
                     maxWidth: '80%',
                     padding:"5px 10px",
                     borderRadius: 2,
-                    backgroundColor: msg.sender === 'user' ? 'rgb(96, 0, 134)' : '#e0e0e0',
+                    backgroundColor: msg.sender === 'user' ? '#600086' : '#e0e0e0',
                     color: msg.sender === 'user' ? 'white' : 'black',
                     boxShadow: 1
                   }}>

@@ -159,7 +159,7 @@ console.log("bra",userID)
     {userID == userCardData._id ? (
       <button
         className="primary"
-        style={{ padding: "5px", marginRight: "8px" }}
+        style={{ padding: "5px", marginRight: "8px",width:"80px" }}
       >
         Profile
       </button>

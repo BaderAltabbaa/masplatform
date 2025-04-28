@@ -208,7 +208,7 @@ const AuctionPage = ({ staticSections }) => {
     { img: "/assets/Images/1.jpg", text: t("Bundles") },
     { img: "/assets/Images/25.webp", text: t("MarketPlace") },
     { img: "/assets/Images/22.jpg", text: t("Education") },
-    { img: "/assets/Images/14.jpg", text: t("Transfer")}
+    { img: "/assets/Images/30.jpeg", text: t("Transfer")}
   ].map((item, index) => (
     <Link to='/creators' key={index}>
       <Box sx={{ 
@@ -360,9 +360,7 @@ padding:"30px 200px"
         "@media(max-width:700px)":{
           gridTemplateColumns: "repeat(3, 1fr)", 
         },
-        "@media(max-width:600px)":{
-          gridTemplateColumns: "repeat(2, 1fr)", 
-        }
+       
         
         }}>
 

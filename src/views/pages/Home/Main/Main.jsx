@@ -11,11 +11,13 @@ import Solutions from "../Solutions/Solutions";
 import Services from "../Services";
 import { ButtonwithAnimation } from "../../../../component/ui/Button/button";
 import { useTranslation } from 'react-i18next';
+import DataLoading from "../../../../component/DataLoading";
 
 
 
 export default function Main() {
       const {t} = useTranslation();
+    const [isLoading, setIsLoading] = useState(true);
   
   const [state, setState] = useState({
     bannerDetails: [],
@@ -36,9 +38,11 @@ export default function Main() {
       });
       if (res.data.statusCode === 200) {
         updateState({ bannerDetails: res.data.result.docs });
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   };
 
@@ -105,20 +109,38 @@ console.log("mm",landingSections)
       background: (theme) => theme.custom.PageBackGround,
      
     }}
+   
     >
-      {bannerDetails.length > 0 && (
-        <BannerSection
-          bannerDetails={bannerDetails}
-          bannerDuration={bannerDuration}
-        />
-      )}
 
-  <Services/>
-    
+{isLoading ? (<>
 
-      <AuctionPage staticSections={staticSections}/>
+ <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+        <DataLoading />
+        </Box>
+</>) :  (<>
 
-    
+
+
+  <Box>
+
+{bannerDetails.length > 0 && (
+  <BannerSection
+    bannerDetails={bannerDetails}
+    bannerDuration={bannerDuration}
+  />
+)}
+
+<Services/>
+
+
+<AuctionPage staticSections={staticSections}/>
+
+</Box>
+</>)}
+
+
+
+
     </Box>
   );
 }

@@ -183,11 +183,12 @@ const Chat = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     borderBottom: '1px solid',
-                    borderColor: 'divider'
+                    borderColor: 'divider',
+                    background:"linear-gradient(to top right,#900098,#4d0051)"
                 }}>
-                    <Typography variant="h6">Messages</Typography>
+                    <Typography variant="h3" color='white'>Messages</Typography>
                     {!isMobile && (
-                        <IconButton onClick={handleDrawerToggle}>
+                        <IconButton onClick={handleDrawerToggle} sx={{color:"white"}}>
                             <Menu />
                         </IconButton>
                     )}
@@ -255,7 +256,12 @@ const Chat = () => {
                     md: 'flex'
                 },
                 flexDirection: 'column',
-                height: '100%'
+                height: '100%',
+                boxShadow:"2px 4px 8px black",
+                backgroundImage: 'url(/assets/Images/doodle2.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
             }}>
                 {selectedUser ? (
                     <>
@@ -264,7 +270,10 @@ const Chat = () => {
                             display: 'flex', 
                             alignItems: 'center',
                             borderBottom: '1px solid',
-                            borderColor: 'divider'
+                            borderColor: 'divider',
+                            background:"rgba(255, 255, 255, 0.7)",
+                            
+                            
                         }}>
                             {isMobile && (
                                 <IconButton onClick={handleDrawerToggle} sx={{ mr: 1 }}>
@@ -277,7 +286,7 @@ const Chat = () => {
                             >
                                 {!selectedUser.profilePic && <AccountCircle />}
                             </Avatar>
-                            <Typography variant="h6">
+                            <Typography variant="h3">
                                 {selectedUser.username || selectedUser.name}
                             </Typography>
                         </Box>
@@ -286,7 +295,10 @@ const Chat = () => {
                             flexGrow: 1, 
                             overflowY: 'auto', 
                             p: 2,
-                            bgcolor: 'background.default'
+                            backgroundImage: 'url(/assets/Images/doodle3.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
                         }}>
                             <List>
                                 {messagesByUser[selectedUser._id]?.map((msg, index) => (
@@ -297,7 +309,7 @@ const Chat = () => {
                                             maxWidth: '80%',
                                             p: 1.5,
                                             borderRadius: 2,
-                                            bgcolor: msg.from === socket?.id ? '#4d0051' : 'background.paper',
+                                            bgcolor: msg.from === socket?.id ? ' #600086' : 'background.paper',
                                             color: msg.from === socket?.id ? 'primary.contrastText' : 'text.primary',
                                             boxShadow: 1
                                         }}>
@@ -353,9 +365,10 @@ const Chat = () => {
                         justifyContent: 'center', 
                         height: '100%',
                         textAlign: 'center',
-                        p: 3
+                        p: 3,
+                        background:"rgba(255, 255, 255, 0.72)"
                     }}>
-                        <AccountCircle sx={{ fontSize: 80, color: 'action.disabled', mb: 2 }} />
+                        <AccountCircle sx={{ fontSize: 80, color: '#600086', mb: 2 }} />
                         <Typography variant="h6" color="text.secondary">
                             {isMobile ? 'Select a conversation' : 'Select a conversation to start chatting'}
                         </Typography>

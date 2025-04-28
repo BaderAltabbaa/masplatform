@@ -49,15 +49,15 @@
     display: flex;
     flex-direction: column;
   }
-  .content2x h3 {
+  .main-span {
     font-size: 14px;
     margin: 0;
    
 
   }
   
-  .content2x p {
-    font-size: 9px;
+  .sub-span {
+    font-size: 10px;
     color: #ddd;
     margin:1px 0 0; 
   
@@ -84,12 +84,12 @@
     margin: 0 auto 10px; /* توسيط الصورة وإضافة مسافة سفلية */
   }
 
-  .content2x h3 {
+  .main-span {
    margin-top: -10px;
     font-size: 0.9rem;
   }
 
-  .content2x p {
+  .sub-span {
     font-size: 0.7rem;
   }
 }

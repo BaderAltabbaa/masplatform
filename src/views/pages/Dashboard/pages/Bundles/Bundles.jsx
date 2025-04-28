@@ -284,7 +284,7 @@ export default function Bundles() {
       .then(async (res) => {
         if (res.data.statusCode === 200) {
           updateState({ bundleList: res.data.result.docs });
-          updateState({ pages: res.data.result.pages });
+          updateState({ pages: res.data.result.totalPages });
         }
       })
       .catch((err) => {
