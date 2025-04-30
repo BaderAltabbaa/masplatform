@@ -26,13 +26,12 @@ import axios from "axios";
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import NoDataFound from "src/component/NoDataFound";
 import { toast } from "react-toastify";
-import BundleCard from "src/component/NewBundleCard";
 import { tokensDetails } from "src/constants";
 import ReactPlayer from "react-player";
-import AddBundleDialog from "../../../../../component/AddBundleDialog";
-import ShareForAudienceDialog from "../../../../../component/shareForAudienceDialog";
+import AddCourseDialog from "../../../../../component/AddCourseDialog";
+import ShareTheLessonDialog from "../../../../../component/shareTheLessonDialog";
 import MainCard from '../../ui-component/cards/MainCard'
-import Cardbundle from "../../../../../component/ui/Card/Cardbundle";
+import Cardcourse from "../../../../../component/ui/Card/Cardcourse";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -170,12 +169,12 @@ export default function MyEducation() {
   const {t} = useTranslation();
   const [state, setState] = useState({
     OpenAuction: false,
-    openShareAudience: false,
-    bundleList: [],
+    openShareTheLesson: false,
+    courseList: [],
     page: 1,
     pages: 1,
   });
-  const { OpenAuction, bundleList, page, pages, openShareAudience } = state;
+  const { OpenAuction, courseList, page, pages, openShareTheLesson } = state;
   const updateState = (data) =>
     setState((prevState) => ({ ...prevState, ...data }));
 
@@ -183,7 +182,7 @@ export default function MyEducation() {
       
 
   useEffect(() => {
-    getBundleListHandler().catch(console.error);
+    getCourseListHandler().catch(console.error);
   }, [page]);
 
   return (<>
@@ -198,9 +197,9 @@ export default function MyEducation() {
             size="large"
             color="white"
             style={{ marginRight: "10px" }}
-            onClick={() => updateState({ openShareAudience: true })}
+            onClick={() => updateState({ openShareTheLesson: true })}
           >
-            {t("share for audience")}
+            {t("share The lesson")}
           </Button>
           <Button
             variant="contained"
@@ -209,12 +208,12 @@ export default function MyEducation() {
             style={{background:"#2f0032",color:'white'}}
             onClick={() => updateState({ OpenAuction: true })}
           >
-            {t("add a bundle")}
+            {t("add a Course")}
           </Button>
         </Box>
       </Box>
       <Box>
-        {!bundleList[0] ? (
+        {!courseList[0] ? (
           <Box align="center" mt={2} mb={5}>
             <NoDataFound />
           </Box>
@@ -223,11 +222,11 @@ export default function MyEducation() {
         )}
 
         <Grid container spacing={2} className={classes.bunbox}  >
-          {bundleList.map((data, i) => {
+          {courseList.map((data, i) => {
             return (
               <Grid item key={i} lg={3} md={4.2} sm={6} xm={12}>
-                <Cardbundle data={data}/>
-                {/* <BundleCard data={data} index={i} isDays={true} /> */}
+                <Cardcourse data={data}/>
+                {/* <CourseCard data={data} index={i} isDays={true} /> */}
               </Grid>
             );
           })}
@@ -249,30 +248,30 @@ export default function MyEducation() {
         )}
       </Box>
 
-      {/* add bundle */}
+      {/* add course */}
 
       {OpenAuction && (
-        <AddBundleDialog
+        <AddCourseDialog
           show={open}
           handleClose={() => updateState({ OpenAuction: false })}
         />
       )}
 
-      {/* Share For Audience */}
-      {openShareAudience && (
-        <ShareForAudienceDialog
-          show={openShareAudience}
-          handleClose={() => updateState({ openShareAudience: false })}
+      {/* Share the lesson  */}
+      {openShareTheLesson && (
+        <ShareTheLessonDialog
+          show={openShareTheLesson}
+          handleClose={() => updateState({ openShareTheLesson: false })}
         />
       )}
     </Box>
     </>
   );
 
-  async function getBundleListHandler() {
+  async function getCourseListHandler() {
     await axios({
       method: "GET",
-      url: Apiconfigs.myNftList,
+      url: Apiconfigs.myNft2List,
       headers: {
         token: sessionStorage.getItem("token"),
       },
@@ -283,8 +282,8 @@ export default function MyEducation() {
     })
       .then(async (res) => {
         if (res.data.statusCode === 200) {
-          updateState({ bundleList: res.data.result.docs });
-          updateState({ pages: res.data.result.totalPages });
+          updateState({ courseList: res.data.result.docs });
+          updateState({ pages: res.data.result.pages });
         }
       })
       .catch((err) => {
@@ -293,7 +292,7 @@ export default function MyEducation() {
   }
 }
 
-export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {
+export const AddCoursePopup = ({ open, handleClose, callbackFun }) => {
   const user = useContext(UserContext);
   const classes = useStyles();
   const [title, settitle] = useState("");
@@ -323,21 +322,21 @@ export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {
       parseFloat(donation) > 0
     ) {
       try {
-        setmessage("Creating Bundle...");
+        setmessage("Creating Course...");
         setprocess(true);
         const formData = new FormData();
         formData.append("file", image);
         formData.append("tokenName", name);
-        formData.append("bundleTitle", title);
+        formData.append("courseTitle", title);
         formData.append("duration", duration);
-        formData.append("bundleName", name);
+        formData.append("courseName", name);
         formData.append("details", details);
         formData.append("donationAmount", donation);
         formData.append("coinName", selectedToken.name);
 
         const res = await axios({
           method: "POST",
-          url: Apiconfigs.addNft,
+          url: Apiconfigs.addNft2,
           data: formData,
           headers: {
             token: sessionStorage.getItem("token"),
@@ -351,7 +350,7 @@ export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {
 
           await user.updateUserData();
           setprocess(false);
-          toast.success("Bundle created");
+          toast.success("Course created");
           setfire(!fire);
           handleClose();
           setname("");
@@ -380,17 +379,17 @@ export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {
       onClose={() => handleClose()}
       aria-labelledby="max-width-dialog-title"
     >
-      <DialogTitle className={classes.dailogTitle}>Create a bundle</DialogTitle>
+      <DialogTitle className={classes.dailogTitle}>Create a course</DialogTitle>
       <DialogContent>
         <Box>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
-              <label> Bundles Title</label>
+              <label> Course Title</label>
             </Grid>
             <Grid item xs={12} md={8}>
               <TextField
                 id="standard-basic"
-                placeholder="Bundles 1"
+                placeholder="Courses 1"
                 className={classes.input_fild2}
                 onChange={(e) => settitle(e.target.value)}
                 error={
@@ -406,12 +405,12 @@ export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {
         <Box>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
-              <label> Bundles Name</label>
+              <label> Courses Name</label>
             </Grid>
             <Grid item xs={12} md={8}>
               <TextField
                 id="standard-basic"
-                placeholder="Basic Bundle"
+                placeholder="Basic Course"
                 onChange={(e) => setname(e.target.value)}
                 className={classes.input_fild2}
                 error={isSubmit && name === ""}

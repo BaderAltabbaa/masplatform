@@ -1,8 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { Typography ,Box ,Container} from '@mui/material'
+import axios from "axios";
+import Apiconfigs from '../../../Apiconfig/Apiconfigs';
 import "src/views/pages/Home/HowWorks/HowWorks.css"
 
 const Services = () => {
+  const [sectionData, setSectionData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const getLandingPageSectionsHandler = async () => {
+    try {
+      setLoading(true);
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.landingContent1List,
+      });
+      if (res.data.statusCode === 200 && res.data.result.length > 0) {
+        // Get only the first item (index 0) from the array
+        setSectionData(res.data.result[1]);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Failed to load content");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getLandingPageSectionsHandler();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (!sectionData) return null;
+
+
+
   return (
 <>
 <Container  maxWidth="xl">
@@ -31,28 +66,23 @@ const Services = () => {
          fontWeight:"bold",
          textShadow:"0px 0px 10px white"
         }}
-         m={2}>MAS PLATFORM Services </Typography>
+         m={2}>{sectionData.title.replace(/<\/?p>/gi, '')} </Typography>
         </Box>
 
         <Box textAlign="left" mb={2} ml={1}>
-        <Typography variant='h4' color='white'>Digital & Physical Marketplace</Typography>
-        <Typography  color='white'>Buy & sell products or services using crypto (MAS, USDT, USDC)—fast, secure, and borderless.</Typography>
+        <Typography  color='white'>{sectionData.description.replace(/<\/?p>/gi, '')}</Typography>
+        <Typography  color='white'>
+          <h2 className="HowWorks-subtitle">{sectionData.description.replace(/<\/?p>/gi, '',)}</h2>
+                          {sectionData.contents.map((content, index) => (
+                            <React.Fragment key={index}>
+                              <h2 className="HowWorks-section-title">{content.heading}</h2>
+                              <p className="HowWorks-text">{content.contentDescription}</p>
+                            </React.Fragment>
+                          ))}
+        </Typography>
         </Box>
 
-        <Box textAlign="left" mb={2} ml={1}>
-        <Typography variant='h4' color='white'>Creator Economy Tools</Typography>
-        <Typography  color='white'>Monetize content (videos, courses) and receive transparent donations via Proof of Donation (PoD).</Typography>
-        </Box>
-
-        <Box textAlign="left" mb={2} ml={1}>
-        <Typography variant='h4' color='white'>Financial Services</Typography>
-        <Typography  color='white'>Low-cost global remittances, auctions, and B2B crypto integrations.</Typography>
-        </Box>
-
-        <Box textAlign="left" mb={2} ml={1}>
-        <Typography variant='h4' color='white'>RWA (Real World Assets)</Typography>
-        <Typography  color='white'>Tokenize and trade real-world assets (property, art, commodities) on-chain for liquidity & accessibility.</Typography>
-        </Box>
+        
          
        
   

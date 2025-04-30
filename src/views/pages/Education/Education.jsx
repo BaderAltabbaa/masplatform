@@ -9,14 +9,13 @@ import {
 } from "@mui/material";  
 
 import { makeStyles } from '@mui/styles';
-import Bundlecard from "src/component/NewBundleCard";  
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs"; 
 import { UserContext } from "src/context/User"; 
 import DataLoading from "src/component/DataLoading"; 
 import NoDataFound from "src/component/NoDataFound"; 
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
-import Cardbundle from "../../../component/ui/Card/Cardbundle";
+import Cardcourse from "../../../component/ui/Card/Cardcourse";
 import { useTranslation } from 'react-i18next';
 import 'src/layouts/TopBar/TopBar.css'
 import { useInView } from 'react-intersection-observer';
@@ -68,7 +67,7 @@ const useStyles = makeStyles(() => ({
 const Education = () => {
   const classes = useStyles();
   const auth = useContext(UserContext);
-  const [allNFTList, setAllNFTList] = useState([]);
+  const [allNFT2List, setAllNFT2List] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -86,10 +85,10 @@ const Education = () => {
                     }); 
   
 
-  const listAllNftHandler = async () => {
+  const listAllNft2Handler = async () => {
     await axios({
       method: "GET",
-      url: Apiconfigs.listAllNft,
+      url: Apiconfigs.listAllNft2,
       params: {
         page: page,
         limit: 10
@@ -97,8 +96,8 @@ const Education = () => {
     })
       .then(async (res) => {
         if (res.data.statusCode === 200) {
-          setAllNFTList(res.data.result.docs);
-          setPages(res.data.result.totalPages)
+          setAllNFT2List(res.data.result.docs);
+          setPages(res.data.result.pages)
         }
         setIsLoading(false);
       })
@@ -111,7 +110,7 @@ const Education = () => {
 
   useEffect(() => {
     if (auth.userData?._id && auth.userLoggedIn) {
-      listAllNftHandler();
+      listAllNft2Handler();
     }
   }, [auth.userLoggedIn, auth.userData, page]);
 
@@ -124,9 +123,7 @@ const Education = () => {
     }}
     >
       {isLoading ? (
-        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
-               <DataLoading />
-               </Box>
+        <DataLoading />
       ) : (
         // <section>
         <Container maxWidth='xl'>
@@ -183,7 +180,7 @@ const Education = () => {
             <>
              
               {/* <Container maxWidth="xl"> */}
-                {allNFTList.length === 0 ? (
+                {allNFT2List.length === 0 ? (
                   <Box align="center" mt={4} mb={5}>
                     <NoDataFound />
                   </Box>
@@ -195,7 +192,7 @@ const Education = () => {
                 
                 
                 className={classes.gridContainer}>
-                  {allNFTList.map((data, i) => {
+                  {allNFT2List.map((data, i) => {
                     return (
                       <Grid
                       container
@@ -209,7 +206,7 @@ const Education = () => {
 
                       className={classes.gridbox}
                     >
-                      <Cardbundle data={data} />
+                      <Cardcourse data={data} />
                     </Grid>
 
                      
@@ -225,10 +222,10 @@ const Education = () => {
                     //   //onMouseLeave={() => setHoveredIndex(null)}
                     //  // style={hoveredIndex === i ? { border: '10px solid red' } : null}
                     //   >
-                    //     <Bundlecard
+                    //     <Coursecard
                     //       data={data}
                     //       index={i}
-                    //       callbackFn={listAllNftHandler}
+                    //       callbackFn={listAllNft2Handler}
                     //     />
                     //   </Grid>
                     );
