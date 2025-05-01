@@ -124,17 +124,18 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',  
+            transform:"scale(0.95)"
         }
       }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.5rem" }}
       >
         {isEdit ? t("Edit Audience") : t("Share For Audience")}
       </DialogTitle>
       <DialogContent style={{ padding: 40, paddingTop: 10 }}>
         <Box sx={{
-                    background:"rgba(255, 255, 255, 0.68)",
+                    background:"rgba(255, 255, 255, 0.85)",
                     padding:"20px",
                     borderRadius:"20px"
                   }}>

@@ -19,9 +19,10 @@ import ReactPlayer from "react-player";
 import CloseIcon from '@mui/icons-material/Close';
 import { color } from 'framer-motion';
 import { transform } from 'lodash';
+import DataLoading from '../../../../component/DataLoading';
 
 const useStyles = makeStyles((theme) => ({
-  root: { background:"linear-gradient(to right, #280026,rgb(142, 82, 146))"
+  root: { background:"linear-gradient(to right, #280026,#4a004f)"
   },
 
 
@@ -62,7 +63,8 @@ export default function itemDetails() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [open, setOpen] = useState(false);
-  const [currentImg, setCurrentImg] = useState('');
+  const [currentImg, setCurrentImg] = useState(itemDetails?.mediaUrl1);
+  
 
   const _onInputChange = (e) => {
     const name = e.target.name;
@@ -235,8 +237,37 @@ export default function itemDetails() {
     <Box className={classes.root}>
     <Box>
       {isLoadingBunldeView ? (
-        <Loader />
+       <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+              <DataLoading />
+              </Box>
       ) : (
+
+        <>
+          <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,overflow: "hidden"}}   className="bunner-animaton">
+   
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <img 
+            src="/assets/Images/wave10.png" 
+            alt="Description" 
+            style={{ display: 'flex' ,transform:" scale(0.7)"  }}
+          />
+          <div style={{
+             position: 'absolute',
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%)',
+             color: 'white',
+             fontSize: '2.5rem',
+              fontWeight:"bold",
+             textShadow:"0px 0px 10px white",
+          }}
+        >
+                             {itemDetails?.itemName ? itemDetails?.itemName : ""}
+
+          </div>
+        </div>
+    
+        </div>
         <Container maxWidth="lg">
           <Box
             style={{ background: "url(/images/banner1.png)" }}
@@ -338,71 +369,111 @@ export default function itemDetails() {
             </Box>
           </Box>
         </Container>
+
+        <Box sx={{
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 3,
+  padding: "40px",
+  "@media(max-width: 1000px)":{
+    flexDirection:"row"
+  }
+ 
+}}>
+  {/* Big Preview Image */}
+  <Box sx={{
+    width: "100%",
+    maxWidth: "550px",
+    height: "300px",
+    borderRadius: "20px",
+    overflow: "hidden",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+     "@media(max-width: 1000px)":{
+      maxWidth:"350px",
+      height:"250px"
+     }
+  }}>
+    <img
+      src={currentImg || itemDetails?.mediaUrl1}
+      alt="Main preview"
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+      }}
+    />
+  </Box>
+
+  {/* Thumbnail Grid */}
+  <Box sx={{
+   display:"flex",
+   justifyContent:"center",
+    gap: 2,
+    width: "fit-content",
+    backgroundImage: 'url(/assets/Images/doodle3.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+    padding:"12px",
+    borderRadius:"20px",   
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+    "@media(max-width: 1000px)":{
+      flexDirection:"column",
+      padding:"5px"
+    }
+
+ 
+  }}>
+    {Array.from({ length: 9 }).map((_, index) => {
+      const mediaUrl = itemDetails?.[`mediaUrl${index + 1}`];
+      if (!mediaUrl) return null;
+
+      return (
+        <Box
+          key={index}
+          sx={{
+            aspectRatio: "1/1",
+            borderRadius: "10px",
+            overflow: "hidden",
+            cursor: "pointer",
+            width:"90px",
+            border: mediaUrl === currentImg ? "3px solid #8e19d2" : "3px solid #2f0032",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+            transition: "all 0.2s ease",
+            "&:hover": {
+              transform: "scale(1.05)",
+              borderColor: "#8e19d2",
+              
+            },
+            "@media(max-width: 1000px)":{
+                width:"60px"
+              }
+          }}
+          onClick={() => setCurrentImg(mediaUrl)}
+        >
+          <img
+            src={mediaUrl}
+            alt={`Thumbnail ${index + 1}`}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </Box>
+      );
+    })}
+  </Box>
+</Box>
+        </>
       )}
     </Box>
 
-    <Box 
-     sx={{
-      display: "grid",
-      gridTemplateColumns: {
-        xs: "repeat(1, 1fr)", // 1 column on small screens
-        sm: "repeat(2, 1fr)", // 2 columns on medium screens
-        md: "repeat(3, 1fr)", // 3 columns on large screens
-      },
-      gap: "20px", // Spacing between grid items
-      padding: "40px",
-    }}>
-    {Array.from({ length: 9 }).map((_, index) => {
-  const mediaUrl = itemDetails?.[`mediaUrl${index + 1}`];
 
-  // Skip rendering if mediaUrl is not available
-  if (!mediaUrl) {
-    return null; // Or render a placeholder
-  }
+    
 
-  return (
-    <Box
-      key={index}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        overflow: "hidden", // Ensure images don't overflow
-        borderRadius: "30px",
-        
-      }}
-    >
-      <img
-        src={mediaUrl}
-        alt={`Item Image ${index + 1}`}
-        style={{
-          width: "100%",
-                height: "300px",
-                objectFit: "cover", // Ensure images scale properly
-                borderRadius: "30px",
-                cursor: "pointer",
-                objectFit:"fill",
-                border:"2px solid white",
-               
-        }}
-        onClick={() => handleClickOpen(mediaUrl)}
-        onError={(e) => (e.target.src = "defaultImage.png")} // Fallback for broken images
-      />
-    </Box>
-  );
-})}
-  <Dialog
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="image-dialog-title"
-    aria-describedby="image-dialog-description"
-  >
-    <IconButton onClick={handleClose} style={{ position: 'absolute', right: '10px', top: '10px' }}>
-      <CloseIcon />
-    </IconButton>
-    <img src={currentImg} alt="Enlarged view" style={{ width: '100%', height: 'auto' }} />
-  </Dialog>
-</Box>
+
 </Box>  </>
   );
 

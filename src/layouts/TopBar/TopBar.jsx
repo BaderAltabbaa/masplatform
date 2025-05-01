@@ -1129,7 +1129,7 @@ const hideicon = hideSupportIcon(location.pathname)
                 sx={{
                   background: "#43005e",
                   "&:hover": {
-                    background: "rgb(50, 0, 70)"
+                    background: "#320046"
                   },
                   "&:disabled": {
                     background: "#e0e0e0",

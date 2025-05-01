@@ -46,7 +46,7 @@ return(
    
     <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave2.png" 
+        src="/assets/Images/wave10.png" 
         alt="Description" 
         style={{ display: 'flex' ,transform:" scale(0.7)"  }}
       />
@@ -103,7 +103,7 @@ return(
 
 <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave6.png" 
+        src="/assets/Images/wave10.png" 
         alt="Description" 
         style={{ display: 'flex',transform:" scale(0.7)"   }}
       />
@@ -152,7 +152,7 @@ return(
 
 <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave8.png" 
+        src="/assets/Images/wave10.png" 
         alt="Description" 
         style={{ display: 'flex' ,transform:" scale(0.7)"  }}
       />

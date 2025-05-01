@@ -363,14 +363,24 @@ useEffect(() => {
             }
         };
       
-          const handleBuy = async () => {
-            try {
-                await handleSubmit();
-                await buyNow();
-            } catch (error) {
-                console.error("Unable to complete purchase:", error.message);
-            }
-          };
+        const handleBuy = async () => {
+          // First validate all fields
+          const requiredFields = ["name", "surname", "phoneNumber", "email", "postcode", "address1", "serialNumber"];
+          const emptyFields = requiredFields.filter(field => !formData[field]?.trim());
+          
+          if (emptyFields.length > 0) {
+            setError(`Please fill in all required fields: ${emptyFields.join(", ")}`);
+            return; // Stop execution if fields are empty
+          }
+        
+          try {
+            await handleSubmit();
+            await buyNow();
+          } catch (error) {
+            console.error("Unable to complete purchase:", error.message);
+            setError(error.message);
+          }
+        };
         
         const generatePDF = async (formData, itemData) => {
           const doc = new jsPDF();
@@ -471,38 +481,76 @@ useEffect(() => {
         
           return (
             <>
-              <Dialog
-                  open={open}
-                  onClose={onClose}
-                  aria-labelledby="billing-dialog-title"
-                  maxWidth="sm"
-                  fullWidth={true}
-              >
-                  <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
-                  <DialogContent>
-                      <Typography variant="body1" sx={{color:"#2f0032"}}>{t("Please enter your billing information below:")}</Typography>
-                      {error && <Typography color="error">{error}</Typography>}  
-                      {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2","serialNumber"].map((item) => (
-                          <TextField
-                              key={item}
-                              margin="dense"
-                              label={item.charAt(0).toUpperCase() + item.slice(1).replace(/([A-Z])/g, ' $1').trim()}
-                              type="text"
-                              fullWidth
-                              autoComplete="off"
-                              name={item}
-                              value={formData[item]}
-                              onChange={handleChange}
-                          />
-                      ))}
-                  </DialogContent>
-                  <br />
-                  <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
-                      <Button onClick={onClose} sx={{color:"#2f0032"}}>{t("Cancel")}</Button>
-                      <Button onClick={handleBuy} color="secondary" variant="contained" style={{background:"#2f0032",color:"white" }}>{t("Buy Now")}</Button>
-                  </Box>
-                  <br />
-              </Dialog>
+             <Dialog
+  open={open}
+  onClose={onClose}
+  aria-labelledby="billing-dialog-title"
+  maxWidth="sm"
+  fullWidth={true}
+>
+  <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
+  <DialogContent>
+    <Typography variant="body1" sx={{color:"#2f0032"}}>
+      {t("Please enter your billing information below:")}
+    </Typography>
+    {error && <Typography color="error">{error}</Typography>}
+    
+    {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2", "serialNumber"].map((item) => (
+      <TextField
+        key={item}
+        margin="dense"
+        label={`${item.charAt(0).toUpperCase() + item.slice(1).replace(/([A-Z])/g, ' $1').trim()}${["address2"].includes(item) ? "" : ""}`}
+        type={item === "phoneNumber" ? "number" : "text"}  // Set type to "number" for phoneNumber
+        fullWidth
+        name={item}
+        value={formData[item]}
+        onChange={handleChange}
+        required={!["address2"].includes(item)} // address2 is optional
+        error={error?.includes(item) && !formData[item]?.trim()}
+        helperText={error?.includes(item) && !formData[item]?.trim() ? "This field is required" : ""}
+        inputProps={{
+          inputMode: item === "phoneNumber" ? "numeric" : "text",
+          pattern: item === "phoneNumber" ? "[0-9]*" : undefined,
+          min: item === "phoneNumber" ? "0" : undefined,
+          style: {
+            // Hide arrows in most browsers
+            MozAppearance: item === "phoneNumber" ? 'textfield' : undefined,
+            WebkitAppearance: item === "phoneNumber" ? 'none' : undefined,
+            appearance: item === "phoneNumber" ? 'none' : undefined,
+            margin: 0
+          }
+        }}
+        sx={item === "phoneNumber" ? {
+          // Hide arrows in Chrome/Safari
+          '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+            WebkitAppearance: 'none',
+            margin: 0
+          },
+          // Hide arrows in Firefox
+          '& input[type=number]': {
+            MozAppearance: 'textfield'
+          }
+        } : undefined}
+      />
+    ))}
+  </DialogContent>
+  <br />
+  <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
+    <Button onClick={onClose} sx={{color:"#2f0032"}}>{t("Cancel")}</Button>
+    <Button 
+      onClick={handleBuy} 
+      color="secondary" 
+      variant="contained" 
+      style={{background:"#2f0032",color:"white" }}
+      disabled={Object.keys(formData).some(key => 
+        !["address2"].includes(key) && !formData[key]?.trim()
+      )}
+    >
+      {t("Buy Now")}
+    </Button>
+  </Box>
+  <br />
+</Dialog>
               
               <Dialog open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
                   <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}>{t("successed Purchase")}</DialogTitle>

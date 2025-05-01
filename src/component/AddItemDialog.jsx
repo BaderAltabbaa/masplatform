@@ -133,7 +133,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
     const emptySlots = maxImages - mediaUrls.length;
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }}>
+        <div style={{ display:"flex",flexDirection:"column",gap: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }}>
             <div className={classes.mediaBoxHeader}>
                 {t("Upload your images here")}
             </div>
@@ -589,12 +589,12 @@ const useStyles = makeStyles(() => ({
   },
 
   mediaPreview: {
-    width: '100px',  // Same as empty box width
+    width: '100%',  // Same as empty box width
     height: '100px', // Same as empty box height
     overflow: 'hidden', // Ensures no part of the image spills out
     position: 'relative',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     border: '1px solid #ccc',  // Optional, for visual consistency
     borderRadius: '5px',       // Optional, matches empty box
@@ -616,8 +616,8 @@ mediaBoxHeader: {
 
 
 emptyBox: {
-  width: '100px',
-  height: '113px',
+  width: '100%',
+  height: '40px',
   border: '2px dashed #ccc',
   display: 'flex',
   justifyContent: 'center',

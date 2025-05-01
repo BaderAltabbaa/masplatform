@@ -123,6 +123,17 @@ export default function ContactUs() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "rgb(250, 249, 249)", // White background
+                  borderRadius: "12px",     // Border radius
+                  border: "1px solid #ccc", // Optional: Add a border
+                },
+                "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
+                  borderBottom: "none", // Remove default underline
+                },
+              }}
             />
             <TextField
               label={t("Subject")}
@@ -131,6 +142,17 @@ export default function ContactUs() {
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               required
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "rgb(250, 249, 249)", // White background
+                  borderRadius: "12px",     // Border radius
+                  border: "1px solid #ccc", // Optional: Add a border
+                },
+                "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
+                  borderBottom: "none", // Remove default underline
+                },
+              }}
             />
             <TextField
               label={t("Message")}
@@ -141,6 +163,20 @@ export default function ContactUs() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
+              variant="filled"
+              sx={{
+                "& .MuiFilledInput-root": {
+                  backgroundColor: "rgb(250, 249, 249)", // White background
+                  borderRadius: "12px",     // Border radius
+                  border: "1px solid #ccc", // Optional: Add a border
+                  "&:hover": {
+                    backgroundColor: "rgb(250, 249, 249)", // Same as default (prevents override)
+                  },
+                },
+                "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
+                  borderBottom: "none", // Remove default underline
+                },
+              }}
             />
             <Box display='flex' justifyContent='center'>
             <Button type="submit" variant="contained"   sx={{backgroundColor:"rgb(84, 0, 85)",marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(102, 2, 107)"}}}>

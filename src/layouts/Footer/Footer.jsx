@@ -23,7 +23,7 @@ const [openForm, setOpenForm] = useState(false);
 const {t} = useTranslation();
 
 
-console.log("soc",socialLinks);
+console.log("soc",staticContent);
 const [selectedItem, setSelectedItem] = useState(null);
 
 const handleClickOpen = (item) => {
@@ -208,7 +208,7 @@ return (
             </> 
             ))}
 
-{staticContent.slice(3, 4).map((row) => (
+{staticContent.slice(7, 8).map((row) => (
   <>  
             <li className="footer-list-item" onClick={() => handleFormOpen(row)}>
             <span style={{cursor:"pointer"}}>{row.title}</span>
@@ -230,7 +230,9 @@ return (
   }
 }}>
         <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e">
-          <h1>{selectedItem?.title}</h1>
+          <span style={{
+            fontSize:"24px"
+          }}>{selectedItem?.title}</span>
           <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleClose}><AiOutlineClose/></div>
           </DialogTitle>
          <DialogContent>
@@ -255,7 +257,7 @@ return (
         <div>
           <h3 className="footer-section-header"></h3>
           <ul className="footer-list">
-          {staticContent.slice(4,6).map((row) => (
+          {staticContent.slice(3,5).map((row) => (
             <>
             <Link
                         style={{ color: 'white', textDecoration: 'none', }}
@@ -281,7 +283,7 @@ return (
             ))}
 
             
-{staticContent.slice(6, 8).map((row) => (
+{staticContent.slice(5, 7).map((row) => (
             <>     
             <li key={row.title} className="footer-list-item"  onClick={() => handleClickOpen(row)}>
                 <span style={{cursor:"pointer"}}>{row.title}</span>
@@ -368,7 +370,9 @@ return (
   }
 }}>
         <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e">
-          <h1>{selectedItem?.title}</h1>
+          <span style={{
+            fontSize:"24px"
+          }}>{selectedItem?.title}</span>
           <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleCloseForm}><AiOutlineClose/></div>
           </DialogTitle>
          <DialogContent>

@@ -23,6 +23,7 @@ import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import Loader from "src/component/Loader";
 import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
+import DataLoading from '../../../../component/DataLoading';
 
 const useStyles = makeStyles((theme) => ({
   root: {background:"linear-gradient(to right, #280026,#4a004f)"
@@ -238,7 +239,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "0 20px",
+    padding: "10px 0px",
     marginBottom: "15px",
     "@media(max-width:767px)": {
       display: "block",
@@ -547,13 +548,40 @@ export default function BundleDetails() {
   return (
     <Box className={classes.root}>
       {isLoadingBunldeView ? (
-        <Loader />
+         <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+                <DataLoading />
+                </Box>
       ) : (
+<>
+        <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,overflow: "hidden"}}   className="bunner-animaton">
+   
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <img 
+            src="/assets/Images/wave10.png" 
+            alt="Description" 
+            style={{ display: 'flex' ,transform:" scale(0.7)"  }}
+          />
+          <div style={{
+             position: 'absolute',
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%)',
+             color: 'white',
+             fontSize: '2.5rem',
+              fontWeight:"bold",
+             textShadow:"0px 0px 10px white",
+          }}
+        >
+                             {bundleDetails?.bundleName ? bundleDetails?.bundleName : ""}
+
+          </div>
+        </div>
+    
+        </div>
         <Container maxWidth="lg">
-          <Box
-            className={classes.bannerimg}
-            style={{ background: "url(/images/banner1.png)" }}
-          ></Box>
+
+          
+      
           <Box className={classes.headbox2}>
             <Box style={{ display: "flex", flexWrap: "wrap" }}>
               {isVideo ? (
@@ -582,11 +610,11 @@ export default function BundleDetails() {
               )}
               <Box className={`${classes.text1} seats`}>
                 <Typography variant="h2" sx={{color:"white"}}>
-                  {bundleDetails?.bundleName ? bundleDetails?.bundleName : ""}
+              Bundle Name:    {bundleDetails?.bundleName ? bundleDetails?.bundleName : ""}
                 </Typography>
                
                 <Typography variant="h4" sx={{color:"rgb(153, 108, 164)",fontSize:'0.5rem'}}>
-                  {bundleDetails?.details ? bundleDetails?.details : ''}
+               Bundle Details:   {bundleDetails?.details ? bundleDetails?.details : ''}
                 </Typography> 
                 <Box mt={1}>
                   <Box
@@ -792,6 +820,7 @@ export default function BundleDetails() {
             </Grid>
           </Grid>
         </Container>
+        </>
       )}
     </Box>
   );

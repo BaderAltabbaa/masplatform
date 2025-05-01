@@ -168,18 +168,19 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          transform:"scale(0.95)"
           
         }
       }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.2rem" }}
+        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.5rem" }}
       >
         {isEdit ? t("Edit Bundle") : t("Create A Bundle")}
       </DialogTitle>
       <DialogContent style={{ padding:"0 20px" }}>
          <Box sx={{
-                    background:"rgba(255, 255, 255, 0.68)",
+                    background:"rgba(255, 255, 255, 0.85)",
                     padding:"5px 20px",
                     borderRadius:"20px"
                   }}>
@@ -203,7 +204,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               <Button
                 key={index}
                 onClick={() => handleCategorySelect(category)}
-                style={{ margin: "5px 0" ,color:"#2f0032"}}
+                style={{ margin: "5px 0" ,color:" #2f0032"}}
               >
                 {category}
               </Button>

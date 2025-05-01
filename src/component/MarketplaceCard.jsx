@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 5px",
     background:
       "linear-gradient(152.97deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)",
-    border: "1px solid #A8CEDF",
     backdropFilter: "blur(42px)",
     borderRadius: "10px",
     overflow: "hidden",
@@ -78,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: "ellipsis",
     overflow: "hidden",
     width: "calc(100% - 5px)",
-    color: "#000",
+    color: "#fff",
   },
   mainimg: {
     cursor: "pointer",
@@ -247,12 +246,12 @@ function ExploreCard(props) {
             style={{ background: "url(" + data?.mediaUrl + ")" }}
           ></Box>
         )}
-        <Box>
+        <Box sx={{background:"linear-gradient(to top right,rgb(117, 0, 123),#4d0051)"}}>
           <Box p={2}>
             <Box>
               <Grid container spacing={1}>
                 <Grid item xs={6} sm={6} align="left">
-                  <Typography variant="h6" className={classes.text}>
+                  <Typography  className={classes.text}>
                     {data?.title ? data?.title : ""}
                   </Typography>
                 </Grid>
@@ -300,7 +299,7 @@ function ExploreCard(props) {
                 variant="contained"
                 size="large"
                 color="primary"
-                style={{ background:"#8c0087",color:'white'}}
+                style={{ background:"#320046",color:'white'}}
 
                 onClick={() => setViewContent(true)}
               >
@@ -311,7 +310,7 @@ function ExploreCard(props) {
                   variant="contained"
                   size="large"
                   color="primary"
-                  style={{ background:"#8c0087",color:'white'}}
+                  style={{ background:"#320046",color:'white'}}
 
                   onClick={() => setOpenEdit(true)}
                 >
@@ -452,7 +451,7 @@ function ExploreCard(props) {
                   variant="contained"
                   size="large"
                   color="primary"
-                  style={{ background:"#8c0087",color:'white'}}
+                  style={{ background:"#320046",color:'white'}}
 
                 >
                   Close
