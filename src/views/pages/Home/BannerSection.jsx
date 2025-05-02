@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
   bannerBackground: {
 
     width: "100%",
-    height: "400px",
-    backgroundSize: "contain",
+    height: "60vh",
   },
 
   leftSection: {
@@ -137,9 +136,11 @@ export default function BannerSection({ bannerDetails, bannerDuration }) {
           key={item._id}
           className={classes.bannerSectionBody}
           style={{
-            backgroundSize: "cover",
+           
             backgroundImage: `url(${item?.background})`,
-            height: "100%",
+            backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
           }}
         >
           <Grid container spacing={5}>

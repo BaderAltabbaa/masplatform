@@ -129,6 +129,9 @@ export default function ContactUs() {
                   backgroundColor: "rgb(250, 249, 249)", // White background
                   borderRadius: "12px",     // Border radius
                   border: "1px solid #ccc", // Optional: Add a border
+                  "&:hover": {
+                    backgroundColor: "rgb(250, 249, 249)", // Same as default (prevents override)
+                  },
                 },
                 "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
                   borderBottom: "none", // Remove default underline
@@ -148,10 +151,14 @@ export default function ContactUs() {
                   backgroundColor: "rgb(250, 249, 249)", // White background
                   borderRadius: "12px",     // Border radius
                   border: "1px solid #ccc", // Optional: Add a border
+                  "&:hover": {
+                    backgroundColor: "rgb(250, 249, 249)", // Same as default (prevents override)
+                  },
                 },
                 "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
                   borderBottom: "none", // Remove default underline
                 },
+                
               }}
             />
             <TextField

@@ -204,13 +204,13 @@ const AuctionPage = ({ staticSections }) => {
   }}
 >
   {[
-    { img: "/assets/Images/13.jpg", text: t("Creators") },
-    { img: "/assets/Images/1.jpg", text: t("Bundles") },
-    { img: "/assets/Images/25.webp", text: t("MarketPlace") },
-    { img: "/assets/Images/22.jpg", text: t("Education") },
-    { img: "/assets/Images/30.jpeg", text: t("Transfer")}
+    { img: "/assets/Images/13.jpg", text: t("Creators") ,link:"/creators"},
+    { img: "/assets/Images/1.jpg", text: t("Bundles") ,link:"/bundles" },
+    { img: "/assets/Images/25.webp", text: t("MarketPlace")  ,link:"/items"},
+    { img: "/assets/Images/22.jpg", text: t("Education") ,link:"/education"},
+    { img: "/assets/Images/30.jpeg", text: t("Transfer") ,link:"/user-list"}
   ].map((item, index) => (
-    <Link to='/creators' key={index}>
+    <Link to={item.link} key={index}>
       <Box sx={{ 
         position: 'relative', 
         display: 'inline-block',

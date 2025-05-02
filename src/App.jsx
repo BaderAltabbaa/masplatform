@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { WalletProvider } from 'src/views/pages/Profile/WalletContext';
 import NavigationScroll from './views/pages/Dashboard/layout/NavigationScroll';
 import themes from './theme';
+import ScrollToTop from './component/ScrollToTop';
 
 const RenderRoutes = routes.map((route, i) => {
   const Component = route.element;
@@ -69,21 +70,23 @@ function App() {
   const { i18n } = useTranslation(); // Use the useTranslation hook
 
   // Check if the current language is RTL
-  const isRTL = i18n.language === 'ar';
+ //{ const isRTL = i18n.language === 'ar';}
 
   // Update the HTML `dir` and `lang` attributes
-  useEffect(() => {
-    document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
-    document.documentElement.setAttribute('lang', i18n.language);
-  }, [i18n.language, isRTL]);
+ // useEffect(() => {
+ //   document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+  //  document.documentElement.setAttribute('lang', i18n.language);
+  //}, [i18n.language, isRTL]);
 
   return (
     <WalletProvider>
       <UserContextProvider>
         <ThemeProvider theme={themes(customization)}>
           <NavigationScroll>
-            {/* Apply RTL/LTR class to the root div */}
-            <div className={isRTL ? 'rtl' : 'ltr'}>
+            {/* Apply RTL/LTR class to the root div  className={isRTL ? 'rtl' : 'ltr'} */}
+            <div >
+           <ScrollToTop/>
+              
               <Routes>
                 {RenderRoutes}
               </Routes>

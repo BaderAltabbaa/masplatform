@@ -292,10 +292,21 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   }
 
   function FormButtons() {
-    const onSubmit = handleSubmit(
-      (data) => (isEdit ? editBundle(data) : createBundle(data)),
-      () => console.log(errors)
-    );
+    const onSubmit = handleSubmit(async (data) => {
+      try {
+        if (isEdit) {
+          await editBundle(data);
+        } else {
+          await createBundle(data);
+        }
+        window.location.reload(); // Force full page refresh
+      } catch (error) {
+        console.error("Submission error:", error);
+      }
+    }, () => console.log(errors));
+
+
+    
 
     return (
       <Grid xs={12} className={classes.buttonContainerStyle}>
