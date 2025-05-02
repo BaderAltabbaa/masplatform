@@ -24,6 +24,7 @@ import IMG2 from "./img/card2.jpeg"
 import IMG3 from "./img/card3.jpeg"
 import IMG5 from "./img/card5.jpeg"
 import IMG6 from "./img/card6.jpeg"
+import { setLocale } from "yup";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -69,30 +70,37 @@ export default function StaticPage() {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-   useEffect(() => {
-    const fetchData = async () => {
-        try {
-            if (!data) {
-                const res = await axios.get(Apiconfigs.viewStaticPage + `?type=${pageName}`);
-                setTitle(res.data.result.title);
-                setContent(res.data.result.description);
-                // Any other state updates from the API response
-            } else {
-                setTitle(data.title);
-                setContent(data.html);
-                // Any other state updates from props
+    useEffect(() => {
+        let isMounted = true;
+        
+        const fetchData = async () => {
+            try {
+                if (!data) {
+                    const res = await axios.get(Apiconfigs.viewStaticPage + `?type=${pageName}`);
+                    if (isMounted) {
+                        setTitle(res.data.result.title);
+                        setContent(res.data.result.description);
+                    }
+                } else if (isMounted) {
+                    setTitle(data.title);
+                    setContent(data.html);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            // Optionally handle errors (e.g., set error state)
-        } finally {
-            setIsLoading(false); // This will run regardless of success or failure
-        }
-    };
-
-    setIsLoading(true); // Set loading to true when starting to fetch
-    fetchData();
-}, [data, pageName]); // Make sure to include all dependencies
+        };
+    
+        setIsLoading(true);
+        fetchData();
+    
+        return () => {
+            isMounted = false; // Cleanup on unmount
+        };
+    }, [data, pageName]); // Make sure to include all dependencies
 
     
 
@@ -191,7 +199,12 @@ export default function StaticPage() {
 
        
         </Box>
-    ) : null
+    ) : (<Box padding='250px' display='flex' justifyContent='center' alignItems='center' sx={{
+        background: (theme) => theme.custom.PageBackGround,
+
+    }}>
+        <DataLoading />
+        </Box>)
 }
 
 /*

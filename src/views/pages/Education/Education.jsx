@@ -123,7 +123,9 @@ const Education = () => {
     }}
     >
       {isLoading ? (
-        <DataLoading />
+        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+                                  <DataLoading />
+                                  </Box>
       ) : (
         // <section>
         <Container maxWidth='xl'>
