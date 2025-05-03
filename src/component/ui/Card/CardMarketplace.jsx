@@ -482,6 +482,7 @@ useEffect(() => {
           return (
             <>
              <Dialog
+             disableScrollLock={true}
   open={open}
   onClose={onClose}
   aria-labelledby="billing-dialog-title"
@@ -552,7 +553,7 @@ useEffect(() => {
   <br />
 </Dialog>
               
-              <Dialog open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
+              <Dialog disableScrollLock={true} open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
                   <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}>{t("successed Purchase")}</DialogTitle>
                   <DialogContent>
                       <Typography variant="body1"> {t("Your purchase was successful. You can download your bill now.")}</Typography>
@@ -582,6 +583,7 @@ useEffect(() => {
 
             <Dialog 
         open={showBillDialog} 
+        disableScrollLock={true}
         onClose={() => {}}
         aria-labelledby="bill-dialog-title" 
         maxWidth="sm" 
@@ -768,6 +770,7 @@ useEffect(() => {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        disableScrollLock={true}
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -869,6 +872,7 @@ useEffect(() => {
       {/* view */}
       <Dialog
         open={open1}
+        disableScrollLock={true}
         fullWidth="sm"
         maxWidth="sm"
         onClose={handleClose1}
@@ -940,6 +944,7 @@ useEffect(() => {
       {/* buy now */}
       <Dialog
   fullWidth
+  disableScrollLock={true}
   maxWidth="md"
   open={open2}
   onClose={handleClose2}
@@ -1145,6 +1150,7 @@ useEffect(() => {
       {/* New Image Dialog */}
       <Dialog
         open={openImageDialog}
+        disableScrollLock={true}
         onClose={handleCloseImageDialog}
         aria-labelledby="image-dialog-title"
         fullWidth
@@ -1165,6 +1171,7 @@ useEffect(() => {
 
       <Dialog
         open={open3}
+        disableScrollLock={true}
         fullWidth="sm"
         maxWidth="sm"
         onClose={handleClose3}

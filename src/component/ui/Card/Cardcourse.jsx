@@ -441,13 +441,14 @@ function Cardcourse({
       </div> 
             
           {/* edit */}
-          <Dialog
-        open={open}
-        fullWidth="sm"
-        maxWidth="sm"
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        <Dialog
+          disableScrollLock={true}
+          open={open}
+          fullWidth="sm"
+          maxWidth="sm"
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -549,6 +550,7 @@ function Cardcourse({
       {/* view */}
       <Dialog
         open={open1}
+        disableScrollLock={true}
         fullWidth="sm"
         maxWidth="sm"
         onClose={handleClose1}
@@ -619,6 +621,7 @@ function Cardcourse({
       <Dialog
         fullWidth="sm"
         maxWidth="sm"
+        disableScrollLock={true}
         open={open2}
         onClose={handleClose2}
         aria-labelledby="max-width-dialog-title"
@@ -761,6 +764,7 @@ function Cardcourse({
       </Dialog>
 
       <Dialog
+      disableScrollLock={true}
         open={open3}
         fullWidth="sm"
         maxWidth="sm"

@@ -67,8 +67,8 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       file: null,
       bundleTitle: isEdit ? bundleData.bundleTitle : "",
       bundleName: isEdit ? bundleData.bundleName : "",
-      donationAmount: isEdit ? bundleData.donationAmount : 0,
-      duration: isEdit ? +bundleData.duration.split(" ")[0] : 0,
+      donationAmount: isEdit ? bundleData.donationAmount : "",
+      duration: isEdit ? +bundleData.duration.split(" ")[0] : "",
       details: isEdit ? bundleData.details : "",
       coinName: isEdit ? bundleData.coinName : "MAS",
       category: isEdit ? bundleData.category : "", // Initialize category
@@ -156,35 +156,45 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   /* Main Return */
   return (
     <Dialog
-      fullWidth={true}
-      maxWidth={"md"}
-      open={show}
-      onClose={uploadCounter === 0 ? handleClose : null}
-      aria-labelledby="max-width-dialog-title"
-      dir='ltr'
-      PaperProps={{
-        sx: {
-          backgroundImage: 'url(/assets/Images/doodle2.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          transform:"scale(0.95)"
-          
-        }
-      }}
+    fullWidth={true}
+    maxWidth={"md"}
+    open={show}
+    onClose={uploadCounter === 0 ? handleClose : null}
+    aria-labelledby="max-width-dialog-title"
+    dir='ltr'
+    scroll="body"
+    PaperProps={{
+      sx: {
+        backgroundImage: 'url(/assets/Images/doodle2.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        maxHeight: '90vh',
+        overflow: 'hidden'
+      }
+    }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.5rem" }}
+        sx={{ 
+          textAlign: "center", 
+          color: "black", 
+          fontWeight: "bold", 
+          fontSize: "1.5rem",
+          py: 1
+   }}
       >
         {isEdit ? t("Edit Bundle") : t("Create A Bundle")}
       </DialogTitle>
-      <DialogContent style={{ padding:"0 20px" }}>
+      <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
          <Box sx={{
-                    background:"rgba(255, 255, 255, 0.85)",
-                    padding:"5px 20px",
-                    borderRadius:"20px"
+                    background: "rgba(255, 255, 255, 0.85)",
+                    borderRadius: "12px",
+                    p: 2,
+                    maxHeight: 'calc(90vh - 64px)',
+                    display: 'flex',
+                    flexDirection: 'column'
                   }}>
-        <Grid container spacing={5}>
+        <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
             {MediaInput()}
@@ -470,15 +480,16 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             <Input
               {...register("donationAmount")}
               className={classes.input}
+              placeholder={t("Enter Donation Amount")}
               inputProps={{
                 min: 0,
               }}
-              placeholder={t("Enter Donation Amount")}
+             
               disabled={isEdit}
               type={"number"}
-                endAdornment={CoinSelector()}
 
-              
+                endAdornment=
+                {<Box zIndex='1'>{CoinSelector()}</Box>}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
@@ -642,37 +653,20 @@ export default AddBundleDialog;
 
 const useStyles = makeStyles(() => ({
   inputContainer: {
-    borderWidth: 2,
-    borderColor: "#ddd",
-    borderStyle: "solid",
+    border: "1px solid #ddd",
     borderRadius: 5,
-    padding: "10px",
-    marginBottom: 10,
-    transition: "border-color 0.3s ease-in",
-    "&:focus-within": {
-      borderColor: "rgb(192, 72, 72)",
-      "& label": {
-        color: "rgb(192, 72, 72)",
-        transition: "color 0.3s ease-in",
-      },
-    },
-    "&>label": {
+    padding: "8px",
+    marginBottom: 8,
+    "& label": {
       fontWeight: "500",
       color: "black",
       fontSize: 14,
     },
   },
-
   input: {
     width: "100%",
-    "&::before": {
+    "&::before, &::after": {
       content: "none",
-    },
-    "&::after": {
-      content: "none",
-    },
-    "&>input": {
-      width: "100%",
     },
   },
 

@@ -271,13 +271,18 @@ const Wallet = () => {
         padding: "0 5%",
         maxWidth: "1600px",
         margin: "0 auto",
+        minHeight: "calc(100vh - [header-height])", // Add this (replace [header-height])
         "@media (max-width: 1200px)": { padding: "0 2%" },
-        "@media (max-width: 600px)": { padding: "0 10px" }
+        "@media (max-width: 600px)": { 
+          padding: "0 10px",
+          minHeight: "calc(100vh - [mobile-header-height])" 
+        }
     }}>
                <div className="tableWrapper" style={{ width: "100%", overflow: "hidden" }}>
                <div className="tableAnimatedBackground"></div>
                <div className="tableInnerBlurEffect"></div>
-   <Box sx={{backgroundColor:" #30003c" ,  padding: { xs: "20px 30px", md: "20px 40px" } ,borderRadius:"20px",position:"relative",  width: "100%"}}>
+   <Box sx={{backgroundColor:" #30003c" ,  padding: { xs: "20px 30px", md: "20px 40px" } 
+   ,borderRadius:"20px",position:"relative",  width: "100%"}}>
     <Typography sx={{ 
         fontSize: { xs: "1.2rem", md: "1.6rem" },
         color: "white",

@@ -442,6 +442,8 @@ function Cardbundle({
           {/* edit */}
           <Dialog
         open={open}
+        disableScrollLock={true}
+
         fullWidth="sm"
         maxWidth="sm"
         onClose={handleClose}
@@ -548,6 +550,8 @@ function Cardbundle({
       {/* view */}
       <Dialog
         open={open1}
+        disableScrollLock={true}
+
         fullWidth="sm"
         maxWidth="sm"
         onClose={handleClose1}
@@ -618,6 +622,8 @@ function Cardbundle({
       <Dialog
         fullWidth="sm"
         maxWidth="sm"
+        disableScrollLock={true}
+
         open={open2}
         onClose={handleClose2}
         aria-labelledby="max-width-dialog-title"
@@ -776,6 +782,8 @@ function Cardbundle({
 
       <Dialog
         open={open3}
+        disableScrollLock={true}
+
         fullWidth="sm"
         maxWidth="sm"
         onClose={handleClose3}

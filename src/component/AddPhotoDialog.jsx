@@ -117,35 +117,44 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
 
   return (
     <Dialog
-    dir="ltr"
-      fullWidth={true}
-      maxWidth={"md"}
-      open={show}
-      onClose={uploadCounter === 0 ? handleClose : null}
-      aria-labelledby="max-width-dialog-title"
-      PaperProps={{
-        sx: {
-          backgroundImage: 'url(/assets/Images/doodle2.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',  
-          transform:"scale(0.95)"
-
-        }
-      }}
+    fullWidth={true}
+    maxWidth={"md"}
+    open={show}
+    onClose={uploadCounter === 0 ? handleClose : null}
+    aria-labelledby="max-width-dialog-title"
+    dir='ltr'
+    scroll="body"
+    PaperProps={{
+      sx: {
+        backgroundImage: 'url(/assets/Images/doodle2.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        maxHeight: '90vh',
+        overflow: 'hidden'
+      }
+    }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.5rem" }}
-      >
+  sx={{ 
+    textAlign: "center", 
+    color: "black", 
+    fontWeight: "bold", 
+    fontSize: "1.5rem",
+    py: 1
+}}      >
         {isEdit ? t("Edit Audience") : t("Add Photo")}
       </DialogTitle>
-      <DialogContent style={{ padding: 40, paddingTop: 10 }}>
+      <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
         <Box sx={{
-                    background:"rgba(255, 255, 255, 0.85)",
-                    padding:"20px",
-                    borderRadius:"20px"
+                     background: "rgba(255, 255, 255, 0.85)",
+                     borderRadius: "12px",
+                     p: 2,
+                     maxHeight: 'calc(90vh - 64px)',
+                     display: 'flex',
+                     flexDirection: 'column'
                   }}>
-        <Grid container spacing={5}>
+        <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
             {MediaInput()}

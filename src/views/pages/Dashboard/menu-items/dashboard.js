@@ -78,14 +78,14 @@ const dashboard = {
       icon: icons.FaHistory,
       breadcrumbs: false
     },
-    {
-      id: 'My_Auctions',
-      title: 'My Auctions',
-      type: 'item',
-      url: '/profile/My_Auctions',
-      icon: icons.FaNewspaper,
-      breadcrumbs: false
-    },
+  //  {
+    //  id: 'My_Auctions',
+    //  title: 'My Auctions',
+    //  type: 'item',
+    //  url: '/profile/My_Auctions',
+    //  icon: icons.FaNewspaper,
+    //  breadcrumbs: false
+    //},
     {
       id: 'My_Subscribers',
       title: 'My Subscribers',

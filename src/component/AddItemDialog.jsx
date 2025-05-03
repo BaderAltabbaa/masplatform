@@ -10,7 +10,8 @@ import {
   MenuItem,
   Button,
   IconButton,
-  Box,Popover
+  Box,Popover,
+  Typography
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 import { ArrowDropDown, ArrowUpward } from "@mui/icons-material";
@@ -68,8 +69,8 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
       file: null,
       itemTitle: isEdit ? itemData.itemTitle : "",
       itemName: isEdit ? itemData.itemName : "",
-      donationAmount: isEdit ? itemData.donationAmount : 0,
-      duration: isEdit ? +itemData.duration.split(" ")[0] : 0,
+      donationAmount: isEdit ? itemData.donationAmount : "",
+      duration: isEdit ? +itemData.duration.split(" ")[0] : "",
       details: isEdit ? itemData.details : "",
       coinName: isEdit ? itemData.coinName : "MAS",
     },
@@ -83,34 +84,45 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
 
   return (
     <Dialog
-    dir="ltr"
-      fullWidth={true}
+    fullWidth={true}
       maxWidth={"md"}
       open={show}
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
+      dir="ltr"
+      scroll="body"
       PaperProps={{
         sx: {
           backgroundImage: 'url(/assets/Images/doodle2.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          
+          maxHeight: '90vh',
+          overflow: 'hidden'
         }
       }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold",fontSize:"1.2rem"}}
+       sx={{ 
+        textAlign: "center", 
+        color: "black", 
+        fontWeight: "bold",
+        fontSize: "1.2rem",
+        py: 1
+      }}
       >
         {isEdit ? t("Edit item") : t("Create an item")}
       </DialogTitle>
-      <DialogContent style={{ padding: 10 }}>
+      <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
         <Box sx={{
-                    background:"rgba(255, 255, 255, 0.68)",
-                    padding:"20px",
-                    borderRadius:"20px"
+                     background: "rgba(255, 255, 255, 0.85)",
+                     borderRadius: "12px",
+                     p: 2,
+                     maxHeight: 'calc(90vh - 64px)',
+                     display: 'flex',
+                     flexDirection: 'column'
                   }}>
-  <Grid container spacing={5}>
+  <Grid container  spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
     {InputList()}
     <Grid item xs={12} sm={5} style={{ textAlign: 'center' }}>
       {MediaBox()}
@@ -128,50 +140,96 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
   /* Main Return */
 
   function MediaBox() {
-    const classes = useStyles(); // Assuming you use this hook for styles
     const maxImages = 9;
     const emptySlots = maxImages - mediaUrls.length;
 
     return (
-        <div style={{ display:"flex",flexDirection:"column",gap: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }}>
-            <div className={classes.mediaBoxHeader}>
-                {t("Upload your images here")}
-            </div>
-            {mediaUrls.map((url, index) => (
-                <Box key={index} className={classes.mediaPreview}>
-                    <img src={url} alt={`Selected image ${index + 1}`} className={classes.img} />
-                    <IconButton onClick={() => removeImage(index)} size="small" style={{ position: 'absolute', top: 0, right: 0, color: 'red' }}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Box>
-            ))}
-            {Array.from({ length: emptySlots }, (_, i) => (
-                <Box key={i + mediaUrls.length} className={classes.emptyBox} onClick={() => document.getElementById('file-input').click()}>
-                    <CloudUploadIcon style={{ color: '#ccc', fontSize: 24 }} />
-                </Box>
-            ))}
-            {uploadCounter > 0 && (
-          <div className={classes.uploadCounter}>
-              <p>{t("Uploading")} {uploadCounter}%</p>
-           <LinearProgress
-                       variant="determinate"
-                       value={uploadCounter}  
-                       sx={{
-                        marginTop:"10px",
-                         width: "100%", // Take full width of the parent container
-                         height: 10, // Set a visible height
-                         borderRadius: 5, // Optional: Add rounded corners
-                         backgroundColor: " #e0e0e0", // Background color
-                         "& .MuiLinearProgress-bar": {
-                           backgroundColor: "rgb(67, 0, 90)", // Progress bar color
-                         },
-                       }}
-                      />
-          
-          </div>
+      <Box sx={{ 
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        p: 1,
+        border: '1px solid #ddd',
+        borderRadius: 1,
+        mb: 2
+      }}>
+        <Typography variant="body2" sx={{ textAlign: 'center', fontWeight: 'bold', color: '#666' }}>
+          {t("Upload your images here")}
+        </Typography>
+        <Grid container spacing={1}>
+          {mediaUrls.map((url, index) => (
+            <Grid item xs={4} key={index}>
+              <Box sx={{ 
+                position: 'relative',
+                height: 100,
+                border: '1px solid #eee',
+                borderRadius: 1,
+                overflow: 'hidden'
+              }}>
+                <img 
+                  src={url} 
+                  alt={`Selected ${index + 1}`} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                />
+                <IconButton 
+                  onClick={() => removeImage(index)} 
+                  size="small" 
+                  sx={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    right: 0, 
+                    color: 'error.main',
+                    backgroundColor: 'rgba(255,255,255,0.7)'
+                  }}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            </Grid>
+          ))}
+          {Array.from({ length: emptySlots }, (_, i) => (
+            <Grid item xs={4} key={i + mediaUrls.length}>
+              <Box 
+                onClick={() => document.getElementById('file-input').click()}
+                sx={{
+                  height: 100,
+                  border: '2px dashed #ddd',
+                  borderRadius: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    borderColor: 'primary.main',
+                    backgroundColor: 'action.hover'
+                  }
+                }}
+              >
+                <CloudUploadIcon sx={{ color: 'text.disabled' }} />
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+        {uploadCounter > 0 && (
+          <Box sx={{ mt: 1 }}>
+            <Typography variant="body2" align="center">
+              {t("Uploading")} {uploadCounter}%
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={uploadCounter}
+              sx={{
+                height: 8,
+                borderRadius: 4,
+                backgroundColor: 'grey.200',
+                '& .MuiLinearProgress-bar': {
+                  backgroundColor: 'primary.dark',
+                },
+              }}
+            />
+          </Box>
         )}
-        </div>
-    );
+      </Box>)
 }
 
 function removeImage(index) {
@@ -180,12 +238,20 @@ function removeImage(index) {
 }
 
 
-  function FormButtons() {
-    const onSubmit = handleSubmit(
-      (data) => (isEdit ? edititem(data) : createitem(data)),
-      () => console.log(errors)
-    );
-
+function FormButtons() {
+  const onSubmit = handleSubmit(async (data) => {
+    try{
+      if(isEdit){
+        await edititem(data)
+      }
+      else {
+        await createitem(data)
+      }
+      window.location.reload()
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  }, () => console.log(errors));
     return (
       <Grid xs={12} className={classes.buttonContainerStyle}>
         <Button
@@ -307,7 +373,7 @@ function removeImage(index) {
               placeholder={"Enter Donation Amount"}
               disabled={isEdit}
               type={"number"}
-              endAdornment={CoinSelector()}
+              endAdornment= {<Box zIndex='1'>{CoinSelector()}</Box>}
             />
           </Grid>
           <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>

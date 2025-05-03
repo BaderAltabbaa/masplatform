@@ -110,16 +110,16 @@ const handleCloseBalance = () => {
          <Button
          className={classes.createButton}
          onClick={() => handleOpenBalance()}
-
-         style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "#ffffff",textAlign:"center" }}
+          color='white'
+         style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3",textAlign:"center" }}
        >
               {t("Check Balance")}
        </Button>
           : <Button
             className={classes.createButton}
             onClick={() => setOpenDonation(true)}
-
-            style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3", color : "#ffffff",textAlign:"center" }}
+             color='white'
+            style={isMobile ? { padding: "" } : { padding: "4px 8px !important", lineHeight: "1.3",textAlign:"center" }}
           >
                  {t("Transfer Funds")}
           </Button>}
@@ -186,7 +186,7 @@ const handleCloseBalance = () => {
         userData={row}
       />
 
-<Dialog open={openBalance} onClose={handleCloseBalance} maxWidth="sm" fullWidth >
+<Dialog open={openBalance} onClose={handleCloseBalance} maxWidth="sm" fullWidth disableScrollLock={true}>
 <DialogTitle>
   <Typography variant='h3' color='rgb(33, 0, 46)'>{t("Your Balance")}</Typography>
   <DialogContent align="center" dir='ltr'>

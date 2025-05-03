@@ -219,20 +219,22 @@ export default function DonateList() {
               
                 <TableRow>
                   
+                 
+                 
                   <TableCell align="Center" style={{ color: "white" }}>
-                    {t("Payment date")}
+                    {t("Beneficiary")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
                    {t("Amount")}
-                  </TableCell>
-                  <TableCell align="Center" style={{ color: "white" }}>
-                    {t("Beneficiary")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
                     {t("Receipt Id")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
                     {t("Status")}
+                  </TableCell>
+                  <TableCell align="Center" style={{ color: "white" }}>
+                    {t("Payment date")}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -241,12 +243,8 @@ export default function DonateList() {
                   donateList?.map((row, index) => (
                     <TableRow className={classes.tbody} key={row.coinName}>
                       
-                      <TableCell style={{ color: "black" }} align="Center">
-                        {moment(row?.updatedAt).format("DD-MM-YYYY hh:mm A")}
-                      </TableCell>
-                      <TableCell style={{ color: "black" }} align="Center">
-                        {row?.amount ? row?.amount : 0}&nbsp;{row?.coinName}
-                      </TableCell>
+                     
+                     
                       
                       <TableCell
                         style={
@@ -266,10 +264,16 @@ export default function DonateList() {
                           : "N/A"}
                       </TableCell>
                       <TableCell style={{ color: "black" }} align="Center">
+                        {row?.amount ? row?.amount : 0}&nbsp;{row?.coinName}
+                      </TableCell>
+                      <TableCell style={{ color: "black" }} align="Center">
                         {row?._id ? row?._id : "N/A"}
                       </TableCell>
                       <TableCell style={{ color: "black" }} align="Center">
                         {row.transactionStatus}
+                      </TableCell>
+                      <TableCell style={{ color: "black" }} align="Center">
+                        {moment(row?.updatedAt).format("DD-MM-YYYY hh:mm A")}
                       </TableCell>
                     </TableRow>
                   ))}

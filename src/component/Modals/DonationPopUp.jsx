@@ -864,6 +864,7 @@ export const DonationPopUp = ({ open, handleClose, userData }) => {
         aria-describedby="alert-dialog-description"
         disableBackdropClick={isLoading}
         disableEscapeKeyDown={isLoading}
+        disableScrollLock={true}
       >
         <DialogContent dir="ltr" >
           <DialogContentText id="alert-dialog-description">

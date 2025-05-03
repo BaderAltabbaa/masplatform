@@ -22,9 +22,12 @@ import {
   TableRow,
   Paper,
   Avatar,
-  IconButton
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import { AccountCircle, Chat, PersonAdd } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { FaEye } from 'react-icons/fa'
 
 
 
@@ -148,12 +151,15 @@ export default function Subscribers({ type }) {
           <TableCell > {subscriber.name}</TableCell>
           
           <TableCell align="center">
-            <IconButton aria-label="chat" color="primary">
+            <Box display="flex" alignItems='center' justifyContent='center'>
+           <Tooltip title="Chat"> <IconButton aria-label="chat" color="primary">
               <Chat  sx={{
                 color:"rgb(60, 0, 60)"
               }}/>
             </IconButton>
-           
+            </Tooltip>
+            <Tooltip title="View"><Link to={"/user-profile/"+ subscriber.userName}><FaEye size={25} color="rgb(60, 0, 60)"></FaEye></Link></Tooltip>
+            </Box>
           </TableCell>
         </TableRow>
       ))}

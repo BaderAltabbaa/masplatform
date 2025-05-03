@@ -220,7 +220,8 @@ return (
             </ul>
       
 
-      <Dialog open={open} onClose={handleClose}  maxWidth="lg" fullWidth PaperProps={{
+      <Dialog open={open} onClose={handleClose}  maxWidth="lg" fullWidth  disableScrollLock={true}
+ PaperProps={{
   sx: {
     backgroundImage: 'url(/assets/Images/doodle2.png)',
     backgroundSize: 'cover',
@@ -360,7 +361,8 @@ return (
       </Container>
 
 
-      <Dialog open={openForm} onClose={handleCloseForm}  maxWidth="sm" fullWidth PaperProps={{
+      <Dialog open={openForm} onClose={handleCloseForm}  maxWidth="sm" fullWidth  disableScrollLock={true}
+ PaperProps={{
   sx: {
     backgroundImage: 'url(/assets/Images/doodle2.png)',
     backgroundSize: 'cover',

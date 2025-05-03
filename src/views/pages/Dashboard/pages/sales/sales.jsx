@@ -18,7 +18,10 @@ import {
     TableHead,
     TableRow,
     Paper,
+    Tooltip,
   } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { FaEye } from 'react-icons/fa'
   
 
 const useStyles = makeStyles(() => ({
@@ -121,6 +124,8 @@ export default function sales() {
                                              <TableCell sx={{color:"white"}}>{t("Name")}</TableCell>
                                              <TableCell sx={{color:"white"}}>{t("Price")}</TableCell>
                                              <TableCell sx={{color:"white"}}>{t("Status")}</TableCell>
+                                             <TableCell sx={{color:"white"}}>{t("Action")}</TableCell>
+                                             
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -139,6 +144,9 @@ export default function sales() {
                                         <TableCell>
                                          {items.status}
                                         </TableCell>
+                                         <TableCell>
+                                                            <Tooltip title="View" placement="right"><Link to={"/items-details?"+ items.nft1Id}><FaEye size={20} color='#4d0051'/></Link></Tooltip>
+                                                            </TableCell>
                                        </TableRow>)
                                     })}
                                     </TableBody>

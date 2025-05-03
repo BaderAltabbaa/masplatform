@@ -126,16 +126,27 @@ export default function ContactUs() {
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  backgroundColor: "rgb(250, 249, 249)", // White background
-                  borderRadius: "12px",     // Border radius
-                  border: "1px solid #ccc", // Optional: Add a border
+                  backgroundColor: "rgb(250, 249, 249) !important", // Force background
+                  borderRadius: "12px",
+                  border: "1px solid #ccc",
                   "&:hover": {
-                    backgroundColor: "rgb(250, 249, 249)", // Same as default (prevents override)
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  },
+                  "&.Mui-focused": { // Active/focused state
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  },
+                  "&.MuiFilledInput-underline:before, &.MuiFilledInput-underline:after": {
+                    borderBottom: "none",
                   },
                 },
-                "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
-                  borderBottom: "none", // Remove default underline
-                },
+                // Fix for the input itself (not just the wrapper)
+                "& .MuiFilledInput-input": {
+                  backgroundColor: "rgb(250, 249, 249) !important",
+                  borderRadius: "12px",
+                  "&:focus": {
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  }
+                }
               }}
             />
             <TextField
@@ -148,17 +159,27 @@ export default function ContactUs() {
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  backgroundColor: "rgb(250, 249, 249)", // White background
-                  borderRadius: "12px",     // Border radius
-                  border: "1px solid #ccc", // Optional: Add a border
+                  backgroundColor: "rgb(250, 249, 249) !important", // Force background
+                  borderRadius: "12px",
+                  border: "1px solid #ccc",
                   "&:hover": {
-                    backgroundColor: "rgb(250, 249, 249)", // Same as default (prevents override)
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  },
+                  "&.Mui-focused": { // Active/focused state
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  },
+                  "&.MuiFilledInput-underline:before, &.MuiFilledInput-underline:after": {
+                    borderBottom: "none",
                   },
                 },
-                "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
-                  borderBottom: "none", // Remove default underline
-                },
-                
+                // Fix for the input itself (not just the wrapper)
+                "& .MuiFilledInput-input": {
+                  backgroundColor: "rgb(250, 249, 249) !important",
+                  borderRadius: "12px",
+                  "&:focus": {
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  }
+                }
               }}
             />
             <TextField
@@ -173,16 +194,27 @@ export default function ContactUs() {
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  backgroundColor: "rgb(250, 249, 249)", // White background
-                  borderRadius: "12px",     // Border radius
-                  border: "1px solid #ccc", // Optional: Add a border
+                  backgroundColor: "rgb(250, 249, 249) !important", // Force background
+                  borderRadius: "12px",
+                  border: "1px solid #ccc",
                   "&:hover": {
-                    backgroundColor: "rgb(250, 249, 249)", // Same as default (prevents override)
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  },
+                  "&.Mui-focused": { // Active/focused state
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  },
+                  "&.MuiFilledInput-underline:before, &.MuiFilledInput-underline:after": {
+                    borderBottom: "none",
                   },
                 },
-                "& .MuiFilledInput-root:before, & .MuiFilledInput-root:after": {
-                  borderBottom: "none", // Remove default underline
-                },
+                // Fix for the input itself (not just the wrapper)
+                "& .MuiFilledInput-input": {
+                  backgroundColor: "rgb(250, 249, 249) !important",
+                  borderRadius: "12px",
+                  "&:focus": {
+                    backgroundColor: "rgb(250, 249, 249) !important",
+                  }
+                }
               }}
             />
             <Box display='flex' justifyContent='center'>

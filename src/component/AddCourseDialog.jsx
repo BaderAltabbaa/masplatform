@@ -67,8 +67,8 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
       file: null,
       courseTitle: isEdit ? CourseData.courseTitle : "",
       courseName: isEdit ? CourseData.courseName : "",
-      donationAmount: isEdit ? CourseData.donationAmount : 0,
-      duration: isEdit ? +CourseData.duration.split(" ")[0] : 0,
+      donationAmount: isEdit ? CourseData.donationAmount : "",
+      duration: isEdit ? +CourseData.duration.split(" ")[0] : "",
       details: isEdit ? CourseData.details : "",
       coinName: isEdit ? CourseData.coinName : "MAS",
       category: isEdit ? CourseData.category : "", // Initialize category
@@ -156,36 +156,45 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
   /* Main Return */
   return (
     <Dialog
-      fullWidth={true}
-      maxWidth={"md"}
-      open={show}
-      onClose={uploadCounter === 0 ? handleClose : null}
-      aria-labelledby="max-width-dialog-title"
-      dir='ltr'
-      PaperProps={{
-        sx: {
-          backgroundImage: 'url(/assets/Images/doodle2.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          transform:"scale(0.95)"
-
-          
-        }
-      }}
+    fullWidth={true}
+    maxWidth={"md"}
+    open={show}
+    onClose={uploadCounter === 0 ? handleClose : null}
+    aria-labelledby="max-width-dialog-title"
+    dir='ltr'
+    scroll="body"
+    PaperProps={{
+      sx: {
+        backgroundImage: 'url(/assets/Images/doodle2.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        maxHeight: '90vh',
+        overflow: 'hidden'
+      }
+    }}
     >
       <DialogTitle
-        style={{ textAlign: "center", color: "black", fontWeight: "bold", fontSize: "1.5rem" }}
+        sx={{ 
+          textAlign: "center", 
+          color: "black", 
+          fontWeight: "bold", 
+          fontSize: "1.5rem",
+          py: 1
+   }}
       >
         {isEdit ? t("Edit course") : t("Create A Course")}
       </DialogTitle>
-      <DialogContent style={{ padding:"0 40px" }}>
+      <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
         <Box sx={{
-                            background:"rgba(255, 255, 255, 0.85)",
-                            padding:"5px 20px",
-                            borderRadius:"20px"
+                            background: "rgba(255, 255, 255, 0.85)",
+                            borderRadius: "12px",
+                            p: 2,
+                            maxHeight: 'calc(90vh - 64px)',
+                            display: 'flex',
+                            flexDirection: 'column'
                           }}>
-        <Grid container spacing={5}>
+        <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
             {MediaInput()}
@@ -293,10 +302,22 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
   }
 
   function FormButtons() {
-    const onSubmit = handleSubmit(
-      (data) => (isEdit ? editcourse(data) : createcourse(data)),
-      () => console.log(errors)
-    );
+    const onSubmit = handleSubmit(async (data) => {
+      try{
+        if(isEdit){
+          await editcourse(data)
+        }
+        else {
+          await createcourse(data)
+        }
+        window.location.reload()
+      } catch (error) {
+        console.error("Submission error:", error);
+      }
+    }, () => console.log(errors));
+  
+  
+    
 
     return (
       <Grid xs={12} className={classes.buttonContainerStyle}>
@@ -466,7 +487,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
               placeholder={t("Enter Donation Amount")}
               disabled={isEdit}
               type={"number"}
-                endAdornment={CoinSelector()}
+                endAdornment= {<Box zIndex='1'>{CoinSelector()}</Box>}
 
               
             />

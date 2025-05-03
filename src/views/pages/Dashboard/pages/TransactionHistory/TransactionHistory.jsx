@@ -215,17 +215,16 @@ export default function TransactionHistory() {
             >
                 <TableRow>
                   
-                  <TableCell align="Center" style={{ color: "white" }}>
-                    {t("Payment date")}
-                  </TableCell>
-                  <TableCell align="Center" style={{ color: "white" }}>
-                    {t("Amount")}
-                  </TableCell>
+                 
+                 
                   <TableCell align="Center" style={{ color: "white" }}>
                    {t("From")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
                     {t("To")}
+                  </TableCell>
+                  <TableCell align="Center" style={{ color: "white" }}>
+                    {t("Amount")}
                   </TableCell>
                   <TableCell align="Center" style={{ color: "white" }}>
                     {t("Type")}
@@ -236,6 +235,9 @@ export default function TransactionHistory() {
                   <TableCell align="Center" style={{ color: "white" }}>
                     {t("Status")}
                   </TableCell>
+                  <TableCell align="Center" style={{ color: "white" }}>
+                    {t("Payment date")}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -243,17 +245,8 @@ export default function TransactionHistory() {
                   transactionsList?.map((row, index) => (
                     <TableRow className={classes.tbody} key={row.coinName}>
                       
-                      <TableCell style={{ color: "black" }} align="Center">
-                        {moment(row.updatedAt).format("DD-MM-YYYY hh:mm A")}
-                      </TableCell>
-                      <TableCell style={{ color: "black" }} align="Center">
-                        { (row.transactionType === "Donation") ?
-                         (auth.userData._id === row.toDonationUser._id ) ? (parseFloat(row.amount)-parseFloat(row.adminCommission)).toFixed(2) : parseFloat(row.amount).toFixed(2) : 
-                         (row.transactionType === "Withdraw") ? (parseFloat(row.amount)+parseFloat(row.adminCommission)).toFixed(2) : 
-                         parseFloat(row.amount).toFixed(2)
-                        }&nbsp;
-                        {row?.coinName}
-                      </TableCell>
+                    
+                     
                       <TableCell
                       style={
                         (row.transactionType === "Withdraw" || row.transactionType === "Donation")
@@ -294,6 +287,14 @@ export default function TransactionHistory() {
                         }
                       </TableCell>
                       <TableCell style={{ color: "black" }} align="Center">
+                        { (row.transactionType === "Donation") ?
+                         (auth.userData._id === row.toDonationUser._id ) ? (parseFloat(row.amount)-parseFloat(row.adminCommission)).toFixed(2) : parseFloat(row.amount).toFixed(2) : 
+                         (row.transactionType === "Withdraw") ? (parseFloat(row.amount)+parseFloat(row.adminCommission)).toFixed(2) : 
+                         parseFloat(row.amount).toFixed(2)
+                        }&nbsp;
+                        {row?.coinName}
+                      </TableCell>
+                      <TableCell style={{ color: "black" }} align="Center">
                         {row?.transactionType
                           ? row?.transactionType?.toUpperCase()
                           : "N/A"}
@@ -312,6 +313,9 @@ export default function TransactionHistory() {
                       </TableCell>
                       <TableCell style={{ color: "black" }} align="Center">
                         {row?.transactionStatus}
+                      </TableCell>
+                      <TableCell style={{ color: "black" }} align="Center">
+                        {moment(row.updatedAt).format("DD-MM-YYYY hh:mm A")}
                       </TableCell>
                     </TableRow>
                   ))}

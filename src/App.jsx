@@ -1,6 +1,6 @@
 import React, { Suspense, Fragment, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // Import useTranslation
+import { useTranslation } from 'react-i18next';
 import { routes } from './routes';
 import { UserContextProvider } from 'src/context/User';
 import PageLoading from 'src/component/PageLoading';
@@ -11,6 +11,7 @@ import { WalletProvider } from 'src/views/pages/Profile/WalletContext';
 import NavigationScroll from './views/pages/Dashboard/layout/NavigationScroll';
 import themes from './theme';
 import ScrollToTop from './component/ScrollToTop';
+import { CookiesProvider } from 'react-cookie'; // Import CookiesProvider
 
 const RenderRoutes = routes.map((route, i) => {
   const Component = route.element;
@@ -67,34 +68,25 @@ const RenderRoutes = routes.map((route, i) => {
 
 function App() {
   const customization = useSelector((state) => state.customization);
-  const { i18n } = useTranslation(); // Use the useTranslation hook
-
-  // Check if the current language is RTL
- //{ const isRTL = i18n.language === 'ar';}
-
-  // Update the HTML `dir` and `lang` attributes
- // useEffect(() => {
- //   document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
-  //  document.documentElement.setAttribute('lang', i18n.language);
-  //}, [i18n.language, isRTL]);
+  const { i18n } = useTranslation();
 
   return (
-    <WalletProvider>
-      <UserContextProvider>
-        <ThemeProvider theme={themes(customization)}>
-          <NavigationScroll>
-            {/* Apply RTL/LTR class to the root div  className={isRTL ? 'rtl' : 'ltr'} */}
-            <div >
-           <ScrollToTop/>
-              
-              <Routes>
-                {RenderRoutes}
-              </Routes>
-            </div>
-          </NavigationScroll>
-        </ThemeProvider>
-      </UserContextProvider>
-    </WalletProvider>
+    <CookiesProvider> {/* Wrap your app with CookiesProvider */}
+      <WalletProvider>
+        <UserContextProvider>
+          <ThemeProvider theme={themes(customization)}>
+            <NavigationScroll>
+              <div>
+                <ScrollToTop/>
+                <Routes>
+                  {RenderRoutes}
+                </Routes>
+              </div>
+            </NavigationScroll>
+          </ThemeProvider>
+        </UserContextProvider>
+      </WalletProvider>
+    </CookiesProvider>
   );
 }
 

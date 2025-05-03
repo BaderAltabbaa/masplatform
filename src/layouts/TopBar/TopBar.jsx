@@ -1013,10 +1013,13 @@ const hideicon = hideSupportIcon(location.pathname)
         onClose={handleCloseSupport} 
         fullWidth
         maxWidth="sm"
+        disableScrollLock={true}
         sx={{
+          margin:"80px 0px"
+          ,
           "& .MuiDialog-container": {
             alignItems: "flex-end",
-            justifyContent: "flex-end"
+            justifyContent: "flex-end",
           },
           "& .MuiDialog-paper": {
             margin: "0px",
@@ -1034,6 +1037,9 @@ const hideicon = hideSupportIcon(location.pathname)
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
           }
+        }}
+        BackdropProps={{
+          style: {backgroundColor:"transparent"}
         }}
       >
         <DialogContent sx={{ 
@@ -1159,6 +1165,7 @@ const hideicon = hideSupportIcon(location.pathname)
             
           }
         }}
+        disableScrollLock={true}
       >
         <DialogContent>
           {notify.length == 0 ? (

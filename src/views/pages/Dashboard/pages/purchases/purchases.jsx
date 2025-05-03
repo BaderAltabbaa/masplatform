@@ -20,7 +20,10 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Tooltip
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { FaEye } from 'react-icons/fa'
 
 const useStyles = makeStyles(() => ({
   subscriptionBox: {
@@ -116,12 +119,14 @@ export default function purchases() {
         <Box>
            <TableContainer component={Paper} >
             <Table>
-              <TableHead sx={{background:"linear-gradient(to top right,#900098,#4d0051)"}}>
+              <TableHead sx={{background:"linear-gradient(to top right, #900098, #4d0051)"}}>
                 <TableRow>
                          <TableCell sx={{color:"white"}}>{t("Title")}</TableCell>
                          <TableCell sx={{color:"white"}}>{t("Name")}</TableCell>
                          <TableCell sx={{color:"white"}}>{t("Price")}</TableCell>
                          <TableCell sx={{color:"white"}}>{t("Status")}</TableCell>
+                         <TableCell sx={{color:"white"}}>{t("Action")}</TableCell>
+
                 </TableRow>
                 </TableHead>
                 <TableBody>
@@ -139,6 +144,9 @@ export default function purchases() {
                     </TableCell>
                     <TableCell>
                      {items.status}
+                    </TableCell>
+                    <TableCell>
+                    <Tooltip title="View" placement="right"><Link to={"/items-details?"+ items.nft1Id}><FaEye size={20} color='#4d0051'/></Link></Tooltip>
                     </TableCell>
                    </TableRow>)
                 })}

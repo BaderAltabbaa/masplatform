@@ -8,6 +8,8 @@ import { BsChat } from "react-icons/bs";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { useTranslation } from 'react-i18next';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 
 
 
@@ -170,7 +172,7 @@ console.log("bra",userID)
           subscribeToUserHandler();
         }}
         className="primary"
-        style={{ padding: "5px", marginRight: "8px" }}
+        style={{ padding: "5px", marginRight: "2px" }}
       >
         {isSubscribed ? t("Subscribed") : t("Subscribe")}
       </button>
@@ -179,7 +181,7 @@ console.log("bra",userID)
     <span style={{
       color: "white",
       fontWeight: "600",
-      fontSize: "10px",
+      fontSize: "11px",
     }}>
       {nbSubscribed
         ? nbSubscribed > 0
@@ -191,8 +193,18 @@ console.log("bra",userID)
 
   {/* Right side - Chat and Like buttons */}
   <div style={{ display: "flex", alignItems: "center" }}>
-    {chat && (
-      <Box>
+   
+
+    <Box
+      style={{
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+
+{chat && (
+      
         <Tooltip title="Chat" placement="bottom">
           <div
             onClick={(event) => {
@@ -205,30 +217,23 @@ console.log("bra",userID)
               badgeContent={Object.keys(auth.unreadChats).length}
               overlap="rectangular"
             >
-              <BsChat style={{ color: "white", fontSize: "13px" }} />
+              <BsChat style={{ color: "white", fontSize: "16px",marginBottom:"3px" }} />
             </Badge>
           </div>
         </Tooltip>
-      </Box>
+      
     )}
-
-    <Box
-      style={{
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <span style={{ fontSize: "12px", margin: "0 6px", color: "white" }}>
-        {nbLike && nbLike}
-      </span>
-      <FaHeart
-        style={isLike ? { color: '#FD1D1D', fontSize: "14px" } : { color: '#ffffff6e', fontSize: "14px" }}
+     
+      <FavoriteIcon
+        style={isLike ? { color: '#FD1D1D', fontSize: "20px" } : { color: '#ffffff6e', fontSize: "20px" }}
         onClick={(event) => {
           event.stopPropagation();
           likeDislikeUserHandler(userCardData._id);
         }}
       />
+       <span style={{ fontSize: "12px", margin: "0 6px", color: "white" }}>
+        {nbLike && nbLike}
+      </span>
     </Box>
   </div>
   </div>
