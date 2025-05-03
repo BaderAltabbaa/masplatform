@@ -12,6 +12,7 @@ import Services from "../Services";
 import { ButtonwithAnimation } from "../../../../component/ui/Button/button";
 import { useTranslation } from 'react-i18next';
 import DataLoading from "../../../../component/DataLoading";
+import CookieConsent from "../../../../cookies/CookieConsent";
 
 
 
@@ -122,6 +123,7 @@ console.log("mm",landingSections)
 
 
   <Box>
+    <CookieConsent/>
 
 {bannerDetails.length > 0 && (
   <BannerSection

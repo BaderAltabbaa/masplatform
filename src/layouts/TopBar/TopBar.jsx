@@ -1124,7 +1124,7 @@ const hideicon = hideSupportIcon(location.pathname)
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button 
                 onClick={handleCloseSupport} 
-                sx={{ mr: 2, color: "#43005e" }}
+                sx={{ mr: 2, color: " #43005e" }}
               >
                 Close
               </Button>
