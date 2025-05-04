@@ -43,6 +43,7 @@ import ShareForAudienceDialog from "../../../../../component/shareForAudienceDia
 import AddPhotoDialog from '../../../../../component/AddPhotoDialog';
 import MainCard from '../../ui-component/cards/MainCard'
 import CardMarketplace from "../../../../../component/ui/Card/CardMarketplace";
+import { ButtonwithAnimation } from '../../../../../component/ui/Button/button';
 
 const useStyles = makeStyles((theme) => ({
   input_fild: {
@@ -197,9 +198,9 @@ export default function Marketplace() {
 
   return (
 <>
-     <MainCard title={t("My Items")} >
-      </MainCard>
- <Box className={classes.LoginBox} mb={5}>
+         <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Items</ButtonwithAnimation></Box>
+     
+ <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6"></Typography>
         <Box display="flex">

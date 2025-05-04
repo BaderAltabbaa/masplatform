@@ -45,15 +45,15 @@ const CookieConsent = () => {
       onClose={() => setOpen(false)}
       disableScrollLock={true} // This prevents scroll locking
       fullWidth={true}
-      maxWidth="sm"
+      maxWidth="xs"
       PaperProps={{
         sx: {
           position: 'fixed',
-          bottom: 0,
-          left: 0,
+          bottom: 20,
+          left: 10,
           right: 0,
           margin: 0,
-          borderRadius: 0,
+          borderRadius: 2,
           backgroundImage: 'url(/assets/Images/doodle2.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -68,12 +68,13 @@ const CookieConsent = () => {
         }
       }}
     >
-      <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e" fontSize='24px'>Cookie Consent</DialogTitle>
-     <Box sx={{
+       <Box sx={{
                       background:"rgba(255, 255, 255, 0.68)",
-                      padding:"5px",
+                      padding:"2px",
                       borderRadius:"20px"
                     }}>
+      <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e" fontSize='20px'>Cookie Consent</DialogTitle>
+    
       <DialogContent>
         <Typography variant="body1" paragraph>
           We use cookies to enhance your experience on our website. 

@@ -28,6 +28,7 @@ import {
 import { AccountCircle, Chat, PersonAdd } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa'
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 
@@ -102,8 +103,8 @@ export default function Subscribers({ type }) {
   }, [state.page]);
 
   return (<>
-  <MainCard title={t("My Subscribers")} >
-    </ MainCard>
+    <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Subscribers</ButtonwithAnimation></Box>
+
       <Box className={classes.LoginBox} mb={5}>
 
         <Box display='flex' alignItems='center' justifyContent='flex-end'>

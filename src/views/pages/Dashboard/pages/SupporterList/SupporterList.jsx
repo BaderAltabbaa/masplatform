@@ -7,6 +7,7 @@ import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import CardCreators from '../../../../../component/ui/Card/CardCreators';
 import MainCard from "../../ui-component/cards/MainCard";
 import { useTranslation } from 'react-i18next';
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 
@@ -80,8 +81,8 @@ export default function SupporterList({ type }) {
   }, [state.page]);
 
   return (<>
-    <MainCard title={t("My Supporter")} >
-  </ MainCard>
+       <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Supporters</ButtonwithAnimation></Box>
+   
       <Box className={classes.LoginBox} mb={5}>
         <Box className={classes.masBoxFlex}>
         

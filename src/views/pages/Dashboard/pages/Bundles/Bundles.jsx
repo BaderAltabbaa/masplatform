@@ -33,6 +33,7 @@ import AddBundleDialog from "../../../../../component/AddBundleDialog";
 import ShareForAudienceDialog from "../../../../../component/shareForAudienceDialog";
 import MainCard from '../../ui-component/cards/MainCard'
 import Cardbundle from "../../../../../component/ui/Card/Cardbundle";
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -187,8 +188,8 @@ export default function Bundles() {
   }, [page]);
 
   return (<>
-    <MainCard title={t('My Bundles')} >
-</MainCard>
+        <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Bundles</ButtonwithAnimation></Box>
+    
     <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6" color="black"></Typography>

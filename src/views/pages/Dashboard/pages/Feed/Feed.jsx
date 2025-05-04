@@ -8,7 +8,7 @@ import axios from "axios";
 import Apiconfigs from "../../../../../Apiconfig/Apiconfigs";
 import MainCard from "../../ui-component/cards/MainCard";
 import { useTranslation } from 'react-i18next';
-
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 const useStyles = makeStyles(() => ({
@@ -60,12 +60,12 @@ export default function Login() {
   }, [state.page]);
 
   return (<>
-        <MainCard title={t("My feed")} >
-    </MainCard>
+           <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Feed</ButtonwithAnimation></Box>
+       
     <Box className={classes.LoginBox} >
       <Box>
         {allFeed && allFeed.length === 0 ? (
-          <Box align="center" mt={4} mb={5}>
+          <Box align="center" mt={2} mb={1}>
             <NoDataFound />
           </Box>
         ) : (

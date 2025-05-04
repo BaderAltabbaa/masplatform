@@ -24,6 +24,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa'
+import { ButtonwithAnimation } from '../../../../../component/ui/Button/button';
 
 const useStyles = makeStyles(() => ({
   subscriptionBox: {
@@ -111,8 +112,8 @@ export default function purchases() {
   }, [state.userPage]);
 
   return (<>
-    <MainCard title={t("Purchased Items")} >
-      </MainCard>
+    <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Purchases</ButtonwithAnimation></Box>
+    
  <div className={classes.subscriptionBox}>
       <Box className={classes.LoginBox} >
        

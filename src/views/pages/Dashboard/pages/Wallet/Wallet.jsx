@@ -16,6 +16,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from "axios"
 import zIndex from "@mui/material/styles/zIndex"
 import { useTranslation } from 'react-i18next';
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button"
 
 
 
@@ -265,8 +266,8 @@ const Wallet = () => {
 
     return(
 <>
-<MainCard title={t("My Wallet")}>
-</MainCard>
+<Box overflow='hidden'>
+<Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem",marginBottom:"1rem"}}><ButtonwithAnimation>My Wallet</ButtonwithAnimation></Box>
     <Box sx={{
         padding: "0 5%",
         maxWidth: "1600px",
@@ -322,6 +323,7 @@ const Wallet = () => {
         </Box>
         </Box>
         </div>
+        </Box>
         </Box>
 
 

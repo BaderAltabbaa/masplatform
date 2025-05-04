@@ -112,8 +112,8 @@ export default function Subscriptions() {
 
   return (
     <div className={classes.subscriptionBox}>
-    <MainCard title={t("Bundles")}>
-    </MainCard>
+     <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem",marginBottom:"1rem"}}><ButtonwithAnimation>Bundles</ButtonwithAnimation></Box>
+ 
       
         <Box>
           <Grid container spacing={2} className={classes.bunbox}  justifyContent="center">

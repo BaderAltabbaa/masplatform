@@ -32,6 +32,7 @@ import AddCourseDialog from "../../../../../component/AddCourseDialog";
 import ShareTheLessonDialog from "../../../../../component/shareTheLessonDialog";
 import MainCard from '../../ui-component/cards/MainCard'
 import Cardcourse from "../../../../../component/ui/Card/Cardcourse";
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -186,8 +187,8 @@ export default function MyEducation() {
   }, [page]);
 
   return (<>
-    <MainCard title={t('My Education')} >
-</MainCard>
+        <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Education</ButtonwithAnimation></Box>
+    
     <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6" color="black"></Typography>

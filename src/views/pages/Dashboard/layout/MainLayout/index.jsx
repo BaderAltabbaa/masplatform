@@ -92,7 +92,7 @@ const MainLayout = () => {
           sx={{
             padding: '10px',
             backgroundColor: 'white',
-            marginTop: '64px', // Adjust based on AppBar height
+            marginTop: '4rem', // Adjust based on AppBar height
           }}
           open={leftDrawerOpened}
         >

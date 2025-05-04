@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import { Pagination } from "@mui/material"; 
 import MainCard from "../../ui-component/cards/MainCard";
 import { useTranslation } from 'react-i18next';
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -261,10 +262,10 @@ export default function Login() {
   }, [page]);
 
   return (<>
-     <MainCard title={t("My Auctions")} >
- </MainCard>
+   
+        <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Auctions</ButtonwithAnimation></Box>
     
-    <Box className={classes.LoginBox} mb={5}>
+    <Box className={classes.LoginBox} mb={2}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6"></Typography>
 

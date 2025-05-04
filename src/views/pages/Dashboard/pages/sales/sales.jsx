@@ -22,6 +22,7 @@ import {
   } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa'
+import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
   
 
 const useStyles = makeStyles(() => ({
@@ -110,8 +111,8 @@ export default function sales() {
     }, [state.userPage]);
 
     return (<>
-        <MainCard title={t("Sold Items")} >
- </MainCard>
+           <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Sales</ButtonwithAnimation></Box>
+       
             <div className={classes.subscriptionBox}>
                 <Box className={classes.LoginBox} >
 
