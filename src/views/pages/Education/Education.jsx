@@ -1,12 +1,17 @@
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect ,useRef } from "react";
 import {
   Grid,
   Container,
   Box,
   Typography,
-  Pagination, 
+  Pagination,
+  Button ,
+  Dialog,
+  DialogTitle,
+  DialogContent,TextField,Snackbar,
 } from "@mui/material";  
+import MuiAlert from '@mui/material/Alert';
 
 import { makeStyles } from '@mui/styles';
 import axios from "axios";
@@ -20,6 +25,9 @@ import { useTranslation } from 'react-i18next';
 import 'src/layouts/TopBar/TopBar.css'
 import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
+import { Link } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
+
 
 
 const useStyles = makeStyles(() => ({
@@ -74,16 +82,220 @@ const Education = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
     const {t} = useTranslation();
 
-      const { ref: ref2,inView: inView2 } = useInView({
-                      threshold: 0.2, 
-                      triggerOnce: true,
-                    });
-                  
-                    const { ref: ref3,inView: inView3 } = useInView({
-                      threshold: 0.2, 
-                      triggerOnce: true, 
-                    }); 
+    const [currentContentIndex, setCurrentContentIndex] = useState(0);
+    const intervalRef = useRef(null);
+    const [open ,setOpen] = useState(false);
   
+
+  const { ref: ref2, inView: inView2 } = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+
+  const { ref: ref3, inView: inView3 } = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
+
+  const scrollToNextSection = () => {
+    const nextSection = document.getElementById('next-sec');
+    nextSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleOpen = () => {
+     setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+    intervalRef.current = setInterval(() => {
+      setCurrentContentIndex(prev => (prev + 1) % contentData.length);
+    }, 5000);
+ }
+
+ const RequestForm = () => {
+         const [username ,setUsername] = useState(auth.userData?.userName);
+         const [firstName , setFirstName] = useState('');
+         const [lastName , setLastName] = useState('');
+         const [email , setEmail] = useState('');
+         const [message , setMessage ] = useState('');
+         const [openSnackBar ,setOpenSnackBar ] = useState(false);
+         const [snackbarMessage, setSnackbarMessage ] = useState('');
+         const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+       
+       
+         const handleSubmit = async (e) => {
+           e.preventDefault();
+        
+       
+         const formspreeEndpoint = 'https://formspree.io/f/xeoajvaq';
+       
+         const formData = new URLSearchParams();
+         formData.append('username',username);
+         formData.append('firstName',firstName);
+         formData.append('lastName',lastName);
+         formData.append('email', email);
+         formData.append('message', message);
+       
+       try {
+         const response = await axios.post(formspreeEndpoint, formData ,{
+           headers: {
+             'Content-Type' : 'application/x-www-form-urlencoded',
+           },
+         });
+         
+         if(response.status === 200){
+           setSnackbarMessage('Message sent successfully!');
+           setSnackbarSeverity('success');
+           setUsername('');
+           setFirstName('');
+           setLastName('');
+           setEmail('');
+           setMessage('');
+           console.log(response.data,"heeeeey");
+         }
+         else {
+           setSnackbarMessage('Failed to send message. Please try again.');
+           setSnackbarSeverity('error');
+         }
+       }
+       
+       catch(error){
+         setSnackbarMessage('An error occurred. Please try again.');
+         setSnackbarSeverity('error');
+       } 
+       
+       finally {
+         setOpenSnackBar(true);
+       }
+       
+         };
+       
+       
+       const handleCloseSnackbar = () => {
+         setOpenSnackBar(false);
+       };
+       
+       return (
+         <Container maxWidth="sm">
+           
+           <form onSubmit={handleSubmit}>
+           <TextField
+               label={t("UserName")}
+               type="username"
+               fullWidth
+               margin="normal"
+               value={username}
+               disabled
+               required
+             />
+           <TextField
+               label={t("firstName")}
+               type="firstName"
+               fullWidth
+               margin="normal"
+               value={firstName}
+               onChange={(e) => setFirstName(e.target.value)}
+               required
+             />
+           <TextField
+               label={t("LastName")}
+               type="lastName"
+               fullWidth
+               margin="normal"
+               value={lastName}
+               onChange={(e) => setLastName(e.target.value)}
+               required
+             />
+             <TextField
+               label={t("Email")}
+               type="email"
+               fullWidth
+               margin="normal"
+               value={email}
+               onChange={(e) => setEmail(e.target.value)}
+               required
+             />
+             
+             <TextField
+               label={t("Tell us why you want to beacome an instructor")}
+               fullWidth
+               margin="normal"
+               multiline
+               rows={3}
+               value={message}
+               onChange={(e) => setMessage(e.target.value)}
+               required
+             />
+             <Button type="submit" variant="contained"  fullWidth sx={{backgroundColor:"#43005e",marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(99, 0, 139)"}}}>
+               {t("Submit")}
+             </Button>
+           </form>
+       
+           <Snackbar
+               open={openSnackBar}
+               autoHideDuration={6000}
+               onClose={handleCloseSnackbar}
+             >
+              
+             
+               <MuiAlert
+                 elevation={6}
+                 variant="filled"
+                 onClose={handleCloseSnackbar}
+                 severity={snackbarSeverity}
+               >
+                 {snackbarMessage}
+               </MuiAlert>
+             </Snackbar>
+       
+           
+         </Container>)
+       
+        }
+
+
+
+const contentData = [
+  {
+    text1:"Choose The Courses That Match Your Mind",
+    text2:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl",
+    image:"/assets/Images/edu.avif",
+    btn:"Learn More",
+    action: scrollToNextSection ,
+  },
+  {
+    text1:"Become A Mas Instructor",
+    text2:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl",
+    image:"/assets/Images/ins.avif",
+    btn:"Become An Instructor",
+    action: handleOpen,
+  },
+]
+
+useEffect(() => {
+
+  if(!open) {
+  intervalRef.current = setInterval(() => {
+    setCurrentContentIndex(prev => (prev + 1) % contentData.length);
+  }, 4000); }
+
+  return () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+}, [open,contentData.length]);
+
+const [forceRender, setForceRender] = useState(0);
+
+useEffect(() => {
+  setForceRender(prev => prev + 1);
+}, [currentContentIndex]);
+
+
+
+
 
   const listAllNft2Handler = async () => {
     await axios({
@@ -159,21 +371,27 @@ const Education = () => {
     </div>
     </div>
 
-<div className="who-we-are-sec">
+    <div className="who-we-are-sec" key={`section-${forceRender}`} id="who-sec">
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-      <span className="who-text1">Choose The Courses That Match Your Mind</span>
-      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
-        </div>
-        
-        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
-          <img style={{
-            display:"inline",
-            width:"100%",
-            borderRadius:"20px"
-          }} 
-          src="/assets/Images/edu.avif" alt="" />
-        </div>
+        <span className="who-text1">{contentData[currentContentIndex].text1}</span>
+        <span className="who-text2">{contentData[currentContentIndex].text2}</span>
+        <Button  onClick={contentData[currentContentIndex].action} className="learn-btn">{contentData[currentContentIndex].btn}</Button>
+
       </div>
+      
+      <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>
+        <img 
+          style={{
+            display: "inline",
+            width: "100%",
+            borderRadius: "20px",
+            transition: "opacity 0.5s ease-in-out"
+          }} 
+          src={contentData[currentContentIndex].image} 
+          alt={contentData[currentContentIndex].text1}
+        />
+      </div>
+    </div>
 
 
              
@@ -192,7 +410,7 @@ const Education = () => {
                 <Grid 
                 container 
                 
-                
+               id="next-sec" 
                 className={classes.gridContainer}>
                   {allNFT2List.map((data, i) => {
                     return (
@@ -252,6 +470,43 @@ const Education = () => {
 
         // </section>
       )}
+
+
+    <Dialog open={open} onClose={handleClose} disableScrollLock  fullWidth maxWidth="sm" PaperProps={{
+  sx: {
+    backgroundImage: 'url(/assets/Images/doodle2.png)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    
+  }
+}}>
+<DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color=" #43005e">
+   <span style={{
+              fontSize:"24px" ,fontWeight:"bold"
+            }}>Become An Instructor</span>
+            <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleClose}><AiOutlineClose/></div>
+</DialogTitle>
+<DialogContent>
+  <Box sx={{
+                       background:"rgba(255, 255, 255, 0.68)",
+                       padding:"10px",
+                       borderRadius:"20px"
+                     }}>
+<span style={{
+              fontSize:"16px"
+            }}>Send A Request To MASplatform Administration</span>
+          
+<RequestForm/>
+<span style={{
+              fontSize:"12px"
+            }}>*Will respond in 3days maximum</span>
+                     </Box>
+</DialogContent>
+    </Dialog>
+
+
+
     </Box>
   );
 };

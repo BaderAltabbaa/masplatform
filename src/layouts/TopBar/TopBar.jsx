@@ -11,6 +11,7 @@ import {
   Box,
   Typography,
   useMediaQuery,
+  Zoom,
   TextField, List, ListItem, ListItemText,
 
 } from '@mui/material';
@@ -35,7 +36,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import './TopBar.css'
 import StaticPage from '../../views/pages/staticPage';
 import LanguageSwitcher from '../../component/LangugeSwitcher';
-import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign } from "react-icons/fa";
+import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign ,FaArrowUp} from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import { hideSupportIcon } from '../../utils';
@@ -654,6 +655,29 @@ export default function Header() {
 
 const hideicon = hideSupportIcon(location.pathname)
 
+
+const [showScroll, setShowScroll] = useState(false);
+
+useEffect(() => {
+  const checkScroll = () => {
+    if (window.scrollY > 100) {
+      setShowScroll(true);
+    } else {
+      setShowScroll(false);
+    }
+  };
+
+  window.addEventListener('scroll', checkScroll);
+  return () => window.removeEventListener('scroll', checkScroll);
+}, []);
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
+
   return (
     <>
       <AppBar
@@ -974,6 +998,29 @@ const hideicon = hideSupportIcon(location.pathname)
         </header>
 
       </AppBar>
+
+      <Zoom in={window.scrollY > 100}>
+      <IconButton
+        onClick={scrollToTop}
+        sx={{
+          position: 'fixed',
+          bottom: 24,
+          left: 24,
+          zIndex: 1000,
+          backgroundColor: ' #998e8e',
+          color: '#43005e',
+          '&:hover': {
+            backgroundColor: '#cdc8c8',
+            transform: 'scale(1.1)'
+          },
+          transition: 'all 0.3s ease'
+        }}
+        size="large"
+        aria-label="scroll back to top"
+      >
+        <FaArrowUp fontSize="24px" />
+      </IconButton>
+    </Zoom>
 
       {auth.userLoggedIn && !hideicon &&
       

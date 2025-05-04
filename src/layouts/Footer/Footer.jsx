@@ -371,7 +371,7 @@ return (
     
   }
 }}>
-        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e">
+        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color=" #43005e">
           <span style={{
             fontSize:"24px"
           }}>{selectedItem?.title}</span>
