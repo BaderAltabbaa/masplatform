@@ -270,7 +270,7 @@ export default function Login() {
         <Typography variant="h6"></Typography>
 
         {auth?.userData?.userType === "Creator" && (
-          <Box>
+          <Box mt={2}>
             <Button
               variant="contained"
               size="large"

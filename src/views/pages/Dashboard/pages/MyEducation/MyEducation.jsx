@@ -192,7 +192,7 @@ export default function MyEducation() {
     <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6" color="black"></Typography>
-        <Box display="flex" sx={{}}>
+        <Box display="flex" mt={2}>
           <Button
             variant="contained"
             size="large"
@@ -225,7 +225,7 @@ export default function MyEducation() {
         <Grid container spacing={2} className={classes.bunbox}  >
           {courseList.map((data, i) => {
             return (
-              <Grid item key={i} lg={3} md={4.2} sm={6} xm={12}>
+              <Grid item key={i} lg={3} md={5} sm={6} xm={12}>
                 <Cardcourse data={data}/>
                 {/* <CourseCard data={data} index={i} isDays={true} /> */}
               </Grid>

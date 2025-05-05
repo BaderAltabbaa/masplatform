@@ -86,7 +86,12 @@ const MainLayout = () => {
         </AppBar>
 
         {/* Sidebar */}
-        <Sidebar></Sidebar>
+       <Box sx={{padding:"130px" ,
+       
+        "@media(max-width:900px)":{
+          padding:"0"
+        }
+       }}></Box>
         {/* Main Content */}
         <Main
           sx={{
