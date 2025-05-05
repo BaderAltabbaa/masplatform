@@ -682,7 +682,7 @@ const useStyles = makeStyles(() => ({
     margin: "20px 0px",
   },
 
-  bundleCardStyle: {
+  courseCardStyle: {
     width: 100,
     height: 100,
     borderRadius: 5,

@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import ReactPlayer from "react-player";
 import DataLoading from '../../../../component/DataLoading';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {background:"linear-gradient(to right, #280026,#4a004f)"
    },
@@ -343,7 +344,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "10px",
     },
   },
-  bundleData: {
+  courseData: {
     display: "flex",
     alignItems: "center",
     "& h4": {
@@ -363,7 +364,7 @@ const currencies = [
     label: "PRIVATE",
   },
 ];
-export default function BundleDetails() {
+export default function CourseDetails() {
   const navigate = useNavigate();
   const auth = useContext(UserContext);
   const location = useLocation();
@@ -376,14 +377,14 @@ export default function BundleDetails() {
     type: "",
   });
 
-  const [bundleDetails, setBundleDetails] = useState({});
+  const [courseDetails, setCourseDetails] = useState({});
   const [isVideo, setIsVideo] = useState(false);
   const [openBuy, setOpenBuy] = useState(false);
   const [contentList, setContentList] = useState([]);
-  const [isLoadingBunldeView, setIsLoadingBundleView] = useState(false);
+  const [isLoadingCourseView, setIsLoadingCourseView] = useState(false);
   const [isLoadingConetent, setIsLoadingContent] = useState(false);
   const [isFilterTrue, setIsFilterTrue] = useState(false);
-  const [bunfleId, setBundleId] = useState("");
+  const [courseId, setCourseId] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -400,21 +401,21 @@ export default function BundleDetails() {
       searchKey: "",
       type: "",
     });
-    getBundleContentListHandler(bundleDetails?._id);
+    getCourseContentListHandler(courseDetails?._id);
     setIsFilterTrue(false);
   };
-  const getBundleDetailsHandler = async (id) => {
+  const getCourseDetailsHandler = async (id) => {
     try {
-      setIsLoadingBundleView(true);
+      setIsLoadingCourseView(true);
       const res = await axios({
         method: "GET",
-        url: Apiconfigs.mynft + id,
+        url: Apiconfigs.mynft2 + id,
       });
       if (res.data.statusCode === 200) {
-        console.log("responseBundleDeatils-----", res.data.result);
-        setBundleDetails(res.data.result);
-        getBundleContentListHandler(res.data.result._id);
-        setIsLoadingBundleView(false);
+        console.log("responseCourseDeatils-----", res.data.result);
+        setCourseDetails(res.data.result);
+        getCourseContentListHandler(res.data.result._id);
+        setIsLoadingCourseView(false);
         const filterFunForCurrentSubscriber =
           res.data.result.subscribers?.filter((value) => {
             return value === auth?.userData?._id;
@@ -426,42 +427,57 @@ export default function BundleDetails() {
       }
     } catch (error) {
       console.log(error);
-      setIsLoadingBundleView(false);
+      setIsLoadingCourseView(false);
     }
   };
-  const getBundleContentListHandler = async (bundleId) => {
+  const getCourseContentListHandler = async (courseId) => {
     try {
+      console.log("📥 courseId:", courseId);
+      console.log("🔎 selectedFilter:", selectedFilter);
+  
+      // تفريغ البيانات مؤقتًا
       setContentList([]);
       setIsLoadingContent(true);
+  
+      const token = sessionStorage.getItem("token");
+      console.log("🛡️ token from sessionStorage:", token);
+  
       const res = await axios({
         method: "GET",
-        url: Apiconfigs.bundleContentList,
+        url: Apiconfigs.courseContentList,
         params: {
-          nftId: bundleId,
-          search: selectedFilter.searchKey ? selectedFilter.searchKey : null,
-          fromDate: selectedFilter.startDate ? selectedFilter.startDate : null,
-          toDate: selectedFilter.endDate ? selectedFilter.endDate : null,
+          nft2Id: courseId,
+          search: selectedFilter.searchKey || null,
+          fromDate: selectedFilter.startDate || null,
+          toDate: selectedFilter.endDate || null,
         },
         headers: {
           token: sessionStorage.getItem("token"),
         },
       });
-      if (res.data.statusCode === 200) {
-        console.log("response--list---", res.data.result.docs);
+      
+  
+      console.log("📦 Raw Response:", res);
+  
+      if (res.status === 200 && res.data?.result?.docs) {
+        console.log("✅ Course contents:", res.data.result.docs);
         setContentList(res.data.result.docs);
-        setIsLoadingContent(false);
         setIsFilterTrue(false);
-      }
+      } 
+      
     } catch (error) {
-      console.log(error);
+      console.error("❌ Error fetching course content:", error);
+    } finally {
       setIsLoadingContent(false);
+      console.log("📴 Loading ended");
     }
   };
+  
   useEffect(() => {
-    const bundleId = location.search.split("?");
-    if (bundleId[1]) {
-      getBundleDetailsHandler(bundleId[1]);
-      setBundleId(bundleId[1]);
+    const courseId = location.search.split("?");
+    if (courseId[1]) {
+      getCourseDetailsHandler(courseId[1]);
+      setCourseId(courseId[1]);
     }
   }, [location]);
   useEffect(() => {
@@ -472,22 +488,22 @@ export default function BundleDetails() {
       selectedFilter.type !== ""
     ) {
       if (isFilterTrue) {
-        getBundleContentListHandler(bundleDetails?._id);
+        getCourseContentListHandler(courseDetails?._id);
       }
     }
   }, [selectedFilter, isFilterTrue]);
 
   useEffect(() => {
-    if (bundleDetails.mediaUrl) {
-      setIsVideo(handleVideo(bundleDetails.mediaUrl));
+    if (courseDetails.mediaUrl1) {
+      setIsVideo(handleVideo(courseDetails.mediaUrl1));
     }
-  }, [bundleDetails]);
+  }, [courseDetails]);
   const subscribeNowHandler = async (isCheck) => {
     // if (parseFloat(auth?.userData?.masBalance) > 0) {
     setIsloading(true);
     await axios({
       method: "GET",
-      url: Apiconfigs.subscribeNow + bunfleId,
+      url: Apiconfigs.subscribeNow + courseId,
       headers: {
         token: sessionStorage.getItem("token"),
       },
@@ -497,7 +513,7 @@ export default function BundleDetails() {
         if (res.data.statusCode === 200) {
           auth.updateUserData();
           toast.success("You have subscribed successfully");
-          getBundleDetailsHandler(bunfleId);
+          getCourseDetailsHandler(courseId);
           // if (callbackFn) {
           //   callbackFn()
           // }
@@ -523,7 +539,7 @@ export default function BundleDetails() {
     setIsloading(true);
     await axios({
       method: "DELETE",
-      url: Apiconfigs.unSubscription + bunfleId,
+      url: Apiconfigs.unSubscription + courseId,
       headers: {
         token: sessionStorage.getItem("token"),
       },
@@ -535,7 +551,7 @@ export default function BundleDetails() {
           auth.updateUserData();
           setIsSubscribed(false);
           toast.success("You have unsubscribed successfully.");
-          getBundleDetailsHandler(bunfleId);
+          getCourseDetailsHandler(courseId);
         } else {
           toast.error("Something went wrong");
         }
@@ -547,10 +563,10 @@ export default function BundleDetails() {
 
   return (
     <Box className={classes.root}>
-      {isLoadingBunldeView ? (
+      {isLoadingCourseView ? (
          <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
-                <DataLoading />
-                </Box>
+                        <DataLoading />
+                        </Box>
       ) : (
 <>
         <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,overflow: "hidden"}}   className="bunner-animaton">
@@ -572,23 +588,21 @@ export default function BundleDetails() {
              textShadow:"0px 0px 10px white",
           }}
         >
-                             {bundleDetails?.bundleName ? bundleDetails?.bundleName : "Bundle"}
+                             {courseDetails?.courseName ? courseDetails?.courseName : "Course"}
 
           </div>
         </div>
     
         </div>
         <Container maxWidth="lg">
-
           
-      
           <Box className={classes.headbox2}>
             <Box style={{ display: "flex", flexWrap: "wrap" }}>
               {isVideo ? (
                 <Box>
                   <Box className={classes.profileimg}>
                     <ReactPlayer
-                      url={bundleDetails?.mediaUrl}
+                      url={courseDetails?.mediaUrl1}
                       playing
                       muted
                       controls
@@ -603,32 +617,33 @@ export default function BundleDetails() {
                   className={classes.profileimg}
                 >
                   <img
-                    src={bundleDetails?.mediaUrl}
+                    src={courseDetails?.mediaUrl1}
                     style={{ width: "100%", height: "100%" }}
                   />
                 </Box>
               )}
               <Box className={`${classes.text1} seats`}>
                 <Typography variant="h2" sx={{color:"white"}}>
-              Bundle Name:    {bundleDetails?.bundleName ? bundleDetails?.bundleName : ""}
+                Course Name:  {courseDetails?.courseName ? courseDetails?.courseName : ""}
                 </Typography>
                
                 <Typography  sx={{color:"rgb(153, 108, 164)",fontSize:'1.5rem'
                   ,"@media(max-width:900px)":{
                     fontSize:'1rem'
-                  }}}>
-               Bundle Details:   {bundleDetails?.details ? bundleDetails?.details : ''}
+                  }
+                }}>
+                 Course Details: {courseDetails?.details ? courseDetails?.details : ''}
                 </Typography> 
                 <Box mt={1}>
                   <Box
                     display="flex"
                     alignItems="center"
-                    className={classes.bundleData}
+                    className={classes.CourseData}
                   >
-                    <Typography variant="h4"  sx={{color:"white"}}>Donation Amount:</Typography>&nbsp;
-                    <Typography variant="h4"  sx={{color:"rgb(178, 178, 178)"}}>
-                      {bundleDetails?.donationAmount
-                        ? bundleDetails?.donationAmount
+                    <Typography  sx={{color:"white"}}>Donation Amount:</Typography>&nbsp;
+                    <Typography  sx={{color:"rgb(178, 178, 178)"}}>
+                      {courseDetails?.donationAmount
+                        ? courseDetails?.donationAmount
                         : "0"}
                       MAS
                     </Typography>
@@ -636,11 +651,11 @@ export default function BundleDetails() {
                   <Box
                     display="flex"
                     alignItems="center"
-                    className={classes.bundleData}
+                    className={classes.CourseData}
                   >
-                    <Typography variant="h4"  sx={{color:"white"}}>Time Duration:</Typography>&nbsp;
-                    <Typography variant="h4" sx={{color:"rgb(178, 178, 178)"}}>
-                      {bundleDetails?.duration ? bundleDetails?.duration : "0"}
+                    <Typography  sx={{color:"white"}}>Time Duration:</Typography>&nbsp;
+                    <Typography  sx={{color:"rgb(178, 178, 178)"}}>
+                      {courseDetails?.duration ? courseDetails?.duration : "0"}
                     </Typography>
                   </Box>
                   {/*{auth?.userData?._id !== bundleDetails?.userId && (
@@ -679,8 +694,8 @@ export default function BundleDetails() {
                 onClick={() => setOpenBuy(true)}
               >
                 <Typography variant="h2"  sx={{color:"white"}}>
-                  {bundleDetails?.subscribers
-                    ? bundleDetails?.subscribers?.length
+                  {courseDetails?.subscribers
+                    ? courseDetails?.subscribers?.length
                     : "0"}
                 </Typography>
                 <Typography variant="h5">Subscribers</Typography>
@@ -783,7 +798,7 @@ export default function BundleDetails() {
                           color="secondary"
                           size="large"
                           variant="contained"
-                          style={{ marginRight: "10px" ,background:" #2f0032",color:'white'}}
+                          style={{ marginRight: "10px" ,background:"#2f0032",color:'white'}}
                           onClick={() =>
                             isLogin ? setIsFilterTrue(true) : navigate("/login")
                           }
@@ -817,7 +832,7 @@ export default function BundleDetails() {
                   auth={auth}
                   isLoadingConetent={isLoadingConetent}
                   isSubscribed={isSubscribed}
-                  bundleDetails={bundleDetails}
+                  courseDetails={courseDetails}
                 />
               </Box>
             </Grid>

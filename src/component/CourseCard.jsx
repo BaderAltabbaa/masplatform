@@ -20,7 +20,7 @@ import { MdEmail } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
 import moment from "moment";
 import ReactPlayer from "react-player";
-import ShareForAudienceDialog from "./shareForAudienceDialog";
+import ShareTheLessonDialog from "./shareTheLessonDialog";
 import axios from "axios";
 import Apiconfigs from "../Apiconfig/Apiconfigs";
 import { toast } from "react-toastify";
@@ -281,8 +281,8 @@ function ExploreCard(props) {
                         }}
                       />
                       &nbsp;&nbsp;
-                    <span style={{color:"#afadaf"}}> {likesUsers ? likesUsers.length : "0"}</span> 
-                    </Typography>
+                      <span style={{color:"#afadaf"}}> {likesUsers ? likesUsers.length : "0"}</span> 
+                      </Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -368,102 +368,90 @@ function ExploreCard(props) {
         </Dialog>
 
         <Dialog
-          fullWidth="sm"
-          maxWidth="sm"
-          open={viewContent}
-          onClose={() => setViewContent(false)}
-          aria-labelledby="max-width-dialog-title"
+  fullWidth
+  maxWidth="sm"
+  open={viewContent}
+  onClose={() => setViewContent(false)}
+  aria-labelledby="max-width-dialog-title"
+  disableEnforceFocus
+>
+
+  <DialogContent>
+    <Box className={classes.PhotoBox}>
+      {handleVideo(data?.mediaUrl) ? (
+        <ReactPlayer
+          url={data.mediaUrl}
+          playing
+          controls
+          width="100%"
+          height={300}
+        />
+      ) : (
+        <img
+          src={data?.mediaUrl}
+          alt=""
+          style={{ height: "300px", width: "100%" }}
+        />
+      )}
+    </Box>
+    <Box mt={3} className={classes.bundleText} textAlign="center">
+      <Typography variant="h4">
+        {data?.title || "No Title Available"}
+      </Typography>
+    </Box>
+    <Box mt={2} className={classes.deskiText}>
+      <Grid container spacing={2} style={{ alignItems: "center" }}>
+        <Grid item xs={12} md={3} lg={2}>
+          <Typography variant="h4" align="left" color="textSecondary" style={{ fontSize: "16px" }}>
+            Details:
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={9} lg={10}>
+          <Typography
+            variant="body2"
+            align="left"
+            color="textSecondary"
+            dangerouslySetInnerHTML={{
+              __html: data?.details || "No details provided."
+            }}
+            style={{ margin: "0px", padding: "0px" }}
+          />
+        </Grid>
+      </Grid>
+    </Box>
+  </DialogContent>
+  <DialogActions style={{ justifyContent: "center" }}>
+    {!auth.userLoggedIn ? (
+      <Box mt={3} mb={3} textAlign="center">
+        <Button className={classes.LoginButton} onClick={() => setViewContent(false)}>
+          Cancel
+        </Button>
+        &nbsp;&nbsp;
+        <Button className={classes.LoginButton} onClick={() => navigate("/login")}>
+          Login
+        </Button>
+      </Box>
+    ) : (
+      <Box mt={3} mb={3} textAlign="center">
+        <Button
+          className={classes.LoginButton}
+          onClick={() => setViewContent(false)}
+          variant="contained"
+          size="large"
+          color="primary"
+          style={{ background: "#320046", color: "white" }}
         >
-          <DialogContent>
-            <Box className={classes.PhotoBox}>
-              {handleVideo(data?.mediaUrl) ? (
-                <ReactPlayer
-                  url={data?.mediaUrl}
-                  playing
-                  controls
-                  width={"100%"}
-                  height={300}
-                />
-              ) : (
-                <img
-                  src={data?.mediaUrl}
-                  alt=""
-                  style={{ height: "300px", width: "100%" }}
-                />
-              )}
-            </Box>
-            <Box mt={3} className={classes.bundleText} textAlign="center">
-              <Typography variant="h4">{data?.title}</Typography>
-            </Box>
+          Close
+        </Button>
+      </Box>
+    )}
+  </DialogActions>
+</Dialog>
 
-            <Box mt={2} className={classes.deskiText}>
-              <Grid container spacing={2} style={{ alignItems: "center" }}>
-                <Grid item xs={12} md={3} lg={2}>
-                  <Typography
-                    variant="h4"
-                    align="left"
-                    color="textSecondary"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Details:{" "}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={9} lg={10}>
-                  <Typography
-                    variant="body2"
-                    align="left"
-                    color="textSecondary"
-                    dangerouslySetInnerHTML={{
-                      __html: data?.details,
-                    }}
-                    style={{ margin: "0px", padding: "0px" }}
-                  ></Typography>
-                </Grid>
-              </Grid>
-            </Box>
-          </DialogContent>
-          <DialogActions style={{ justifyContent: "center" }}>
-            {!auth.userLoggedIn && (
-              <Box mt={3} mb={3} textAlign="center">
-                {" "}
-                <Button
-                  className={classes.LoginButton}
-                  onClick={() => setViewContent(false)}
-                >
-                  Cancel
-                </Button>
-                &nbsp;&nbsp;{" "}
-                <Button
-                  className={classes.LoginButton}
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Login
-                </Button>
-              </Box>
-            )}
-            {auth.userLoggedIn && (
-              <Box mt={3} mb={3} textAlign="center">
-                <Button
-                  className={classes.LoginButton}
-                  onClick={() => setViewContent(false)}
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  style={{ background:"#320046",color:'white'}}
-
-                >
-                  Close
-                </Button>
-              </Box>
-            )}
-          </DialogActions>
-        </Dialog>
       </Paper>
       {/* Edit Audience */}
       {openEdit && (
-        <ShareForAudienceDialog
+        <ShareTheLessonDialog
           show={openEdit}
           handleClose={() => setOpenEdit(false)}
           audienceData={data}
@@ -492,21 +480,13 @@ function ExploreCard(props) {
   }
 
   function handleVideo(url) {
-    const videoFormats = [
-      "mp4",
-      "avi",
-      "wmv",
-      "mov",
-      "mkv",
-      "flv",
-      "webm",
-      "mpeg",
-      "3gp",
-      "ogv",
-    ];
-    const format = url.split(".").slice(-1)[0];
-    return videoFormats.includes(format);
+    if (!url || typeof url !== "string") return false; // ✅ تحقق من وجود url أولاً
+  
+    const videoFormats = ["mp4", "avi", "wmv", "mov", "mkv", "flv", "webm", "mpeg", "3gp", "ogv"];
+    const extension = url.split('.').pop().split('?')[0].toLowerCase();
+    return videoFormats.includes(extension);
   }
+  
 }
 
 export default ExploreCard;

@@ -328,6 +328,21 @@ export const routes = [
       import("src/views/pages/Profile/Items/ItemDetails")
     ),
   },
+
+
+  
+{
+    path: "/courses-details",
+    layout: HomeLayout,
+    guard: true,
+    element: lazy(() =>
+      import("src/views/pages/Profile/Courses/CourseDetails")
+    ),
+  },
+
+
+
+
   
   {
     path: "/auctions",

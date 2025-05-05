@@ -9,7 +9,7 @@ import {
   Button ,
   Dialog,
   DialogTitle,
-  DialogContent,TextField,Snackbar,
+  DialogContent,TextField,Snackbar,InputAdornment,Input,Select
 } from "@mui/material";  
 import MuiAlert from '@mui/material/Alert';
 
@@ -27,6 +27,8 @@ import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
 import { Link } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
+import { ArrowDropDown, ArrowUpward } from "@mui/icons-material";
+
 
 
 
@@ -85,6 +87,7 @@ const Education = () => {
     const [currentContentIndex, setCurrentContentIndex] = useState(0);
     const intervalRef = useRef(null);
     const [open ,setOpen] = useState(false);
+    const [value ,setValue] = useState('')
   
 
   const { ref: ref2, inView: inView2 } = useInView({
@@ -113,16 +116,46 @@ const Education = () => {
     }, 5000);
  }
 
+ 
+
+
+
+
  const RequestForm = () => {
          const [username ,setUsername] = useState(auth.userData?.userName);
-         const [firstName , setFirstName] = useState('');
-         const [lastName , setLastName] = useState('');
-         const [email , setEmail] = useState('');
+         const [email , setEmail] = useState(auth.userData?.email);
+         const [type ,setType] = useState('');
          const [message , setMessage ] = useState('');
          const [openSnackBar ,setOpenSnackBar ] = useState(false);
          const [snackbarMessage, setSnackbarMessage ] = useState('');
          const [snackbarSeverity, setSnackbarSeverity] = useState('success');
        
+
+         const types = [
+          'Instructor',
+          'School',
+          'University',
+          'Educational Institution'
+         ]
+        
+         const [openType ,setOpenType] = useState(false);
+        
+         const handleOpenType = () => {
+          setOpenType(true);
+         }
+        
+         const handleCloseType = () => {
+          setOpenType(false);
+         } 
+        
+         const handleSelectType = (type) => {
+          setType(type);
+          handleCloseType();
+         }
+
+
+
+
        
          const handleSubmit = async (e) => {
            e.preventDefault();
@@ -132,9 +165,8 @@ const Education = () => {
        
          const formData = new URLSearchParams();
          formData.append('username',username);
-         formData.append('firstName',firstName);
-         formData.append('lastName',lastName);
          formData.append('email', email);
+         formData.append('type',type);
          formData.append('message', message);
        
        try {
@@ -148,8 +180,7 @@ const Education = () => {
            setSnackbarMessage('Message sent successfully!');
            setSnackbarSeverity('success');
            setUsername('');
-           setFirstName('');
-           setLastName('');
+           setType('');
            setEmail('');
            setMessage('');
            console.log(response.data,"heeeeey");
@@ -186,36 +217,36 @@ const Education = () => {
                fullWidth
                margin="normal"
                value={username}
-               disabled
+               readOnly
                required
              />
-           <TextField
-               label={t("firstName")}
-               type="firstName"
-               fullWidth
-               margin="normal"
-               value={firstName}
-               onChange={(e) => setFirstName(e.target.value)}
-               required
-             />
-           <TextField
-               label={t("LastName")}
-               type="lastName"
-               fullWidth
-               margin="normal"
-               value={lastName}
-               onChange={(e) => setLastName(e.target.value)}
-               required
-             />
+          
              <TextField
                label={t("Email")}
                type="email"
                fullWidth
                margin="normal"
                value={email}
-               onChange={(e) => setEmail(e.target.value)}
+               readOnly
                required
+               
              />
+               <TextField
+          label="Type"
+          value={type}
+          onClick={handleOpenType}
+          fullWidth
+          margin="normal"
+          InputProps={{
+            readOnly: true,
+            endAdornment: (
+              <InputAdornment position="end">
+                <ArrowDropDown />
+              </InputAdornment>
+            )
+          }}
+          required
+        />
              
              <TextField
                label={t("Tell us why you want to beacome an instructor")}
@@ -250,6 +281,26 @@ const Education = () => {
              </Snackbar>
        
            
+
+             <Dialog open={openType} onClose={handleCloseType}>
+<DialogTitle align="center" color="#2f0032" sx={{fontSize:"18px"}}>Select a type</DialogTitle>
+<DialogContent>
+          <Box display="flex" flexDirection="column">
+           {types.map((type,index) => (
+            <Button
+            key={index}
+            onClick={() => handleSelectType(type)}
+            style={{ margin: "5px 0" ,color:" #2f0032"}}
+            >
+              {type}
+            </Button>
+           ))
+
+           }
+          </Box>
+          </DialogContent>
+    </Dialog>
+
          </Container>)
        
         }
@@ -504,6 +555,7 @@ useEffect(() => {
                      </Box>
 </DialogContent>
     </Dialog>
+
 
 
 
