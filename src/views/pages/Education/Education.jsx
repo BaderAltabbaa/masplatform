@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import 'src/layouts/TopBar/TopBar.css'
 import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
 import { ArrowDropDown, ArrowUpward } from "@mui/icons-material";
 
@@ -83,7 +83,7 @@ const Education = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
     const {t} = useTranslation();
-
+    const navigate = useNavigate();
     const [currentContentIndex, setCurrentContentIndex] = useState(0);
     const intervalRef = useRef(null);
     const [open ,setOpen] = useState(false);
@@ -320,7 +320,7 @@ const contentData = [
     text2:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl",
     image:"/assets/Images/ins.avif",
     btn:"Become An Instructor",
-    action: handleOpen,
+    action: () => {navigate('/plans')},
   },
 ]
 

@@ -306,6 +306,12 @@ export const routes = [
     element: lazy(() => import("src/views/pages/Education/Education")),
   },
   {
+    path: "/plans",
+      layout: HomeLayout,
+      guard: true,
+      element: lazy(() => import("src/views/pages/Education/Plans")),
+    },
+  {
     path: "/items",
     layout: HomeLayout,
     guard: true,
@@ -339,9 +345,6 @@ export const routes = [
       import("src/views/pages/Profile/Courses/CourseDetails")
     ),
   },
-
-
-
 
   
   {
