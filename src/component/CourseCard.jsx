@@ -301,7 +301,13 @@ function ExploreCard(props) {
                 color="primary"
                 style={{ background:"#320046",color:'white'}}
 
-                onClick={() => setViewContent(true)}
+                onClick={() => navigate(`/lesson/${data._id}`, { 
+                  state: { 
+                    lessonData: data,
+                    courseDetails: props.courseDetails,
+                    isSubscribed: props.isSubscribed
+                  } 
+                })}
               >
                 View
               </Button>

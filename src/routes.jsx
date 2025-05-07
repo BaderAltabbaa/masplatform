@@ -312,6 +312,12 @@ export const routes = [
       element: lazy(() => import("src/views/pages/Education/Plans")),
     },
   {
+    path: "/lesson/:id",
+    layout: HomeLayout,
+    guard: true,
+    element: lazy(() => import("src/views/pages/Education/Lesson")),
+  },
+  {
     path: "/items",
     layout: HomeLayout,
     guard: true,

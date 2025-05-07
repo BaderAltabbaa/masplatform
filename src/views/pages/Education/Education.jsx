@@ -377,6 +377,8 @@ useEffect(() => {
     }
   }, [auth.userLoggedIn, auth.userData, page]);
 
+  console.log("cor",allNFT2List)
+
   return (
     <Box className={classes.container}
     sx={{
@@ -424,10 +426,14 @@ useEffect(() => {
 
     <div className="who-we-are-sec" key={`section-${forceRender}`} id="who-sec">
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-        <span className="who-text1">{contentData[currentContentIndex].text1}</span>
+        <span className="who-text1" style={{textShadow:"1px 1px 14px rgb(255, 0, 242)"}}>{contentData[currentContentIndex].text1}</span>
         <span className="who-text2">{contentData[currentContentIndex].text2}</span>
-        <Button  onClick={contentData[currentContentIndex].action} className="learn-btn">{contentData[currentContentIndex].btn}</Button>
-
+     <Box onClick={contentData[currentContentIndex].action}><ButtonwithAnimation>
+      <span style={{fontSize:"17px"}}>
+        {contentData[currentContentIndex].btn}
+        </span>
+        </ButtonwithAnimation>
+     </Box> 
       </div>
       
       <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>

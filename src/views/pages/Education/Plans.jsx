@@ -13,8 +13,20 @@ import {
 } from "@mui/material";  
 import MuiAlert from '@mui/material/Alert';
 import PlanCard from "./PlanCard";
+import { useInView } from 'react-intersection-observer';
+
 
 const Plans = () => {
+
+    const { ref: ref2,inView: inView2 } = useInView({
+                    threshold: 0.2, 
+                    triggerOnce: true,
+                  });
+                
+                  const { ref: ref3,inView: inView3 } = useInView({
+                    threshold: 0.2, 
+                    triggerOnce: true, 
+                  }); 
 
     const Plans = [
         {
@@ -134,6 +146,24 @@ return (
       </div>
     </div>
     </div>
+
+
+    <div className="who-we-are-sec">
+      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <span className="who-text1">Choose the best plan to fufill your educational purops</span>
+      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
+        </div>
+        
+        <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
+          <img style={{
+            display:"inline",
+            width:"100%",
+            borderRadius:"20px"
+          }} 
+          src="/assets/Images/31.jpg" alt="" />
+        </div>
+      </div>
+
 
 
   <div style={{

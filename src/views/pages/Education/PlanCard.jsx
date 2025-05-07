@@ -24,6 +24,8 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { FiDownload } from "react-icons/fi";
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 
 
 
@@ -203,11 +205,38 @@ const donloadBadge = () => {
       }
     );
   };
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay:  0.5, // Stagger animation based on index
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
     
   return (
 
     <>
-    <Card sx={{ maxWidth: 345, borderRadius:10,border:"2px solid rgb(255, 255, 255)"}}>
+
+<motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={cardVariants}
+    >
+
+    <Card sx={{ maxWidth: 345, borderRadius:10,border:"2px solid rgb(255, 255, 255)" ,
+      "&:hover":{transform:"scale(1.02)",transition: "ease-out 0.3s",boxShadow:"0px 0px 10px white"}}} >
       {/* Top Section - Plan Name and Subtext */}
       <Box 
         sx={{ 
@@ -267,14 +296,15 @@ const donloadBadge = () => {
         </Button>
       </Box>
     </Card>
+    </motion.div>
 
 
 <Dialog open={open} onClose={handleClose}  disableScrollLock  fullWidth maxWidth="sm" PaperProps={{
   sx: {
-    backgroundImage: 'url(/assets/Images/doodle2.png)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
+    backgroundColor:"rgb(255, 250, 238)"
     
   }
 }}>
