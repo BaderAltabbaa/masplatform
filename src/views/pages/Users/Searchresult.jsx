@@ -5,10 +5,12 @@ import {
   Box,
   Container,
   Pagination,  // Corrected import
+  TextField, // Add TextField import
+  InputAdornment, // For search icon
+  IconButton
 } from '@mui/material';  // Make sure all material components are imported from MUI v5
-
+import SearchIcon from '@mui/icons-material/Search'; // Import search icon
 import { makeStyles } from '@mui/styles';
-
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import DataLoading from "src/component/DataLoading";
@@ -18,7 +20,9 @@ import { ButtonwithAnimation } from "../../../component/ui/Button/button";
 import CardCreators from "../../../component/ui/Card/CardCreators";
 import { useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
+import { FaSearch } from "react-icons/fa";
 import "src/views/pages/About/AboutUs.css"
+import { transform } from "lodash";
 
 
 const useStyles = makeStyles(() => ({
@@ -67,6 +71,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
   const [page, setPage] = useState(1);
   const [noOfPages, setNoOfPages] = useState(1);
   const [userListToDisplay, setUserListToDisplay] = useState([]);
+  const [openSeachBar , SetOpenSearchBar] = useState(false)
       const {t} = useTranslation();
 
       const { ref: ref2,inView: inView2 } = useInView({
@@ -128,6 +133,11 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
     };
   }, [search, page]);
 
+  const handleSearchChange = (event) => {
+    setsearch(event.target.value);
+    setPage(1); // Reset to first page when searching
+  };
+
   return (
     <Box className={classes.container}
     sx={{
@@ -145,6 +155,8 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
               </Box>
       ) : (
         <Container maxWidth="xl">
+  
+
           <div style={{
             display:"flex",
             justifyContent:"center",
@@ -193,6 +205,65 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
         </div>
       </div>
 
+      
+      <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems:"center",
+            marginBottom: '10px', 
+            position:"fixed",
+            bottom:"70px",
+            right:"15px",
+            zIndex:"100",
+            gap:"5px"
+          }}>
+            {openSeachBar && <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search creators by name..."
+              value={search}
+              onChange={handleSearchChange}
+              sx={{
+                maxWidth: '300px',
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  '& fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.24)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'white',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'white',
+                }
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ color: '#2d013a' }} />
+                  </InputAdornment>
+                ),
+              }}
+            />}
+            <IconButton
+            onClick={() => SetOpenSearchBar(!openSeachBar)}
+            sx={{
+              "&:hover":{
+                transform:"scale(1.2)",
+                transition:"ease-out 1s"
+              }
+            }}
+            >
+            <FaSearch   style={{fontSize:"40px"
+            ,  color:"#cdc8c8",
+              cursor:"pointer",
+             
+            }}/>
+            </IconButton>
+           
+           
+          </Box>
      
                       
           {userListToDisplay.length === 0 ? (
@@ -207,6 +278,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
            
           
           className={classes.userGridContainer}>
+            
         
             {userListToDisplay.map((data, i) => {
               return (

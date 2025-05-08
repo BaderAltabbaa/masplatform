@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
-  Grid,
-  Container,
-  Box,
   Typography,
-  Pagination,  
-} from "@mui/material";  
+  Grid,
+  Box,
+  Container,
+  Pagination,  // Corrected import
+  TextField, // Add TextField import
+  InputAdornment, // For search icon
+  IconButton
+} from '@mui/material'; 
 
 import { makeStyles } from '@mui/styles';  
 import axios from "axios";
@@ -18,7 +21,8 @@ import CardMarketplace from "../../../component/ui/Card/CardMarketplace";
 import { useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
-
+import SearchIcon from '@mui/icons-material/Search'; // Import search icon
+import { FaSearch } from "react-icons/fa";
 
 
 const useStyles = makeStyles(() => ({
@@ -63,6 +67,8 @@ const AllItemsPage = () => {
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+   const [openSeachBar , SetOpenSearchBar] = useState(false)
+    const [search, setsearch] = useState("");
       const {t} = useTranslation();
 
        const { ref: ref2,inView: inView2 } = useInView({
@@ -82,7 +88,8 @@ const AllItemsPage = () => {
       url: Apiconfigs.listAllNft1,
       params: {
         page: page,
-        limit: 10
+        limit: 10,
+        
       }
     })
       .then(async (res) => {

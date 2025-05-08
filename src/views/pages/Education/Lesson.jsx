@@ -8,7 +8,18 @@ import {
   Card,
   CardMedia,
   CardContent,
-  Chip
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Divider,
+  CircularProgress
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 import ReactPlayer from "react-player";
@@ -16,10 +27,12 @@ import moment from "moment";
 import axios from "axios";
 import Apiconfigs from "../../../Apiconfig/Apiconfigs";
 import Loader from "../../../component/Loader";
+import { motion } from "framer-motion";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(4, 10),
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(2),
     },
@@ -38,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
   },
   lessonsContainer: {
     flex: 1,
-    maxHeight: '600px',
     overflowY: 'auto',
     padding: theme.spacing(1),
     [theme.breakpoints.down('md')]: {
@@ -46,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mediaContainer: {
-    width: 'fit-content',
+    width: '100%',
     height: '550px',
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
@@ -54,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   lessonCard: {
-    width:"fit-content",
+    width:"100%",
     marginBottom: theme.spacing(2),
     cursor: 'pointer',
     transition: 'transform 0.2s',
@@ -67,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     height: '120px',
   },
   activeLesson: {
-    border: `2px solid ${theme.palette.primary.main}`,
+    border: `2px solid rgb(191, 0, 255)`,
   },
   contentSection: {
     marginTop: theme.spacing(2),
@@ -76,8 +88,74 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1),
-  }
+  },
+
+  quizDialog: {
+    minWidth: '500px',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '300px',
+    },
+  },
+  quizTitle: {
+    marginBottom: theme.spacing(2),
+    color: theme.palette.primary.main,
+  },
+  questionCard: {
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(2),
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  submitButton: {
+    marginTop: theme.spacing(2),
+    backgroundColor: '#4a148c',
+    '&:hover': {
+      backgroundColor: '#7b1fa2',
+    },
+  },
+  resultContainer: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    backgroundColor: 'rgba(0, 200, 0, 0.1)',
+    borderRadius: '8px',
+  },
 }));
+
+
+const mockQuiz = {
+  title: "Lesson Quiz",
+  questions: [
+    {
+      text: "What is the main topic of this lesson?",
+      options: [
+        "Introduction to React",
+        "State management",
+        "Component lifecycle",
+        "All of the above"
+      ],
+      correctAnswer: 0
+    },
+    {
+      text: "Which hook is used for side effects?",
+      options: [
+        "useState",
+        "useEffect",
+        "useContext",
+        "useReducer"
+      ],
+      correctAnswer: 1
+    },
+    {
+      text: "What does JSX stand for?",
+      options: [
+        "JavaScript XML",
+        "JavaScript Extension",
+        "JavaScript Syntax",
+        "JavaScript Execute"
+      ],
+      correctAnswer: 0
+    }
+  ]
+};
 
 const Lesson = () => {
   const classes = useStyles();
@@ -97,6 +175,12 @@ const Lesson = () => {
   const [isSubscribed, setIsSubscribed] = useState(location.state?.isSubscribed || false);
   const [loading, setLoading] = useState(!location.state?.lessonData);
   const [loadingLessons, setLoadingLessons] = useState(false);
+
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
+
 
   useEffect(() => {
     if (!location.state?.lessonData) {
@@ -170,6 +254,62 @@ const Lesson = () => {
     });
   };
 
+  useEffect(() => {
+    if (quizOpen) {
+      const initialAnswers = {};
+      mockQuiz.questions.forEach((q, i) => {
+        initialAnswers[`q${i}`] = null;
+      });
+      setUserAnswers(initialAnswers);
+      setQuizSubmitted(false);
+      setScore(0);
+    }
+  }, [quizOpen]);
+
+  const handleAnswerSelect = (questionIndex, answerIndex) => {
+    setUserAnswers(prev => ({
+      ...prev,
+      [`q${questionIndex}`]: answerIndex,
+    }));
+  };
+
+  const handleSubmitQuiz = () => {
+    let correctAnswers = 0;
+    mockQuiz.questions.forEach((question, qIndex) => {
+      if (userAnswers[`q${qIndex}`] === question.correctAnswer) {
+        correctAnswers++;
+      }
+    });
+    
+    setScore(correctAnswers);
+    setQuizSubmitted(true);
+  };
+
+  const handleRetryQuiz = () => {
+    initializeQuiz();
+  };
+
+  const handleCloseQuiz = () => {
+    setQuizOpen(false);
+  };
+
+  const initializeQuiz = () => {
+    const initialAnswers = {};
+    mockQuiz.questions.forEach((q, i) => {
+      initialAnswers[`q${i}`] = null;
+    });
+    setUserAnswers(initialAnswers);
+    setQuizSubmitted(false);
+    setScore(0);
+  };
+
+  const handleOpenQuiz = () => {
+    initializeQuiz();
+    setQuizOpen(true);
+  };
+
+
+
   if (loading) return <Loader />;
   if (!currentLesson) return <Typography variant="h4">Lesson not found</Typography>;
 
@@ -219,30 +359,31 @@ const Lesson = () => {
               </Typography>
             </Box>
             
+           
+            
+            <Box display="flex" flexWrap="wrap" justifyContent='space-between'>
             <Typography variant="h3" paragraph color="white" mb={3}>
             {currentLesson?.title || "No Title Available"}
             </Typography>
-            
-            <Box display="flex" flexWrap="wrap">
               <Chip 
                 label={currentLesson?.postType || "PUBLIC"} 
                 className={classes.chip}
                 color={currentLesson?.postType === "PRIVATE" ? "secondary" : "primary"}
+                sx={{
+                  color: "white",
+                  backgroundColor: "rgb(66, 0, 92)",
+                  '&:hover': {
+                    backgroundColor: "rgb(86, 0, 120)",
+                  }
+                }}
               />
-              {!isSubscribed && currentLesson?.postType === "PRIVATE" && (
-                <Chip 
-                  label="Subscribe to access" 
-                  className={classes.chip}
-                  color="error"
-                />
-              )}
             </Box>
-          </Box>
-          
+            <Box mt={2} display='flex' justifyContent="space-between">
           <Button 
             variant="contained"
             sx={{
               color: "white",
+              fontSize:"18px",
               backgroundColor: "rgb(66, 0, 92)",
               '&:hover': {
                 backgroundColor: "rgb(86, 0, 120)",
@@ -252,6 +393,33 @@ const Lesson = () => {
           >
             Back to Course
           </Button>
+
+        <Button 
+        component={motion.button}
+          variant="contained" 
+          onClick={handleOpenQuiz}
+          animate={{
+            scale: [1, 1.1, 1]
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          sx={{
+            color: "white",
+            fontSize:"18px",
+              backgroundColor: "rgb(66, 0, 92)",
+              '&:hover': {
+                backgroundColor: "rgb(86, 0, 120)",
+              }
+          }}
+        >
+          Take Lesson Quiz
+        </Button>
+      </Box>
+          </Box>
+         
         </Box>
         
         {/* Lessons List */}
@@ -276,7 +444,7 @@ const Lesson = () => {
                     }`}
                     onClick={() => handleLessonClick(lesson)}
                   >
-                    <Box display="flex">
+                    <Box display="flex" sx={{background:"rgb(117, 0, 125)" }}>
                       <Box>
                         {handleVideo(lesson.mediaUrl) ? (
                           <ReactPlayer
@@ -295,7 +463,7 @@ const Lesson = () => {
                         )}
                       </Box>
                       <Box>
-                      <CardContent style={{ flex: 1 ,background:"rgb(117, 0, 125)" }}>
+                      <CardContent style={{ flex: 1 }}>
                         <Typography variant="subtitle1" noWrap color="white">
                            {lesson.details}
                         </Typography>
@@ -315,6 +483,100 @@ const Lesson = () => {
           )}
         </Box>
       </Box>
+
+
+      <Dialog
+        open={quizOpen}
+        onClose={handleCloseQuiz}
+        maxWidth="md"
+        fullWidth
+        classes={{ paper: classes.quizDialog }}
+        disableScrollLock
+      >
+        <DialogTitle sx={{fontSize:"20px"}}>Lesson Quiz</DialogTitle>
+        <DialogContent dividers>
+          {mockQuiz.questions.map((question, qIndex) => (
+            <Box key={qIndex} mb={4}>
+              <Typography variant="h4" gutterBottom>
+                {qIndex + 1}. {question.text}
+              </Typography>
+              
+              <FormControl component="fieldset" fullWidth>
+                <RadioGroup
+                  value={userAnswers[`q${qIndex}`] ?? ''}
+                  onChange={(e) => handleAnswerSelect(qIndex, parseInt(e.target.value))}
+                  disabled={quizSubmitted}
+                >
+                  {question.options.map((option, oIndex) => (
+                    <FormControlLabel
+                      key={oIndex}
+                      value={oIndex}
+                      control={<Radio />}
+                      label={option}
+                      sx={{
+                        marginBottom: 1,
+                        borderRadius: 1,
+                        backgroundColor: quizSubmitted 
+                          ? oIndex === question.correctAnswer 
+                            ? 'rgba(0, 200, 0, 0.1)'
+                            : userAnswers[`q${qIndex}`] === oIndex 
+                              ? 'rgba(200, 0, 0, 0.1)'
+                              : 'transparent'
+                          : 'transparent',
+                        padding: 1,
+                      }}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+              <Divider sx={{ my: 2 }} />
+            </Box>
+          ))}
+
+          {quizSubmitted && (
+            <Box className={classes.resultContainer}>
+              <Typography variant="h6">
+                Your score: {score} out of {mockQuiz.questions.length}
+              </Typography>
+              <Typography variant="body1" mt={1}>
+                {score === mockQuiz.questions.length 
+                  ? "Perfect! You got all questions right!"
+                  : score >= mockQuiz.questions.length / 2
+                    ? "Good job! Keep learning!"
+                    : "Keep practicing! You'll get better!"}
+              </Typography>
+              <Button 
+                onClick={handleRetryQuiz}
+                variant="outlined"
+                sx={{ mt: 2 }}
+              >
+                Retry Quiz
+              </Button>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseQuiz} sx={{color:"rgb(66, 0, 92)"}}>
+            Close
+          </Button>
+          {!quizSubmitted && (
+            <Button 
+              onClick={handleSubmitQuiz}
+              variant="contained"
+              color="primary"
+              disabled={Object.values(userAnswers).some(a => a === null)}
+              sx={{
+                backgroundColor: "rgb(66, 0, 92)",
+                '&:hover': {
+                  backgroundColor: "rgb(86, 0, 120)",
+                }
+              }}
+            >
+              Submit Quiz
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

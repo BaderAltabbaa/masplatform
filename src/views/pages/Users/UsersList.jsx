@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "10px",
+    padding:"0 50px",
     "& h6": {
       fontSize: "28px",
       color: "#000",
@@ -63,7 +63,7 @@ const useStyles = makeStyles(() => ({
     }
   },
   paddingContainer: {
-    padding: "30px 30px  10px 30px",
+    padding: "20px 30px  10px 30px",
     // marginTop: "-30px",
     
   },
@@ -181,22 +181,8 @@ export default function UsersList() {
      
     }}
     >
-
-{isLoadingData ? (
-   <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
-                 <DataLoading />
-                 </Box>
-) : (
-
-  <Container maxWidth='xl'
-    dir="ltr" >
-     
-<Box className={classes.paddingContainer} >
-
-      <Box className={classes.LoginBox}  >
-        {/* Start Title */}
-        
-        <Box className={classes.masBoxFlex}
+      
+      <Box className={classes.masBoxFlex}
         >
           <ButtonwithAnimation  >{t("Users")}</ButtonwithAnimation>
           {/* {isMobile ? "" : <Typography variant="h6">Users</Typography>} */}
@@ -252,6 +238,22 @@ export default function UsersList() {
 />
           </Box>
         </Box>
+
+{isLoadingData ? (
+   <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+                 <DataLoading />
+                 </Box>
+) : (
+
+  <Container maxWidth='xl'
+    dir="ltr" >
+     
+<Box className={classes.paddingContainer} >
+
+      <Box className={classes.LoginBox}  >
+        {/* Start Title */}
+        
+       
         {/* End Title */}
 
         {/* Start Serach */}

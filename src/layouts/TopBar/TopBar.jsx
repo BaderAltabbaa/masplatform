@@ -1031,7 +1031,7 @@ const scrollToTop = () => {
         bottom: "15px",
         right: "15px",
         zIndex: "1000",
-        background: "#cdc8c8",
+        background: " #cdc8c8",
         borderRadius: "50%", 
         width: "60px",
         height: "60px",

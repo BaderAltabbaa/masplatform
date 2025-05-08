@@ -1,12 +1,15 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import {
-  Grid,
-  Container,
-  Box,
   Typography,
-  Pagination, 
-} from "@mui/material";  
+  Grid,
+  Box,
+  Container,
+  Pagination,  // Corrected import
+  TextField, // Add TextField import
+  InputAdornment, // For search icon
+  IconButton
+} from '@mui/material';
 
 import { makeStyles } from '@mui/styles';
 import Bundlecard from "src/component/NewBundleCard";  
@@ -21,6 +24,10 @@ import { useTranslation } from 'react-i18next';
 import 'src/layouts/TopBar/TopBar.css'
 import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
+import SearchIcon from '@mui/icons-material/Search'; // Import search icon
+import { FaSearch } from "react-icons/fa";
+
+
 
 
 const useStyles = makeStyles(() => ({
@@ -73,6 +80,10 @@ const AllBundlesPage = () => {
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [openSeachBar , SetOpenSearchBar] = useState(false)
+  const [search, setsearch] = useState("");
+  
+  
     const {t} = useTranslation();
 
     const { ref: ref2,inView: inView2 } = useInView({
@@ -92,7 +103,8 @@ const AllBundlesPage = () => {
       url: Apiconfigs.listAllNft,
       params: {
         page: page,
-        limit: 10
+        limit: 10,
+        search: search,
       }
     })
       .then(async (res) => {
@@ -114,7 +126,12 @@ const AllBundlesPage = () => {
     if (auth.userData?._id && auth.userLoggedIn) {
       listAllNftHandler();
     }
-  }, [auth.userLoggedIn, auth.userData, page]);
+  }, [auth.userLoggedIn, auth.userData, page,search]);
+
+  const handleSearchChange = (event) => {
+    setsearch(event.target.value);
+    setPage(1); // Reset to first page when searching
+  };
 
   return (
     <Box className={classes.container}
@@ -177,7 +194,65 @@ const AllBundlesPage = () => {
           src="/assets/Images/bundles.jpg" alt="" />
         </div>
       </div>
-
+ 
+      <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems:"center",
+            marginBottom: '10px', 
+            position:"fixed",
+            bottom:"70px",
+            right:"15px",
+            zIndex:"100",
+            gap:"5px"
+          }}>
+            {openSeachBar && <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search creators by name..."
+              value={search}
+              onChange={handleSearchChange}
+              sx={{
+                maxWidth: '300px',
+                '& .MuiOutlinedInput-root': {
+                  color: 'white',
+                  '& fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.24)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'white',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'white',
+                }
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ color: '#2d013a' }} />
+                  </InputAdornment>
+                ),
+              }}
+            />}
+            <IconButton
+            onClick={() => SetOpenSearchBar(!openSeachBar)}
+            sx={{
+              "&:hover":{
+                transform:"scale(1.2)",
+                transition:"ease-out 1s"
+              }
+            }}
+            >
+            <FaSearch   style={{fontSize:"40px"
+            ,  color:"#cdc8c8",
+              cursor:"pointer",
+             
+            }}/>
+            </IconButton>
+           
+           
+          </Box>
 
 
         

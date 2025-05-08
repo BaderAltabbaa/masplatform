@@ -28,6 +28,7 @@ import "src/views/pages/About/AboutUs.css"
 import { Link ,useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
 import { ArrowDropDown, ArrowUpward } from "@mui/icons-material";
+import { motion } from "framer-motion";
 
 
 
@@ -428,12 +429,31 @@ useEffect(() => {
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
         <span className="who-text1" style={{textShadow:"1px 1px 14px rgb(255, 0, 242)"}}>{contentData[currentContentIndex].text1}</span>
         <span className="who-text2">{contentData[currentContentIndex].text2}</span>
-     <Box onClick={contentData[currentContentIndex].action}><ButtonwithAnimation>
-      <span style={{fontSize:"17px"}}>
+     
+        <Button 
+      component={motion.button}
+      onClick={contentData[currentContentIndex].action}
+      variant="contained"
+      animate={{
+        scale: [1, 1.1, 1]
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+      sx={{
+        background: "#581454",
+        '& span': {
+          fontSize: "17px"
+        }
+      }}
+    >
+      <span>
         {contentData[currentContentIndex].btn}
         </span>
-        </ButtonwithAnimation>
-     </Box> 
+        </Button>
+     
       </div>
       
       <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>

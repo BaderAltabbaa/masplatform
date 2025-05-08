@@ -132,17 +132,19 @@ export default function Subscribers({ type }) {
       <TableRow>
         <TableCell sx={{color:"white"}}>{t("Icon")}</TableCell>
         <TableCell sx={{color:"white"}} >{t("Username")}</TableCell>
+        <TableCell sx={{color:"white"}} >{t("Speciality")}</TableCell>
+        <TableCell sx={{color:"white"}} >{t("Type")}</TableCell>
         <TableCell sx={{color:"white"}} align="center">{t("Actions")}</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
       {userList.map((subscriber, index) => (
         <TableRow key={index}>
-          <TableCell component="th" scope="row">
+          <TableCell component="th" scope="row" sx={{width:"10px"}}>
             <Box display="flex" alignItems="center">
               <Avatar
                 src={subscriber.profilePic}
-                sx={{ width: 40, height: 40, mr: 2 }}
+                sx={{ width: 40, height: 40 }}
               >
                 {!subscriber.profileImage && <AccountCircle />}
               </Avatar>
@@ -150,6 +152,9 @@ export default function Subscribers({ type }) {
             </Box>
           </TableCell>
           <TableCell > {subscriber.name}</TableCell>
+          <TableCell > {subscriber.speciality}</TableCell>
+          <TableCell > {subscriber.userType}</TableCell>
+
           
           <TableCell align="center">
             <Box display="flex" alignItems='center' justifyContent='center'>
