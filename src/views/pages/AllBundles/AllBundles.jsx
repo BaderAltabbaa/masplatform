@@ -26,6 +26,7 @@ import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
 import SearchIcon from '@mui/icons-material/Search'; // Import search icon
 import { FaSearch } from "react-icons/fa";
+import { Clear } from "@mui/icons-material";
 
 
 
@@ -75,15 +76,34 @@ const useStyles = makeStyles(() => ({
 const AllBundlesPage = () => {
   const classes = useStyles();
   const auth = useContext(UserContext);
-  const [allNFTList, setAllNFTList] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   const [openSeachBar , SetOpenSearchBar] = useState(false)
-  const [search, setsearch] = useState("");
-  
-  
+  const [searchTerm, setSearchTerm] = useState("");
+const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+const [allBundles, setAllBundles] = useState([]); // Complete list for client-side filtering
+const [filteredBundles, setFilteredBundles] = useState([]); // What actually gets displayed
+const [serverSearchSupported, setServerSearchSupported] = useState(true);
+const [isClientSideMode, setIsClientSideMode] = useState(false); // Track if we're in client-side mode
+
+
+  // Debounce search term
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setPage(1); // Always reset to page 1 when search changes
+      
+      // When search is cleared, switch back to server-side mode
+      if (!searchTerm.trim() && isClientSideMode) {
+        setIsClientSideMode(false);
+        setServerSearchSupported(true);
+      }
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [searchTerm, isClientSideMode]);
+
+
     const {t} = useTranslation();
 
     const { ref: ref2,inView: inView2 } = useInView({
@@ -97,41 +117,98 @@ const AllBundlesPage = () => {
           }); 
   
 
+           const fetchAllBundles = async () => {
+    try {
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.listAllNft,
+        params: { page: 1, limit: 100 } // Get more items for client-side search
+      });
+      if (res.data.statusCode === 200) {
+        setAllBundles(res.data.result.docs);
+        filterClientSide(res.data.result.docs, debouncedSearchTerm);
+      }
+    } catch (err) {
+      console.error("Error fetching all bundles:", err);
+    }
+  };
+
+         // Client-side filtering function
+  const filterClientSide = (bundles, term) => {
+    if (!term.trim()) {
+      // When search is cleared in client-side mode, we need to reset
+      setIsClientSideMode(false);
+      setServerSearchSupported(true);
+      setFilteredBundles([]); // Clear results to trigger server fetch
+    } else {
+      const filtered = bundles.filter(bundle => 
+        bundle.bundleName?.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredBundles(filtered);
+    }
+  };
+
+          // Main data fetching function
   const listAllNftHandler = async () => {
-    await axios({
-      method: "GET",
-      url: Apiconfigs.listAllNft,
-      params: {
+    setIsLoading(true);
+    try {
+      const params = {
         page: page,
         limit: 10,
-        search: search,
-      }
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          setAllNFTList(res.data.result.docs);
-          setPages(res.data.result.totalPages)
-          console.log("raa",res.data)
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
+      };
 
-        console.log(err.message);
+      // Only add search if we think server supports it
+      if (serverSearchSupported && debouncedSearchTerm.trim()) {
+        params.search = debouncedSearchTerm;
+      }
+
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.listAllNft,
+        params: params
       });
+
+      if (res.data.statusCode === 200) {
+        const newBundles = res.data.result.docs;
+        
+        // Detect if server search isn't working
+        if (debouncedSearchTerm.trim() && newBundles.length === res.data.result.totalDocs) {
+          setServerSearchSupported(false);
+          setIsClientSideMode(true);
+          await fetchAllBundles(); // Load all bundles for client-side filtering
+        } else {
+          // Server search is working
+          setFilteredBundles(newBundles);
+        }
+        
+        setPages(res.data.result.totalPages);
+      }
+    } catch (err) {
+      console.error("API Error:", err);
+      setServerSearchSupported(false);
+      setIsClientSideMode(true);
+      await fetchAllBundles(); // Fallback to client-side
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+          // Load data when dependencies change
   useEffect(() => {
     if (auth.userData?._id && auth.userLoggedIn) {
-      listAllNftHandler();
+      if (!isClientSideMode) {
+        listAllNftHandler();
+      } else if (allBundles.length > 0) {
+        // If we have client-side data, just filter it
+        filterClientSide(allBundles, debouncedSearchTerm);
+      } else {
+        // Initial load when in client-side mode
+        fetchAllBundles();
+      }
     }
-  }, [auth.userLoggedIn, auth.userData, page,search]);
+  }, [auth.userLoggedIn, auth.userData, page, debouncedSearchTerm, isClientSideMode]);
 
-  const handleSearchChange = (event) => {
-    setsearch(event.target.value);
-    setPage(1); // Reset to first page when searching
-  };
+ 
 
   return (
     <Box className={classes.container}
@@ -141,14 +218,6 @@ const AllBundlesPage = () => {
      
     }}
     >
-      {isLoading ? (
-        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
-               <DataLoading />
-               </Box>
-      ) : (
-        // <section>
-        <Container maxWidth='xl'>
-
 <div style={{
             display:"flex",
             justifyContent:"center",
@@ -178,8 +247,7 @@ const AllBundlesPage = () => {
     </div>
     </div>
 
-
-<div className="who-we-are-sec">
+    <div className="who-we-are-sec">
       <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
       <span className="who-text1">Discover Mas Bundles And Choose The Best for You</span>
       <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
@@ -194,7 +262,7 @@ const AllBundlesPage = () => {
           src="/assets/Images/bundles.jpg" alt="" />
         </div>
       </div>
- 
+
       <Box sx={{ 
             display: 'flex', 
             justifyContent: 'center', 
@@ -207,11 +275,12 @@ const AllBundlesPage = () => {
             gap:"5px"
           }}>
             {openSeachBar && <TextField
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               fullWidth
               variant="outlined"
-              placeholder="Search creators by name..."
-              value={search}
-              onChange={handleSearchChange}
+              placeholder="Search Bundle by name..."
+            
               sx={{
                 maxWidth: '300px',
                 '& .MuiOutlinedInput-root': {
@@ -229,7 +298,15 @@ const AllBundlesPage = () => {
               }}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment position="end">
+                    {searchTerm && (
+                      <IconButton 
+                        onClick={() => setSearchTerm("")}
+                        size="small"
+                      >
+                        <Clear fontSize="small" />
+                      </IconButton>
+                    )}
                     <SearchIcon sx={{ color: '#2d013a' }} />
                   </InputAdornment>
                 ),
@@ -255,6 +332,21 @@ const AllBundlesPage = () => {
           </Box>
 
 
+      {isLoading ? (
+        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+               <DataLoading />
+               </Box>
+      ) : (
+        // <section>
+        <Container maxWidth='xl'>
+
+
+
+
+
+ 
+     
+
         
              
 
@@ -262,10 +354,10 @@ const AllBundlesPage = () => {
             <>
              
               {/* <Container maxWidth="xl"> */}
-                {allNFTList.length === 0 ? (
-                  <Box align="center" mt={4} mb={5}>
-                    <NoDataFound />
-                  </Box>
+                {filteredBundles.length === 0 ? (
+            <Box align="center" mt={4} mb={5}>
+              <NoDataFound />
+            </Box>
                 ) : (
                   ""
                 )}
@@ -274,7 +366,7 @@ const AllBundlesPage = () => {
                 
                 
                 className={classes.gridContainer}>
-                  {allNFTList.map((data, i) => {
+                  {filteredBundles.map((data, i) => {
                     return (
                       <Grid
                       container
@@ -314,18 +406,24 @@ const AllBundlesPage = () => {
                   })}
                 </Grid>
               {/* </Container> */}
-              <Box mb={2} mt={2} display="flex" justifyContent="center" dir="ltr">
-                <Pagination
+              {!isClientSideMode && pages > 1 && (
+                <Box mb={2} mt={2} display="flex" justifyContent="center" dir="ltr">
+                  <Pagination
                     count={pages}
                     page={page}
                     onChange={(e, v) => setPage(v)}
                     sx={{
-                      "& .MuiPaginationItem-root": { color: "white" }, // Change text color
-                      "& .MuiPaginationItem-page.Mui-selected": {  color: "grey" }, // Change selected color
-                      "& .MuiPaginationItem-ellipsis": { color: "white" }, // Change ellipsis color
+                      "& .MuiPaginationItem-root": { color: "white" },
+                      "& .MuiPaginationItem-page.Mui-selected": { color: "grey" },
+                      "& .MuiPaginationItem-ellipsis": { color: "white" },
                     }}
-                />
-              </Box>
+                  />
+                </Box>
+              )}
+
+
+
+
             </>
           )}
         </Container>

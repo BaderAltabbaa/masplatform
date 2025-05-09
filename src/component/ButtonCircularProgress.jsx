@@ -5,7 +5,7 @@ import { withStyles } from '@mui/styles';
 
 const styles = () => ({
   circularProgress: {
-    color: '#015284',
+    color: 'rgb(195, 0, 209)',
   },
 });
 
