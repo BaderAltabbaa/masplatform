@@ -5,7 +5,6 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
         alignItems: 'center',
-        backgroundColor: theme.palette.background.default,
         display: 'flex',
         flexDirection: 'column',
         height: '100%',

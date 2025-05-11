@@ -69,10 +69,7 @@ const MainLayout = () => {
           {/* TopBar */}
           <Box>
           <TopBar
-            sx={{
-              position: 'absolute',
-              top: '0',
-            }}
+           
           /></Box>
 
           {/* Toolbar with Header */}

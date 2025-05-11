@@ -40,6 +40,9 @@ import { FaSearch, FaBars, FaTimes, FaUser,FaDollarSign ,FaArrowUp} from "react-
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import { hideSupportIcon } from '../../utils';
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 
 
@@ -169,6 +172,27 @@ export default function Header() {
     setAboutDropdownOpen(!isAboutDropdownOpen)
   }
 
+    const [isServiceDropdownOpen, setServiceDropdownOpen] = useState(false);
+
+
+    const toggleServicetDropdown = () => {
+    setServiceDropdownOpen(!isServiceDropdownOpen)
+  }
+
+
+    const [isEducationDropdownOpen, setEducationDropdownOpen] = useState(false);
+
+  const toggleEducationDropdown = () => {
+    setEducationDropdownOpen(!isEducationDropdownOpen);
+  };
+
+
+ const [isGameDropdownOpen, setGameDropdownOpen] = useState(false);
+
+  const toggleGameDropdown = () => {
+    setGameDropdownOpen(!isGameDropdownOpen);
+  };
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -267,6 +291,11 @@ export default function Header() {
   const [openNotifications, setOpenNotifications] = useState(false);
   const dropdownRef = useRef(null);
   const aboutDropdownRef = useRef(null);
+  const servicesDropdownRef = useRef(null);
+  const educationDropdownRef = useRef(null);
+  const gameDropdownRef = useRef(null);
+  const relativeBar =  ['/']
+
 
 
   useEffect(() => {
@@ -388,7 +417,7 @@ export default function Header() {
           top: '100%',
           left: '50%', // Center it horizontally
           transform: 'translateX(-50%)', // Adjust for exact centering
-          backgroundColor: '#cdc8c8',
+          backgroundColor: 'rgba(0, 0, 0, 0.67)',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           borderRadius: '4px',
           padding: '10px',
@@ -402,7 +431,7 @@ export default function Header() {
               navigate("/profile");
               onClose();
             }}
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -430,7 +459,7 @@ export default function Header() {
                 <BsChat />
               </Badge>
             }
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -452,7 +481,7 @@ export default function Header() {
                 <NotificationsIcon />
               </Badge>
             }
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -468,7 +497,7 @@ export default function Header() {
               navigate("/buymas");
               onClose();
             }}
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -496,8 +525,8 @@ export default function Header() {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor: '#cdc8c8',
-          borderRadius: isMobile ? '0' : '4px', // Sharp edges in mobile
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
           width: isMobile ? '100%' : 'auto', // Full width in mobile
@@ -512,7 +541,7 @@ export default function Header() {
               navigate("/FAQ");
               onClose();
             }}
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -531,7 +560,7 @@ export default function Header() {
               navigate("/Blogs");
               onClose();
             }}
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -549,7 +578,7 @@ export default function Header() {
               navigate("/About_us");
               onClose();
             }}
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -568,7 +597,7 @@ export default function Header() {
               navigate("/Contact_Us");
               onClose();
             }}
-            sx={{color:"#43005e",
+            sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
                   color: "#8602ba"
@@ -612,6 +641,284 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target)) {
+        setServiceDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (educationDropdownRef.current && !educationDropdownRef.current.contains(event.target)) {
+        setEducationDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (gameDropdownRef.current && !gameDropdownRef.current.contains(event.target)) {
+        setGameDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+
+
+const GamesDropDown = ({ onClose, isMobile }) => {
+    return (
+      <Box
+        sx={{
+          position: isMobile ? 'relative' : 'absolute', // Only relative in mobile
+          top: isMobile ? 'unset' : '100%', // Reset top in mobile
+          left: isMobile ? 'unset' : '50%', // Reset left in mobile
+          transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
+          padding: '10px',
+          zIndex: 1000,
+          width: isMobile ? '100%' : 'auto', // Full width in mobile
+          whiteSpace:"nowrap",
+          textAlign:"center"
+        }}
+      >
+      <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <Box>
+        <Button
+            onClick={() => {
+              navigate("/corporate/metaverse");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("MetaVerse")}
+          </Button>
+          </Box>
+
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/corporate/metaverse");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Games")}
+          </Button>
+          </Box>
+         
+
+         
+      </Box>
+    </Box>
+    )
+}
+
+
+
+
+const EducationDropDown = ({ onClose, isMobile }) => {
+    return (
+      <Box
+        sx={{
+          position: isMobile ? 'relative' : 'absolute', // Only relative in mobile
+          top: isMobile ? 'unset' : '100%', // Reset top in mobile
+          left: isMobile ? 'unset' : '50%', // Reset left in mobile
+          transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
+          padding: '10px',
+          zIndex: 1000,
+          width: isMobile ? '100%' : 'auto', // Full width in mobile
+          whiteSpace:"nowrap",
+          textAlign:"center"
+        }}
+      >
+      <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <Box>
+        <Button
+            onClick={() => {
+              navigate("/education");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Education")}
+          </Button>
+          </Box>
+
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/plans");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Plans")}
+          </Button>
+          </Box>
+         
+
+         
+      </Box>
+    </Box>
+    )
+}
+
+
+ const ServicesDropDown = ({ onClose, isMobile }) => {
+    return (
+      <Box
+        sx={{
+          position: isMobile ? 'relative' : 'absolute', // Only relative in mobile
+          top: isMobile ? 'unset' : '100%', // Reset top in mobile
+          left: isMobile ? 'unset' : '50%', // Reset left in mobile
+          transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
+          padding: '10px',
+          zIndex: 1000,
+          width: isMobile ? '100%' : 'auto', // Full width in mobile
+          whiteSpace:"nowrap",
+          textAlign:"center"
+        }}
+      >
+      <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <Box>
+        <Button
+            onClick={() => {
+              navigate("/creators");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Creators")}
+          </Button>
+          </Box>
+
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/bundles");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Bundles")}
+          </Button>
+          </Box>
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/items");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Marketplace")}
+          </Button>
+          </Box>
+
+            <Box>
+        <Button
+            onClick={() => {
+              navigate("/user-list");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Transfer")}
+          </Button>
+          </Box>
+
+         
+      </Box>
+    </Box>
+    )
+}
+
+
+
+
   // start Search result
   const SearchResult = () => {
     return (
@@ -681,13 +988,13 @@ const scrollToTop = () => {
   return (
     <>
       <AppBar
-        position={"relative"}
+        position={relativeBar.includes(location.pathname) ? "fixed" : "fixed"}
         elevation={0}
-        style={{ border: "none" }}
+        sx={{ border: "none" ,background:"none" }}
       >
 
 
-        <header style={{display:"flex",backgroundColor:"#cdc8c8" ,padding:"0 10px"}}>
+        <header style={{display:"flex",backgroundColor: "rgba(0, 0, 0, 0.77)" ,padding:"0 10px"}}>
           <div className='logo1_contanier '>
             <Link to={"/"}>
               <img className="logo1" src="\assets\Images\bader-logo.svg" alt="Logo11" />
@@ -718,7 +1025,7 @@ const scrollToTop = () => {
 
               )}
               <FaSearch
-                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
+                style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: '#dadada' }}
                 onClick={toggleSearch}
               />
               <LanguageSwitcher/>
@@ -733,29 +1040,313 @@ const scrollToTop = () => {
 
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
             <ul  style={{ display: "flex", alignItems: "center", marginBottom: "10px" ,padding:"0"}}>
-            <li><Link to="/creators">{t("Creators")}</Link></li>
-              <li><Link to="/bundles">{t("Bundles")}</Link></li>
-              <li><Link to="/items">{t("Marketplace")}</Link></li>
-              <li><Link to="/education">{t("Education")}</Link></li>
-              <li><Link to="/user-list">{t("Transfer")}</Link></li>
-              <li><Link to="/corporate/metaverse">{t("Games")}</Link></li>
-              <li><Link to="/corporate/metaverse">{t("Metaverse")}</Link></li>
-              <li 
-  ref={aboutDropdownRef} 
-  onClick={toggleAboutDropdown}
+              <li><Link to="/">{t("Home")}</Link></li>
+
+
+<li 
+  ref={servicesDropdownRef} 
+  onMouseEnter={!isMobileView ? () => setServiceDropdownOpen(true) : undefined}
+  onMouseLeave={!isMobileView ? () => setServiceDropdownOpen(false) : undefined}
+  onClick={isMobileView ? toggleServicetDropdown : undefined}
   style={{ 
     position: 'relative',
     display: 'flex',
-    flexDirection: isMobileView ? 'column' : 'row' // Only column in mobile
+    flexDirection: isMobileView ? 'column' : 'row',
+    // Add these to prevent layout shift:
+    alignItems: 'center',
+    width: isMobileView ? '100%' : 'auto'
   }}
 >
-  <Link>{t("About us")}</Link>
+  <Link>
+    <Box sx={{display:"flex", alignItems:"center"}}>
+      <span>{t("Services")}</span>
+        <FaChevronDown style={{
+        transform: isServiceDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.3s ease',
+        marginLeft: '3px'
+      }}/>
+    </Box>
+  </Link>
+ <AnimatePresence>
+  {isServiceDropdownOpen && (
+    <motion.div
+      key="dropdown"
+        initial={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          scale: 0.98,
+          filter: 'blur(2px)'
+        } : false} // No animation on mobile
+        animate={!isMobileView ? { 
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)'
+        } : false}
+        exit={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          transition: { duration: 0.2 }
+        } : false}
+        transition={{
+          duration: 0.35,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+        style={{
+          position: isMobileView ? 'static' : 'absolute',
+          top: 'calc(100% + 99%)',
+            left: 0,
+          width: "100%",
+          borderRadius: '8px',
+          zIndex: 1000,
+          transformOrigin: 'top center',
+          // Mobile-specific styles
+          ...(isMobileView && {
+            marginTop: '8px',
+            boxShadow: 'none',
+            animation: 'none'
+          })
+  }}
+    >
+    <ServicesDropDown
+      onClose={() => setServiceDropdownOpen(false)}
+      isMobile={isMobileView}
+    />
+    </motion.div>
+  )}
+</AnimatePresence>
+
+</li>
+
+
+
+              <li
+              ref={educationDropdownRef}
+      onMouseEnter={!isMobileView ? () => setEducationDropdownOpen(true) : undefined}
+  onMouseLeave={!isMobileView ? () => setEducationDropdownOpen(false) : undefined}
+  onClick={isMobileView ? toggleEducationDropdown : undefined}
+  style={{ 
+    position: 'relative',
+    display: 'flex',
+    flexDirection: isMobileView ? 'column' : 'row',
+    // Add these to prevent layout shift:
+    alignItems: 'center',
+    width: isMobileView ? '100%' : 'auto'
+  }}>
+
+    <Link>
+ <Box sx={{display:"flex", alignItems:"center"}}>
+      <span>{t("Education")}</span>
+        <FaChevronDown style={{
+        transform: isEducationDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.3s ease',
+        marginLeft: '3px'
+      }}/>
+    </Box>    </Link>
+     <AnimatePresence>
+    {isEducationDropdownOpen && (
+        <motion.div
+      key="dropdown"
+        initial={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          scale: 0.98,
+          filter: 'blur(2px)'
+        } : false} // No animation on mobile
+        animate={!isMobileView ? { 
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)'
+        } : false}
+        exit={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          transition: { duration: 0.2 }
+        } : false}
+        transition={{
+          duration: 0.35,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+        style={{
+          position: isMobileView ? 'static' : 'absolute',
+          top: 'calc(100% + 99%)',
+          left: 0,
+          width: "100%",
+          borderRadius: '8px',
+          zIndex: 1000,
+          transformOrigin: 'top center',
+          // Mobile-specific styles
+          ...(isMobileView && {
+            marginTop: '8px',
+            boxShadow: 'none',
+            animation: 'none'
+          })
+  }}
+    >
+    <EducationDropDown
+      onClose={() => setEducationDropdownOpen(false)}
+      isMobile={isMobileView} // Pass mobile state
+    />
+    </motion.div>
+  )}
+  </AnimatePresence>
+    </li>
+
+
+
+ <li
+               ref={gameDropdownRef} 
+    onMouseEnter={!isMobileView ? () => setGameDropdownOpen(true) : undefined}
+  onMouseLeave={!isMobileView ? () => setGameDropdownOpen(false) : undefined}
+  onClick={isMobileView ? toggleGameDropdown: undefined}
+  style={{ 
+    position: 'relative',
+    display: 'flex',
+    flexDirection: isMobileView ? 'column' : 'row',
+    // Add these to prevent layout shift:
+    alignItems: 'center',
+    width: isMobileView ? '100%' : 'auto'
+  }}>
+    <Link>
+    <Box sx={{display:"flex" ,alignItems:"center"}}>
+      <span>{t("Metaverse")}</span>
+ <FaChevronDown style={{
+        transform: isGameDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.3s ease',
+        marginLeft: '3px'
+      }}/>      </Box>
+      </Link>
+
+      <AnimatePresence>
+    {isGameDropdownOpen && (
+        <motion.div
+      key="dropdown"
+        initial={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          scale: 0.98,
+          filter: 'blur(2px)'
+        } : false} // No animation on mobile
+        animate={!isMobileView ? { 
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)'
+        } : false}
+        exit={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          transition: { duration: 0.2 }
+        } : false}
+        transition={{
+          duration: 0.35,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+        style={{
+          position: isMobileView ? 'static' : 'absolute',
+          top: 'calc(100% + 99%)',
+          left: 0,
+          width: "100%",
+          borderRadius: '8px',
+          zIndex: 1000,
+          transformOrigin: 'top center',
+          // Mobile-specific styles
+          ...(isMobileView && {
+            marginTop: '8px',
+            boxShadow: 'none',
+            animation: 'none'
+          })
+  }}
+    >
+    <GamesDropDown
+      onClose={() => setGameDropdownOpen(false)}
+      isMobile={isMobileView} // Pass mobile state
+    />
+    </motion.div>
+  )}
+  </AnimatePresence>
+    </li>
+
+         
+                                    
+             
+             
+              <li 
+  ref={aboutDropdownRef} 
+ onMouseEnter={!isMobileView ? () => setAboutDropdownOpen(true) : undefined}
+  onMouseLeave={!isMobileView ? () => setAboutDropdownOpen(false) : undefined}
+  onClick={isMobileView ? toggleAboutDropdown: undefined}
+   style={{ 
+    position: 'relative',
+    display: 'flex',
+    flexDirection: isMobileView ? 'column' : 'row',
+    // Add these to prevent layout shift:
+    alignItems: 'center',
+    width: isMobileView ? '100%' : 'auto'
+  }}
+  >
+
+  <Link>
+  <Box sx={{  display: "flex", 
+      alignItems: "center",
+      
+      }}>
+    <span
+    >{t("About us")}</span>
+ <FaChevronDown style={{
+        transform: isAboutDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.3s ease',
+        marginLeft: '3px'
+      }}/>  </Box></Link>
+  <AnimatePresence>
   {isAboutDropdownOpen && (
+       <motion.div
+      key="dropdown"
+        initial={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          scale: 0.98,
+          filter: 'blur(2px)'
+        } : false} // No animation on mobile
+        animate={!isMobileView ? { 
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)'
+        } : false}
+        exit={!isMobileView ? { 
+          opacity: 0,
+          y: -25,
+          transition: { duration: 0.2 }
+        } : false}
+        transition={{
+          duration: 0.35,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+        style={{
+          position: isMobileView ? 'static' : 'absolute',
+          top: 'calc(100% + 99%)',
+          left: 0,
+          width: "100%",
+          borderRadius: '8px',
+          zIndex: 1000,
+          transformOrigin: 'top center',
+          // Mobile-specific styles
+          ...(isMobileView && {
+            marginTop: '8px',
+            boxShadow: 'none',
+            animation: 'none'
+          })
+  }}
+    >
     <AboutUsDropDown
       onClose={() => setAboutDropdownOpen(false)}
       isMobile={isMobileView} // Pass mobile state
     />
+    </motion.div>
   )}
+  </AnimatePresence>
 </li>
 
               <li className='test'><Link to="/buymas">{t("Buy A Mas")}</Link></li>
@@ -802,7 +1393,7 @@ const scrollToTop = () => {
 
                 )}
                 <FaSearch
-                  style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: ' #43005e' }}
+                  style={{ fontSize: '20px', margin: '10px', cursor: 'pointer', color: '#dadada' }}
                   onClick={toggleSearch}
                 />
                 <LanguageSwitcher/>
@@ -821,7 +1412,7 @@ const scrollToTop = () => {
                     <Avatar
                       alt={auth.userData?.userName}
                       src={auth.userData?.profilePic}
-                      style={{ cursor: 'pointer', border: 'solid 3px #43005e' }}
+                      style={{ cursor: 'pointer', border: 'solid 3px #dadada' }}
                     />
                   </IconButton>
                 {isDropdownOpen && (
@@ -847,7 +1438,7 @@ const scrollToTop = () => {
                         <Tooltip title="Chat" placement="bottom">
                           <IconButton onClick={() => navigate("/chat/t")}>
                             <Badge badgeContent={Object.keys(auth.unreadChats).length} overlap="rectangular" color="primary">
-                              <BsChat style={{ color: " #43005e" }} />
+                              <BsChat style={{ color: " #dadada" }} />
                             </Badge>
                           </IconButton>
                         </Tooltip>
@@ -875,7 +1466,7 @@ const scrollToTop = () => {
                               color="primary"
                             >
                               <NotificationsIcon
-                                style={{ color: " #43005e" }}
+                                style={{ color: " #dadada" }}
                                 size="12px"
                               />
                             </Badge>
@@ -892,7 +1483,7 @@ const scrollToTop = () => {
                           <Avatar onClick={() => navigate("/profile")}
                             alt={auth.userData?.userName}
                             src={auth.userData?.profilePic}
-                            style={{ cursor: 'pointer', border: 'solid 3px  #43005e' }}
+                            style={{ cursor: 'pointer', border: 'solid 3px  #dadada' }}
                             sx={{
                               display: "none",
                               "@media(max-width:1250px)": {
@@ -921,7 +1512,7 @@ const scrollToTop = () => {
                           placement="bottom"
                         >
                           <IconButton onClick={() => setIsLogoutOpen(true)}>
-                            <AiOutlineLogout />
+                            <AiOutlineLogout color='#dadada' />
                           </IconButton>
                         </Tooltip>
                       ) : (
@@ -998,6 +1589,9 @@ const scrollToTop = () => {
         </header>
 
       </AppBar>
+      <Box  sx={{width:"100%" ,minHeight:"4.2rem" ,background:"linear-gradient(to right,#280026,#4a004f)"}}
+      display={relativeBar.includes(location.pathname) ? "none" : "block"}
+      ></Box>
 
       <Zoom in={window.scrollY > 100}>
       <IconButton
@@ -1235,6 +1829,7 @@ const scrollToTop = () => {
       <Dialog
         open={isLogOutOpen}
         onClose={() => setIsLogoutOpen(false)}
+        disableScrollLock
         PaperProps={{
           sx: {
             backgroundImage: 'url(/assets/Images/doodle2.png)',

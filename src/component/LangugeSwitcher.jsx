@@ -14,7 +14,7 @@ const LanguageSwitcher = () => {
 
   return (
     <Tooltip title="Change Language">
-      <IconButton  sx={{ color:"#43005e"}}>
+      <IconButton  sx={{ color:"#dadada"}}>
         <LanguageIcon />
       </IconButton>
     </Tooltip>

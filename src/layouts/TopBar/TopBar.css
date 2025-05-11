@@ -15,6 +15,7 @@
 }
 
 .nav-links1{
+  position: relative;
    display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,7 +33,7 @@
 }
 
 .nav-links1 ul a {
-  color:  #43005e;
+  color:  #dadada;
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -45,9 +46,8 @@
 
 
 .logo1 {
-  height: 55px;
-  width: 55px;
-  border-radius: 50%;
+  height: 65px;
+  width: 65px;
   margin-left: 0px;
   margin-right: 20px;
 }
@@ -108,7 +108,7 @@
   font-size: 25px;
   cursor: pointer;
   margin-right: 10px;
-  color: rgb(80, 3, 95);
+  color: #dadada;
   /* text-align: end; */
 
 }
@@ -187,7 +187,7 @@
     position: absolute;
     top: 100%; 
     right: 0; 
-    background-color: #cdc8c8;
+    background-color: rgba(0, 0, 0, 0.77);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 25%;
     overflow: hidden;

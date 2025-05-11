@@ -27,11 +27,9 @@ export default function MetaverseCard({ data, key }) {
                 },
             },
             "& img": {
-                overflow: "hidden",
                 transition: ".2s all linear",
                 // borderTopRightRadius: "10px",
                 // borderTopLeftRadius: "10px",
-                overflow: "hiiden",
                 width: "100%",
                 height: "100%",
 
@@ -43,7 +41,6 @@ export default function MetaverseCard({ data, key }) {
             padding: "15px",
             background: "transparent",
             "& div": {
-                width: "100%",
                 textAlign: "center",
                 fontSize: "16px",
                 color:"white"
