@@ -988,7 +988,7 @@ const scrollToTop = () => {
   return (
     <>
       <AppBar
-        position={relativeBar.includes(location.pathname) ? "fixed" : "fixed"}
+        position={"fixed"}
         elevation={0}
         sx={{ border: "none" ,background:"none" }}
       >
@@ -1872,6 +1872,7 @@ const scrollToTop = () => {
                 onClick={() => {
                   auth.logOut();
                   navigate('/');
+                  setIsLogoutOpen(false);
                 }}
               >
                 {t("Yes")}

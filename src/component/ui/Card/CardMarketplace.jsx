@@ -143,7 +143,7 @@ const CardMarketplace = ({data}) => {
     itemData.userId !== null
       ? itemData.userId._id
       : itemData.userId;
-  const isUseritem = auth.userData._id === userId;
+  const isUseritem = auth?.userData?._id === userId;
   let userName = itemData.userId.userName || itemData.userDetail.userName;
   let userSpeciality =
     itemData.userId?.speciality || itemData.userDetail?.speciality;

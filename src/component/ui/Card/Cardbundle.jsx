@@ -120,9 +120,9 @@ function Cardbundle({
       typeof BundleData.userId === "object" &&
       !Array.isArray(BundleData.userId) &&
       BundleData.userId !== null
-        ? BundleData.userId._id
-        : BundleData.userId;
-    const isUserBundle = auth.userData._id === userId;
+        ? BundleData?.userId?._id
+        : BundleData?.userId;
+    const isUserBundle = auth?.userData?._id === userId;
     let userName = BundleData.userId.userName || BundleData.userDetail.userName;
     let userSpeciality =
       BundleData.userId?.speciality || BundleData.userDetail?.speciality;

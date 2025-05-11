@@ -81,7 +81,7 @@
     text-align: left;
 
   }
-  @media (max-width: 1250px) {
+  @media (max-width: 1450px) {
     .HowWorks {
       width: auto;
       height: auto;

@@ -13,6 +13,8 @@ import { ButtonwithAnimation } from "../../../../component/ui/Button/button";
 import { useTranslation } from 'react-i18next';
 import DataLoading from "../../../../component/DataLoading";
 import CookieConsent from "../../../../cookies/CookieConsent";
+import RoadMap from "../RoadMap";
+import CanDoMas from "../CanDoMas";
 
 
 

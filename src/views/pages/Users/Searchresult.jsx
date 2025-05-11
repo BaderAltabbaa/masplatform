@@ -23,6 +23,7 @@ import { useInView } from 'react-intersection-observer';
 import { FaSearch } from "react-icons/fa";
 import "src/views/pages/About/AboutUs.css"
 import { transform } from "lodash";
+import MostPopular from "../Home/MostPopular";
 
 
 const useStyles = makeStyles(() => ({
@@ -204,6 +205,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
           src="/assets/Images/creator3.jpg" alt="" />
         </div>
       </div>
+      
 
       
       <Box sx={{ 
@@ -325,6 +327,7 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
           />
         )}
       </Box>
+      <MostPopular/>
     </Box>
   );
 }

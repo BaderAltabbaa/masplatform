@@ -18,6 +18,12 @@ import Solutions from "./Solutions/Solutions";
 import FAQmodel from "../../../component/FAQmodel";
 import { useInView } from "react-intersection-observer";
 import "src/views/pages/About/FAQ.css"
+import { motion } from 'framer-motion';
+import CanDoMas from "./CanDoMas";
+import Features from "./Features";
+import TokenUtility from "./TokenUtility";
+import RoadMap from "./RoadMap";
+import FinalCTA from "./FinalCTA";
 
 const AuctionPage = ({ staticSections }) => {
   const classes = useStyles();
@@ -29,6 +35,32 @@ const AuctionPage = ({ staticSections }) => {
   const [isLoadingAuctions, setIsLaodingAuctions] = useState(false);
     const {t} = useTranslation();
   
+const AnimatedItem = ({ children, index }) => {
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      animate={{ 
+        opacity: inView ? 1 : 0,
+        y: inView ? 0 : 50,
+        scale: inView ? 1 : 0.95
+      }}
+      transition={{
+        duration: 0.6,
+        ease: "easeOut",
+        delay: index * 0.15 // Stagger delay based on index
+      }}
+      style={{ display: 'inline-block' }} // Maintain layout
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 
   useEffect(() => {
@@ -127,20 +159,26 @@ const AuctionPage = ({ staticSections }) => {
 
   return (
     <>
-       {ServicesSection()}
-       <Box className="how-sol">
+     
+       {/*<Box className="how-sol">
       
       <HowWorks/>
     <Solutions/>
     
-    </Box>
+    </Box>*/}
+    <CanDoMas/>
+      {ServicesSection()}
+    <Features/>
       {CreatorsSection()}
       {BundlesSection()}
       {ItemsSection()}
-      {NFTsection()}
-      <MostPopular/>
-      {popularCategory()}
-      {FAQ()}
+      {/*NFTsection()*/}
+     <TokenUtility/>
+     <RoadMap/>
+     <FinalCTA/>
+      {/*popularCategory()*/}
+      {/*FAQ()*/}
+     
     </>
   );
 
@@ -186,7 +224,15 @@ const AuctionPage = ({ staticSections }) => {
     return (
     <>
      
-    <Box display="flex" justifyContent="center" alignItems='center' mt={3}>
+    <Box display="flex" justifyContent="center" alignItems='center' flexDirection={"column"} mb={4}>
+       <Typography variant="h3" component="h2" sx={{
+              fontWeight: 700,
+              color: 'white',
+              mb: 2,
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
+            }}>
+              MAS Services
+            </Typography>
     <Box 
   display='flex' 
   justifyContent='center' 
@@ -210,7 +256,8 @@ const AuctionPage = ({ staticSections }) => {
     { img: "/assets/Images/22.jpg", text: t("Education") ,link:"/education"},
     { img: "/assets/Images/30.jpeg", text: t("Transfer") ,link:"/user-list"}
   ].map((item, index) => (
-    <Link to={item.link} key={index}>
+     <AnimatedItem key={index} index={index}>
+    <Link to={item.link}>
       <Box sx={{ 
         position: 'relative', 
         display: 'inline-block',
@@ -244,12 +291,13 @@ const AuctionPage = ({ staticSections }) => {
           fontWeight: "bold",
           textShadow: "3px 3px 5px rgba(0,0,0,0.6)",
           textAlign: 'center',
-          width: '100%' // Ensures text stays centered
+          width: '100%', // Ensures text stays centered
         }}>
           {item.text}
         </Box>
       </Box>
     </Link>
+    </AnimatedItem>
   ))}
 </Box>
 

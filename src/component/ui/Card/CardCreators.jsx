@@ -56,7 +56,7 @@ function CardCreators({
   // start Handle subscribe function
 
 
-const userID = auth.userData._id ;
+const userID = auth?.userData?._id ;
 console.log("bra",userID)
 
   const subscribeToUserHandler = async () => {

@@ -6,22 +6,21 @@ import {  useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import Apiconfigs from '../../../../Apiconfig/Apiconfigs';
-
+import { Box } from "@mui/material";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const NFTSection = () => {
   const navigate = useNavigate();
   const {t} = useTranslation();
 
-  const onClickFun=()=>{
-    navigate("/auctions")
   
-  }
 
   const [sectionData, setSectionData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getLandingPageSectionsHandler = async () => {
+ {/* const getLandingPageSectionsHandler = async () => {
     try {
       setLoading(true);
       const res = await axios({
@@ -42,22 +41,44 @@ const NFTSection = () => {
 
   useEffect(() => {
     getLandingPageSectionsHandler();
-  }, []);
+  }, []); */}
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="error-message">{error}</div>;
-  if (!sectionData) return null;
+  {/*if (!sectionData) return null;*/}
 
   return (
-    <div className='NFTSection'>
+    <Box className='NFTSection'
+     component={motion.div}
+                      animate={{
+                        scale: [1, 1.009, 1]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}>
         <LandingSection >
         <div className="NFT-text-content">
-        <Typography component='headTitle' onClickFun={onClickFun }>{sectionData.title}</Typography>
+        <Typography component='headTitle'>$MAS Token Utility & Incentives</Typography>
        
      
-        <p className="" style={{fontSize:"20px", marginBottom:"10px"}}>Real World Assets Tokenomics</p>
-        <p className="" style={{ marginBottom:"10px"}}>{sectionData.description.replace(/<\/?p>/gi, '',)}</p>
-         
+        <p className="" style={{fontSize:"21px", marginBottom:"10px"}}>The MAS Token: Fueling the Ecosystem</p>
+          <Box sx={{display:"grid",
+                    gridTemplateColumns:"1fr 1fr",
+                    textAlign:"center",
+                    gap:"10px",
+                    fontSize:"18px",
+                    "@media(max-width:900px)":{
+                      gridTemplateColumns:"1fr"
+                    }
+          }}>
+            <p className="" style={{ marginBottom: "10px" }}>Power donations, bundles, purchases</p>
+            <p className="" style={{ marginBottom: "10px" }}>Reduced fees for holders</p>
+            <p className="" style={{ marginBottom: "10px" }}>Easy swapping with USDT/USDC</p>
+            <p className="" style={{ marginBottom: "10px" }}>Built on newest Chains </p>
+          </Box>
+
        
       </div>
 
@@ -69,7 +90,7 @@ const NFTSection = () => {
 
         </LandingSection>
     
-    </div>
+    </Box>
   )
 }
 
