@@ -81,7 +81,7 @@
     text-align: left;
 
   }
-  @media (max-width: 1450px) {
+  @media (max-width: 1200px) {
     .HowWorks {
       width: auto;
       height: auto;
@@ -100,7 +100,7 @@
     }
 
     .service-image-container {
-      flex: 1 1 100%;
+      flex: 1 1 90%;
       min-width: 100%;
       max-width: none;
       position: relative;

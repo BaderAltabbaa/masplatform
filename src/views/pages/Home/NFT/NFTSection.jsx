@@ -9,6 +9,7 @@ import Apiconfigs from '../../../../Apiconfig/Apiconfigs';
 import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { BsBox2 } from "react-icons/bs";
 
 const NFTSection = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const NFTSection = () => {
     <Box className='NFTSection'
      component={motion.div}
                       animate={{
-                        scale: [1, 1.009, 1]
+                        scale: [1, 1.001, 1]
                       }}
                       transition={{
                         duration: 1.5,
@@ -60,24 +61,14 @@ const NFTSection = () => {
                       }}>
         <LandingSection >
         <div className="NFT-text-content">
-        <Typography component='headTitle'>$MAS Token Utility & Incentives</Typography>
+        <Typography component='headTitle'>RWA</Typography>
        
      
-        <p className="" style={{fontSize:"21px", marginBottom:"10px"}}>The MAS Token: Fueling the Ecosystem</p>
-          <Box sx={{display:"grid",
-                    gridTemplateColumns:"1fr 1fr",
-                    textAlign:"center",
-                    gap:"10px",
-                    fontSize:"18px",
-                    "@media(max-width:900px)":{
-                      gridTemplateColumns:"1fr"
-                    }
-          }}>
-            <p className="" style={{ marginBottom: "10px" }}>Power donations, bundles, purchases</p>
-            <p className="" style={{ marginBottom: "10px" }}>Reduced fees for holders</p>
-            <p className="" style={{ marginBottom: "10px" }}>Easy swapping with USDT/USDC</p>
-            <p className="" style={{ marginBottom: "10px" }}>Built on newest Chains </p>
-          </Box>
+        <p className="" style={{fontSize:"21px", marginBottom:"10px"}}>Real World Assets</p>
+        
+            <p className="" style={{ marginBottom: "10px" }}> Comming Soon..</p>
+
+        
 
        
       </div>

@@ -373,14 +373,17 @@ const auctionNftListHandler = async () => {
     <CanDoMas/>
       {ServicesSection()}
     <Features/>
+    {popularCategory()}
       {CreatorsSection()}
       {BundlesSection()}
       {ItemsSection()}
-      {/*NFTsection()*/}
+      {NFTsection()}
+      
      <TokenUtility/>
+      
      <RoadMap/>
      <FinalCTA/>
-      {/*popularCategory()*/}
+     
       {/*FAQ()*/}
      
     </>
@@ -454,11 +457,13 @@ const auctionNftListHandler = async () => {
   }}
 >
   {[
-    { img: "/assets/Images/13.jpg", text: t("Creators") ,link:"/creators"},
+    
     { img: "/assets/Images/1.jpg", text: t("Bundles") ,link:"/bundles" },
+       { img: "/assets/Images/22.jpg", text: t("Education") ,link:"/education"},
     { img: "/assets/Images/25.webp", text: t("MarketPlace")  ,link:"/items"},
-    { img: "/assets/Images/22.jpg", text: t("Education") ,link:"/education"},
-    { img: "/assets/Images/30.jpeg", text: t("Transfer") ,link:"/user-list"}
+ { img: "/assets/Images/25.webp", text: t("RWA")  ,link:"/items"},
+    { img: "/assets/Images/30.jpeg", text: t("Transfer") ,link:"/user-list"},
+    { img: "/assets/Images/13.jpg", text: t("Fundraise") ,link:"/creators"},
   ].map((item, index) => (
      <AnimatedItem key={index} index={index}>
     <Link to={item.link}>
@@ -466,8 +471,8 @@ const auctionNftListHandler = async () => {
         position: 'relative', 
         display: 'inline-block',
         margin: '10px',
-        width: { xs: '150px', sm: '200px', md: '230px' },
-        height: { xs: '200px', sm: '280px', md: '300px' },
+        width: { xs: '100px', sm: '200px', md: '200px' },
+        height: { xs: '150px', sm: '280px', md: '250px' },
         "&:hover": {
           transform: "scale(1.04)",
           transition: "ease-out 0.3s" // Reduced for better UX

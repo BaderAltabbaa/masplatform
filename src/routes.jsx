@@ -300,6 +300,18 @@ export const routes = [
     element: lazy(() => import("src/views/pages/AllBundles/AllBundles")),
   },
   {
+  path: "/edu-home",
+    layout: HomeLayout,
+    guard: true,
+    element: lazy(() => import("src/views/pages/Education/Education-Beta/Home")),
+  },
+  {
+  path: "/edu-courses",
+    layout: HomeLayout,
+    guard: true,
+    element: lazy(() => import("src/views/pages/Education/Education-Beta/Courses")),
+  },
+  {
   path: "/education",
     layout: HomeLayout,
     guard: true,

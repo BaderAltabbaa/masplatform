@@ -15,40 +15,17 @@
 
 
 
-.Service-image-container{
-  background-image: url('/assets/Images/22.jpg ');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height:200px;
-  width: 100%;
-padding: 0 !important;
-margin: 0 !important;
-text-align: center;
-/* border-radius: 50px; */
-  
-}
-.Service-image-container img{
-    margin: 0 auto;
-    width: 300px;
-    height: 300px;
-}
+
+
 
 @media (max-width: 480px) {
  
-  .Service-image-container {
-
-    height:300px
-  }
+  
 
 
  
 
 
-.Service-image-container img{
-  margin: 0 auto;
-  width: 150px;
-  height: 150px;
-}
+
 
 }

@@ -77,7 +77,7 @@ const AnimatedBox = ({ fromLeft = true, children }) => {
             <Box
               component={motion.div}
               animate={{
-                scale: [1, 1.009, 1]
+                scale: [1, 1.001, 1]
               }}
               transition={{
                 duration: 1.5,

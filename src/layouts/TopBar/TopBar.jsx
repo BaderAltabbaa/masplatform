@@ -861,6 +861,25 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             {t("Plans")}
           </Button>
           </Box>
+
+           <Box>
+        <Button
+            onClick={() => {
+              navigate("/edu-home");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Education Beta")}
+          </Button>
+          </Box>
          
 
          
@@ -960,6 +979,44 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           >
 
             {t("Transfer")}
+          </Button>
+          </Box>
+
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/user-list");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("Fundraise")}
+          </Button>
+          </Box>
+
+          <Box>
+        <Button
+            onClick={() => {
+              navigate("/");
+              onClose();
+            }}
+            sx={{color:"#dadada",
+              "&:hover":{
+                  background:"none",
+                  color: "#8602ba"
+              }
+            }}
+           
+          >
+
+            {t("RWA")}
           </Button>
           </Box>
 
