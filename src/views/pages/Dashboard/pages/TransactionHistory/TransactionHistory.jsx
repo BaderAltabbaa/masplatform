@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext ,useRef } from "react";
 import axios from "axios";  // For making API calls
 import Apiconfigs from "src/Apiconfig/Apiconfigs";  // Custom API configurations
 import { useNavigate } from "react-router-dom";  // For navigation
@@ -150,7 +150,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TransactionHistory() {
         const {t} = useTranslation();
-  
+  const transactionsCache = useRef({});
+
   const classes = useStyles();
   const navigate = useNavigate();
   const auth = useContext(UserContext);
@@ -160,8 +161,39 @@ export default function TransactionHistory() {
   const [loadingTransactions, setLoadingTransactions] = useState(false);
 
   const transactionsListHandler = async () => {
-    setLoadingTransactions(true);
-    await axios({
+  const cacheKey = `transactions-page-${page}`;
+  setLoadingTransactions(true);
+
+  // 1. Check in-memory cache
+  if (transactionsCache.current[cacheKey]) {
+    const cached = transactionsCache.current[cacheKey];
+    console.log(`✅ Using in-memory cache for ${cacheKey}`);
+    setTransactionsList(cached.docs);
+    setPages(cached.totalPages);
+    setLoadingTransactions(false);
+    return;
+  }
+
+  // 2. Check sessionStorage
+  const sessionData = sessionStorage.getItem(cacheKey);
+  if (sessionData) {
+    try {
+      const parsed = JSON.parse(sessionData);
+      console.log(`✅ Using sessionStorage for ${cacheKey}`);
+      setTransactionsList(parsed.docs);
+      setPages(parsed.totalPages);
+      // Store into in-memory cache
+      transactionsCache.current[cacheKey] = parsed;
+      setLoadingTransactions(false);
+      return;
+    } catch (err) {
+      console.warn(`⚠️ Failed to parse sessionStorage data for ${cacheKey}`, err);
+    }
+  }
+
+  // 3. Fallback to API call
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.transactionList,
       headers: {
@@ -171,22 +203,27 @@ export default function TransactionHistory() {
         limit: 10,
         page: page,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          setLoadingTransactions(false);
-          setTransactionsList(res.data.result.docs);
-          setPages(res?.data?.result?.pages);
-        } else {
-          setLoadingTransactions(false);
-        }
-      })
-      .catch((err) => {
-        setLoadingTransactions(false);
+    });
 
-        console.log(err.message);
-      });
-  };
+    if (res.data.statusCode === 200) {
+      const docs = res?.data?.result?.docs;
+      const totalPages = res?.data?.result?.totalPages;
+
+      console.log(`🌐 Fetched data from API for ${cacheKey}`);
+      setTransactionsList(docs);
+      setPages(totalPages);
+
+      const cacheValue = { docs, totalPages };
+      transactionsCache.current[cacheKey] = cacheValue;
+      sessionStorage.setItem(cacheKey, JSON.stringify(cacheValue));
+    }
+  } catch (err) {
+    console.error(`❌ API error for ${cacheKey}:`, err.message);
+  } finally {
+    setLoadingTransactions(false);
+  }
+};
+
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
       transactionsListHandler();

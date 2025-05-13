@@ -8,7 +8,7 @@ import {
  
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext ,useRef } from "react";
 import { UserContext } from "src/context/User";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -64,6 +64,8 @@ export default function itemDetails() {
   const [showSearch, setShowSearch] = useState(false);
   const [open, setOpen] = useState(false);
   const [currentImg, setCurrentImg] = useState(itemDetails?.mediaUrl1);
+  const cacheRef = useRef({});
+  const cacheRef1 = useRef({});
   
 
   const _onInputChange = (e) => {
@@ -82,60 +84,124 @@ export default function itemDetails() {
     getItemContentListHandler(itemDetails?._id);
     setIsFilterTrue(false);
   };
+
   const getitemDetailsHandler = async (id) => {
-    try {
-      setIsLoadingItemView(true);
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.mynft1 + id,
-      });
-      if (res.data.statusCode === 200) {
-        console.log("responseItemDeatils-----", res.data.result);
-        setitemDetails(res.data.result);
-        getItemContentListHandler(res.data.result._id);
-        setIsLoadingItemView(false);
-        const filterFunForCurrentSubscriber =
-          res.data.result.subscribers?.filter((value) => {
-            return value === auth?.userData?._id;
-          });
-        console.log("responseFilter---->>>", filterFunForCurrentSubscriber);
-        if (filterFunForCurrentSubscriber[0]) {
-          setIsSubscribed(true);
-        }
-      }
-    } catch (error) {
-      console.log(error);
+  const cacheKey = `itemDetails_${id}`;
+
+  // Check sessionStorage first
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached sessionStorage data for item:", id);
+    setitemDetails(parsed);
+    setIsLoadingItemView(false);
+    return;
+  }
+
+  // Check useRef cache
+  if (cacheRef.current[cacheKey]) {
+    console.log("📦 Using cached useRef data for item:", id);
+    setitemDetails(cacheRef.current[cacheKey]);
+    setIsLoadingItemView(false);
+    return;
+  }
+
+  try {
+    setIsLoadingItemView(true);
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.mynft1 + id,
+    });
+
+    if (res.data.statusCode === 200) {
+      console.log("🆕 API call made for item details:", id);
+
+      const itemData = res.data.result;
+      setitemDetails(itemData);
+      getItemContentListHandler(itemData._id);
+
       setIsLoadingItemView(false);
-    }
-  };
-  const getItemContentListHandler = async (ItemId) => {
-    try {
-      setContentList([]);
-      setIsLoadingContent(true);
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.ItemContentList,
-        params: {
-          nftId: ItemId,
-          search: selectedFilter.searchKey ? selectedFilter.searchKey : null,
-          fromDate: selectedFilter.startDate ? selectedFilter.startDate : null,
-          toDate: selectedFilter.endDate ? selectedFilter.endDate : null,
-        },
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
+
+      // Cache to both sessionStorage and useRef
+      sessionStorage.setItem(cacheKey, JSON.stringify(itemData));
+      cacheRef.current[cacheKey] = itemData;
+
+      const filterFunForCurrentSubscriber = itemData.subscribers?.filter((value) => {
+        return value === auth?.userData?._id;
       });
-      if (res.data.statusCode === 200) {
-        console.log("response--list---", res.data.result.docs);
-        setContentList(res.data.result.docs);
-        setIsLoadingContent(false);
-        setIsFilterTrue(false);
+
+      console.log("responseFilter---->>>", filterFunForCurrentSubscriber);
+      if (filterFunForCurrentSubscriber[0]) {
+        setIsSubscribed(true);
       }
-    } catch (error) {
-      console.log(error);
-      setIsLoadingContent(false);
     }
-  };
+  } catch (error) {
+    console.log(error);
+    setIsLoadingItemView(false);
+  }
+};
+
+
+
+
+const getItemContentListHandler = async (ItemId) => {
+  const cacheKey = `itemContentList_${ItemId}_${selectedFilter.searchKey || ""}_${selectedFilter.startDate || ""}_${selectedFilter.endDate || ""}`;
+
+  // Check sessionStorage first
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached sessionStorage data for item content:", ItemId);
+    setContentList(parsed);
+    setIsLoadingContent(false);
+    return;
+  }
+
+  // Check useRef cache
+  if (cacheRef1.current[cacheKey]) {
+    console.log("📦 Using cached useRef data for item content:", ItemId);
+    setContentList(cacheRef1.current[cacheKey]);
+    setIsLoadingContent(false);
+    return;
+  }
+
+  try {
+    setContentList([]); // Reset content list
+    setIsLoadingContent(true);
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.ItemContentList,
+      params: {
+        nftId: ItemId,
+        search: selectedFilter.searchKey ? selectedFilter.searchKey : null,
+        fromDate: selectedFilter.startDate ? selectedFilter.startDate : null,
+        toDate: selectedFilter.endDate ? selectedFilter.endDate : null,
+      },
+      headers: {
+        token: sessionStorage.getItem("token"),
+      },
+    });
+
+    if (res.data.statusCode === 200) {
+      console.log("🆕 API call made for item content list:", ItemId);
+
+      const contentData = res.data.result.docs;
+      setContentList(contentData);
+      setIsLoadingContent(false);
+      setIsFilterTrue(false);
+
+      // Cache to both sessionStorage and useRef
+      sessionStorage.setItem(cacheKey, JSON.stringify(contentData));
+      cacheRef1.current[cacheKey] = contentData;
+    }
+  } catch (error) {
+    console.log(error);
+    setIsLoadingContent(false);
+  }
+};
+
+
+
   useEffect(() => {
     const ItemId = location.search.split("?");
     if (ItemId[1]) {

@@ -13,7 +13,7 @@ import {
   Collapse,
 } from '@mui/material';
 import { makeStyles } from "@mui/styles";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext ,useRef } from "react";
 import { UserContext } from "src/context/User";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -388,6 +388,10 @@ export default function CourseDetails() {
   const [isLoading, setIsloading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+      const cacheRef = useRef({});
+            const cacheRef1 = useRef({});
+
+  
   const _onInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -404,74 +408,155 @@ export default function CourseDetails() {
     getCourseContentListHandler(courseDetails?._id);
     setIsFilterTrue(false);
   };
+
   const getCourseDetailsHandler = async (id) => {
-    try {
-      setIsLoadingCourseView(true);
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.mynft2 + id,
-      });
-      if (res.data.statusCode === 200) {
-        console.log("responseCourseDeatils-----", res.data.result);
-        setCourseDetails(res.data.result);
-        getCourseContentListHandler(res.data.result._id);
-        setIsLoadingCourseView(false);
-        const filterFunForCurrentSubscriber =
-          res.data.result.subscribers?.filter((value) => {
-            return value === auth?.userData?._id;
-          });
-        console.log("responseFilter---->>>", filterFunForCurrentSubscriber);
-        if (filterFunForCurrentSubscriber[0]) {
-          setIsSubscribed(true);
-        }
-      }
-    } catch (error) {
-      console.log(error);
+  const cacheKey = `courseDetails_${id}`;
+
+  // 1. Check sessionStorage for cached data
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached course details from sessionStorage:", cacheKey);
+    setCourseDetails(parsed.result);
+    getCourseContentListHandler(parsed.result._id);
+    setIsLoadingCourseView(false);
+
+    const filterFunForCurrentSubscriber = parsed.result.subscribers?.filter((value) => {
+      return value === auth?.userData?._id;
+    });
+    if (filterFunForCurrentSubscriber[0]) {
+      setIsSubscribed(true);
+    }
+    return;
+  }
+
+  // 2. Check useRef cache
+  if (cacheRef.current[cacheKey]) {
+    console.log("📦 Using cached course details from useRef:", cacheKey);
+    const cached = cacheRef.current[cacheKey];
+    setCourseDetails(cached.result);
+    getCourseContentListHandler(cached.result._id);
+    setIsLoadingCourseView(false);
+
+    const filterFunForCurrentSubscriber = cached.result.subscribers?.filter((value) => {
+      return value === auth?.userData?._id;
+    });
+    if (filterFunForCurrentSubscriber[0]) {
+      setIsSubscribed(true);
+    }
+    return;
+  }
+
+  // 3. Fetch from API if no cache found
+  try {
+    setIsLoadingCourseView(true);
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.mynft2 + id,
+    });
+
+    if (res.data.statusCode === 200) {
+      console.log("🆕 Fetching course details from API:", res.data.result);
+      setCourseDetails(res.data.result);
+      getCourseContentListHandler(res.data.result._id);
       setIsLoadingCourseView(false);
-    }
-  };
-  const getCourseContentListHandler = async (courseId) => {
-    try {
-      console.log("📥 courseId:", courseId);
-      console.log("🔎 selectedFilter:", selectedFilter);
-  
-      // تفريغ البيانات مؤقتًا
-      setContentList([]);
-      setIsLoadingContent(true);
-  
-      const token = sessionStorage.getItem("token");
-      console.log("🛡️ token from sessionStorage:", token);
-  
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.courseContentList,
-        params: {
-          nft2Id: courseId,
-          search: selectedFilter.searchKey || null,
-          fromDate: selectedFilter.startDate || null,
-          toDate: selectedFilter.endDate || null,
-        },
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
+
+      // Cache the result
+      const cachedData = {
+        result: res.data.result
+      };
+
+      sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
+      cacheRef.current[cacheKey] = cachedData;
+
+      // Check subscription status
+      const filterFunForCurrentSubscriber = res.data.result.subscribers?.filter((value) => {
+        return value === auth?.userData?._id;
       });
-      
-  
-      console.log("📦 Raw Response:", res);
-  
-      if (res.status === 200 && res.data?.result?.docs) {
-        console.log("✅ Course contents:", res.data.result.docs);
-        setContentList(res.data.result.docs);
-        setIsFilterTrue(false);
-      } 
-      
-    } catch (error) {
-      console.error("❌ Error fetching course content:", error);
-    } finally {
-      setIsLoadingContent(false);
-      console.log("📴 Loading ended");
+      if (filterFunForCurrentSubscriber[0]) {
+        setIsSubscribed(true);
+      }
     }
-  };
+  } catch (error) {
+    console.log(error);
+    setIsLoadingCourseView(false);
+  }
+};
+
+
+  const getCourseContentListHandler = async (courseId) => {
+  const cacheKey = `courseContentList_${courseId}_${selectedFilter.searchKey}_${selectedFilter.startDate}_${selectedFilter.endDate}`;
+
+  // 1. Check sessionStorage for cached data
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached course content from sessionStorage:", cacheKey);
+    setContentList(parsed.result);
+    setIsLoadingContent(false);
+    return;
+  }
+
+  // 2. Check useRef cache
+  if (cacheRef1.current[cacheKey]) {
+    console.log("📦 Using cached course content from useRef:", cacheKey);
+    const cached = cacheRef1.current[cacheKey];
+    setContentList(cached.result);
+    setIsLoadingContent(false);
+    return;
+  }
+
+  // 3. Fetch from API if no cache found
+  try {
+    console.log("📥 courseId:", courseId);
+    console.log("🔎 selectedFilter:", selectedFilter);
+
+    // Clear previous data temporarily
+    setContentList([]);
+    setIsLoadingContent(true);
+
+    const token = sessionStorage.getItem("token");
+    console.log("🛡️ token from sessionStorage:", token);
+
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.courseContentList,
+      params: {
+        nft2Id: courseId,
+        search: selectedFilter.searchKey || null,
+        fromDate: selectedFilter.startDate || null,
+        toDate: selectedFilter.endDate || null,
+      },
+      headers: {
+        token: token,
+      },
+    });
+
+    console.log("📦 Raw Response:", res);
+
+    if (res.status === 200 && res.data?.result?.docs) {
+      console.log("✅ Course contents:", res.data.result.docs);
+
+      // Set content list
+      setContentList(res.data.result.docs);
+
+      // Cache the result in sessionStorage and useRef
+      const cachedData = {
+        result: res.data.result.docs
+      };
+      sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
+      cacheRef1.current[cacheKey] = cachedData;
+
+      setIsFilterTrue(false);
+    }
+  } catch (error) {
+    console.error("❌ Error fetching course content:", error);
+  } finally {
+    setIsLoadingContent(false);
+    console.log("📴 Loading ended");
+  }
+};
+
   
   useEffect(() => {
     const courseId = location.search.split("?");

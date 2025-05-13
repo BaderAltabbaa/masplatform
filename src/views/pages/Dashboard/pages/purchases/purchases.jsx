@@ -1,7 +1,7 @@
 
 import { useTranslation } from 'react-i18next';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { Box, Typography, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 // import ItemCard from "src/component/NewItemCard";
@@ -88,7 +88,7 @@ const useStyles = makeStyles(() => ({
 
 export default function purchases() {
         const {t} = useTranslation();
-  
+  const bundleSubsCache = useRef({});
   const classes = useStyles();
   const [state, setState] = useState({
     purchases: [],
@@ -181,8 +181,23 @@ export default function purchases() {
    
   );
 
-  async function getBundleSubscriptionListHandler() {
-    await axios({
+ async function getBundleSubscriptionListHandler() {
+  const cacheKey = `subs-page-${subsPage}`;
+
+  // Use cached data if available
+  const cachedData = sessionStorage.getItem(cacheKey);
+  if (cachedData) {
+    console.log("Using cached data for", cacheKey);
+    const { docs, totalPages } = JSON.parse(cachedData); // Parse the cached data from string
+    updateState({
+      purchases: docs,
+      subsPages: totalPages,
+    });
+    return;
+  }
+
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.mypurchases,
       headers: {
@@ -192,20 +207,28 @@ export default function purchases() {
         limit: 6,
         page: subsPage,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          updateState({
-            purchases: res.data.result.docs,
-            subsPages: res.data.result.totalPages,
-          });
-          console.log("pur",res.data)
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
+    });
+
+    if (res.data.statusCode === 200) {
+      const { docs, totalPages } = res.data.result;
+
+      // Cache the result in sessionStorage
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        docs,
+        totalPages,
+      }));
+
+      updateState({
+        purchases: docs,
+        subsPages: totalPages,
       });
+      console.log("Fetched and cached data for", cacheKey);
+    }
+  } catch (err) {
+    console.log(err.message);
   }
+}
+
 
   async function myFollowingHandler() {
     await axios({

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import {
   Typography,
   Grid,
@@ -61,6 +61,7 @@ const AllItemsPage = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [serverSearchSupported, setServerSearchSupported] = useState(true);
   const [isClientSideMode, setIsClientSideMode] = useState(false);
+  const cacheRef = useRef({});
 
   const { t } = useTranslation();
   const { ref: ref2, inView: inView2 } = useInView({ threshold: 0.2, triggerOnce: true });
@@ -81,22 +82,48 @@ const AllItemsPage = () => {
   }, [searchTerm, isClientSideMode]);
 
   // Fetch all items for client-side fallback
-  const fetchAllItems = async () => {
-    try {
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.listAllNft1,
-        params: { page: 1, limit: 100 }
-      });
-      if (res.data.statusCode === 200) {
-        setAllItems(res.data.result.docs);
-        filterClientSide(res.data.result.docs, debouncedSearchTerm);
-        console.log("item",res.data)
-      }
-    } catch (err) {
-      console.error("Error fetching all items:", err);
+const fetchAllItems = async () => {
+  const cacheKey = "allItems_full";
+
+  // Check sessionStorage
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached sessionStorage full list");
+    setAllItems(parsed);
+    filterClientSide(parsed, debouncedSearchTerm);
+    return;
+  }
+
+  if (cacheRef.current[cacheKey]) {
+    console.log("📦 Using cached useRef full list");
+    setAllItems(cacheRef.current[cacheKey]);
+    filterClientSide(cacheRef.current[cacheKey], debouncedSearchTerm);
+    return;
+  }
+
+  try {
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.listAllNft1,
+      params: { page: 1, limit: 100 },
+    });
+    if (res.data.statusCode === 200) {
+      const items = res.data.result.docs;
+      console.log("🆕 API call made for full list");
+
+      setAllItems(items);
+      filterClientSide(items, debouncedSearchTerm);
+
+      // Cache full list
+      sessionStorage.setItem(cacheKey, JSON.stringify(items));
+      cacheRef.current[cacheKey] = items;
     }
-  };
+  } catch (err) {
+    console.error("Error fetching all items:", err);
+  }
+};
+
 
   // Client-side filtering
   const filterClientSide = (items, term) => {
@@ -113,47 +140,79 @@ const AllItemsPage = () => {
   };
 
   // Main data fetching function
-  const listAllItemsHandler = async () => {
-    setIsLoading(true);
-    try {
-      const params = {
-        page: page,
-        limit: 10,
+const listAllItemsHandler = async () => {
+  setIsLoading(true);
+  const cacheKey = JSON.stringify({ page, search: debouncedSearchTerm.trim() });
+
+  // Check sessionStorage
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached sessionStorage data for:", cacheKey);
+    setDisplayedItems(parsed.items);
+    setPages(parsed.pages);
+    setIsLoading(false);
+    return;
+  }
+
+  // Check useRef cache
+  if (cacheRef.current[cacheKey]) {
+    console.log("📦 Using cached useRef data for:", cacheKey);
+    setDisplayedItems(cacheRef.current[cacheKey].items);
+    setPages(cacheRef.current[cacheKey].pages);
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const params = {
+      page,
+      limit: 10,
+    };
+
+    if (serverSearchSupported && debouncedSearchTerm.trim()) {
+      params.search = debouncedSearchTerm;
+    }
+
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.listAllNft1,
+      params,
+    });
+
+    if (res.data.statusCode === 200) {
+      const newItems = res.data.result.docs;
+      console.log("🆕 API call made with:", cacheKey);
+
+      const cacheData = {
+        items: newItems,
+        pages: res.data.result.totalPages,
       };
 
-      if (serverSearchSupported && debouncedSearchTerm.trim()) {
-        params.search = debouncedSearchTerm;
+      // Cache to both sessionStorage and useRef
+      sessionStorage.setItem(cacheKey, JSON.stringify(cacheData));
+      cacheRef.current[cacheKey] = cacheData;
+
+      if (debouncedSearchTerm.trim() && newItems.length === res.data.result.totalDocs) {
+        setServerSearchSupported(false);
+        setIsClientSideMode(true);
+        await fetchAllItems();
+      } else {
+        setDisplayedItems(newItems);
       }
 
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.listAllNft1,
-        params: params
-      });
-
-      if (res.data.statusCode === 200) {
-        const newItems = res.data.result.docs;
-        console.log("new",newItems)
-        
-        if (debouncedSearchTerm.trim() && newItems.length === res.data.result.totalDocs) {
-          setServerSearchSupported(false);
-          setIsClientSideMode(true);
-          await fetchAllItems();
-        } else {
-          setDisplayedItems(newItems);
-        }
-        
-        setPages(res.data.result.totalPages);
-      }
-    } catch (err) {
-      console.error("API Error:", err);
-      setServerSearchSupported(false);
-      setIsClientSideMode(true);
-      await fetchAllItems();
-    } finally {
-      setIsLoading(false);
+      setPages(res.data.result.totalPages);
     }
-  };
+  } catch (err) {
+    console.error("API Error:", err);
+    setServerSearchSupported(false);
+    setIsClientSideMode(true);
+    await fetchAllItems();
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   // Load data when dependencies change
   useEffect(() => {

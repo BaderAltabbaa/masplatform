@@ -182,15 +182,27 @@ const Lesson = () => {
   const [score, setScore] = useState(0);
 
 
-  useEffect(() => {
-    if (!location.state?.lessonData) {
-      // If data wasn't passed via state, fetch it from API
+ useEffect(() => {
+  // 1. Cache key for lesson data
+  const lessonCacheKey = `lessonData_${id}`;
+  const lessonsCacheKey = `allLessons_${location.state?.courseDetails?._id || courseDetails?._id}`;
+
+  // 2. Check if lesson data is passed via state or cached
+  if (!location.state?.lessonData) {
+    // Check if cached lesson data exists
+    const cachedLesson = sessionStorage.getItem(lessonCacheKey);
+    if (cachedLesson) {
+      setCurrentLesson(JSON.parse(cachedLesson)); // Use cached data
+    } else {
+      // Fetch lesson data from API if not cached
       const fetchLessonData = async () => {
         try {
           setLoading(true);
           const res = await axios.get(`${Apiconfigs.mynft2}${id}`);
           if (res.data.statusCode === 200) {
             setCurrentLesson(res.data.result);
+            // Cache the lesson data
+            sessionStorage.setItem(lessonCacheKey, JSON.stringify(res.data.result));
           }
         } catch (error) {
           console.error("Error fetching lesson:", error);
@@ -199,12 +211,18 @@ const Lesson = () => {
           setLoading(false);
         }
       };
-      
       fetchLessonData();
     }
-    
-    // Always fetch all lessons for the course
-    const fetchAllLessons = async () => {
+  }
+
+  // 3. Fetch all lessons for the course
+  const fetchAllLessons = async () => {
+    // Check if cached all lessons data exists
+    const cachedLessons = sessionStorage.getItem(lessonsCacheKey);
+    if (cachedLessons) {
+      setAllLessons(JSON.parse(cachedLessons)); // Use cached data
+    } else {
+      // Fetch lessons from API if not cached
       try {
         setLoadingLessons(true);
         const res = await axios.get(Apiconfigs.courseContentList, {
@@ -218,7 +236,9 @@ const Lesson = () => {
         
         if (res.data.statusCode === 200) {
           setAllLessons(res.data.result.docs);
-          
+          // Cache the lessons data
+          sessionStorage.setItem(lessonsCacheKey, JSON.stringify(res.data.result.docs));
+
           // If we didn't get lessonData from state, set the first lesson as current
           if (!location.state?.lessonData && res.data.result.docs.length > 0) {
             setCurrentLesson(res.data.result.docs[0]);
@@ -229,10 +249,13 @@ const Lesson = () => {
       } finally {
         setLoadingLessons(false);
       }
-    };
-    
-    fetchAllLessons();
-  }, [id, location.state, navigate, courseDetails]);
+    }
+  };
+
+  fetchAllLessons();
+
+}, [id, location.state, navigate, courseDetails]);
+
 
   const handleVideo = (url) => {
     if (!url || typeof url !== "string") return false;

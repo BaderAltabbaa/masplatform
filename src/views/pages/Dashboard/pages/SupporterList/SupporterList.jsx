@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import { Box, Typography, Grid, Pagination } from '@mui/material';  // Correct imports for MUI v5
 import { makeStyles } from '@mui/styles';  // Still valid, although consider using `sx` or `styled` for newer approaches
 import UserDetailsCard from "src/component/UserCard";
@@ -65,7 +65,7 @@ const useStyles = makeStyles(() => ({
 
 export default function SupporterList({ type }) {
         const {t} = useTranslation();
-  
+  const followersCache = useRef({});
   const classes = useStyles();
   const [state, setState] = useState({
     userList: [],
@@ -122,8 +122,34 @@ export default function SupporterList({ type }) {
       </>
   );
 
-  async function myFollowersHandler() {
-    await axios({
+ async function myFollowersHandler(page) {
+  const cacheKey = `followers-page-${page}`;
+
+  // 1. Check in-memory cache
+  if (followersCache.current[cacheKey]) {
+        console.log("Using in-memory cache for", cacheKey);
+
+    updateState({ userList: followersCache.current[cacheKey] });
+    return;
+  }
+
+  // 2. Check sessionStorage
+  const sessionData = sessionStorage.getItem(cacheKey);
+  if (sessionData) {
+    try {
+      const parsed = JSON.parse(sessionData);
+      console.log("Using sessionStorage cache for", cacheKey);
+      updateState({ userList: parsed });
+      followersCache.current[cacheKey] = parsed;
+      return;
+    } catch (e) {
+      console.warn("Failed to parse sessionStorage data for", cacheKey);
+    }
+  }
+
+  // 3. Fallback to API call
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.profileFollowersList,
       headers: {
@@ -131,16 +157,21 @@ export default function SupporterList({ type }) {
       },
       params: {
         limit: 4,
-        page: page,
+        page,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          updateState({ userList: res.data.result.docs });
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    });
+
+    if (res.data.statusCode === 200) {
+      const docs = res.data.result.docs;
+      updateState({ userList: docs });
+
+      // Save to cache
+      followersCache.current[cacheKey] = docs;
+      sessionStorage.setItem(cacheKey, JSON.stringify(docs));
+    }
+  } catch (err) {
+    console.log(err.message);
   }
 }
+  }
+

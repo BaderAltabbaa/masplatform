@@ -4,7 +4,7 @@
 
 
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import { Box, Typography, Grid, Pagination } from '@mui/material';  // Correct imports for MUI v5
 import { makeStyles } from '@mui/styles';  // Still valid, although consider using `sx` or `styled` for newer approaches
 import UserDetailsCard from "src/component/UserCard";
@@ -87,7 +87,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Subscribers({ type }) {
         const {t} = useTranslation();
-  
+  const followersCache = useRef({});
   const classes = useStyles();
   const [state, setState] = useState({
     userList: [],
@@ -192,11 +192,36 @@ export default function Subscribers({ type }) {
       </>
   );
 
-  async function myFollowersHandler() {
-    console.log("Making API request to:", Apiconfigs.profileFollowersList); // Log the endpoint
-    console.log("Request params:", { limit: 4, page: page }); // Log request parameters
-    
-    await axios({
+  async function myFollowersHandler(page) {
+  const cacheKey = `followers-page-${page}`;
+
+  // 1. Check in-memory cache
+  if (followersCache.current[cacheKey]) {
+    console.log("Using in-memory cache for", cacheKey);
+    updateState({ userList: followersCache.current[cacheKey] });
+    return;
+  }
+
+  // 2. Check sessionStorage
+  const sessionData = sessionStorage.getItem(cacheKey);
+  if (sessionData) {
+    try {
+      const parsed = JSON.parse(sessionData);
+      console.log("Using sessionStorage cache for", cacheKey);
+      updateState({ userList: parsed });
+      followersCache.current[cacheKey] = parsed; // Save in-memory for faster reuse
+      return;
+    } catch (e) {
+      console.warn("Failed to parse sessionStorage for", cacheKey);
+    }
+  }
+
+  // 3. Fallback to API
+  console.log("Making API request to:", Apiconfigs.profileFollowersList);
+  console.log("Request params:", { limit: 4, page });
+
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.profileFollowersList,
       headers: {
@@ -204,28 +229,33 @@ export default function Subscribers({ type }) {
       },
       params: {
         limit: 4,
-        page: page,
+        page,
       },
-    })
-      .then(async (res) => {
-        console.log("API Response:", res); // Log full response
-        console.log("Response data:", res.data); // Log response data
-        
-        if (res.data.statusCode === 200) {
-          console.log("Successful response - followers data:", res.data.result.docs); // Log the followers data
-          updateState({ userList: res.data.result.docs });
-        } else {
-          console.log("Unexpected status code:", res.data.statusCode); // Log unexpected status
-        }
-      })
-      .catch((err) => {
-        console.error("API Error:", err); // Log full error
-        console.log("Error message:", err.message); // Log error message
-        if (err.response) {
-          console.log("Error response data:", err.response.data); // Log response data if available
-          console.log("Error status:", err.response.status); // Log status code
-        }
-      });
+    });
+
+    console.log("API Response:", res);
+    console.log("Response data:", res.data);
+
+    if (res.data.statusCode === 200) {
+      const docs = res.data.result.docs;
+      console.log("Successful response - followers data:", docs);
+
+      // Save to cache and sessionStorage
+      followersCache.current[cacheKey] = docs;
+      sessionStorage.setItem(cacheKey, JSON.stringify(docs));
+
+      updateState({ userList: docs });
+    } else {
+      console.log("Unexpected status code:", res.data.statusCode);
+    }
+  } catch (err) {
+    console.error("API Error:", err);
+    console.log("Error message:", err.message);
+    if (err.response) {
+      console.log("Error response data:", err.response.data);
+      console.log("Error status:", err.response.status);
+    }
   }
+}
 }
 

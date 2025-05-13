@@ -142,6 +142,7 @@ export default function Header() {
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
   const isMobileView = useMediaQuery('(max-width: 1250px)');
+  const readNotificationCache = useRef({});
 
  const handleOpenSupport = () => {
   setOpenSupport(true);
@@ -311,52 +312,104 @@ export default function Header() {
     setNotify(auth?.notifyData);
   }, [auth?.notifyData]);
 
-  const readNotificationhandler = () => {
+   const readNotificationhandler = async () => {
+    const cacheKey = "readNotifications";
+    const sessionKey = "readNotifications";
+
+    // Check cache
+    if (readNotificationCache.current[cacheKey]) {
+      console.log("Using in-memory cache for read notifications.");
+      return;
+    }
+
+    // Check sessionStorage
+    const sessionData = sessionStorage.getItem(sessionKey);
+    if (sessionData === "done") {
+      console.log("Using sessionStorage cache for read notifications.");
+      return;
+    }
+
     try {
-      axios.get(Apiconfigs.markAllNotificationsRead, {
+      const res = await axios.get(Apiconfigs.markAllNotificationsRead, {
         headers: {
           token: sessionStorage.getItem("token"),
         },
-      }).then((res) => {
-        if (res.data.result.ok == 1) {
-          auth.setUnReadNotification(0);
-        }
       });
+
+      if (res.data?.result?.ok === 1) {
+        auth.setUnReadNotification(0);
+
+        // Cache it in memory and sessionStorage
+        readNotificationCache.current[cacheKey] = true;
+        sessionStorage.setItem(sessionKey, "done");
+
+        console.log("Marked all notifications as read and cached the result.");
+      } else {
+        console.log("Unexpected response", res.data);
+      }
     } catch (error) {
-      console.log(error)
+      console.log("Error marking notifications as read:", error.message);
     }
   };
 
-  const getSearchResult = async (cancelTokenSource) => {
+  const searchCache = useRef({});
+
+
+   const getSearchResult = async (cancelTokenSource) => {
+    const cacheKey = `search-${search}-page-${page}`;
+    const sessionKey = `search-${search}-page-${page}`;
+
+    // 1. Try in-memory cache
+    if (searchCache.current[cacheKey]) {
+      console.log("Using in-memory cache for", cacheKey);
+      setUserList(searchCache.current[cacheKey]);
+      return;
+    }
+
+    // 2. Try sessionStorage
+    const sessionData = sessionStorage.getItem(sessionKey);
+    if (sessionData) {
+      console.log("Using sessionStorage cache for", cacheKey);
+      setUserList(JSON.parse(sessionData));
+      return;
+    }
+
+    // 3. Fetch from API
     setIsLoading(true);
-    axios({
-      method: "GET",
-      url: Apiconfigs.latestUserList,
-      data: {
-        cancelToken: cancelTokenSource && cancelTokenSource.token,
-      },
-      params: {
-        limit: 10,
-        page: page,
-        search: search,
-        userType: "Creator",
-      },
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-    })
-      .then(async (res) => {
-        setIsLoading(false);
-        if (res.data.statusCode === 200) {
-          if (res.data.result.docs) {
-            setIsLoading1(true);
-            setUserList(res.data.result.docs);
-          }
-        }
-      })
-      .catch(() => {
-        setIsLoading(false);
+
+    try {
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.latestUserList,
+        params: {
+          limit: 10,
+          page: page,
+          search: search,
+          userType: "Creator",
+        },
+        headers: {
+          token: sessionStorage.getItem("token"),
+        },
+        cancelToken: cancelTokenSource?.token,
       });
+
+      setIsLoading(false);
+
+      if (res.data.statusCode === 200 && res.data.result.docs) {
+        const data = res.data.result.docs;
+
+        // Cache results
+        searchCache.current[cacheKey] = data;
+        sessionStorage.setItem(sessionKey, JSON.stringify(data));
+
+        console.log("Fetched and cached data for", cacheKey);
+        setIsLoading1(true);
+        setUserList(data);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.log("API error:", err.message);
+    }
   };
 
   const {

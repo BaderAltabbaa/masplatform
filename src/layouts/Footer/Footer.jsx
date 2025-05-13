@@ -1,10 +1,10 @@
-import React ,{Suspense,useState} from "react";
+import React, { Suspense, useState, useRef } from "react";
 import useSWR from 'swr';
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import { Dialog, DialogTitle, DialogContent, DialogContentText ,TextField,Button,Container,Typography,Snackbar, Box } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Button, Container, Typography, Snackbar, Box } from "@mui/material";
 import MuiAlert from '@mui/material/Alert';
 import { CgFacebook } from "react-icons/cg";
-import { FaTelegram, FaTwitterSquare, FaDiscord, FaFacebook,FaInstagram,FaWhatsapp } from "react-icons/fa";
+import { FaTelegram, FaTwitterSquare, FaDiscord, FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
 import { SiAppstore, SiGoogleplay } from "react-icons/si";
 import './footer.css';
@@ -15,12 +15,49 @@ import { useTranslation } from 'react-i18next';
 
 
 const Footer = () => {
-const fetcher = url => axios.get(url).then(res => res.data.result);
-const { data: staticContent } = useSWR(Apiconfigs.staticContentList, fetcher, { suspense: true })
-const { data: socialLinks } = useSWR(Apiconfigs.listSocial, fetcher, { suspense: true })
-const [open, setOpen] = useState(false);
-const [openForm, setOpenForm] = useState(false);
-const {t} = useTranslation();
+const cacheRef = useRef({});
+ 
+  const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
+  const { t } = useTranslation();
+
+  const wrappedFetcher = async (url) => {
+  const cacheKey = `cache-${url}`;
+  const sessionData = sessionStorage.getItem(cacheKey);
+
+  // 1. Check in-memory cache
+  if (cacheRef.current[cacheKey]) {
+    console.log("✅ Using in-memory cache for", cacheKey);
+    return cacheRef.current[cacheKey];
+  }
+
+  // 2. Check sessionStorage
+  if (sessionData) {
+    console.log("✅ Using sessionStorage cache for", cacheKey);
+    const parsed = JSON.parse(sessionData);
+    cacheRef.current[cacheKey] = parsed; // sync to memory
+    return parsed;
+  }
+
+  // 3. Fetch from API
+  console.log("⏬ Fetching fresh data for", cacheKey);
+  const res = await axios.get(url, {
+    headers: {
+      token: sessionStorage.getItem("token"),
+    },
+  });
+
+  const result = res.data.result;
+
+  // Store in memory and sessionStorage
+  cacheRef.current[cacheKey] = result;
+  sessionStorage.setItem(cacheKey, JSON.stringify(result));
+
+  return result;
+};
+
+const { data: staticContent } = useSWR(Apiconfigs.staticContentList, wrappedFetcher, { suspense: true });
+const { data: socialLinks } = useSWR(Apiconfigs.listSocial, wrappedFetcher, { suspense: true });
 
 
 console.log("soc",staticContent);

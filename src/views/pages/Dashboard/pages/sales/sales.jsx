@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { Box, Typography, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -87,7 +87,7 @@ const useStyles = makeStyles(() => ({
 
 export default function sales() {
           const {t} = useTranslation();
-    
+    const itemSubsCache = useRef({});
     const classes = useStyles();
     const [state, setState] = useState({
         sales: [],
@@ -220,31 +220,55 @@ export default function sales() {
     );
 
     async function getItemSubscriptionListHandler() {
-        await axios({
-            method: "GET",
-            url: Apiconfigs.mysales,
-            headers: {
-                token: sessionStorage.getItem("token"),
-            },
-            params: {
-                limit: 6,
-                page: subsPage,
-            },
-        })
-            .then(async (res) => {
-                if (res.data.statusCode === 200) {
-                    updateState({
-                        sales: res.data.result.docs,
-                        subsPages: res.data.result.totalPages,
-                    });
-                    console.log("sale",res.data)
+  const cacheKey = `item-subs-page-${subsPage}`;
+const cachedData = sessionStorage.getItem(cacheKey);
 
-                }
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-    }
+// Check if data is cached
+if (cachedData) {
+  console.log("Using cached data for", cacheKey);
+  const { docs, totalPages } = JSON.parse(cachedData);
+  updateState({
+    sales: docs,
+    subsPages: totalPages,
+  });
+  return;
+}
+
+// If not cached, fetch data
+try {
+  const res = await axios({
+    method: "GET",
+    url: Apiconfigs.mysales,
+    headers: {
+      token: sessionStorage.getItem("token"),
+    },
+    params: {
+      limit: 6,
+      page: subsPage,
+    },
+  });
+
+  if (res.data.statusCode === 200) {
+    const { docs, totalPages } = res.data.result;
+
+    // Cache the result in sessionStorage
+    sessionStorage.setItem(cacheKey, JSON.stringify({
+      docs,
+      totalPages,
+    }));
+
+    updateState({
+      sales: docs,
+      subsPages: totalPages,
+    });
+    console.log("Fetched and cached data for", cacheKey);
+  }
+} catch (err) {
+  console.log(err.message);
+}
+
+}
+
 
     async function myFollowingHandler() {
         await axios({

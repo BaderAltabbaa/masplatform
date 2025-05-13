@@ -21,7 +21,7 @@
 // import { Pagination } from "@mui/material";  
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { useNavigate } from "react-router-dom";
@@ -158,15 +158,47 @@ const useStyles = makeStyles((theme) => ({
 export default function DonateList() {
   const classes = useStyles();
         const {t} = useTranslation();
-  
+  const donationCache = useRef({});
   const navigate = useNavigate();
   const [donateList, setDonateList] = useState([]);
   const [loadingDonations, setLoadingDonations] = useState(false);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
-  const donationListHandler = async () => {
-    setLoadingDonations(true);
-    await axios({
+
+ const donationListHandler = async () => {
+  const cacheKey = `donations-page-${page}`;
+  setLoadingDonations(true);
+
+  // 1. Check in-memory cache
+  if (donationCache.current[cacheKey]) {
+    const cached = donationCache.current[cacheKey];
+    console.log(`✅ Using in-memory cache for ${cacheKey}`);
+    setDonateList(cached.docs);
+    setPages(cached.totalPages);
+    setLoadingDonations(false);
+    return;
+  }
+
+  // 2. Check sessionStorage
+  const sessionData = sessionStorage.getItem(cacheKey);
+  if (sessionData) {
+    try {
+      const parsed = JSON.parse(sessionData);
+      console.log(`✅ Using sessionStorage for ${cacheKey}`);
+      setDonateList(parsed.docs);
+      setPages(parsed.totalPages);
+      // Store into in-memory cache
+      donationCache.current[cacheKey] = parsed;
+      setLoadingDonations(false);
+      return;
+    } catch (err) {
+      console.warn(`⚠️ Failed to parse sessionStorage data for ${cacheKey}`, err);
+    }
+  }
+
+  // 3. Fallback to API call
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.donationTransactionlist,
       headers: {
@@ -176,19 +208,26 @@ export default function DonateList() {
         limit: 10,
         page: page,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          setDonateList(res?.data?.result?.docs);
-          setPages(res?.data?.result?.pages);
-        } 
-          setLoadingDonations(false);
-      })
-      .catch((err) => {
-        setLoadingDonations(false);
-        console.log(err.message);
-      });
-  };
+    });
+
+    if (res.data.statusCode === 200) {
+      const docs = res?.data?.result?.docs;
+      const totalPages = res?.data?.result?.totalPages;
+
+      console.log(`🌐 Fetched data from API for ${cacheKey}`);
+      setDonateList(docs);
+      setPages(totalPages);
+
+      const cacheValue = { docs, totalPages };
+      donationCache.current[cacheKey] = cacheValue;
+      sessionStorage.setItem(cacheKey, JSON.stringify(cacheValue));
+    }
+  } catch (err) {
+    console.error(`❌ API error for ${cacheKey}:`, err.message);
+  } finally {
+    setLoadingDonations(false);
+  }
+};
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {

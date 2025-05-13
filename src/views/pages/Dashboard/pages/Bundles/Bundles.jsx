@@ -169,6 +169,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Bundles() {
   const {t} = useTranslation();
+  const bundleCache = useRef({});
   const [state, setState] = useState({
     OpenAuction: false,
     openShareAudience: false,
@@ -270,8 +271,20 @@ export default function Bundles() {
     </>
   );
 
-  async function getBundleListHandler() {
-    await axios({
+ async function getBundleListHandler() {
+  const cacheKey = `page-${page}`;
+
+  // Use cached data if available
+  const cachedData = sessionStorage.getItem(cacheKey);
+  if (cachedData) {
+    console.log("Using cached data for", cacheKey);
+    const { docs, totalPages } = JSON.parse(cachedData); // Parse the cached data from string
+    updateState({ bundleList: docs, pages: totalPages });
+    return;
+  }
+
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.myNftList,
       headers: {
@@ -281,17 +294,25 @@ export default function Bundles() {
         page,
         limit: 4,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          updateState({ bundleList: res.data.result.docs });
-          updateState({ pages: res.data.result.totalPages });
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    });
+
+    if (res.data.statusCode === 200) {
+      const { docs, totalPages } = res.data.result;
+
+      // Cache the result in sessionStorage
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        docs,
+        totalPages,
+      }));
+
+      updateState({ bundleList: docs, pages: totalPages });
+      console.log("Fetched and cached data for", cacheKey);
+    }
+  } catch (err) {
+    console.error(err.message);
   }
+}
+
 }
 
 export const AddBundlePopup = ({ open, handleClose, callbackFun }) => {

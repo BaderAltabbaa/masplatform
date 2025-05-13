@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import AuctionPage from "../AuctionPage";
 import BannerSection from "../BannerSection";
 import axios from "axios";
@@ -29,41 +29,102 @@ export default function Main() {
     staticSections: []
   });
   const { bannerDuration, bannerDetails, landingSections, staticSections } = state;
+  const cacheRef = useRef({});
+    const cacheRef1 = useRef({});
+
 
   const updateState = (data) =>
     setState((prevState) => ({ ...prevState, ...data }));
 
-  const getBannerContentHandler = async () => {
+   const getBannerContentHandler = async () => {
+    const cacheKey = "cache-banner-content";
+    const sessionData = sessionStorage.getItem(cacheKey);
+
+    // 1. Check in-memory cache
+    if (cacheRef.current[cacheKey]) {
+      console.log("✅ Using in-memory cache for banner");
+      updateState({ bannerDetails: cacheRef.current[cacheKey] });
+      setIsLoading(false);
+      return;
+    }
+
+    // 2. Check sessionStorage
+    if (sessionData) {
+      console.log("✅ Using sessionStorage cache for banner");
+      const parsed = JSON.parse(sessionData);
+      cacheRef.current[cacheKey] = parsed; // sync to memory
+      updateState({ bannerDetails: parsed });
+      setIsLoading(false);
+      return;
+    }
+
+    // 3. Fetch fresh data
+    console.log("⏬ Fetching fresh banner data from API");
     try {
       const res = await axios({
         method: "GET",
         url: Apiconfigs.listBanner,
       });
+
       if (res.data.statusCode === 200) {
-        updateState({ bannerDetails: res.data.result.docs });
-        setIsLoading(false)
+        const bannerDocs = res.data.result.docs;
+
+        // Cache in memory and sessionStorage
+        cacheRef.current[cacheKey] = bannerDocs;
+        sessionStorage.setItem(cacheKey, JSON.stringify(bannerDocs));
+
+        updateState({ bannerDetails: bannerDocs });
       }
     } catch (error) {
-      console.log(error);
-      setIsLoading(false)
+      console.error("❌ Error fetching banner content:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const getBannerDuration = async () => {
+   const getBannerDuration = async () => {
+    const cacheKey = "cache-banner-duration";
+    const sessionData = sessionStorage.getItem(cacheKey);
+
+    // 1. In-memory cache
+    if (cacheRef1.current[cacheKey]) {
+      console.log("✅ Using in-memory cache for banner duration");
+      updateState({ bannerDuration: cacheRef1.current[cacheKey] });
+      return;
+    }
+
+    // 2. Session storage cache
+    if (sessionData) {
+      console.log("✅ Using sessionStorage cache for banner duration");
+      const parsed = JSON.parse(sessionData);
+      cacheRef1.current[cacheKey] = parsed;
+      updateState({ bannerDuration: parsed });
+      return;
+    }
+
+    // 3. Fresh fetch
+    console.log("⏬ Fetching fresh banner duration from API");
     try {
       const res = await axios({
         method: "GET",
         url: Apiconfigs.getBannerDuration,
       });
+
       if (res.data.statusCode === 200) {
-        updateState({ bannerDuration: res.data.result });
+        const duration = res.data.result;
+
+        // Cache in both memory and sessionStorage
+        cacheRef1.current[cacheKey] = duration;
+        sessionStorage.setItem(cacheKey, JSON.stringify(duration));
+
+        updateState({ bannerDuration: duration });
       }
     } catch (error) {
-      console.log(error);
+      console.error("❌ Error fetching banner duration:", error);
     }
   };
 
-  const getLandingPageSectionsHandler = async () => {
+ {/* const getLandingPageSectionsHandler = async () => {
     try {
       const res = await axios({
         method: "GET",
@@ -76,7 +137,8 @@ export default function Main() {
       console.log(error);
     }
   };
-console.log("mm",landingSections)
+console.log("mm",landingSections)*/}
+{/*
   async function getStaticSections() {
     try {
       const res = await axios({
@@ -91,11 +153,13 @@ console.log("mm",landingSections)
     }
   }
 
+  console.log("sta",staticSections)*/}
+
   useEffect(() => {
     getBannerDuration().catch(console.error);
     getBannerContentHandler().catch(console.error);
-    getLandingPageSectionsHandler().catch(console.error);
-    getStaticSections().catch(console.error);
+    {/*getLandingPageSectionsHandler().catch(console.error);*/}
+    {/*getStaticSections().catch(console.error);*/}
   }, []);
 
   useEffect(() => {

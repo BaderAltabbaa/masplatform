@@ -88,7 +88,8 @@ const Education = () => {
     const [currentContentIndex, setCurrentContentIndex] = useState(0);
     const intervalRef = useRef(null);
     const [open ,setOpen] = useState(false);
-    const [value ,setValue] = useState('')
+    const [value ,setValue] = useState('');
+    const cacheRef = useRef({});
   
 
   const { ref: ref2, inView: inView2 } = useInView({
@@ -349,28 +350,62 @@ useEffect(() => {
 
 
 
-  const listAllNft2Handler = async () => {
-    await axios({
-      method: "GET",
-      url: Apiconfigs.listAllNft2,
-      params: {
-        page: page,
-        limit: 10
-      }
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          setAllNFT2List(res.data.result.docs);
-          setPages(res.data.result.pages)
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
+const listAllNft2Handler = async () => {
+    const cacheKey = `nftList_page_${page}`;
 
-        console.log(err.message);
-      });
-  };
+    // 1. Check sessionStorage for cached data
+    const cachedSession = sessionStorage.getItem(cacheKey);
+    if (cachedSession) {
+        const parsed = JSON.parse(cachedSession);
+        console.log("📦 Using cached NFT data from sessionStorage:", cacheKey);
+        setAllNFT2List(parsed.docs);
+        setPages(parsed.pages);
+        setIsLoading(false);
+        return;
+    }
+
+    // 2. Check useRef cache
+    if (cacheRef.current[cacheKey]) {
+        console.log("📦 Using cached NFT data from useRef:", cacheKey);
+        const cached = cacheRef.current[cacheKey];
+        setAllNFT2List(cached.docs);
+        setPages(cached.pages);
+        setIsLoading(false);
+        return;
+    }
+
+    // 3. Fetch from API if no cache found
+    try {
+        console.log("🆕 Fetching NFT list via API for:", cacheKey);
+        const res = await axios({
+            method: "GET",
+            url: Apiconfigs.listAllNft2,
+            params: {
+                page: page,
+                limit: 10
+            }
+        });
+
+        if (res.data.statusCode === 200) {
+            setAllNFT2List(res.data.result.docs);
+            setPages(res.data.result.pages);
+
+            const cachedData = {
+                docs: res.data.result.docs,
+                pages: res.data.result.pages
+            };
+
+            // Cache the data
+            sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
+            cacheRef.current[cacheKey] = cachedData;
+        }
+    } catch (err) {
+        console.log("❌ Error fetching NFT list:", err.message);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
 
   useEffect(() => {
     if (auth.userData?._id && auth.userLoggedIn) {

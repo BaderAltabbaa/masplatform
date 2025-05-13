@@ -178,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Marketplace() {
         const {t} = useTranslation();
-  
+  const itemCache = useRef({});
   const [state, setState] = useState({
     OpenAuction: false,
     openShareAudience: false,
@@ -282,8 +282,20 @@ export default function Marketplace() {
    
   );
 
-  async function getitemListHandler() {
-    await axios({
+ async function getitemListHandler() {
+  const cacheKey = `item-page-${page}`;
+
+  // Use cached data if available
+  const cachedData = sessionStorage.getItem(cacheKey);
+  if (cachedData) {
+    console.log("Using cached data for", cacheKey);
+    const { docs, totalPages } = JSON.parse(cachedData); // Parse the cached data from string
+    updateState({ itemList: docs, pages: totalPages });
+    return;
+  }
+
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.myNft1List,
       headers: {
@@ -293,18 +305,26 @@ export default function Marketplace() {
         page,
         limit: 4,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          updateState({ itemList: res.data.result.docs });
-          updateState({ pages: res.data.result.totalPages });
-          console.log("mark",itemList)
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    });
+
+    if (res.data.statusCode === 200) {
+      const { docs, totalPages } = res.data.result;
+
+      // Cache the result in sessionStorage
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        docs,
+        totalPages,
+      }));
+
+      updateState({ itemList: docs, pages: totalPages });
+      console.log("Fetched and cached data for", cacheKey);
+    }
+  } catch (err) {
+    console.log(err.message);
   }
+}
+
+
 }
 
 export const AdditemPopup = ({ open, handleClose, callbackFun }) => {

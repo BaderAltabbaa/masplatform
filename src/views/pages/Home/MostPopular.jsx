@@ -1,4 +1,4 @@
-import {useState ,useEffect,useContext} from "react"
+import {useState ,useEffect,useContext,useRef} from "react"
 import axios from "axios"
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { Box ,Typography } from "@mui/material";
@@ -19,46 +19,77 @@ const MostPopular = () => {
       const auth = useContext(UserContext);
       const [isSubscribed, setisSubscribed] = useState(false);
           const {t} = useTranslation();
+          const userCacheRef = useRef({});
       
 
         
    
-      const getuser = async (cancelTokenSource) => {
-        setIsLoading(true); 
+     const getuser = async (cancelTokenSource) => {
+  setIsLoading(true);
 
-        try {
-            const res = await axios({
-                method: "GET",
-                url: Apiconfigs.latestUserList, 
-                params: {
-                    userType: "Creator",
-                    page: 1,
-                    limit: 100
-                },
-                headers: {
-                    token: sessionStorage.getItem("token"),
-                },
-                cancelToken: cancelTokenSource?.token,
-            });
+  const cacheKey = "top8Creators_sortedByFollowers";
 
-            // Sort users by followers count (most followers first)
-            const sortedUsers = res.data.result.docs
-            .sort((a, b) => b.followers.length - a.followers.length)
-            .slice(0, 8); // Get top 6 users
-    
-          // Initialize isSubscribed for each user
-          const updatedUsers = sortedUsers.map((user) => ({
-            ...user,
-            isSubscribed: auth.userData?._id ? user.followers.includes(auth.userData._id) : false,
-          }));
-    
-          setUserListToDisplay(updatedUsers);
-        } catch (error) {
-            console.error("API Error:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+  // 1. Check sessionStorage cache
+  const sessionData = sessionStorage.getItem(cacheKey);
+  if (sessionData) {
+    console.log("✅ Loaded from sessionStorage cache");
+    const parsed = JSON.parse(sessionData);
+    setUserListToDisplay(parsed);
+    userCacheRef.current[cacheKey] = parsed; // sync into in-memory
+    setIsLoading(false);
+    return;
+  }
+
+  // 2. Check in-memory cache
+  if (userCacheRef.current[cacheKey]) {
+    console.log("✅ Loaded from in-memory cache (useRef)");
+    setUserListToDisplay(userCacheRef.current[cacheKey]);
+    setIsLoading(false);
+    return;
+  }
+
+  // 3. Fallback to API request
+  console.log("📡 Fetching from API...");
+
+  try {
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.latestUserList,
+      params: {
+        userType: "Creator",
+        page: 1,
+        limit: 100,
+      },
+      headers: {
+        token: sessionStorage.getItem("token"),
+      },
+      cancelToken: cancelTokenSource?.token,
+    });
+
+    const sortedUsers = res.data.result.docs
+      .sort((a, b) => b.followers.length - a.followers.length)
+      .slice(0, 8);
+
+    const updatedUsers = sortedUsers.map((user) => ({
+      ...user,
+      isSubscribed: auth.userData?._id
+        ? user.followers.includes(auth.userData._id)
+        : false,
+    }));
+
+    // Save to both caches
+    userCacheRef.current[cacheKey] = updatedUsers;
+    sessionStorage.setItem(cacheKey, JSON.stringify(updatedUsers));
+
+    setUserListToDisplay(updatedUsers);
+    console.log("✅ Data saved to cache (memory + sessionStorage)");
+  } catch (error) {
+    console.error("❌ API Error:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
     
       useEffect(() => {

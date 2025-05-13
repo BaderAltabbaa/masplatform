@@ -13,7 +13,7 @@ import {
   Collapse,
 } from '@mui/material';
 import { makeStyles } from "@mui/styles";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext ,useRef} from "react";
 import { UserContext } from "src/context/User";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -387,6 +387,10 @@ export default function BundleDetails() {
   const [isLoading, setIsloading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const bundleDetailsCache = useRef({});
+  const BUNDLE_DETAILS_CACHE_KEY = "bundleDetailsCache";
+const bundleContentCache = useRef({});
+const BUNDLE_CONTENT_CACHE_KEY = "bundleContentCache";
   const _onInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -403,60 +407,148 @@ export default function BundleDetails() {
     getBundleContentListHandler(bundleDetails?._id);
     setIsFilterTrue(false);
   };
+
+
+
+
   const getBundleDetailsHandler = async (id) => {
-    try {
-      setIsLoadingBundleView(true);
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.mynft + id,
-      });
-      if (res.data.statusCode === 200) {
-        console.log("responseBundleDeatils-----", res.data.result);
-        setBundleDetails(res.data.result);
-        getBundleContentListHandler(res.data.result._id);
-        setIsLoadingBundleView(false);
-        const filterFunForCurrentSubscriber =
-          res.data.result.subscribers?.filter((value) => {
-            return value === auth?.userData?._id;
-          });
-        console.log("responseFilter---->>>", filterFunForCurrentSubscriber);
-        if (filterFunForCurrentSubscriber[0]) {
-          setIsSubscribed(true);
-        }
+  setIsLoadingBundleView(true);
+
+  const cacheKey = `bundle_${id}`;
+
+  // Load from sessionStorage if available
+  const storedCache = JSON.parse(sessionStorage.getItem(BUNDLE_DETAILS_CACHE_KEY) || "{}");
+
+  if (bundleDetailsCache.current[cacheKey]) {
+    console.log("[CACHE] Loaded bundle details from in-memory cache:", cacheKey);
+    const cachedData = bundleDetailsCache.current[cacheKey];
+    setBundleDetails(cachedData);
+    getBundleContentListHandler(cachedData._id);
+    setIsLoadingBundleView(false);
+    const isSubbed = cachedData.subscribers?.includes(auth?.userData?._id);
+    if (isSubbed) setIsSubscribed(true);
+    return;
+  } else if (storedCache[cacheKey]) {
+    console.log("[CACHE] Loaded bundle details from sessionStorage:", cacheKey);
+    const cachedData = storedCache[cacheKey];
+    bundleDetailsCache.current[cacheKey] = cachedData;
+    setBundleDetails(cachedData);
+    getBundleContentListHandler(cachedData._id);
+    setIsLoadingBundleView(false);
+    const isSubbed = cachedData.subscribers?.includes(auth?.userData?._id);
+    if (isSubbed) setIsSubscribed(true);
+    return;
+  }
+
+  // Otherwise fetch from API
+  try {
+    console.log("[API] Fetching bundle details for ID:", id);
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.mynft + id,
+    });
+
+    if (res.data.statusCode === 200) {
+      const bundle = res.data.result;
+      console.log("responseBundleDeatils-----", bundle);
+      setBundleDetails(bundle);
+      getBundleContentListHandler(bundle._id);
+
+      // Update caches
+      bundleDetailsCache.current[cacheKey] = bundle;
+      sessionStorage.setItem(
+        BUNDLE_DETAILS_CACHE_KEY,
+        JSON.stringify({
+          ...storedCache,
+          [cacheKey]: bundle,
+        })
+      );
+
+      const isSubbed = bundle.subscribers?.includes(auth?.userData?._id);
+      if (isSubbed) {
+        console.log("responseFilter---->>>", isSubbed);
+        setIsSubscribed(true);
       }
-    } catch (error) {
-      console.log(error);
-      setIsLoadingBundleView(false);
     }
-  };
+  } catch (error) {
+    console.log("[API ERROR]", error);
+  } finally {
+    setIsLoadingBundleView(false);
+  }
+};
+
   const getBundleContentListHandler = async (bundleId) => {
-    try {
-      setContentList([]);
-      setIsLoadingContent(true);
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.bundleContentList,
-        params: {
-          nftId: bundleId,
-          search: selectedFilter.searchKey ? selectedFilter.searchKey : null,
-          fromDate: selectedFilter.startDate ? selectedFilter.startDate : null,
-          toDate: selectedFilter.endDate ? selectedFilter.endDate : null,
-        },
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
-      });
-      if (res.data.statusCode === 200) {
-        console.log("response--list---", res.data.result.docs);
-        setContentList(res.data.result.docs);
-        setIsLoadingContent(false);
-        setIsFilterTrue(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsLoadingContent(false);
+  setContentList([]);
+  setIsLoadingContent(true);
+
+  const searchKey = selectedFilter.searchKey || "";
+  const fromDate = selectedFilter.startDate || "";
+  const toDate = selectedFilter.endDate || "";
+
+  const cacheKey = `bundle_${bundleId}_search_${searchKey}_from_${fromDate}_to_${toDate}`;
+  const storedCache = JSON.parse(sessionStorage.getItem(BUNDLE_CONTENT_CACHE_KEY) || "{}");
+
+  // Check in-memory cache
+  if (bundleContentCache.current[cacheKey]) {
+    console.log("[CACHE] Loaded bundle content from in-memory cache:", cacheKey);
+    setContentList(bundleContentCache.current[cacheKey]);
+    setIsLoadingContent(false);
+    setIsFilterTrue(false);
+    return;
+  }
+
+  // Check sessionStorage cache
+  if (storedCache[cacheKey]) {
+    console.log("[CACHE] Loaded bundle content from sessionStorage:", cacheKey);
+    const cachedContent = storedCache[cacheKey];
+    bundleContentCache.current[cacheKey] = cachedContent;
+    setContentList(cachedContent);
+    setIsLoadingContent(false);
+    setIsFilterTrue(false);
+    return;
+  }
+
+  // API fetch if not cached
+  try {
+    console.log("[API] Fetching bundle content list:", cacheKey);
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.bundleContentList,
+      params: {
+        nftId: bundleId,
+        search: searchKey || null,
+        fromDate: fromDate || null,
+        toDate: toDate || null,
+      },
+      headers: {
+        token: sessionStorage.getItem("token"),
+      },
+    });
+
+    if (res.data.statusCode === 200) {
+      const docs = res.data.result.docs;
+      console.log("response--list---", docs);
+      setContentList(docs);
+      setIsFilterTrue(false);
+
+      // Update caches
+      bundleContentCache.current[cacheKey] = docs;
+      sessionStorage.setItem(
+        BUNDLE_CONTENT_CACHE_KEY,
+        JSON.stringify({
+          ...storedCache,
+          [cacheKey]: docs,
+        })
+      );
     }
-  };
+  } catch (error) {
+    console.log("[API ERROR]", error);
+  } finally {
+    setIsLoadingContent(false);
+  }
+};
+
+  
   useEffect(() => {
     const bundleId = location.search.split("?");
     if (bundleId[1]) {
@@ -464,6 +556,8 @@ export default function BundleDetails() {
       setBundleId(bundleId[1]);
     }
   }, [location]);
+
+
   useEffect(() => {
     if (
       selectedFilter.startDate !== "" ||
@@ -482,6 +576,8 @@ export default function BundleDetails() {
       setIsVideo(handleVideo(bundleDetails.mediaUrl));
     }
   }, [bundleDetails]);
+
+
   const subscribeNowHandler = async (isCheck) => {
     // if (parseFloat(auth?.userData?.masBalance) > 0) {
     setIsloading(true);

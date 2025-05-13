@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext ,useRef} from "react";
 import {
   Box,
   TableCell,
@@ -133,6 +133,7 @@ export default function UsersList() {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const cacheRef = useRef({});
   const [filterData, setFilterData] = useState({
     userType: "",
     searchKey: "",
@@ -141,33 +142,69 @@ export default function UsersList() {
     setFilterData({ ...filterData, [e.target.name]: e.target.value });
     setPage(1);
   };
-  const getAllUserListHandler = async () => {
-    setIsLoadingData(true);
-    try {
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.allUserList,
 
-        params: {
-          search: filterData.searchKey != "" ? filterData.searchKey : null,
-          type: filterData.userType != "" ? filterData.userType : null,
-          limit: 12,
-          page: page,
 
-        },
-      });
-      if (res.data.statusCode === 200) {
-        let rankingOrder = res.data.result.docs;
-        rankingOrder.sort((a, b) => b.masBalance - a.masBalance || b.followers.length - a.followers.length)
-        setAllUserList(rankingOrder);
-        setIsLoadingData(false);
-        setPages(res.data.result.totalPages)
-      }
-    } catch (error) {
-      console.log(error);
-      setIsLoadingData(false);
+const getAllUserListHandler = async () => {
+  const cacheKey = `users_${filterData.searchKey}_${filterData.userType}_${page}`;
+
+  // 1. Try sessionStorage first
+  const cachedSession = sessionStorage.getItem(cacheKey);
+  if (cachedSession) {
+    const parsed = JSON.parse(cachedSession);
+    console.log("📦 Using cached data from sessionStorage for:", cacheKey);
+    setAllUserList(parsed.rankingOrder);
+    setPages(parsed.totalPages);
+    setIsLoadingData(false);
+    return;
+  }
+
+  // 2. Then try useRef cache
+  if (cacheRef.current[cacheKey]) {
+    console.log("📦 Using cached data from useRef for:", cacheKey);
+    setAllUserList(cacheRef.current[cacheKey].rankingOrder);
+    setPages(cacheRef.current[cacheKey].totalPages);
+    setIsLoadingData(false);
+    return;
+  }
+
+  // 3. Otherwise, fetch from API
+  setIsLoadingData(true);
+  try {
+    const res = await axios.get(Apiconfigs.allUserList, {
+      params: {
+        search: filterData.searchKey || null,
+        type: filterData.userType || null,
+        limit: 12,
+        page: page,
+      },
+    });
+
+    if (res.data.statusCode === 200) {
+      console.log("🆕 API call made for:", cacheKey);
+
+      let rankingOrder = res.data.result.docs;
+      rankingOrder.sort((a, b) => b.masBalance - a.masBalance || b.followers.length - a.followers.length);
+
+      const totalPages = res.data.result.totalPages;
+      const cachedData = { rankingOrder, totalPages };
+
+      // Cache the data
+      sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
+      cacheRef.current[cacheKey] = cachedData;
+
+      // Update UI state
+      setAllUserList(rankingOrder);
+      setPages(totalPages);
     }
-  };
+  } catch (error) {
+    console.error("❌ API error:", error);
+  } finally {
+    setIsLoadingData(false);
+  }
+};
+
+
+
   useEffect(() => {
     getAllUserListHandler();
   }, [page, filterData]);

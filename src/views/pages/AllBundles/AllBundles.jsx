@@ -1,5 +1,5 @@
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect ,useRef} from "react";
 import {
   Typography,
   Grid,
@@ -86,6 +86,8 @@ const [allBundles, setAllBundles] = useState([]); // Complete list for client-si
 const [filteredBundles, setFilteredBundles] = useState([]); // What actually gets displayed
 const [serverSearchSupported, setServerSearchSupported] = useState(true);
 const [isClientSideMode, setIsClientSideMode] = useState(false); // Track if we're in client-side mode
+const inMemoryCache = useRef({});
+const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
 
 
   // Debounce search term
@@ -117,21 +119,51 @@ const [isClientSideMode, setIsClientSideMode] = useState(false); // Track if we'
           }); 
   
 
-           const fetchAllBundles = async () => {
-    try {
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.listAllNft,
-        params: { page: 1, limit: 100 } // Get more items for client-side search
-      });
-      if (res.data.statusCode === 200) {
-        setAllBundles(res.data.result.docs);
-        filterClientSide(res.data.result.docs, debouncedSearchTerm);
-      }
-    } catch (err) {
-      console.error("Error fetching all bundles:", err);
+     const fetchAllBundles = async () => {
+  const fullCacheKey = "full_bundle_list";
+
+  if (inMemoryCache.current[fullCacheKey]) {
+    console.log("[CACHE] Loaded full bundles from in-memory cache");
+    filterClientSide(inMemoryCache.current[fullCacheKey], debouncedSearchTerm);
+    return;
+  }
+
+  const storedCache = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "{}");
+  if (storedCache[fullCacheKey]) {
+    console.log("[CACHE] Loaded full bundles from sessionStorage");
+    inMemoryCache.current[fullCacheKey] = storedCache[fullCacheKey];
+    filterClientSide(storedCache[fullCacheKey], debouncedSearchTerm);
+    return;
+  }
+
+  try {
+    console.log("[API] Fetching all bundles for client-side filtering");
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.listAllNft,
+      params: { page: 1, limit: 100 },
+    });
+
+    if (res.data.statusCode === 200) {
+      const bundles = res.data.result.docs;
+      setAllBundles(bundles);
+      filterClientSide(bundles, debouncedSearchTerm);
+
+      // Cache it
+      inMemoryCache.current[fullCacheKey] = bundles;
+      sessionStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          ...storedCache,
+          [fullCacheKey]: bundles,
+        })
+      );
     }
-  };
+  } catch (err) {
+    console.error("Error fetching all bundles:", err);
+  }
+};
+
 
          // Client-side filtering function
   const filterClientSide = (bundles, term) => {
@@ -149,49 +181,83 @@ const [isClientSideMode, setIsClientSideMode] = useState(false); // Track if we'
   };
 
           // Main data fetching function
-  const listAllNftHandler = async () => {
-    setIsLoading(true);
-    try {
-      const params = {
-        page: page,
-        limit: 10,
-      };
+ const listAllNftHandler = async () => {
+  setIsLoading(true);
 
-      // Only add search if we think server supports it
-      if (serverSearchSupported && debouncedSearchTerm.trim()) {
-        params.search = debouncedSearchTerm;
-      }
+  const cacheKey = `${page}_${debouncedSearchTerm.trim() || "all"}`;
+  
+  // Check sessionStorage
+  const storedCache = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "{}");
+  if (inMemoryCache.current[cacheKey]) {
+    console.log("[CACHE] Loaded from in-memory cache:", cacheKey);
+    setFilteredBundles(inMemoryCache.current[cacheKey].bundles);
+    setPages(inMemoryCache.current[cacheKey].pages);
+    setIsLoading(false);
+    return;
+  } else if (storedCache[cacheKey]) {
+    console.log("[CACHE] Loaded from sessionStorage:", cacheKey);
+    inMemoryCache.current[cacheKey] = storedCache[cacheKey];
+    setFilteredBundles(storedCache[cacheKey].bundles);
+    setPages(storedCache[cacheKey].pages);
+    setIsLoading(false);
+    return;
+  }
 
-      const res = await axios({
-        method: "GET",
-        url: Apiconfigs.listAllNft,
-        params: params
-      });
+  // Otherwise fetch from API
+  try {
+    console.log("[API] Fetching bundles for:", cacheKey);
+    const params = {
+      page: page,
+      limit: 10,
+    };
 
-      if (res.data.statusCode === 200) {
-        const newBundles = res.data.result.docs;
-        
-        // Detect if server search isn't working
-        if (debouncedSearchTerm.trim() && newBundles.length === res.data.result.totalDocs) {
-          setServerSearchSupported(false);
-          setIsClientSideMode(true);
-          await fetchAllBundles(); // Load all bundles for client-side filtering
-        } else {
-          // Server search is working
-          setFilteredBundles(newBundles);
-        }
-        
-        setPages(res.data.result.totalPages);
-      }
-    } catch (err) {
-      console.error("API Error:", err);
-      setServerSearchSupported(false);
-      setIsClientSideMode(true);
-      await fetchAllBundles(); // Fallback to client-side
-    } finally {
-      setIsLoading(false);
+    if (serverSearchSupported && debouncedSearchTerm.trim()) {
+      params.search = debouncedSearchTerm;
     }
-  };
+
+    const res = await axios({
+      method: "GET",
+      url: Apiconfigs.listAllNft,
+      params,
+    });
+
+    if (res.data.statusCode === 200) {
+      const newBundles = res.data.result.docs;
+
+      if (debouncedSearchTerm.trim() && newBundles.length === res.data.result.totalDocs) {
+        setServerSearchSupported(false);
+        setIsClientSideMode(true);
+        await fetchAllBundles(); // fallback
+      } else {
+        setFilteredBundles(newBundles);
+        setPages(res.data.result.totalPages);
+
+        const cacheData = {
+          bundles: newBundles,
+          pages: res.data.result.totalPages,
+        };
+
+        // Save to both caches
+        inMemoryCache.current[cacheKey] = cacheData;
+        sessionStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({
+            ...storedCache,
+            [cacheKey]: cacheData,
+          })
+        );
+      }
+    }
+  } catch (err) {
+    console.error("[API ERROR]:", err);
+    setServerSearchSupported(false);
+    setIsClientSideMode(true);
+    await fetchAllBundles();
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
           // Load data when dependencies change
   useEffect(() => {

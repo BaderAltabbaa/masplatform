@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import {
   Typography,
   Grid,
@@ -74,6 +74,20 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
   const [userListToDisplay, setUserListToDisplay] = useState([]);
   const [openSeachBar , SetOpenSearchBar] = useState(false)
       const {t} = useTranslation();
+        const userCacheRef = useRef({});
+        const [debouncedSearch, setDebouncedSearch] = useState(search);
+
+
+useEffect(() => {
+  const handler = setTimeout(() => {
+    setDebouncedSearch(search);
+  }, 500); // 500ms delay
+
+  return () => {
+    clearTimeout(handler); // Cleanup
+  };
+}, [search]);
+
 
       const { ref: ref2,inView: inView2 } = useInView({
         threshold: 0.2, 
@@ -86,53 +100,88 @@ export default function Login(chat,subscrib,Subscribe,CardpersonalInfo
       }); 
   
 
-  const getuser = async (cancelTokenSource) => {
-    console.log("Starting API request...");
-  console.log("Page:", page);
-  console.log("Search:", search);
-  console.log("Cancel Token:", cancelTokenSource && cancelTokenSource.token);
-    axios({
-      method: "GET",
-      url: Apiconfigs.latestUserList,
-      data: {
+    const getuser = async (cancelTokenSource) => {
+    console.log("🔄 Starting API request...");
+    console.log("Page:", page);
+    console.log("Search:", search);
+    console.log("Cancel Token:", cancelTokenSource && cancelTokenSource.token);
+
+const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSearch}`;
+    // Check sessionStorage
+    const sessionData = sessionStorage.getItem(cacheKey);
+    if (sessionData) {
+      console.log("✅ getuser: Loaded from sessionStorage cache");
+      const parsed = JSON.parse(sessionData);
+      setUserListToDisplay(parsed.docs);
+      setNoOfPages(parsed.totalPages);
+      userCacheRef.current[cacheKey] = parsed;
+      return;
+    }
+
+    // Check in-memory cache
+    if (userCacheRef.current[cacheKey]) {
+      console.log("✅ getuser: Loaded from in-memory cache (useRef)");
+      const cached = userCacheRef.current[cacheKey];
+      setUserListToDisplay(cached.docs);
+      setNoOfPages(cached.totalPages);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.latestUserList,
+        params: {
+          limit: 10,
+          page: page,
+          search: debouncedSearch,
+          userType: "Creator",
+        },
+        headers: {
+          token: sessionStorage.getItem("token"),
+        },
         cancelToken: cancelTokenSource && cancelTokenSource.token,
-      },
-      params: {
-        limit: 10,
-        page: page,
-        search: search,
-        userType: "Creator",
-      },
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-    })
-      .then(async (res) => {
-        setIsLoading(false);
-        console.log("API Response:", res);
-        console.log("Status Code:", res.data.statusCode);
-        console.log("Result Docs:", res.data.result.docs);
-        console.log("Total Pages:", res.data.result.pages);
-        if (res.data.statusCode === 200) {
-          if (res.data.result.docs) {
-            setNoOfPages(res.data.result.totalPages);
-            setUserListToDisplay(res.data.result.docs);
-          }
-        }
-      })
-      .catch(() => {
-        setIsLoading(false);
       });
+
+      setIsLoading(false);
+
+      console.log("📡 API Response:", res);
+      console.log("Status Code:", res.data.statusCode);
+      console.log("Result Docs:", res.data.result.docs);
+      console.log("Total Pages:", res.data.result.totalPages);
+
+      if (res.data.statusCode === 200 && res.data.result.docs) {
+        const result = {
+          docs: res.data.result.docs,
+          totalPages: res.data.result.totalPages,
+        };
+
+        // Set state
+        setUserListToDisplay(result.docs);
+        setNoOfPages(result.totalPages);
+
+        // Cache in-memory
+        userCacheRef.current[cacheKey] = result;
+
+        // Cache in sessionStorage
+        sessionStorage.setItem(cacheKey, JSON.stringify(result));
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.log("❌ API Error:", err.message);
+    }
   };
 
-  useEffect(() => {
-    const cancelTokenSource = axios.CancelToken.source();
-    getuser(cancelTokenSource);
+ useEffect(() => {
+  const cancelTokenSource = axios.CancelToken.source();
+  getuser(cancelTokenSource);
 
-    return () => {
-      cancelTokenSource.cancel();
-    };
-  }, [search, page]);
+  return () => {
+    cancelTokenSource.cancel();
+  };
+}, [debouncedSearch, page]);
 
   const handleSearchChange = (event) => {
     setsearch(event.target.value);

@@ -168,6 +168,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyEducation() {
   const {t} = useTranslation();
+  const courseCache = useRef({});
   const [state, setState] = useState({
     OpenAuction: false,
     openShareTheLesson: false,
@@ -269,8 +270,20 @@ export default function MyEducation() {
     </>
   );
 
-  async function getCourseListHandler() {
-    await axios({
+async function getCourseListHandler() {
+  const cacheKey = `course-page-${page}`;
+
+  // Use cached data if available
+  const cachedData = sessionStorage.getItem(cacheKey);
+  if (cachedData) {
+    console.log("Using cached data for", cacheKey);
+    const { docs, totalPages } = JSON.parse(cachedData); // Parse the cached data from string
+    updateState({ courseList: docs, pages: totalPages });
+    return;
+  }
+
+  try {
+    const res = await axios({
       method: "GET",
       url: Apiconfigs.myNft2List,
       headers: {
@@ -280,17 +293,25 @@ export default function MyEducation() {
         page,
         limit: 4,
       },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          updateState({ courseList: res.data.result.docs });
-          updateState({ pages: res.data.result.pages });
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    });
+
+    if (res.data.statusCode === 200) {
+      const { docs, pages } = res.data.result;
+
+      // Cache the result in sessionStorage
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        docs,
+        totalPages: pages,
+      }));
+
+      updateState({ courseList: docs, pages });
+      console.log("Fetched and cached data for", cacheKey);
+    }
+  } catch (err) {
+    console.log(err.message);
   }
+}
+
 }
 
 export const AddCoursePopup = ({ open, handleClose, callbackFun }) => {

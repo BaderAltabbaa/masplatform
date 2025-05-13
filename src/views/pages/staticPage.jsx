@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect ,useRef} from "react";
 import {
     Container, Grid,
     Box,
@@ -53,6 +53,7 @@ export default function StaticPage() {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
       const [isLoading, setIsLoading] = useState(true);
+      const cacheRef = useRef({});
     const [datas, setdatas] = useState();
           const {t} = useTranslation();
 
@@ -73,27 +74,68 @@ export default function StaticPage() {
     useEffect(() => {
         let isMounted = true;
         
-        const fetchData = async () => {
-            try {
-                if (!data) {
-                    const res = await axios.get(Apiconfigs.viewStaticPage + `?type=${pageName}`);
-                    if (isMounted) {
-                        setTitle(res.data.result.title);
-                        setContent(res.data.result.description);
-                    }
-                } else if (isMounted) {
-                    setTitle(data.title);
-                    setContent(data.html);
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                if (isMounted) {
-                    setIsLoading(false);
-                }
-            }
-        };
-    
+       const fetchData = async () => {
+    const cacheKey = `staticPage_${pageName}`;
+
+    // 1. Try sessionStorage first
+    const cachedSession = sessionStorage.getItem(cacheKey);
+    if (cachedSession) {
+        const parsed = JSON.parse(cachedSession);
+        console.log("📦 Using cached static page from sessionStorage for:", cacheKey);
+        if (isMounted) {
+            setTitle(parsed.title);
+            setContent(parsed.description);
+            setIsLoading(false);
+        }
+        return;
+    }
+
+    // 2. Then try useRef cache
+    if (cacheRef.current[cacheKey]) {
+        console.log("📦 Using cached static page from useRef for:", cacheKey);
+        const cached = cacheRef.current[cacheKey];
+        if (isMounted) {
+            setTitle(cached.title);
+            setContent(cached.description);
+            setIsLoading(false);
+        }
+        return;
+    }
+
+    // 3. Use provided prop `data` if available
+    if (data) {
+        console.log("🗃 Using passed-in static data for:", cacheKey);
+        if (isMounted) {
+            setTitle(data.title);
+            setContent(data.html);
+            setIsLoading(false);
+        }
+        return;
+    }
+
+    // 4. Otherwise, fetch from API
+    try {
+        console.log("🆕 Fetching static page via API for:", cacheKey);
+        const res = await axios.get(`${Apiconfigs.viewStaticPage}?type=${pageName}`);
+
+        if (res.data?.result && isMounted) {
+            const { title, description } = res.data.result;
+            setTitle(title);
+            setContent(description);
+
+            const cachedData = { title, description };
+            sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
+            cacheRef.current[cacheKey] = cachedData;
+        }
+    } catch (error) {
+        console.error("❌ Error fetching static page:", error);
+    } finally {
+        if (isMounted) {
+            setIsLoading(false);
+        }
+    }
+};
+
         setIsLoading(true);
         fetchData();
     

@@ -93,6 +93,10 @@ function Cardbundle({
     const handleCloseMenu = () => {
       setAnchorEl(null);
     };
+
+     if (!data) {
+    return null; // or return a placeholder component
+  }
   
     let BundleData = data;
   
@@ -123,9 +127,9 @@ function Cardbundle({
         ? BundleData?.userId?._id
         : BundleData?.userId;
     const isUserBundle = auth?.userData?._id === userId;
-    let userName = BundleData.userId.userName || BundleData.userDetail.userName;
-    let userSpeciality =
-      BundleData.userId?.speciality || BundleData.userDetail?.speciality;
+  let userName = BundleData?.userId?.userName || BundleData?.userDetail?.userName || 'Unknown User';
+      let userSpeciality = BundleData?.userId?.speciality || BundleData?.userDetail?.speciality || '';
+
     let profilePic =
       BundleData?.userId?.profilePic ||
       BundleData?.userDetail?.profilePic ||

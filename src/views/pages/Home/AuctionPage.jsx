@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import { Container, Box, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import axios from "axios";
@@ -33,7 +33,14 @@ const AuctionPage = ({ staticSections }) => {
   const [allNFT1List, setAllNFT1List] = useState([]);
   const [userListToDisplay, setUserListToDisplay] = useState([]);
   const [isLoadingAuctions, setIsLaodingAuctions] = useState(false);
-    const {t} = useTranslation();
+  const {t} = useTranslation();
+  const auctionCacheRef = useRef({});
+  const allNftCacheRef = useRef(null);
+  const allNft1CacheRef = useRef(null);
+  const userCacheRef = useRef(null);
+
+      
+
   
 const AnimatedItem = ({ children, index }) => {
   const [ref, inView] = useInView({
@@ -62,6 +69,203 @@ const AnimatedItem = ({ children, index }) => {
   );
 };
 
+const auctionNftListHandler = async () => {
+    const cacheKey = "cache-auction-nft-list";
+    const sessionData = sessionStorage.getItem(cacheKey);
+
+    setIsLaodingAuctions(true);
+
+    // 1. Check in-memory cache
+    if (auctionCacheRef.current[cacheKey]) {
+      console.log("✅ Using in-memory cache for auction list");
+      setAuctionList(auctionCacheRef.current[cacheKey]);
+      setIsLaodingAuctions(false);
+      return;
+    }
+
+    // 2. Check sessionStorage
+    if (sessionData) {
+      console.log("✅ Using sessionStorage cache for auction list");
+      const parsed = JSON.parse(sessionData);
+      auctionCacheRef.current[cacheKey] = parsed;
+      setAuctionList(parsed);
+      setIsLaodingAuctions(false);
+      return;
+    }
+
+    // 3. Fetch fresh data from API
+    console.log("⏬ Fetching fresh data from API");
+    try {
+      const res = await axios.get(Apiconfigs.allorder, {
+        headers: {
+          token: sessionStorage.getItem("token"),
+        },
+      });
+
+      if (res.data.statusCode === 200 && res.data.result) {
+        const result = res.data.result;
+
+        // Save to both caches
+        auctionCacheRef.current[cacheKey] = result;
+        sessionStorage.setItem(cacheKey, JSON.stringify(result));
+
+        setAuctionList(result);
+      }
+    } catch (err) {
+      console.error("❌ Error fetching auction list:", err.message);
+    } finally {
+      setIsLaodingAuctions(false);
+    }
+  };
+
+
+    const listAllNftHandler = async () => {
+    const cacheKey = "listAllNft_page1_limit10";
+
+    // Check sessionStorage
+    const sessionData = sessionStorage.getItem(cacheKey);
+    if (sessionData) {
+      console.log("✅ listAllNft: Loaded from sessionStorage");
+      const parsedData = JSON.parse(sessionData);
+      setAllNFTList(parsedData);
+      allNftCacheRef.current = parsedData;
+      return;
+    }
+
+    // Check in-memory cache
+    if (allNftCacheRef.current) {
+      console.log("✅ Loaded from in-memory cache (useRef)");
+      setAllNFTList(allNftCacheRef.current);
+      return;
+    }
+
+    try {
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.listAllNft,
+        params: {
+          page: 1,
+          limit: 10,
+        },
+      });
+
+      if (res.data.statusCode === 200) {
+        const docs = res.data.result.docs;
+        console.log("📡 Fetched from API");
+
+        // Save to state
+        setAllNFTList(docs);
+
+        // Save to in-memory cache
+        allNftCacheRef.current = docs;
+
+        // Save to sessionStorage
+        sessionStorage.setItem(cacheKey, JSON.stringify(docs));
+      }
+    } catch (err) {
+      console.log("❌ Error fetching NFT list:", err.message);
+    }
+  };
+
+
+  const listAllNft1Handler = async () => {
+    const cacheKey = "listAllNft1_page1_limit10";
+
+    // Check sessionStorage
+    const sessionData = sessionStorage.getItem(cacheKey);
+    if (sessionData) {
+      console.log("✅ listAllNft1: Loaded from sessionStorage");
+      const parsedData = JSON.parse(sessionData);
+      setAllNFT1List(parsedData);
+      allNft1CacheRef.current = parsedData;
+      return;
+    }
+
+    // Check in-memory cache
+    if (allNft1CacheRef.current) {
+      console.log("✅ listAllNft1: Loaded from in-memory cache (useRef)");
+      setAllNFT1List(allNft1CacheRef.current);
+      return;
+    }
+
+    try {
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.listAllNft1,
+        params: {
+          page: 1,
+          limit: 10,
+        },
+      });
+
+      if (res.data.statusCode === 200) {
+        const docs = res.data.result.docs;
+        console.log("📡 listAllNft1: Fetched from API");
+
+        // Save to state
+        setAllNFT1List(docs);
+
+        // Save to in-memory cache
+        allNft1CacheRef.current = docs;
+
+        // Save to sessionStorage
+        sessionStorage.setItem(cacheKey, JSON.stringify(docs));
+      }
+    } catch (err) {
+      console.log("❌ listAllNft1: Error fetching data:", err.message);
+    }
+  };
+
+    const getuser = async () => {
+    const cacheKey = "latestUserList_Creator_limit10";
+
+    // Check sessionStorage
+    const sessionData = sessionStorage.getItem(cacheKey);
+    if (sessionData) {
+      console.log("✅ getuser: Loaded from sessionStorage");
+      const parsedData = JSON.parse(sessionData);
+      setUserListToDisplay(parsedData);
+      userCacheRef.current = parsedData;
+      return;
+    }
+
+    // Check in-memory cache
+    if (userCacheRef.current) {
+      console.log("✅ getuser: Loaded from in-memory cache (useRef)");
+      setUserListToDisplay(userCacheRef.current);
+      return;
+    }
+
+    try {
+      const res = await axios({
+        method: "GET",
+        url: Apiconfigs.latestUserList,
+        params: {
+          limit: 10,
+          userType: "Creator",
+        },
+        headers: {
+          token: sessionStorage.getItem("token"),
+        },
+      });
+
+      if (res.data.statusCode === 200 && res.data.result.docs) {
+        const docs = res.data.result.docs;
+        console.log("📡 getuser: Fetched from API");
+
+        // Save to state
+        setUserListToDisplay(docs);
+
+        // Save to in-memory cache
+        userCacheRef.current = docs;
+
+        // Save to sessionStorage
+        sessionStorage.setItem(cacheKey, JSON.stringify(docs));
+      }
+    } catch (err) {
+      console.log("❌ getuser: Error fetching data:", err.message);
+    }
+  };
 
   useEffect(() => {
     auctionNftListHandler().catch(console.error);
@@ -461,88 +665,15 @@ return(
 )
   }
 
-  async function auctionNftListHandler() {
-    setIsLaodingAuctions(true);
-    await axios({
-      method: "GET",
-      url: Apiconfigs.allorder,
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          if (res.data.result) {
-            setAuctionList(res.data.result);
-            setIsLaodingAuctions(false);
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setIsLaodingAuctions(false);
-      });
-  }
 
-  async function listAllNftHandler() {
-    await axios({
-      method: "GET",
-      url: Apiconfigs.listAllNft,
-      params: {
-        page: 1,
-        limit: 10,
-      },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          setAllNFTList(res.data.result.docs);
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }
+  
+  
 
-  async function listAllNft1Handler() {
-    await axios({
-      method: "GET",
-      url: Apiconfigs.listAllNft1,
-      params: {
-        page: 1,
-        limit: 10,
-      },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          setAllNFT1List(res.data.result.docs);
-        }
-      })
-      .catch((err) => {
-        //console.log(err.message);
-      });
-  }
+ 
 
-  async function getuser() {
-    axios({
-      method: "GET",
-      url: Apiconfigs.latestUserList,
-      params: {
-        limit: 10,
-        userType: "Creator",
-      },
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-    })
-      .then(async (res) => {
-        if (res.data.statusCode === 200) {
-          if (res.data.result.docs) {
-            setUserListToDisplay(res.data.result.docs);
-          }
-        }
-      })
-      .catch(() => {});
-  }
+  
+
+  
 };
 
 export default AuctionPage;
