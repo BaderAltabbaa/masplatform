@@ -11,6 +11,14 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import { Typography ,Box,useMediaQuery ,useTheme , Card, CardContent,Grid,Collapse, } from "@mui/material";
 import { styled } from '@mui/system';
+import UniqueFeatures from "./UniqueFeatures";
+import MarketplaceCarousel from "./MarketplaceCarousel";
+import TechnicalInfrastructure from "./TechnicalInfrastructure";
+import DigitalEcosystem from "./DigitalEcosystem";
+import MembershipTiers from "./MembershipTiers";
+import Roadmap from "./Roadmap";
+import WhyMasNow from "./WhyMasNow";
+import FinalCTA from "./FinalCTA";
 
 
 export default function AboutUs() {
@@ -127,17 +135,9 @@ export default function AboutUs() {
 
 
  <div className="how-it-work-sec" style={{marginTop:"20px"}}>
-                    <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <img 
-                            src="/assets/Images/wave10.png" 
-                            alt="Description" 
-                            style={{ display: 'flex', transform:" scale(0.7)" }}
-                        />
+                       
                         <div style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
+                           paddingBottom:"20px",
                             color: 'white',
                             fontSize: '2.5rem',
                             fontWeight:"bold",
@@ -149,22 +149,18 @@ export default function AboutUs() {
                   onClick={() => setIsExpanded(!isExpanded)}
                   sx={{ cursor: "pointer" ,fontSize:"40px",fontWeight:"bold" }}
                   animate={{
-        scale: [1, 1.1, 1]
+        scale: [1, 1.07, 1]
       }}
       transition={{
         duration: 1.5,
         repeat: Infinity,
         ease: "easeInOut"
-      }}
-                >
-                  Our Vision {isExpanded ? '−' : '+'}
+      }}>
+                  Our Vision 
                 </Typography>
                         </div>
-                    </div>
-
-                    {isExpanded && (
                         <>
-                           <Box maxWidth="1200px" margin="0 auto" px={4}>
+                           <Box maxWidth="1000px" margin="0 auto" px={4}>
       
         
         <Box display="flex" flexDirection="column" gap={4} sx={{background:"linear-gradient(to top right,#900098,#4d0051)" ,padding:"20px" ,borderRadius:"20px",boxShadow:"0 4px 6px rgba(0, 0, 0, 0.5)"}}>
@@ -177,7 +173,7 @@ export default function AboutUs() {
               fontStyle: 'italic',
               color: "White",
               textAlign: 'center',
-              fontSize: isMobile ? '1.1rem' : '1.5rem'
+              fontSize: isMobile ? '1rem' : '1.3rem'
             }}
           >
             "To become the world's leading digital platform—not as a technical intermediary, but as a bridge that connects creators with their audience and redefines the meaning of value in the digital age."
@@ -198,7 +194,7 @@ export default function AboutUs() {
                 fontWeight: 400,
                 lineHeight: 1.8,
                 color: "white",
-                fontSize: isMobile ? '1rem' : '1.3rem'
+                fontSize: isMobile ? '0.9rem' : '1.1rem'
               }}
             >
               We envision a future where talent is fairly rewarded, engagement is built on trust, and income is driven by creativity—not dominance or monopolization.
@@ -212,7 +208,7 @@ export default function AboutUs() {
                 lineHeight: 1.8,
                 color: "white",
                 mt: 2,
-                fontSize: isMobile ? '1rem' : '1.2rem'
+                fontSize: isMobile ? '0.9rem' : '1.1rem'
               }}
             >
               MAS aspires to be a mirror of a new era—one built on transparency, speed, and openness.
@@ -221,13 +217,11 @@ export default function AboutUs() {
         </Box>
       </Box>
                         </>
-                    )}
+                    
                 </div>
 
 
-           <div className="how-it-work-sec" style={{
-                    marginTop: isExpanded2? '50px' : '100px'
-                }}>
+           <div className="how-it-work-sec">
                     <div style={{ position: 'relative', display: 'inline-block' }}>
                         <img 
                             src="/assets/Images/wave10.png" 
@@ -270,7 +264,7 @@ export default function AboutUs() {
           transition={{ duration: 0.5 }}
         >
           <Box sx={{ 
-            py: 1,
+          
             px: isMobile ? 2 : 4,
             backgroundColor: 'transparent'
           }}>
@@ -288,7 +282,7 @@ export default function AboutUs() {
               Discover our mission to revolutionize digital economies through decentralized technologies
             </Typography>
 
-            <Grid container spacing={4} alignItems="stretch">
+            <Grid container spacing={1} alignItems="stretch">
               {missionCards.map((card, index) => (
                 <Grid i item xs={12} md={4} key={index} sx={{ display: 'flex' }}>
                   <motion.div
@@ -301,7 +295,7 @@ export default function AboutUs() {
                       borderRadius: '12px',
                       boxShadow: theme.shadows[2],
                       transition: 'box-shadow 0.3s',
-                      background:"rgb(249, 200, 255)",
+                      background:"rgb(222, 222, 222)",
                       '&:hover': {
                         boxShadow: theme.shadows[6]
                       }
@@ -341,30 +335,21 @@ export default function AboutUs() {
           </Box>
         </motion.div>
       </Collapse>
-                </div>      
+                </div>  
 
 
-                <div className="we-do-sec">
-                    <div className="we-do-content">
-                        <span className='we-do-title'>What We Do</span>
-                        <span className='we-do-text'>Let us change the way you think about technology.</span>
-                        <div className="cards" ref={ref1}>
-                            <div className={`card-container ${inView1 ? 'animate' : ''}`}>
-                                {weDoContent.map((props, index) => (
-                                    <DoCard key={index} title={props.title} desc={props.desc} src={props.src}/>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <UniqueFeatures/>    
+                <MarketplaceCarousel/>
+                <TechnicalInfrastructure/>
+                <DigitalEcosystem/>
+                <MembershipTiers/>
+                <Roadmap/>
+                <WhyMasNow/>
+                <FinalCTA/>
+
 
                
-
-                
-
-                
-
-                <ContactUs/>
             </div>
         </>
     )

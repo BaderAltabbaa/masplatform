@@ -69,7 +69,7 @@ const TokenUtility = () => {
     <Box sx={{
       mx: 'auto',
       px: { xs: 3, md: 4 },
-      py: { xs: 4, md: 6 },
+      py: { xs: 4, md: 4 },
       textAlign: 'center',
       display: "flex",
       flexDirection: "column",
@@ -81,14 +81,14 @@ const TokenUtility = () => {
         fontWeight: 'bold',
         color: 'white',
         mb: 1,
-        fontSize: { xs: '2rem', md: '2.5rem' }
+        fontSize: { xs: '1.6rem', md: '2rem' }
       }}>
         $MAS Token Utility & Incentives
       </Typography>
       
       <Typography variant="h5" component="h3" sx={{
         mb: { xs: 3, md: 4 },
-        color: 'rgb(183, 0, 255)',
+        color: 'rgb(139, 137, 137)',
         fontSize: { xs: '1.25rem', md: '1.5rem' }
       }}>
         The MAS Token: Fueling the Ecosystem
@@ -109,7 +109,7 @@ const TokenUtility = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            maxWidth: 600,
+            maxWidth: 550,
             mx: 'auto'
           }}>
             <List sx={{ width: '100%' }}>
@@ -136,7 +136,7 @@ const TokenUtility = () => {
                             fontWeight: 600,
                             textAlign: 'left',
                             color: "white",
-                            fontSize: { xs: '1.5rem', md: '1.75rem' } // Adjusted for better responsiveness
+                            fontSize: { xs: '1.25rem', md: '1.5rem' } // Adjusted for better responsiveness
                           }}>
                             {utility.text}
                           </Typography>
@@ -178,7 +178,7 @@ const TokenUtility = () => {
                 width: "100%",
                 borderRadius: "20px",
                 display: "block",
-                maxWidth: "600px",
+                maxWidth: 550,
                 margin: "0 auto"
               }} 
               src="/assets/Images/bundles.jpg" 

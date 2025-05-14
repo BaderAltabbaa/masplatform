@@ -86,6 +86,28 @@ const Features = () => {
   ];
 
   return (
+    <>
+    <Box>
+       <Typography variant="h3" component="h2" sx={{
+          fontWeight: 700,
+          color: 'white',
+          mb: 2,
+          textAlign: 'center',
+          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+        }}>
+          Key Features
+        </Typography>
+        
+        <Typography variant="h5" component="h3" sx={{
+          mb: 2,
+          color: 'rgb(139, 137, 137)',
+          textAlign: 'center',
+          fontSize: { xs: '1rem', sm: '1rem', md: '1.2rem' },
+          }}>
+          Why MAS Stands Out
+        </Typography>
+    </Box>
+    
     <Box sx={{
       maxWidth: 1200,
       mx: 'auto',
@@ -101,24 +123,7 @@ const Features = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Typography variant="h3" component="h2" sx={{
-          fontWeight: 700,
-          color: 'white',
-          mb: 2,
-          textAlign: 'center',
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-        }}>
-          Key Features
-        </Typography>
-        
-        <Typography variant="h5" component="h3" sx={{
-          mb: 6,
-          color: 'rgb(220, 142, 251)',
-          textAlign: 'center',
-          fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.5rem' }
-        }}>
-          Why MAS Stands Out
-        </Typography>
+       
       </motion.div>
 
       {/* Features Grid */}
@@ -139,7 +144,7 @@ const Features = () => {
                 border: '1px solid',
                 borderColor: 'divider',
                 boxShadow: 'none',
-                background: "rgb(249, 200, 255)"
+                background: "rgb(196, 193, 193)"
               }}>
                 <CardContent sx={{
                   flexGrow: 1,
@@ -176,7 +181,7 @@ const Features = () => {
         ))}
       </Grid>
     </Box>
-  );
+ </> );
 };
 
 export default Features;

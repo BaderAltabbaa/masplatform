@@ -1,9 +1,9 @@
 import React, { useState, useEffect ,useRef } from "react";
-import { Container, Box, Typography } from '@mui/material'
+import { Container, Box, Typography ,useTheme, useMediaQuery} from '@mui/material'
 import { makeStyles } from '@mui/styles';
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import { useNavigate ,Link } from "react-router";
+import { useNavigate ,Link } from "react-router-dom";
 import "./style.css";
 import SectionCard from "../../../component/ui/sectionCard/SectionCard";
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
@@ -50,19 +50,13 @@ const AnimatedItem = ({ children, index }) => {
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-      animate={{ 
-        opacity: inView ? 1 : 0,
-        y: inView ? 0 : 50,
-        scale: inView ? 1 : 0.95
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ 
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: "easeOut"
       }}
-      transition={{
-        duration: 0.6,
-        ease: "easeOut",
-        delay: index * 0.15 // Stagger delay based on index
-      }}
-      style={{ display: 'inline-block' }} // Maintain layout
     >
       {children}
     </motion.div>
@@ -427,95 +421,127 @@ const auctionNftListHandler = async () => {
   }
 
   function ServicesSection() {
-    const item = staticSections.find((i) => i?.title === "Bundles");
-    return (
-    <>
-     
-    <Box display="flex" justifyContent="center" alignItems='center' flexDirection={"column"} mb={4}>
-       <Typography variant="h3" component="h2" sx={{
-              fontWeight: 700,
-              color: 'white',
-              mb: 2,
-              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
-            }}>
-              MAS Services
-            </Typography>
-    <Box 
-  display='flex' 
-  justifyContent='center' 
-  flexWrap='wrap'
-  sx={{
-    background: "linear-gradient(to top right,#75017b,#3a013d)",
-    margin: { xs: '10px', sm: '20px' },
-    borderRadius: "50px", 
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-    overflow: "hidden",
-    padding: '10px', // Reduced padding
-    gap: '10px', // Consistent gap between items
-    width: 'fit-content', // Makes container shrink to fit content
-    maxWidth: '100%', 
-  }}
->
-  {[
-    
-    { img: "/assets/Images/1.jpg", text: t("Bundles") ,link:"/bundles" },
-       { img: "/assets/Images/22.jpg", text: t("Education") ,link:"/education"},
-    { img: "/assets/Images/25.webp", text: t("MarketPlace")  ,link:"/items"},
- { img: "/assets/Images/25.webp", text: t("RWA")  ,link:"/items"},
-    { img: "/assets/Images/30.jpeg", text: t("Transfer") ,link:"/user-list"},
-    { img: "/assets/Images/13.jpg", text: t("Fundraise") ,link:"/creators"},
-  ].map((item, index) => (
-     <AnimatedItem key={index} index={index}>
-    <Link to={item.link}>
-      <Box sx={{ 
-        position: 'relative', 
-        display: 'inline-block',
-        margin: '10px',
-        width: { xs: '100px', sm: '200px', md: '200px' },
-        height: { xs: '150px', sm: '280px', md: '250px' },
-        "&:hover": {
-          transform: "scale(1.04)",
-          transition: "ease-out 0.3s" // Reduced for better UX
-        }
-      }}>
-        <img 
-          src={item.img} 
-          alt={item.text} 
-          style={{
-            width: "100%", 
-            height: "100%", 
-            borderRadius: '30px',
-            display: 'block',
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-            objectFit: 'cover' // Ensures images maintain aspect ratio
-          }}
-        />
-        <Box sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          color: "white",
-          fontSize: { xs: '20px', sm: '26px', md: '32px' },
-          fontWeight: "bold",
-          textShadow: "3px 3px 5px rgba(0,0,0,0.6)",
-          textAlign: 'center',
-          width: '100%', // Ensures text stays centered
-        }}>
-          {item.text}
-        </Box>
-      </Box>
-    </Link>
-    </AnimatedItem>
-  ))}
-</Box>
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMedium = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
+  const isLarge = useMediaQuery(theme.breakpoints.up('lg'));
 
-</Box>
-    
-    </>
-     
-    );
-  }
+  const services = [
+    { img: "/assets/Images/1.jpg", text: "Bundles", link: "/bundles" },
+    { img: "/assets/Images/22.jpg", text: "Education", link: "/education" },
+    { img: "/assets/Images/25.webp", text: "MarketPlace", link: "/items" },
+    { img: "/assets/Images/25.webp", text: "RWA", link: "/items" },
+    { img: "/assets/Images/30.jpeg", text: "Transfer", link: "/user-list" },
+    { img: "/assets/Images/13.jpg", text: "Fundraise", link: "/creators" },
+  ];
+
+  const getCardDimensions = () => {
+    if (isSmall) return { width: '140px', height: '220px' };
+    if (isMedium) return { width: '180px', height: '260px' };
+    return { width: '220px', height: '280px' };
+  };
+
+  const getFontSize = () => {
+    if (isSmall) return '1.5rem';
+    if (isMedium) return '2rem';
+    return '2rem';
+  };
+
+  return (
+    <Box sx={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center',
+      flexDirection: 'column',
+      mb: 6,
+      px: 2
+    }}>
+      <Typography variant="h2" sx={{
+        fontWeight: 700,
+        color: 'white',
+        mb: 4,
+        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+        textAlign: 'center'
+      }}>
+        MAS Services
+      </Typography>
+
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: { 
+          xs: 'repeat(2, 1fr)', 
+          sm: 'repeat(3, 1fr)',
+          lg: 'repeat(3, 1fr)',
+          xl: 'repeat(6, 1fr)' 
+        },
+        gap: { xs: 2, md: 3 },
+        maxWidth: '1400px',
+        width: '100%',
+        padding: { xs: 2, md: 3 },
+        background: "linear-gradient(to top right, #75017b, #3a013d)",
+        borderRadius: "50px",
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+        margin: '0 auto'
+      }}>
+        {services.map((item, index) => (
+          <AnimatedItem key={index} index={index}>
+            <Link to={item.link} style={{ textDecoration: 'none' }}>
+              <Box sx={{
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: '30px',
+                height: getCardDimensions().height,
+                transition: 'transform 0.3s ease-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  '& .service-overlay': {
+                    opacity: 0.9
+                  }
+                }
+              }}>
+                <Box
+                  component="img"
+                  src={item.img}
+                  alt={item.text}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+                <Box className="service-overlay" sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(58,1,61,0.8))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'opacity 0.3s ease',
+                  opacity: 0.7
+                }}>
+                  <Typography sx={{
+                    color: 'white',
+                    fontSize: getFontSize(),
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    px: 1,
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                  }}>
+                    {item.text}
+                  </Typography>
+                </Box>
+              </Box>
+            </Link>
+          </AnimatedItem>
+        ))}
+      </Box>
+    </Box>
+  );}
+  
   function ItemsSection() {
     const item = staticSections.find((i) => i?.title === "Bundles");
     return (

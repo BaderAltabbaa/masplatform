@@ -79,15 +79,15 @@ const CanDoMas = () => {
         fontWeight: 700,
         color: 'white',
         mb: 2,
-        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
+        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' }
       }}>
         What You Can Do on MAS
       </Typography>
       
       <Typography variant="h5" component="h3" sx={{
         mb: 6,
-        color: 'rgb(183, 0, 255)',
-        fontSize: { xs: '1.1rem', sm: '1.3rem', md: '1.5rem' }
+        color: 'rgb(139, 137, 137)',
+        fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' }
       }}>
         A Full Ecosystem for Digital Creativity & Giving
       </Typography>

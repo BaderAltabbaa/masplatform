@@ -1204,7 +1204,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 99%)',
+          top: 'calc(100% + 80%)',
             left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1280,7 +1280,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 99%)',
+          top: 'calc(100% + 80%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1355,7 +1355,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 99%)',
+          top: 'calc(100% + 80%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1436,7 +1436,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 99%)',
+          top: 'calc(100% + 80%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1529,7 +1529,7 @@ const scrollToTop = () => {
                 {isDropdownOpen && (
                   <Box   sx={{
           position: 'absolute',
-          top: 'calc(100% + 13%)',
+          top: 'calc(100% + 5%)',
             left: 0,
           width: "100%",
           zIndex: 1000,
@@ -1711,7 +1711,7 @@ const scrollToTop = () => {
         </header>
 
       </AppBar>
-      <Box  sx={{width:"100%" ,minHeight:"4.2rem" ,background:"linear-gradient(to right,#280026,#4a004f)"}}
+      <Box  sx={{width:"100%" ,minHeight:"3.8rem" ,background:"linear-gradient(to right,#280026,#4a004f)"}}
       display={relativeBar.includes(location.pathname) ? "none" : "block"}
       ></Box>
 
