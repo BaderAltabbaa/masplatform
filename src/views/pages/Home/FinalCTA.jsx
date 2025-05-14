@@ -17,10 +17,10 @@ const FinalCTA = () => {
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       sx={{
-        maxWidth: 1200,
+        maxWidth: 900,
         mx: 'auto',
-        px: { xs: 3, md: 6 },
-        py: { xs: 8, md: 12 },
+        px: { xs: 1, md: 2 },
+        py: { xs: 4, md: 6 },
         textAlign: 'center',
         background: `linear-gradient(to top right,#900098,#4d0051)`,
         borderRadius: '20px',
@@ -33,7 +33,7 @@ const FinalCTA = () => {
       <Typography variant="h2" component="h2" sx={{
         fontWeight: 800,
         mb: 3,
-        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+        fontSize: { xs: '1rem', sm: '1.5rem', md: '2rem' },
         lineHeight: 1.2,
         color: "white"
       }}>
@@ -45,7 +45,7 @@ const FinalCTA = () => {
         maxWidth: 800,
         mx: 'auto',
         mb: 5,
-        fontSize: { xs: '1.1rem', md: '1.3rem' },
+        fontSize: { xs: '1rem', md: '1.2rem' },
         opacity: 0.9,
         color: "white"
       }}>
@@ -66,8 +66,8 @@ const FinalCTA = () => {
           size="large"
           endIcon={<ArrowForward />}
           sx={{
-            px: 4,
-            py: 1.5,
+            px: 3,
+            py: 1,
             fontSize: '1.1rem',
             fontWeight: 600,
             borderRadius: '50px',
@@ -83,8 +83,8 @@ const FinalCTA = () => {
           color="inherit"
           size="large"
           sx={{
-            px: 4,
-            py: 1.5,
+            px: 3,
+            py: 1,
             fontSize: '1.1rem',
             fontWeight: 600,
             borderRadius: '50px',

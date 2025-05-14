@@ -470,7 +470,7 @@ export default function Header() {
           top: '100%',
           left: '50%', // Center it horizontally
           transform: 'translateX(-50%)', // Adjust for exact centering
-          backgroundColor: 'rgba(0, 0, 0, 0.67)',
+          backgroundColor: 'rgba(0, 0, 0, 0.77)',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           borderRadius: '4px',
           padding: '10px',
@@ -578,7 +578,7 @@ export default function Header() {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -748,7 +748,7 @@ const GamesDropDown = ({ onClose, isMobile }) => {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -814,7 +814,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -897,7 +897,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.67)',
+          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -1511,7 +1511,8 @@ const scrollToTop = () => {
 
 
 
-              {auth.userLoggedIn ? <Box sx={{
+              {auth.userLoggedIn ? 
+              <Box sx={{
                 position: 'relative',
                 "@media(max-width:1250px)": {
                   display: "none"
@@ -1526,11 +1527,22 @@ const scrollToTop = () => {
                     />
                   </IconButton>
                 {isDropdownOpen && (
+                  <Box   sx={{
+          position: 'absolute',
+          top: 'calc(100% + 13%)',
+            left: 0,
+          width: "100%",
+          zIndex: 1000,
+          transformOrigin: 'top center',
+          
+        
+  }}>
                   <ProfileDropdown
                     onClose={() => setDropdownOpen(false)}
                     unreadChats={Object.keys(auth.unreadChats).length}
                     unReadNotification={auth.unReadNotification}
                   />
+                  </Box>
                 )}
               </Box> : <></>}
 
