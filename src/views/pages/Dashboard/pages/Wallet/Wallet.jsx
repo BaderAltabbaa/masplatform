@@ -267,7 +267,8 @@ const Wallet = () => {
     return(
 <>
 <Box overflow='hidden'>
-<Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem",marginBottom:"1rem"}}><ButtonwithAnimation>My Wallet</ButtonwithAnimation></Box>
+<Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem",marginBottom:"1rem"}}><ButtonwithAnimation>My Wallet</ButtonwithAnimation>
+</Box>
     <Box sx={{
         padding: "0 5%",
         maxWidth: "1600px",

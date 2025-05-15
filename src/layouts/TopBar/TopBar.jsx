@@ -985,7 +985,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           <Box>
         <Button
             onClick={() => {
-              navigate("/user-list");
+              navigate("/Fundraise");
               onClose();
             }}
             sx={{color:"#dadada",

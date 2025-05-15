@@ -428,11 +428,11 @@ const auctionNftListHandler = async () => {
 
   const services = [
     { img: "/assets/Images/1.jpg", text: "Bundles", link: "/bundles" },
-    { img: "/assets/Images/22.jpg", text: "Education", link: "/education" },
-    { img: "/assets/Images/25.webp", text: "MarketPlace", link: "/items" },
-    { img: "/assets/Images/25.webp", text: "RWA", link: "/items" },
+    { img: "/assets/Images/edu.png", text: "Education", link: "/education" },
+    { img: "/assets/Images/market.png", text: "MarketPlace", link: "/items" },
+    { img: "/assets/Images/rwa.png", text: "RWA", link: "/items" },
     { img: "/assets/Images/30.jpeg", text: "Transfer", link: "/user-list" },
-    { img: "/assets/Images/13.jpg", text: "Fundraise", link: "/creators" },
+    { img: "/assets/Images/fund.webp", text: "Fundraise", link: "/Fundraise" },
   ];
 
   const getCardDimensions = () => {

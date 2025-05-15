@@ -46,6 +46,14 @@ const dashboard = {
       icon: icons.FaDollarSign,
       breadcrumbs: false
     },
+     {
+      id: 'My_Fundraise',
+      title: 'My Fundraise',
+      type: 'item',
+      url: '/profile/My_Fundraise',
+      icon: icons.FaBox,
+      breadcrumbs: false
+    },
    
     {
       id: 'My_purchases',

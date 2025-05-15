@@ -55,7 +55,7 @@ const RoadMap = () => {
         alignItems="flex-start"
         sx={{
           position: 'relative',
-          background: "linear-gradient(to top right,#900098,#4d0051)",
+          background: "linear-gradient(to top right,#900098, #4d0051)",
           padding: 3,
           borderRadius: 10,
           boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
@@ -67,7 +67,7 @@ const RoadMap = () => {
             right: 0,
             height: { xs: '100%', md: 4 },
             width: { xs: 4, md: '100%' },
-            bgcolor: 'primary.main',
+            bgcolor: '#4d0051',
             mx: 'auto',
             zIndex: 0
           }
@@ -104,10 +104,11 @@ const RoadMap = () => {
                 transform: { xs: 'translateX(-50%)', md: 'translateY(-50%)' },
                 zIndex: 2
               }}>
-                <TimelineDot color="primary" sx={{
+                <TimelineDot  sx={{
                   width: 24,
                   height: 24,
-                  boxShadow: theme.shadows[4]
+                  boxShadow: theme.shadows[4],
+                  backgroundColor:"#4d0051"
                 }} />
               </Box>
               <Typography variant="h6" component="h4" sx={{

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { 
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  Box,
   Button,
   Typography,
-  Box
+  Slide
 } from '@mui/material';
 
 const CookieConsent = () => {
@@ -40,68 +37,66 @@ const CookieConsent = () => {
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      disableScrollLock={true} // This prevents scroll locking
-      fullWidth={true}
-      maxWidth="xs"
-      PaperProps={{
-        sx: {
+    <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+      <Box
+        sx={{
           position: 'fixed',
-          bottom: 20,
-          left: 10,
+          bottom: 0,
+          left: 0,
           right: 0,
-          margin: 0,
-          borderRadius: 2,
-          backgroundImage: 'url(/assets/Images/doodle2.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          '@media (min-width: 600px)': {
-            bottom: 20,
-            left: '50%',
-            right: 'auto',
-            transform: 'translateX(-50%)',
-            borderRadius: 2,
-          }
-        }
-      }}
-    >
-       <Box sx={{
-                      background:"rgba(255, 255, 255, 0.68)",
-                      padding:"2px",
-                      borderRadius:"20px"
-                    }}>
-      <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e" fontSize='20px'>Cookie Consent</DialogTitle>
-    
-      <DialogContent>
-        <Typography variant="body1" paragraph>
-          We use cookies to enhance your experience on our website. 
-          By clicking "Accept", you agree to our use of cookies.
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleDecline} color="secondary"  sx={{color: " #43005e" }}>
-          Decline
-        </Button>
-        <Button onClick={handleAccept} variant="contained" color="primary"  sx={{
-                  background: "#43005e",
-                  "&:hover": {
-                    background: "#320046"
-                  },
-                  "&:disabled": {
-                    background: "#e0e0e0",
-                    color: "#9e9e9e"
-                  }
-                }}>
-          Accept
-        </Button>
-      </DialogActions>
-      </Box>
-    </Dialog>
+          width: '100%',
+          zIndex: 9999,
+           background: "rgba(0, 0, 0, 0.9)",
+          p: 3,
+          boxShadow: '0px -2px 10px rgba(0,0,0,0.1)',
+          borderRadius:"0 50px 0 0"
+        }}
+      >
+       
+          <Box sx={{ 
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2
+          }}>
+            <Typography variant="h4" color="#8200b5">
+              Cookie Consent
+            </Typography>
+          </Box>
+          
+          <Typography variant="body1" paragraph color='white'>
+            We use cookies to enhance your experience on our website. 
+            By clicking "Accept", you agree to our use of cookies.
+          </Typography>
+          
+          <Box sx={{ 
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: 2,
+            mt: 2
+          }}>
+            <Button 
+              onClick={handleDecline} 
+              color="secondary"  
+              sx={{ color: "#8200b5" }}
+            >
+              Decline
+            </Button>
+            <Button 
+              onClick={handleAccept} 
+              variant="contained" 
+              sx={{
+                background: "#43005e",
+                "&:hover": {
+                  background: "#320046"
+                }
+              }}
+            >
+              Accept
+            </Button>
+          </Box>
+        </Box>
+    </Slide>
   );
 };
 

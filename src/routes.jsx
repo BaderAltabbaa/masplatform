@@ -64,6 +64,12 @@ export const routes = [
           import("src/views/pages/Dashboard/pages/Wallet/Wallet")
         ),
       },
+       {
+        path: 'My_Fundraise',
+        element:lazy(() =>
+          import("src/views/pages/Dashboard/pages/Fundraise/Fundraise")
+        ),
+      },
 
       {
         path: 'My_purchases',
@@ -148,6 +154,12 @@ export const routes = [
         path: 'My_Marketplace',
         element:lazy(() =>
           import("src/views/pages/Dashboard/pages/Marketplace/Marketplace")
+        ),
+      },
+       {
+        path: 'My_Fundraise',
+        element:lazy(() =>
+          import("src/views/pages/Dashboard/pages/Fundraise/Fundraise")
         ),
       },
 
@@ -422,8 +434,16 @@ export const routes = [
   layout: HomeLayout,
   element: lazy(() => import("src/views/pages/About/FAQ")),
 },
-
-
+{
+  path: "/Fundraise",
+  layout: HomeLayout,
+  element: lazy(() => import("src/views/pages/Fundraise/Fundraise")),
+},
+{
+  path: "/FundDetails",
+  layout: HomeLayout,
+  element: lazy(() => import("src/views/pages/Fundraise/FundDetails")),
+},
   {
     path: "/404",
     element: lazy(() => import("src/views/errors/NotFound")),
