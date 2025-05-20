@@ -259,7 +259,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
         >
           {t("Cancel")}
         </Button>
@@ -268,7 +268,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
         >
           {isEdit ? t("Edit") : t("Share")}
         </Button>

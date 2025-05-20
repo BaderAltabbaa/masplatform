@@ -90,11 +90,11 @@ const WhyMasNow = () => {
           height: '4px', 
           bgcolor: "white",
           mx: 'auto',
-          mb: 6
+          mb: 4
         }} />
       </motion.div>
 
-      <Grid container spacing={4} sx={{ mb: 6 }}>
+      <Grid container spacing={4} sx={{ mb: 6 ,display:"flex" ,alignItems:"center"}}>
         {/* Large featured card */}
         <Grid item xs={12} md={6}>
           <motion.div
@@ -108,22 +108,22 @@ const WhyMasNow = () => {
               height: '100%',
               p: 4,
               borderRadius: '16px',
-              background: `linear-gradient(135deg, #4d0051 0%,rgba(255, 255, 255, 0.58) 100%)`,
+              background: (theme) => theme.custom.secCardBackGround,
               color: 'white',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}>
               <Typography variant="h3" sx={{ 
                 fontWeight: 700,
                 mb: 3,
-                fontSize: isMobile ? '1.8rem' : '2.2rem',
+                fontSize: isMobile ? '1.7rem' : '1.9rem',
                 color:"white"
               }}>
                 The Perfect Timing
               </Typography>
               <Typography variant="body1" sx={{ 
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
                 mb: 3,
                 color:"rgb(205, 205, 205)"
               }}>
@@ -133,7 +133,7 @@ const WhyMasNow = () => {
                 width: 60, 
                 height: 60, 
                 bgcolor: 'white',
-                color: "#4d0051",
+                color:  (theme) => theme.custom.mainButton,
                 mt: 'auto',
                 alignSelf: 'flex-end'
               }}>
@@ -162,13 +162,13 @@ const WhyMasNow = () => {
                     borderRadius: '12px',
                     display: 'flex',
                     flexDirection: 'column',
-                    background:"linear-gradient(to top left,#900098,#4d0051)"
+                    background: (theme) => theme.custom.CarBackGround
                   }}>
                     <Avatar sx={{ 
                       width: 50, 
                       height: 50, 
                       bgcolor: "white",
-                      color: "#4d0051",
+                      color:  (theme) => theme.custom.mainButton,
                       mb: 2
                     }}>
                       {reason.icon}
@@ -176,14 +176,14 @@ const WhyMasNow = () => {
                     <Typography variant="h4" sx={{ 
                       fontWeight: 700,
                       mb: 1,
-                      fontSize: '1.4rem',
+                      fontSize: '1.2rem',
                       color:"white"
                     }}>
                       {reason.title}
                     </Typography>
                     <Typography variant="body1" sx={{ 
                       color: 'white',
-                      fontSize: '1rem'
+                      fontSize: '0.9rem'
                     }}>
                       {reason.description}
                     </Typography>

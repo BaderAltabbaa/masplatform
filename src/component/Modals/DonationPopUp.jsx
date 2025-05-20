@@ -1018,7 +1018,7 @@ variant="standard"
                 
                 <Box className={classes.body} align="start">
                 <Box className={classes.heading} mb={2}>
-                  <img src="\assets\Images\masfooter-logo.svg"  style={{width:"50px"}}/>
+                  <img src="\assets\Images\masfooter-logo1.svg"  style={{width:"50px"}}/>
                   <Typography align="center" sx={{color:"white" ,fontSize:"24px" ,fontWeight:"bold" ,
                     "@media(max-width:700px)":{
                       fontSize:"16px"
@@ -1026,7 +1026,7 @@ variant="standard"
                   }}>
                   {t("Transaction Receipt")}
                   </Typography>
-                  <img src="\assets\Images\masfooter-logo.svg"  style={{width:"50px"}}/>
+                  <img src="\assets\Images\masfooter-logo1.svg"  style={{width:"50px"}}/>
                 </Box>
                   <Box display="flex" alignItems="center" marginBottom="10px"> 
                   <Typography variant="h3" sx={{marginRight:"5px"}}>

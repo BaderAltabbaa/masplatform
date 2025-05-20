@@ -1204,7 +1204,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 80%)',
+          top: 'calc(100% + 70%)',
             left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1280,7 +1280,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 80%)',
+          top: 'calc(100% + 70%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1355,7 +1355,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 80%)',
+          top: 'calc(100% + 70%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1436,7 +1436,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 80%)',
+          top: 'calc(100% + 70%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1529,13 +1529,11 @@ const scrollToTop = () => {
                 {isDropdownOpen && (
                   <Box   sx={{
           position: 'absolute',
-          top: 'calc(100% + 5%)',
+          top: 'calc(100% + 1%)',
             left: 0,
           width: "100%",
           zIndex: 1000,
           transformOrigin: 'top center',
-          
-        
   }}>
                   <ProfileDropdown
                     onClose={() => setDropdownOpen(false)}
@@ -1711,7 +1709,7 @@ const scrollToTop = () => {
         </header>
 
       </AppBar>
-      <Box  sx={{width:"100%" ,minHeight:"3.8rem" ,background:"linear-gradient(to right,#280026,#4a004f)"}}
+      <Box  sx={{width:"100%" ,minHeight:"3.5rem" , background: (theme) => theme.custom.PageBackGround}}
       display={relativeBar.includes(location.pathname) ? "none" : "block"}
       ></Box>
 
@@ -1724,7 +1722,7 @@ const scrollToTop = () => {
           left: 24,
           zIndex: 1000,
           backgroundColor: 'rgb(206, 204, 204)',
-          color: '#43005e',
+          color:  (theme) => theme.custom.mainButton,
           '&:hover': {
             backgroundColor: '#cdc8c8',
             transform: 'scale(1.1)'

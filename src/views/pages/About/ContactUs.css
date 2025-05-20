@@ -3,7 +3,6 @@
     flex-direction: column;
     padding:40px 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right,#280026,#4a004f);
 }
 
 .touch-top{
@@ -83,7 +82,6 @@
     padding: 25px;
     max-width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to top right,#900098,#4d0051);
     color: white;
     text-align: start;
     opacity: 0; 
@@ -98,9 +96,7 @@
     transform: translateX(0); 
   }
 
-.contact-card-body:nth-child(1){
-    background: linear-gradient(to top right,#75017b,#3a013d);
-}
+
 
 .contact-icons{
    

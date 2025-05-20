@@ -147,8 +147,8 @@ const Roadmap = () => {
               width:"100%",
               maxWidth:"400px",
               flexShrink: 0,
-              p: 4,
-              background:"linear-gradient(to top left,#900098,#4d0051)",
+              p: 3,
+              background: (theme) => theme.custom.CarBackGround,
               borderRadius: '16px',
               borderLeft: `6px solid white`,
               transition: 'all 0.3s ease',
@@ -158,7 +158,7 @@ const Roadmap = () => {
               }
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, gap: 1 }}>
               <Box sx={{
                 width: '50px',
                 height: '50px',
@@ -181,7 +181,7 @@ const Roadmap = () => {
               </Typography>
             </Box>
 
-            <Typography variant="body1" sx={{ mb: 3, color: 'white', fontSize: '1.1rem' }}>
+            <Typography variant="body1" sx={{ mb: 2, color: 'white', fontSize: '1rem' }}>
               {item.title}
             </Typography>
 

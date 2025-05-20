@@ -259,7 +259,7 @@ function FormButtons() {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ background:"#2f0032",color:'white',margin:"0 5px"}}
+          sx={{ background:(theme) => theme.custom.mainButton,color:'white',margin:"0 5px"}}
 
         >
           {t("Cancel")}
@@ -268,7 +268,7 @@ function FormButtons() {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          style={{ background:"#2f0032",color:'white',margin:"0 5px"}}
+          sx={{ background:(theme) => theme.custom.mainButton,color:'white',margin:"0 5px"}}
 
           className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}

@@ -2,6 +2,7 @@ import "./FAQ.css"
 import FAQmodel from "../../../component/FAQmodel";
 import { useInView } from 'react-intersection-observer';
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
+import { Box } from "@mui/material";
 
 
 
@@ -17,12 +18,13 @@ export default function FAQ() {
         triggerOnce: true,  
       });
 
-
+   
 
 return(
     <>
+    <Box sx={{background: (theme) => theme.custom.PageBackGround}}>
     <div style={{
-                background:"linear-gradient(to right,#280026,#4a004f)",
+            
                 display:"flex",
                 justifyContent:"center",
                 alignItems:"center",
@@ -41,7 +43,7 @@ return(
 <FAQmodel/>
    </div>
    </div>
-  
+  </Box>
     </>
 )
 

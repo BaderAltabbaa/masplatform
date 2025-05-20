@@ -1,9 +1,10 @@
 import React from "react";
 import "./Card.css";
+import { Box } from "@mui/material";
 
 const Card = ({  imgsrc, titel, text,AvatarClick }) => {
   return (
-    <div className="card-containerx"
+    <Box className="card-containerx" sx={{background: (theme) => theme.custom.miniUserCard}}
     >
       
       <div className="content2x">
@@ -30,7 +31,7 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
       
       </div>
      
-    </div>
+    </Box>
   );
 };
 

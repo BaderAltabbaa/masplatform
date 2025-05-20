@@ -207,14 +207,14 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
 
       {/* Category Selection Dialog */}
       <Dialog open={categoryDialogOpen} onClose={handleCloseCategoryDialog}>
-        <DialogTitle align="center" color="#2f0032" sx={{fontSize:"18px"}}>{t("Select a Category")}</DialogTitle>
+        <DialogTitle align="center" sx={{fontSize:"18px" ,color:(theme) => theme.custom.mainButton}}>{t("Select a Category")}</DialogTitle>
         <DialogContent>
           <Box display="flex" flexDirection="column">
             {categories.map((category, index) => (
               <Button
                 key={index}
                 onClick={() => handleCategorySelect(category)}
-                style={{ margin: "5px 0" ,color:" #2f0032"}}
+                sx={{ margin: "5px 0" ,color:(theme) => theme.custom.mainButton}}
               >
                 {category}
               </Button>
@@ -325,7 +325,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
+          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 5px" }}
         >
           {t("Cancel")}
         </Button>
@@ -335,7 +335,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={onSubmit}
           size="large"
           disabled={isEdit && !dirtyFields.file}
-          style={{ fontSize: "15px", background: "#2f0032", color: "white", margin: "0 5px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 5px" }}
         >
           {isEdit ? t("Edit") : t("Create")}
         </Button>

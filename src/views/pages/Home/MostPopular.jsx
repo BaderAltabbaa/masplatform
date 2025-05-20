@@ -180,7 +180,9 @@ return(
                                 transform:"scale(1.05)",
                                 transition:"ease-out 500ms"
                             }}}>
-                            <Box key={user._id}  display="flex" sx={{background:"linear-gradient(to top right,#900098,#4d0051)", padding:"10px 20px", borderRadius:"20px 20px 0 0" ,
+                            <Box key={user._id}  display="flex" sx={{            
+                                background: (theme) => theme.custom.CarBackGround,
+                               padding:"10px 20px", borderRadius:"20px 20px 0 0" ,
                               }}>
                             
                                <img 

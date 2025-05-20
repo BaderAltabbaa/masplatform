@@ -22,7 +22,7 @@ import { transform } from 'lodash';
 import DataLoading from '../../../../component/DataLoading';
 
 const useStyles = makeStyles((theme) => ({
-  root: { background:"linear-gradient(to right, #280026,#4a004f)"
+  root: {
   },
 
 
@@ -300,7 +300,9 @@ const getItemContentListHandler = async (ItemId) => {
 
   return (
     <>
-    <Box className={classes.root}>
+    <Box  sx={{
+      background: (theme) => theme.custom.PageBackGround
+    }}>
     <Box>
       {isLoadingBunldeView ? (
        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>

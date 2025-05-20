@@ -2,6 +2,7 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { FaThumbsUp } from "react-icons/fa";
+import { Box } from '@mui/material';
 
 
   
@@ -16,16 +17,17 @@ const { ref, inView } = useInView({
   });
 
     return(
-        <div className="blog-center">
-        <div
+        <Box className="blog-center" >
+        <Box
       ref={ref}
       className={`blog-card ${inView ? 'animate' : ''}`}
+      sx={{background: (theme) => theme.custom.CarBackGround}}
     >
      <span className="blog-card-title">{title}</span>
      <p className="blog-card-desc">{desc}</p>
-     <div className="lower-blog">
+     <Box className="lower-blog">
      <span className='blog-card-date'>{date}</span>
-     <div className="blog-icons">
+     <Box className="blog-icons">
      <FaThumbsUp
               className={`${activeIcon === 'like' ? 'active' : ''}`}
               onClick={() => onIconClick(id, 'like')}
@@ -34,10 +36,10 @@ const { ref, inView } = useInView({
      
     
 
-     </div>
-     </div>
-    </div>
-    </div>
+     </Box>
+     </Box>
+    </Box>
+    </Box>
         
     )
 

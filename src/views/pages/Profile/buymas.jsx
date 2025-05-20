@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '90vh',
-    background: 'linear-gradient(to right,#280026,#4a004f)',
     color:"white",
     padding: theme.spacing(2),
 
@@ -357,7 +356,7 @@ useEffect(() => {
   }, [user.userData])
   
   return (
-    <div className={classes.root}>
+    <Box className={classes.root} sx={{background: (theme) => theme.custom.PageBackGround}}>
        <div className="tableWrapper" style={{maxWidth:"100%", width:"800px"}}>
        <div className="tableAnimatedBackground"></div>
        <div className="tableInnerBlurEffect"></div>
@@ -461,7 +460,7 @@ useEffect(() => {
             </div>
             </Box> 
             </div> 
-          </div>
+          </Box>
     
   );
 

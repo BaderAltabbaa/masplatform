@@ -208,7 +208,7 @@ export default function Bundles() {
             variant="contained"
             size="large"
             color=""
-            style={{background:"#2f0032",color:'white'}}
+            sx={{background:(theme) => theme.custom.mainButton,color:'white'}}
             onClick={() => updateState({ OpenAuction: true })}
           >
             {t("add a bundle")}

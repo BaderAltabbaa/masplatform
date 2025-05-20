@@ -20,22 +20,22 @@ const infrastructureItems = [
   {
     title: "Binance Smart Chain",
     description: "Built on BSC (Binance Smart Chain) using BEP-20 tokens",
-    icon: <Link fontSize="large" />
+    icon: <Link fontSize="medium" />
   },
   {
     title: "Smart Contracts",
     description: "Smart contracts automate all operations: donations, payments, distributions",
-    icon: <Code fontSize="large" />
+    icon: <Code fontSize="medium" />
   },
   {
     title: "Wallet Integration",
     description: "Integrated with wallets like MetaMask and Trust Wallet",
-    icon: <AccountBalanceWallet fontSize="large" />
+    icon: <AccountBalanceWallet fontSize="medium" />
   },
   {
     title: "Proof of Donation",
     description: "PoD mechanism to transparently document every act of support",
-    icon: <Verified fontSize="large" />
+    icon: <Verified fontSize="medium" />
   }
 ];
 
@@ -84,11 +84,11 @@ const TechnicalInfrastructure = () => {
         }} />
       </motion.div>
     <Box sx={{ 
-      px: isMobile ? 3 : 4,
-      py: 4,
-      background: `linear-gradient(to top left,#900098, #4d0051)`,
+      px: isMobile ? 2 : 3,
+      py: 3,
+      background: (theme) => theme.custom.CarBackGround,
       borderRadius: '16px',
-      maxWidth: '1000px',
+      maxWidth: '1200px',
       mx: 'auto',
       my: 4
     }}>
@@ -107,8 +107,8 @@ const TechnicalInfrastructure = () => {
             >
               <Box sx={{
                 height: '100%',
-                p: 4,
-                background: theme.palette.background.paper,
+                p: 3,
+              background: (theme) => theme.custom.secCardBackGround,
                 borderRadius: '12px',
                 borderLeft: `4px solid rgb(56, 0, 59)`,
                 boxShadow: theme.shadows[2],
@@ -121,10 +121,10 @@ const TechnicalInfrastructure = () => {
                 flexDirection: 'column'
               }}>
                 <Box sx={{
-                  width: '60px',
-                  height: '60px',
+                  width: '40px',
+                  height: '40px',
                   borderRadius: '50%',
-                  background: `#4d0051`,
+                  background:  (theme) => theme.custom.mainButton,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -138,8 +138,9 @@ const TechnicalInfrastructure = () => {
                   variant="h4" 
                   sx={{ 
                     fontWeight: 700,
-                    mb: 2,
-                    fontSize: isMobile ? '1.5rem' : '1.75rem'
+                    mb: 1,
+                    fontSize: isMobile ? '1rem' : '1.2rem',
+                    color:"white"
                   }}
                 >
                   {item.title}
@@ -150,7 +151,8 @@ const TechnicalInfrastructure = () => {
                   sx={{ 
                     color: 'text.secondary',
                     mb: 2,
-                    fontSize: isMobile ? '1rem' : '1.1rem'
+                    fontSize: isMobile ? '0.9rem' : '0.9rem',
+                    color:"white"
                   }}
                 >
                   {item.description}
@@ -161,7 +163,7 @@ const TechnicalInfrastructure = () => {
                     label={`Feature ${index + 1}`} 
                     color="primary" 
                     size="small" 
-                    sx={{ fontWeight: 600 ,background:"#4d0051"}} 
+                    sx={{ fontWeight: 600 ,background:  (theme) => theme.custom.mainButton}} 
                   />
                 </Box>
               </Box>

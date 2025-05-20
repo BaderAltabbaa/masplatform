@@ -54,32 +54,32 @@ transition={{
 const Features = () => {
   const features = [
     {
-      icon: <BlockchainIcon fontSize="large" sx={{ color: "white" }} />,
+      icon: <BlockchainIcon fontSize="medium" />,
       title: "Blockchain Transparency",
       description: "Every transaction is publicly verifiable on the blockchain"
     },
     {
-      icon: <PodIcon fontSize="large" sx={{ color: "white" }} />,
+      icon: <PodIcon fontSize="medium"  />,
       title: "Proof of Donation (PoD)",
       description: "Immutable records of all charitable contributions"
     },
     {
-      icon: <FeesIcon fontSize="large" sx={{ color: "white" }} />,
+      icon: <FeesIcon fontSize="medium" />,
       title: "Ultra-low Fees (0.5%)",
       description: "Industry-leading low transaction costs"
     },
     {
-      icon: <CertificatesIcon fontSize="large" sx={{ color: "white" }} />,
+      icon: <CertificatesIcon fontSize="medium"  />,
       title: "Donation Certificates",
       description: "Automatically generated verifiable certificates"
     },
     {
-      icon: <CurrencyIcon fontSize="large" sx={{ color: "white" }} />,
+      icon: <CurrencyIcon fontSize="medium"  />,
       title: "Multi-Currency Support",
       description: "Accept payments in multiple cryptocurrencies"
     },
     {
-      icon: <SocialIcon fontSize="large" sx={{ color: "white" }} />,
+      icon: <SocialIcon fontSize="medium"  />,
       title: "Social & Matchmaking Tools",
       description: "Connect donors with causes they care about"
     }
@@ -91,7 +91,7 @@ const Features = () => {
        <Typography variant="h3" component="h2" sx={{
           fontWeight: 700,
           color: 'white',
-          mb: 2,
+          mb: 1,
           textAlign: 'center',
           fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
         }}>
@@ -109,11 +109,11 @@ const Features = () => {
     </Box>
     
     <Box sx={{
-      maxWidth: 1200,
+      maxWidth: 1400,
       mx: 'auto',
-      px: { xs: 2, sm: 3, md: 4 },
-      py: 8,
-      background: 'linear-gradient(to top right,#900098,#4d0051)',
+      px: 2,
+      py: 2,
+      background: (theme) => theme.custom.CarBackGround,
       borderRadius: "20px",
       boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)"
     }}>
@@ -141,36 +141,34 @@ const Features = () => {
                   boxShadow: 3
                 },
                 borderRadius: 3,
-                border: '1px solid',
-                borderColor: 'divider',
-                boxShadow: 'none',
-                background: "rgb(196, 193, 193)"
+                boxShadow: 2,
+              background: (theme) => theme.custom.secCardBackGround,
               }}>
                 <CardContent sx={{
                   flexGrow: 1,
-                  p: 3,
+                  p: 2,
                   textAlign: 'center'
                 }}>
                   <Box sx={{
                     display: 'inline-flex',
-                    p: 2,
-                    mb: 3,
-                    backgroundColor: '#4d0051',
+                    p: 1.5,
+                    mb: 2,
+                    backgroundColor: (theme) => theme.custom.mainButton,
                     borderRadius: '30%',
-                    color: 'primary.contrastText'
+                    color: 'white'
                   }}>
                     {feature.icon}
                   </Box>
                   <Typography variant="h5" component="h4" gutterBottom sx={{
                     fontWeight: 600,
-                    fontSize: { xs: '1.25rem', md: '1.4rem' },
-                    color: "#4d0051"
+                    fontSize: { xs: '1rem', md: '1.1rem' },
+                    color: "white"
                   }}>
                     {feature.title}
                   </Typography>
                   <Typography variant="body1" sx={{
-                    color: 'rgb(94, 0, 99)',
-                    fontSize: { xs: '0.95rem', md: '1rem' }
+                    color: 'white',
+                    fontSize: { xs: '0.8rem', md: '0.9rem' }
                   }}>
                     {feature.description}
                   </Typography>

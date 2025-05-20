@@ -37,8 +37,10 @@ const Services = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Container maxWidth="xl" sx={{ py: 2 }}>
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box display="flex" justifyContent="center" alignItems="center" 
+      sx={{
+        px:{xs:"10px" , md:"0"}
+        }}>
         <AnimatedBox fromLeft={true}>
           <Box
             component={motion.div}
@@ -54,7 +56,7 @@ const Services = () => {
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
               justifyContent: 'space-between',
-              background: "linear-gradient(to top right,#75017b,#3a013d)",
+              background: (theme) => theme.custom.CarBackGround,
               marginTop: { xs: '10px', sm: '20px' },
               borderRadius: "50px",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
@@ -63,17 +65,17 @@ const Services = () => {
               gap: '10px',
               position: "relative",
               width: '100%',
-              maxWidth: isLargeScreen ? '1200px' : isMediumScreen ? '900px' : '100%',
+              maxWidth: isLargeScreen ? '1400px' : isMediumScreen ? '900px' : '100%',
             }}
           >
             <Box sx={{ 
-              padding: { xs: '15px', md: '20px' },
+              padding: { xs: '15px', md: '15px' },
               flex: 1,
               minWidth: { md: '50%' }
             }}>
               <Box textAlign="center">
                 <Typography sx={{
-                  fontSize: { xs: "22px", sm: "25px" },
+                  fontSize: { xs: "1.2rem", sm: "1.7rem" },
                   color: "white",
                   fontWeight: "bold",
                   textShadow: "0px 0px 10px white",
@@ -111,7 +113,7 @@ const Services = () => {
                   1. Create Your Wallet-Linked Account: Seamless sign-up with MetaMask or Trust Wallet.
                 </Typography>
                 <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1rem' },
+                  fontSize: { xs: '1rem', sm: '1rem', md: '0.9rem' },
                   fontWeight: 'bold',
                   textAlign: { xs: 'center', md: 'left' },
                   color:"white"
@@ -119,7 +121,7 @@ const Services = () => {
                   2. Choose a Role: Creator, Supporter, or Both.
                 </Typography>       
                 <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1rem' },
+                  fontSize: { xs: '1rem', sm: '1rem', md: '0.9rem' },
                   fontWeight: 'bold',
                   textAlign: { xs: 'center', md: 'left' },
                   color:"white"
@@ -127,7 +129,7 @@ const Services = () => {
                   3. Donate, Sell, or Subscribe: Support creators through bundles, donations, or purchases.
                 </Typography>      
                 <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1rem' },
+                  fontSize: { xs: '1rem', sm: '1rem', md: '0.9rem' },
                   fontWeight: 'bold',
                   textAlign: { xs: 'center', md: 'left' },
                   color:"white"
@@ -144,7 +146,7 @@ const Services = () => {
               alignItems: 'center',
               maxWidth: { md: '50%' },
               width: '100%',
-              height: { xs: '300px', md: '350px' },
+              height: { xs: '300px', md: '300px' },
               position: 'relative',
               zIndex: 3,
               p: { xs: 0, md: 0 }
@@ -165,7 +167,6 @@ const Services = () => {
           </Box>
         </AnimatedBox>
       </Box>
-    </Container>
   );
 }
 

@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
 import styles from './ButtonWithAnimation.module.css'; 
+import { Box, Button } from "@mui/material";
 
 
 export const PrimaryButton = styled(MuiButton)(({ pill }) => ({
@@ -24,14 +25,15 @@ export const PrimaryButton = styled(MuiButton)(({ pill }) => ({
 
 export const ButtonwithAnimation=({children}) => {
 return (
-  <div className={styles.btnBlock}>
+  <Box className={styles.btnBlock}>
         
-  <div className={styles.buttonContainer}>
+  <Box className={styles.buttonContainer} sx={{background: (theme) => theme.custom.buttonContainer}}>
     <button className={styles.buttonFree}>{children}</button>
-    <div className={styles.animatedBackground}></div>
-    <div className={styles.innerBlurEffect}></div>
-  </div>
-</div>
+    <Box className={styles.animatedBackground} sx={{background: (theme) => theme.custom.animatedBackground
+}}></Box>
+    <Box className={styles.innerBlurEffect} sx={{background:(theme) => theme.custom.innerBlurEffect}}></Box>
+  </Box>
+</Box>
 )
 
 }

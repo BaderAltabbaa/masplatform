@@ -218,7 +218,8 @@ export default function ContactUs() {
               }}
             />
             <Box display='flex' justifyContent='center'>
-            <Button type="submit" variant="contained"   sx={{backgroundColor:"rgb(84, 0, 85)",marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(102, 2, 107)"}}}>
+            <Button type="submit" variant="contained"   sx={{backgroundColor: (theme) => theme.custom.mainButton
+              ,marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(102, 2, 107)"}}}>
               {t("Submit")}
             </Button>
             </Box>
@@ -250,8 +251,8 @@ export default function ContactUs() {
 
       return (
         <>
+        <Box sx={{background: (theme) => theme.custom.PageBackGround}}>
           <div style={{
-              background:"linear-gradient(to right,#280026,#4a004f)",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -290,28 +291,29 @@ export default function ContactUs() {
                   });
 
                   return (
-                    <div
+                    <Box
                       ref={ref}
                       key={card.id}
                       className={`contact-card-body ${
                         index % 2 === 0 ? "direction-left" : "direction-right"
                       } ${inView ? "animate" : ""}`}
-                      style={{ transitionDelay: `${index * 0.2}s` }}
+                      sx={{ transitionDelay: `${index * 0.2}s` ,background: (theme) => theme.custom.CarBackGround}}
                     >
                       {card.icon}
                       <span className="contact-title">{card.title}</span>
                       <span className="contact-desc">{card.desc}</span>
-                    </div>
+                    </Box>
                   );
                 })}
               </div>
             </div>
           </div>
-          <div style={{display:"flex" ,justifyContent:"center" ,alignItems:"center" ,background:"linear-gradient(to right,#280026,#4a004f)",padding:"10px"}}>
-          <div style={{background:"linear-gradient(to top right,#900098,#4d0051)" ,width:"fit-content",padding:"20px",borderRadius:"50px",boxShadow:"0 4px 6px rgba(0, 0, 0, 0.5)"}}>   
+          <div style={{display:"flex" ,justifyContent:"center" ,alignItems:"center" ,padding:"10px"}}>
+          <Box sx={{background: (theme) => theme.custom.CarBackGround,width:"fit-content",padding:"20px",borderRadius:"50px",boxShadow:"0 4px 6px rgba(0, 0, 0, 0.5)"}}>   
           <ContactForm/> 
+          </Box> 
           </div> 
-          </div>  
+          </Box> 
         </>
       )
 }

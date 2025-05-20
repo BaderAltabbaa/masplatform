@@ -59,30 +59,48 @@ function CardCreators({
 const userID = auth?.userData?._id ;
 console.log("bra",userID)
 
-  const subscribeToUserHandler = async () => {
-    if (auth.userData?._id) {
-      await axios({
+ const subscribeToUserHandler = async () => {
+  console.log('Starting subscribeToUserHandler');
+  
+  if (auth.userData?._id) {
+    console.log('User ID found:', auth.userData._id);
+    console.log('Preparing API request to:', Apiconfigs.followProfile + userCardData._id);
+    
+    try {
+      const response = await axios({
         method: "GET",
         url: Apiconfigs.followProfile + userCardData._id,
         headers: {
           token: sessionStorage.getItem("token"),
         },
-      })
-        .then(async (res) => {
-          if (res.data.statusCode === 200) {
-            setisSubscribed(res.data.result.subscribed == "yes");
-            setnbSubscribed(res.data.result.nb);
-          } else {
-            toast.error(res.data.result);
-          }
-        })
-        .catch((err) => {
-          toast.error(err?.response?.data?.responseMessage);
-        });
-    } else {
-      toast.error("Please Login");
+      });
+
+      console.log('API response received:', response);
+      
+      if (response.data.statusCode === 200) {
+        console.log('Successful response with status 200');
+        console.log('Response data:', response.data);
+        console.log('Setting subscription status:', response.data.result.subscribed == "yes");
+        console.log('Setting subscription count:', response.data.result.nb);
+        
+        setisSubscribed(response.data.result.subscribed == "yes");
+        setnbSubscribed(response.data.result.nb);
+      } else {
+        console.log('Non-200 status code received:', response.data.statusCode);
+        console.log('Error message:', response.data.result);
+      }
+    } catch (err) {
+      console.error('Error in API request:', err);
+      console.log('Error response:', err?.response);
+      console.log('Error message:', err?.response?.data?.responseMessage);
+      
     }
+  } else {
+    console.log('No user ID found - user not logged in');
   }
+  
+  console.log('Finished subscribeToUserHandler execution');
+}
   // End Handle subscribe function
 
   const likeDislikeUserHandler = async (id) => {

@@ -120,7 +120,7 @@ export default function purchases() {
         <Box>
            <TableContainer component={Paper} >
             <Table>
-              <TableHead sx={{background:"linear-gradient(to top right, #900098, #4d0051)"}}>
+              <TableHead sx={{background: (theme) => theme.custom.CarBackGround}}>
                 <TableRow>
                          <TableCell sx={{color:"white"}}>{t("Title")}</TableCell>
                          <TableCell sx={{color:"white"}}>{t("Name")}</TableCell>

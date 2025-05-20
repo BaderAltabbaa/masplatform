@@ -184,7 +184,7 @@ const Chat = () => {
                     justifyContent: 'space-between',
                     borderBottom: '1px solid',
                     borderColor: 'divider',
-                    background:"linear-gradient(to top right,#900098,#4d0051)"
+                    background:(theme) => theme.custom.CarBackGround
                 }}>
                     <Typography variant="h3" color='white'>Messages</Typography>
                     {!isMobile && (
@@ -309,7 +309,7 @@ const Chat = () => {
                                             maxWidth: '80%',
                                             p: 1.5,
                                             borderRadius: 2,
-                                            bgcolor: msg.from === socket?.id ? ' #600086' : 'background.paper',
+                                            bgcolor: msg.from === socket?.id ? (theme) => theme.custom.mainButton : 'background.paper',
                                             color: msg.from === socket?.id ? 'primary.contrastText' : 'text.primary',
                                             boxShadow: 1
                                         }}>
@@ -349,7 +349,7 @@ const Chat = () => {
                                     onClick={sendMessage}
                                     disabled={!newMessage.trim()}
                                     sx={{
-                                        background:"#4d0051"
+                                        background:(theme) => theme.custom.mainButton
                                     }}
                                 >
                                     Send
@@ -368,7 +368,7 @@ const Chat = () => {
                         p: 3,
                         background:"rgba(255, 255, 255, 0.72)"
                     }}>
-                        <AccountCircle sx={{ fontSize: 80, color: '#600086', mb: 2 }} />
+                        <AccountCircle sx={{ fontSize: 80, color:(theme) => theme.custom.mainButton, mb: 2 }} />
                         <Typography variant="h6" color="text.secondary">
                             {isMobile ? 'Select a conversation' : 'Select a conversation to start chatting'}
                         </Typography>

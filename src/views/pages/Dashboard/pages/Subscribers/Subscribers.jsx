@@ -111,7 +111,7 @@ export default function Subscribers({ type }) {
 
        <Box sx={{
         padding:"10px",
-        background:"linear-gradient(to top right,#900098,#4d0051)" ,
+        background: (theme) => theme.custom.CarBackGround ,
         width:"fit-content",
         margin:"10px",
         borderRadius:"10px",
@@ -128,7 +128,7 @@ export default function Subscribers({ type }) {
         <Box>
         <TableContainer component={Paper} >
   <Table  aria-label="subscribers table">
-    <TableHead sx={{background:"linear-gradient(to top right,#900098,#4d0051)"}}>
+    <TableHead sx={{background: (theme) => theme.custom.CarBackGround}}>
       <TableRow>
         <TableCell sx={{color:"white"}}>{t("Icon")}</TableCell>
         <TableCell sx={{color:"white"}} >{t("Username")}</TableCell>

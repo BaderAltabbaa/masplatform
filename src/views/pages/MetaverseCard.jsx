@@ -7,7 +7,6 @@ import { color } from 'framer-motion';
 export default function MetaverseCard({ data, key }) {
     const useStyles = makeStyles((theme) => ({
         main: {
-            background: 'linear-gradient(to top right,rgb(144, 0, 152),rgb(77, 0, 81))',
             padding: "10px 10px 15px 10px",
             borderRadius: "10px",
             width: "300px",
@@ -50,7 +49,7 @@ export default function MetaverseCard({ data, key }) {
     const classes = useStyles();
     return (
         <div>
-            <Card className={classes.main} sx={{background:"linear-gradient(to top right,rgb(144, 0, 152),rgb(77, 0, 81))"}}>
+            <Card className={classes.main} sx={{background: (theme) => theme.custom.CarBackGround}}>
                 <div className={classes.imgParent}>
                     <img src={data} />
                 </div>

@@ -2,6 +2,7 @@ import BlogCard from "../../../component/BlogCard";
 import React, { useState } from "react";
 import './Blog.css'
 import { ButtonwithAnimation } from "../../../component/ui/Button/button";
+import { Box } from "@mui/material";
 
 
 
@@ -81,8 +82,10 @@ const Blog = () => {
   ] 
  
     return<>
+        <Box sx={{background: (theme) => theme.custom.PageBackGround}}>
+    
      <div style={{
-                background:"linear-gradient(to right,#280026,#4a004f)",
+
                 display:"flex",
                 justifyContent:"center",
                 alignItems:"center",
@@ -110,6 +113,7 @@ const Blog = () => {
     <button className="load-btn">Load More</button>
     <span>No more posts to show</span>
     </div>
+    </Box>
     </>
   }
   

@@ -33,7 +33,7 @@ const RoadMap = () => {
   ];
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', px: { xs: 2, md: 4 }, py: 3, overflowX: 'auto'  , overflowY:"hidden"}}>
+    <Box sx={{ maxWidth: 1200, mx: 'auto', px: { xs: 2, md: 4 }, py: 2, overflowX: 'auto'  , overflowY:"hidden"}}>
       <Typography variant="h3" component="h2" sx={{
         fontWeight: 'bold', textAlign: 'center', color: 'white', mb: 2,
         fontSize: { xs: '2rem', md: '2.5rem' }
@@ -42,7 +42,7 @@ const RoadMap = () => {
       </Typography>
 
       <Typography variant="h5" component="h3" sx={{
-        textAlign: 'center', mb: 6, color: 'rgb(183, 0, 255)',
+        textAlign: 'center', mb: 6, color: 'rgb(139, 137, 137)',
         fontSize: { xs: '1.2rem', md: '1.5rem' }
       }}>
         Our Journey — Built for the Future
@@ -55,8 +55,8 @@ const RoadMap = () => {
         alignItems="flex-start"
         sx={{
           position: 'relative',
-          background: "linear-gradient(to top right,#900098, #4d0051)",
-          padding: 3,
+              background: (theme) => theme.custom.CarBackGround,
+          padding: 2,
           borderRadius: 10,
           boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
           '&:before': {
@@ -67,7 +67,7 @@ const RoadMap = () => {
             right: 0,
             height: { xs: '100%', md: 4 },
             width: { xs: 4, md: '100%' },
-            bgcolor: '#4d0051',
+            bgcolor: (theme) => theme.custom.mainButton,
             mx: 'auto',
             zIndex: 0
           }
@@ -89,7 +89,7 @@ const RoadMap = () => {
                 width: { xs: '100%', md: 240 },
                 position: 'relative',
                 zIndex: 1,
-                bgcolor: 'rgb(249, 200, 255)',
+                background: (theme) => theme.custom.secCardBackGround,
                 borderRadius: 3,
                 transition: 'transform 0.3s',
                 '&:hover': {
@@ -108,23 +108,24 @@ const RoadMap = () => {
                   width: 24,
                   height: 24,
                   boxShadow: theme.shadows[4],
-                  backgroundColor:"#4d0051"
+                  backgroundColor: (theme) => theme.custom.mainButton,
                 }} />
               </Box>
               <Typography variant="h6" component="h4" sx={{
                 fontWeight: 600,
-                color: 'rgb(183, 0, 255)',
+                color: "white",
                 mb: 1
               }}>
                 {milestone.period}
               </Typography>
               <Typography variant="h5" component="h3" sx={{
                 fontWeight: 700,
-                mb: 1.5
+                mb: 1.5,
+                color:"white"
               }}>
                 {milestone.title}
               </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body1" sx={{ color: 'white' }}>
                 {milestone.description}
               </Typography>
             </MotionPaper>

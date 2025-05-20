@@ -85,7 +85,7 @@ const DigitalEcosystem = () => {
               <br/>it's a dynamic digital ecosystem hosting:
             </Typography>
 
-            <List sx={{ width: '100%' ,background:"linear-gradient(to top left,#900098,#4d0051)" ,px:2 ,borderRadius:"20px"}}>
+            <List sx={{ width: '100%' ,background: (theme) => theme.custom.CarBackGround ,px:2 ,borderRadius:"20px"}}>
               {ecosystemItems.map((item, index) => (
                 <motion.div
                   key={index}
@@ -97,13 +97,13 @@ const DigitalEcosystem = () => {
                   
                 >
                     
-                  <ListItem sx={{ px: 0, py: 1.5 }}>
+                  <ListItem sx={{ px: 0, py: 1 }}>
                     <ListItemIcon sx={{ minWidth: '50px' }}>
                       <Avatar sx={{ 
                         bgcolor: "white",
-                        color: '#4d0051',
-                        width: 42,
-                        height: 42
+                        color:  (theme) => theme.custom.mainButton,
+                        width: 40,
+                        height: 40
                       }}>
                         {item.icon}
                       </Avatar>
@@ -139,7 +139,8 @@ const DigitalEcosystem = () => {
               src="/assets/Images/—Pngtree—business professional analyzing stock market_20116370.png" // Replace with your image path
               alt="Digital Ecosystem"
               sx={{
-                maxWidth: '100%',
+                Width: '100%',
+                maxWidth:400,
                 height: 'auto',
                 objectFit: 'cover'
               }}

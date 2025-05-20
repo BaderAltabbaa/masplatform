@@ -294,37 +294,37 @@ const auctionNftListHandler = async () => {
 
  const Categories = [
   {name:t("Art"),
-   image:"/assets/Images/15.jpg"
+   image:"/assets/Images/art.png"
   },
   {name:t("Sports"),
-    image:"/assets/Images/14.jpg"
+    image:"/assets/Images/sports.png"
    },
-   {name:t("Collectors"),
-    image:"/assets/Images/5.jpg"
+   {name:t("Real Estate"),
+    image:"/assets/Images/rwa.png"
    },
    {name:t("Fashion"),
     image:"/assets/Images/17.jpg"
    },
    {name:t("Video"),
-    image:"/assets/Images/22.jpg"
+    image:"/assets/Images/video.png"
    },
    {name:t("Music"),
-    image:"/assets/Images/1.jpg"
+    image:"/assets/Images/music.png"
    },
    {name:t("Cars"),
-    image:"/assets/Images/4.jpg"
+    image:"/assets/Images/cars.png"
    },
    {name:t("Coding"),
-    image:"/assets/Images/6.jpg"
+    image:"/assets/Images/coding.png"
    },
    {name:t("Crypto"),
-    image:"/assets/Images/7.jpg"
+    image:"/assets/Images/bundleIcon.png"
    },
    {name:t("Education"),
-    image:"/assets/Images/2.jpg"
+    image:"/assets/Images/edu.png"
    },
    {name:t("Trading"),
-    image:"/assets/Images/22.jpg"
+    image:"/assets/Images/transfer.png"
    },
    {name:t("Analytics"),
     image:"/assets/Images/1.jpg"
@@ -333,10 +333,10 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/5.jpg"
    },
    {name:t("Gaming"),
-    image:"/assets/Images/6.jpg"
+    image:"/assets/Images/gaming.png"
    },
-   {name:t("Privacy"),
-    image:"/assets/Images/7.jpg"
+   {name:t("E-commerce"),
+    image:"/assets/Images/market.png"
    },
    {name:t("Startups"),
     image:"/assets/Images/8.jpg"
@@ -351,7 +351,7 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/12.jpg"
    },
    {name:t("Metaverse"),
-    image:"/assets/Images/13.jpg"
+    image:"/assets/Images/meta.png"
    },
  ]
 
@@ -427,24 +427,24 @@ const auctionNftListHandler = async () => {
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'));
 
   const services = [
-    { img: "/assets/Images/1.jpg", text: "Bundles", link: "/bundles" },
+    { img: "/assets/Images/bundleIcon.png", text: "Bundles", link: "/bundles" },
     { img: "/assets/Images/edu.png", text: "Education", link: "/education" },
     { img: "/assets/Images/market.png", text: "MarketPlace", link: "/items" },
     { img: "/assets/Images/rwa.png", text: "RWA", link: "/items" },
-    { img: "/assets/Images/30.jpeg", text: "Transfer", link: "/user-list" },
-    { img: "/assets/Images/fund.webp", text: "Fundraise", link: "/Fundraise" },
+    { img: "/assets/Images/transfer.png", text: "Transfer", link: "/user-list" },
+    { img: "/assets/Images/fundraise.png", text: "Fundraise", link: "/Fundraise" },
   ];
 
   const getCardDimensions = () => {
-    if (isSmall) return { width: '140px', height: '220px' };
-    if (isMedium) return { width: '180px', height: '260px' };
-    return { width: '220px', height: '280px' };
+    if (isSmall) return { width: '100px', height: '220px' };
+    if (isMedium) return { width: '180px', height: '240px' };
+    return { width: '220px', height: '250px' };
   };
 
   const getFontSize = () => {
     if (isSmall) return '1.5rem';
-    if (isMedium) return '2rem';
-    return '2rem';
+    if (isMedium) return '1.2rem';
+    return '1.5rem';
   };
 
   return (
@@ -477,8 +477,8 @@ const auctionNftListHandler = async () => {
         gap: { xs: 2, md: 3 },
         maxWidth: '1400px',
         width: '100%',
-        padding: { xs: 2, md: 3 },
-        background: "linear-gradient(to top right, #75017b, #3a013d)",
+        padding: { xs: 2, md: 2 },
+    background: (theme) => theme.custom.CarBackGround,
         borderRadius: "50px",
         boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
         margin: '0 auto'
@@ -489,7 +489,7 @@ const auctionNftListHandler = async () => {
               <Box sx={{
                 position: 'relative',
                 overflow: 'hidden',
-                borderRadius: '30px',
+                borderRadius: '50px',
                 height: getCardDimensions().height,
                 transition: 'transform 0.3s ease-out',
                 '&:hover': {
@@ -597,24 +597,19 @@ const auctionNftListHandler = async () => {
   {/*  */}
   function popularCategory() {
     return(
-      <Box sx={{padding:"30px 150px", 
-        "@media(max-width:1200px)":{
-padding:"30px 200px"
-      }, "@media(max-width:800px)":{
-        padding:"30px 100px"
-      }
-      }} display="flex" flexDirection="column" alignItems="center">
+      <Box sx={{py: 4,maxWidth:1400 ,mx: 'auto',px:{xs:4 , md: 0}
+}} 
+      display="flex" flexDirection="column" alignItems="center" justifyContent="center"> 
         <Typography align="center" variant="h1" color="white">{t("Popular Categories")}</Typography>
-        <Box mt={2} sx={{ background:"linear-gradient(to top right,#900098,#4d0051)",
+        <Box mt={2} sx={{               background: (theme) => theme.custom.CarBackGround,
+
         boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",
         borderRadius:"20px", 
+       width:"100%",
         }}>
         
         <Box mt={1} sx={{ display: "grid",
-        gridTemplateRows: "repeat(2, 150px)", // 2 rows, each 100px tall
         gridTemplateColumns: "repeat(10, 1fr)", // 10 columns, equal width
-        gap: "10px", // Spacing between items
-        padding: "10px",
         "@media(max-width:1200px)":{
           gridTemplateColumns: "repeat(9, 1fr)", 
         },
@@ -629,7 +624,7 @@ padding:"30px 200px"
         },
         "@media(max-width:800px)":{
           gridTemplateColumns: "repeat(4, 1fr)",
-          height:"400px" ,
+          height:"350px" ,
           overflowY:"auto",
           scrollbarWidth: "none",  // For Firefox
           "&::-webkit-scrollbar": {
@@ -660,6 +655,7 @@ padding:"30px 200px"
 
         </Box>
         </Box>
+      
       </Box>
     )
   }

@@ -17,12 +17,12 @@ const FinalCTA = () => {
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       sx={{
-        maxWidth: 900,
+        maxWidth: 1000,
         mx: 'auto',
         px: { xs: 1, md: 2 },
-        py: { xs: 4, md: 6 },
+        py: 3,
         textAlign: 'center',
-        background: `linear-gradient(to top right,#900098,#4d0051)`,
+              background: (theme) => theme.custom.CarBackGround,
         borderRadius: '20px',
         color: 'white',
         mt: 4,
@@ -72,7 +72,7 @@ const FinalCTA = () => {
             fontWeight: 600,
             borderRadius: '50px',
             minWidth: 200,
-            backgroundColor: "#2f0032"
+            backgroundColor: (theme) => theme.custom.mainButton
           }}
         >
           Get Started

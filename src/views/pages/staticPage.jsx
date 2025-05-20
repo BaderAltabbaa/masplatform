@@ -171,9 +171,9 @@ export default function StaticPage() {
           className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave10.png" 
+        src="/assets/Images/wave20.png" 
         alt="Description" 
-        style={{ display: 'block' ,transform:" scale(0.7)"}}
+        style={{ display: 'block' ,maxHeight:"120px"}}
       />
       <div style={{
          position: 'absolute',
@@ -203,7 +203,7 @@ export default function StaticPage() {
             width:"100%",
             borderRadius:"20px"
           }} 
-          src="/assets/Images/bundles.jpg" alt="" />
+          src="/assets/Images/metaCrop.png" alt="" />
         </div>
       </div>
 

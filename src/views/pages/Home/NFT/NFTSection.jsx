@@ -56,7 +56,7 @@ const NFTSection = () => {
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
               justifyContent: 'space-between',
-              background: "linear-gradient(to top right,#75017b,#3a013d)",
+              background: (theme) => theme.custom.CarBackGround,
               marginTop: { xs: '10px', sm: '20px' },
               borderRadius: "50px",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
@@ -83,7 +83,8 @@ const NFTSection = () => {
                 fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                 fontWeight: 700,
                 mb: 1,
-                color: 'white'
+                color: 'white',
+                fontFamily:"inter !important"
               }}
             >
               RWA
@@ -96,7 +97,8 @@ const NFTSection = () => {
               sx={{
                 fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
                 mb: 1,
-                color: 'white'
+                color: 'white',
+                 fontFamily:"Space Grotesk !important"
               }}
             >
               Real World Assets
@@ -108,10 +110,11 @@ const NFTSection = () => {
               sx={{
                 fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
                 mb: 1,
-                color: 'white'
+                color: 'white',
+                fontFamily:"Roboto Mono !important"
               }}
             >
-              Coming Soon..
+              Comming Soon..
             </Typography>
               </Box>
             </Box>
@@ -130,7 +133,7 @@ const NFTSection = () => {
             }}>
               <Box
                 component="img"
-                src={'assets/Images/24.png'}
+                src={'assets/Images/rwaCrop.png'}
                 alt="Real World Assets"
                 sx={{
                   width: '100%',

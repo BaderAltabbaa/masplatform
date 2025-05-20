@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '90vh',
     padding: theme.spacing(2),
-    background: 'linear-gradient(to right,#280026,#4a004f)',
     color:"white"
 
   },
@@ -713,7 +712,7 @@ const ConnectWallet = () => {
   
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root} sx={{background: (theme) => theme.custom.PageBackGround}}>
        <div className="tableWrapper" style={{maxWidth:"100%", width:"800px"}}>
 
 <div className="tableAnimatedBackground"></div>
@@ -856,7 +855,7 @@ const ConnectWallet = () => {
     
   </DialogContent>
 </Dialog>
-    </div>
+    </Box>
   );
   
 };

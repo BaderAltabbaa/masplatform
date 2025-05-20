@@ -69,7 +69,7 @@ const UniqueFeatures = () => {
     <Box sx={{ 
       px: isMobile ? 2 : 6,
       py: 1,
-      maxWidth: '1200px',
+      maxWidth: '1000px',
       mx: 'auto'
     }}>
       <motion.div
@@ -97,7 +97,7 @@ const UniqueFeatures = () => {
           variant="h5" 
           align="center" 
           sx={{ 
-            mb: 6, 
+            mb: 2, 
             fontSize: isMobile ? '1.1rem' : '1.3rem',
             color: 'rgb(139, 137, 137)'
           }}
@@ -108,7 +108,7 @@ const UniqueFeatures = () => {
       
       <Grid 
         container 
-        spacing={4} 
+        spacing={2} 
         justifyContent="center"
         sx={{ mt: 4 }}
       >
@@ -122,7 +122,7 @@ const UniqueFeatures = () => {
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              minHeight: '350px'
+              
             }}
           >
             <motion.div
@@ -134,15 +134,13 @@ const UniqueFeatures = () => {
               style={{
                 width: '100%',
                 height: '100%',
-                maxWidth: '300px',
-                maxHeight:"300px"
               }}
             >
               <Card 
                 sx={{ 
                   width: '100%',
                   height: '100%',
-                  minHeight: '250px',
+                  maxHeight: '250px',
                   display: 'flex',
                   flexDirection: 'column',
                   borderRadius: '16px',
@@ -158,13 +156,13 @@ const UniqueFeatures = () => {
                   flexGrow: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  p: 4,
+                  p: 3,
                   '&:last-child': { pb: 4 }
                 }}>
                   <Typography 
                     variant="h1" 
                     sx={{ 
-                      fontSize: '4rem',
+                      fontSize: '3rem',
                       textAlign: 'center',
                       mb: 2,
                       lineHeight: 1

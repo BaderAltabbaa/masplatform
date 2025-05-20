@@ -208,7 +208,7 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="primary"
-            style={{ marginRight: "10px",background:"#2f0032",color:'white' }}
+            sx={{ marginRight: "10px",background:(theme) => theme.custom.mainButton,color:'white' }}
             onClick={() => updateState({ openShareAudience: true })}
           >
             {t("add a Photos")}
@@ -217,7 +217,7 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="secondary"
-            style={{ background:"#2f0032",color:'white'}}
+            sx={{ background:(theme) => theme.custom.mainButton,color:'white'}}
 
             onClick={() => updateState({ OpenAuction: true })}
           >

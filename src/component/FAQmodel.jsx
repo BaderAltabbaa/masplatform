@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { Box } from "@mui/material";
 
 const FAQmodel = () => {
     const { t } = useTranslation();
@@ -40,10 +41,11 @@ const FAQmodel = () => {
     };
 
     return (
-        <div className="faq-container">
+        <Box className="faq-container">
             {faqData.map((item) => (
-                <div key={item.id} className="faq-item">
-                    <div
+                <Box key={item.id} className="faq-item">
+                    <Box
+                    sx={{background: (theme) => theme.custom.CarBackGround,}}
                         className="faq-question"
                         onClick={() => toggleAnswer(item.id)}
                     >
@@ -53,15 +55,15 @@ const FAQmodel = () => {
                         ) : (
                             <FaChevronDown className="arrow-icon" />
                         )}
-                    </div>
+                    </Box>
                     {expandedId === item.id && (
-                        <div className="faq-answer">
+                        <Box className="faq-answer">
                             {item.answer}
-                        </div>
+                        </Box>
                     )}
-                </div>
+                </Box>
             ))}
-        </div>
+        </Box>
     );
 };
 

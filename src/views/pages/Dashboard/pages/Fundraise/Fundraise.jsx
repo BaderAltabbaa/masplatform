@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "src/context/User";
-import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions } from "@mui/material";
-import { Dialog, DialogContent, DialogActions, DialogTitle, InputAdornment, TextField } from '@mui/material';
+import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions ,MenuItem } from "@mui/material";
+import { Dialog, DialogContent, DialogActions, DialogTitle, InputAdornment, TextField,
+  Select } from '@mui/material';
 import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 import { makeStyles } from "@mui/styles";
+import { tokensDetails } from "../../../../../constants";
+
 
 const useStyles = makeStyles((theme) => ({
   masBoxFlex: {
@@ -30,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "16px !important",
-    background:"linear-gradient(to top left, #75017b, #3a013d)"
   },
   amountText: {
     fontWeight: "bold",
@@ -50,6 +52,7 @@ const Fundraise = () => {
     email: user.userData?.email || '',
     phone: user.userData?.phone || '',
     amount: '',
+    coinName: tokensDetails[0]?.name || '', // Default to first coin
     description: '',
     passportPhoto: null,
     coverPhoto: null
@@ -120,6 +123,49 @@ const Fundraise = () => {
     console.log("Donate button clicked for:", formData.username);
   };
 
+  function CoinSelector() {
+        return (
+      <Select
+        value={formData.coinName}
+        onChange={(e) => handleChange({
+          target: {
+            name: 'coinName',
+            value: e.target.value
+          }
+        })}
+        sx={{
+          height: '40px',
+          '& .MuiSelect-select': {
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: '24px !important',
+            gap:1,
+
+          }
+        }}
+      >
+        {tokensDetails.map((item, index) => (
+          <MenuItem
+            key={index}
+            value={item.name}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1
+            }}
+          >
+            <img 
+              src={`/${item.img}`} 
+              alt={item.name} 
+              style={{ width: '20px', height: '20px' }} 
+            />
+            {item.name}
+          </MenuItem>
+        ))}
+      </Select>
+      );
+    }
+
   return (
     <>
       <Box overflow='hidden'>
@@ -133,7 +179,7 @@ const Fundraise = () => {
             <Button
               variant="contained"
               size="large"
-              sx={{background:"#2f0032", color:'white'}}
+              sx={{background:(theme) => theme.custom.mainButton, color:'white'}}
               onClick={handleOpen}
             >
               Create a Fundraiser
@@ -144,7 +190,7 @@ const Fundraise = () => {
 
       {/* Dialog for creating fundraiser */}
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle sx={{fontSize:"20px", color:"#2f0032"}}>Create a Fundraiser</DialogTitle>
+        <DialogTitle sx={{fontSize:"20px", color:(theme) => theme.custom.mainButton}}>Create a Fundraiser</DialogTitle>
         
         <DialogContent>
           <form onSubmit={handleSubmit}>
@@ -194,22 +240,27 @@ const Fundraise = () => {
               readOnly
             />
             
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Amount to Collect"
-              name="amount"
-              type="number"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                inputProps: { min: 0 }
-              }}
-              value={formData.amount}
-              onChange={handleChange}
-              error={errors.amount}
-              helperText={errors.amount ? "Amount cannot be negative" : ""}
-            />
+           <TextField
+        margin="normal"
+        required
+        fullWidth
+        label="Amount to Collect"
+        name="amount"
+        type="number"
+        InputProps={{
+          startAdornment: <InputAdornment position="start">{formData.coinName}</InputAdornment>,
+          inputProps: { min: 0 },
+          endAdornment: (
+            <InputAdornment position="end">
+              <CoinSelector />
+            </InputAdornment>
+          )
+        }}
+        value={formData.amount}
+        onChange={handleChange}
+        error={errors.amount}
+        helperText={errors.amount ? "Amount cannot be negative" : ""}
+      />
             
             <TextField
               margin="normal"
@@ -256,14 +307,14 @@ const Fundraise = () => {
         </DialogContent>
         
         <DialogActions>
-          <Button onClick={handleClose} sx={{color:"#2f0032"}}>
+          <Button onClick={handleClose} sx={{color:(theme) => theme.custom.mainButton}}>
             Cancel
           </Button>
           <Button 
             onClick={handleSubmit} 
             variant="contained"
             type="submit"
-            sx={{background:"#2f0032", color:'white'}}
+            sx={{background:(theme) => theme.custom.mainButton, color:'white'}}
           >
             Submit
           </Button>
@@ -281,7 +332,7 @@ const Fundraise = () => {
               alt="Fundraiser cover"
             />
           )}
-          <CardContent className={classes.cardContent}>
+          <CardContent className={classes.cardContent} sx={{background: (theme) => theme.custom.CarBackGround}}>
             <Box>
                  <Typography variant="h5" component="div" color="white">
                 {formData.title}
@@ -290,13 +341,13 @@ const Fundraise = () => {
                 {formData.username}
               </Typography>
               <Typography variant="body2" className={classes.amountText} color="white">
-                ${formData.amount} goal
+                {formData.coinName} {formData.amount} goal
               </Typography>
             </Box>
             <Button 
               variant="contained" 
               size="small"
-              sx={{background:"#2f0032", color:'white'}}
+              sx={{background:(theme) => theme.custom.mainButton, color:'white'}}
               onClick={handleDonate}
             >
               Donate

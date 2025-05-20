@@ -293,9 +293,9 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
           className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave10.png" 
+        src="/assets/Images/wave20.png" 
         alt="Description" 
-        style={{ display: 'block' ,transform:" scale(0.7)"}}
+        style={{ display: 'block' ,maxHeight:"120px"}}
       />
       <div style={{
          position: 'absolute',
@@ -325,7 +325,7 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
             width:"100%",
             borderRadius:"20px"
           }} 
-          src="/assets/Images/bundles.jpg" alt="" />
+          src="/assets/Images/bundleIconCropped.png" alt="" />
         </div>
       </div>
 

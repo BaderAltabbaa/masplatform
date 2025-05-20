@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import { Container, Box, Typography, Grid, Card, CardMedia, CardContent,CardActions, Button } from "@mui/material";
+import { makeStyles } from '@mui/styles';
+
 
 const Fundraise = () => {
   const navigate = useNavigate();
+  const useStyles = makeStyles((theme) => ({
+
+  }))
   const { ref: ref2, inView: inView2 } = useInView({
     threshold: 0.2,
     triggerOnce: true,
@@ -52,7 +57,7 @@ const Fundraise = () => {
       description: "Funds for building community centers in underserved areas",
       coverPhoto: "/assets/Images/22.jpg",
       amount: 15000,
-      raised: 9200,
+      raised: 10000,
       organizer: "Neighborhood Builders"
     },
     // Add more mock data as needed
@@ -63,14 +68,14 @@ const Fundraise = () => {
   };
 
   return (
-    <div style={{ background: "linear-gradient(to right,#280026,#4a004f)", minHeight: "100vh" }}>
+    <Box sx={{   background: (theme) => theme.custom.PageBackGround, minHeight: "100vh" }}>
       {/* Header Section */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "25px", overflow: "hidden" }}>
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <img
-            src="/assets/Images/wave10.png"
+            src="/assets/Images/wave20.png"
             alt="Description"
-            style={{ display: 'flex', transform: " scale(0.7)" }}
+            style={{ display: 'flex', maxHeight:"120px" }}
           />
           <div style={{
             position: 'absolute',
@@ -100,7 +105,7 @@ const Fundraise = () => {
             width: "100%",
             borderRadius: "20px"
           }}
-            src="/assets/Images/bundles.jpg" alt="" />
+            src="/assets/Images/fundCrop.png" alt="" />
         </div>
       </div>
 
@@ -127,6 +132,7 @@ const Fundraise = () => {
                   borderRadius: "12px",
                   boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
                   transition: "transform 0.3s ease",
+              background: (theme) => theme.custom.CarBackGround,
                   "&:hover": {
                     transform: "translateY(-5px)",
                     cursor: "pointer"
@@ -142,13 +148,13 @@ const Fundraise = () => {
                   sx={{ objectFit: "cover" }}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: "bold" }}>
+                  <Typography gutterBottom variant="h5" component="h3" sx={{ fontWeight: "bold" ,color:"white"}}>
                     {fundraiser.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 ,color:"white"}}>
                     {fundraiser.description}
                   </Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ mb: 1 ,color:"white"}}>
                     <strong>Organizer:</strong> {fundraiser.organizer}
                   </Typography>
                   <Box sx={{ 
@@ -161,16 +167,17 @@ const Fundraise = () => {
                     <Box sx={{ 
                       height: "100%", 
                       width: `${(fundraiser.raised / fundraiser.amount) * 100}%`, 
-                      backgroundColor: "#4a004f",
-                      borderRadius: 4
+                      backgroundColor: (theme) => theme.custom.mainButton,
+                      borderRadius: 4,
+                      
                     }} />
                   </Box>
                   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <Typography variant="body2">
-                      <strong>Raised:</strong> ${fundraiser.raised}
+                    <Typography variant="body2" sx={{color:"white"}}>
+                      <strong>Raised:</strong> {fundraiser.raised} MAS
                     </Typography>
-                    <Typography variant="body2">
-                      <strong>Goal:</strong> ${fundraiser.amount}
+                    <Typography variant="body2" sx={{color:"white"}}>
+                      <strong>Goal:</strong> {fundraiser.amount} MAS
                     </Typography>
                   </Box>
                 </CardContent>
@@ -179,7 +186,7 @@ const Fundraise = () => {
                     variant="contained" 
                     size="large"
                     sx={{ 
-                      backgroundColor: "#4a004f",
+                      backgroundColor: (theme) => theme.custom.mainButton,
                       "&:hover": {
                         backgroundColor: "#280026"
                       },
@@ -189,7 +196,8 @@ const Fundraise = () => {
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      // Handle direct donation without navigation
+                      // Handle
+                      //  direct donation without navigation
                       console.log("Donate to:", fundraiser.title);
     navigate('/FundDetails', { state: { fundraiser } });
                     }}
@@ -202,7 +210,7 @@ const Fundraise = () => {
           ))}
         </Grid>
       </Container>
-    </div>
+    </Box>
   );
 };
 

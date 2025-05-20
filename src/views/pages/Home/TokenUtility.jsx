@@ -12,19 +12,19 @@ import { useInView } from 'react-intersection-observer';
 const TokenUtility = () => {
   const utilities = [
     { 
-      icon: <PowerIcon color="white" sx={{ fontSize: "40px" }} />,
+      icon: <PowerIcon color="white" sx={{ fontSize: "30px" }} />,
       text: "Power donations, bundles, purchases" 
     },
     { 
-      icon: <FeesIcon color="white" sx={{ fontSize: "40px" }} />,
+      icon: <FeesIcon color="white" sx={{ fontSize: "30px" }} />,
       text: "Reduced fees for holders" 
     },
     { 
-      icon: <SwapIcon color="white" sx={{ fontSize: "40px" }} />,
+      icon: <SwapIcon color="white" sx={{ fontSize: "30px" }} />,
       text: "Easy swapping with USDT/USDC" 
     },
     { 
-      icon: <ChainIcon color="white" sx={{ fontSize: "40px" }} />,
+      icon: <ChainIcon color="white" sx={{ fontSize: "30px" }} />,
       text: "Built on newest Chains" 
     }
   ];
@@ -87,7 +87,7 @@ const TokenUtility = () => {
       </Typography>
       
       <Typography variant="h5" component="h3" sx={{
-        mb: { xs: 3, md: 4 },
+        mb: 2,
         color: 'rgb(139, 137, 137)',
         fontSize: { xs: '1.25rem', md: '1.5rem' }
       }}>
@@ -109,13 +109,13 @@ const TokenUtility = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            maxWidth: 550,
+            maxWidth: 600,
             mx: 'auto'
           }}>
             <List sx={{ width: '100%' }}>
               {utilities.map((utility, index) => (
                 <React.Fragment key={index}>
-                  <ListItem sx={{ px: 0, py: 2 }}>
+                  <ListItem sx={{ px: 0, py: 1 }}>
                     <ListItemText
                       primary={
                         <Box sx={{ 
@@ -126,7 +126,7 @@ const TokenUtility = () => {
                           <Box sx={{ 
                             display: 'inline-flex',
                             p: 1,
-                            bgcolor: '#4d0051',
+                            bgcolor: (theme) => theme.custom.mainButton,
                             borderRadius: '20%',
                             color: 'primary.contrastText'
                           }}>
@@ -178,7 +178,7 @@ const TokenUtility = () => {
                 width: "100%",
                 borderRadius: "20px",
                 display: "block",
-                maxWidth: 550,
+                maxWidth: 600,
                 margin: "0 auto"
               }} 
               src="/assets/Images/bundles.jpg" 

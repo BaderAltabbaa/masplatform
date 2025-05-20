@@ -13,9 +13,9 @@ import axios from "axios";
 import NoDataFound from "src/component/NoDataFound";
 import { useTranslation } from 'react-i18next';
 
-
 const Footer = () => {
 const cacheRef = useRef({});
+
  
   const [open, setOpen] = useState(false);
   const [openForm, setOpenForm] = useState(false);
@@ -177,7 +177,7 @@ return (
         onChange={(e) => setMessage(e.target.value)}
         required
       />
-      <Button type="submit" variant="contained"  fullWidth sx={{backgroundColor:"#43005e",marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(99, 0, 139)"}}}>
+      <Button type="submit" variant="contained"  fullWidth sx={{backgroundColor: (theme) => theme.custom.mainButton,marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(99, 0, 139)"}}}>
         {t("Submit")}
       </Button>
     </form>
@@ -206,11 +206,13 @@ return (
 
 
   return (
-    <footer
-      
+    <Box
+    component='footer'
       className="footer"
-    >
-        <Container maxWidth='xl'>
+  sx={{
+    background: (theme) => theme.custom.PageBackGround
+  }}    >
+       
 
       <div
         className="footer-content"
@@ -219,7 +221,7 @@ return (
         <div className="footer-logo-container">
   <Link to="/" onClick={scrollToTop} className="footer-link">
     <img
-      src="\assets\Images\masfooter-logo.svg"
+      src="\assets\Images\masfooter-logo1.svg"
       alt="Logo"
       className="footer-logo-img"
     />
@@ -237,8 +239,8 @@ return (
             <>     
            <li key={row.title} className="footer-list-item" onClick={() => handleClickOpen(row)}>
   <span>{row.title}</span>
-  <div className="footer-list-divider" />
-  <div className="footer-list-dot" />
+ <Box className="footer-list-divider" />
+  <Box className="footer-list-dot" sx={{background: (theme) => theme.custom.CarBackGround}}/>
 </li>
              
             
@@ -249,8 +251,8 @@ return (
   <>  
             <li className="footer-list-item" onClick={() => handleFormOpen(row)}>
             <span style={{cursor:"pointer"}}>{row.title}</span>
-            <div className="footer-list-divider" />
-            <div className="footer-list-dot" />
+           <Box className="footer-list-divider" />
+            <Box className="footer-list-dot" sx={{background: (theme) => theme.custom.CarBackGround}}/>
             </li>
             </> 
             ))}
@@ -267,7 +269,7 @@ return (
     
   }
 }}>
-        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color="#43005e">
+        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center", color: (theme) => theme.custom.mainButton}}>
           <span style={{
             fontSize:"24px"
           }}>{selectedItem?.title}</span>
@@ -311,8 +313,8 @@ return (
                      
             <li key={row.title} className="footer-list-item">
                 <span>{row.title}</span>
-                <div className="footer-list-divider" />
-                <div className="footer-list-dot" />
+                <Box className="footer-list-divider" />
+                <Box className="footer-list-dot" sx={{background: (theme) => theme.custom.CarBackGround}}/>
               </li>
               </Link>
             
@@ -325,8 +327,8 @@ return (
             <>     
             <li key={row.title} className="footer-list-item"  onClick={() => handleClickOpen(row)}>
                 <span style={{cursor:"pointer"}}>{row.title}</span>
-                <div className="footer-list-divider" />
-                <div className="footer-list-dot" />
+                <Box className="footer-list-divider" />
+                <Box className="footer-list-dot" sx={{background: (theme) => theme.custom.CarBackGround}}/>
               </li>
              
             
@@ -346,56 +348,55 @@ return (
           <div  className="iconContainer">
          
          
-          <div  className="footer-icon-wrapper" >
+            <Box className="footer-icon-wrapper" sx={{background: (theme) => theme.custom.CarBackGround}}>
           <Link to={socialLinks[2]?.link} target="_blank" rel="noreferrer">
               <AiOutlineClose  className="footer-icon"/>
             </Link>
 
-            </div>
+            </Box>
          
          
-          <div  className="footer-icon-wrapper" >
+            <Box className="footer-icon-wrapper" sx={{background: (theme) => theme.custom.CarBackGround}}>
           <Link to={socialLinks[0]?.link} target="_blank" rel="noreferrer">
               <FaInstagram  className="footer-icon"/>
             </Link>
 
-            </div>
+            </Box>
 
 
-            <div  className="footer-icon-wrapper" >
+            <Box className="footer-icon-wrapper" sx={{background: (theme) => theme.custom.CarBackGround}}>
           <Link to={socialLinks[0]?.link} target="_blank" rel="noreferrer">
               <FaWhatsapp  className="footer-icon"/>
             </Link>
 
-            </div>
+            </Box>
 
 
 
-            <div  className="footer-icon-wrapper">
+            <Box className="footer-icon-wrapper" sx={{background: (theme) => theme.custom.CarBackGround}}>
           <Link to={socialLinks[3]?.link} target="_blank" rel="noreferrer">
               <FaTelegram className="footer-icon"/>
             </Link>
 
-            </div>
+            </Box>
 
 
             
 
             
         
-            <div  className="footer-icon-wrapper">
+            <Box className="footer-icon-wrapper" sx={{background: (theme) => theme.custom.CarBackGround}}>
           <Link to={socialLinks[1]?.link} target="_blank" rel="noreferrer">
               <FaDiscord  className="footer-icon"/>
             </Link>
 
-            </div>
+            </Box>
 
             
            
           </div>
         </div>
       </div>
-      </Container>
 
 
       <Dialog open={openForm} onClose={handleCloseForm}  maxWidth="sm" fullWidth  disableScrollLock={true}
@@ -408,7 +409,7 @@ return (
     
   }
 }}>
-        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color=" #43005e">
+        <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center" ,color: (theme) => theme.custom.mainButton}}>
           <span style={{
             fontSize:"24px"
           }}>{selectedItem?.title}</span>
@@ -425,7 +426,7 @@ return (
   </DialogContent>
       </Dialog>
 
-    </footer>
+    </Box>
   );
 };
 

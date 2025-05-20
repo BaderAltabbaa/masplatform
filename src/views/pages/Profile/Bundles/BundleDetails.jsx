@@ -26,7 +26,7 @@ import ReactPlayer from "react-player";
 import DataLoading from '../../../../component/DataLoading';
 
 const useStyles = makeStyles((theme) => ({
-  root: {background:"linear-gradient(to right, #280026,#4a004f)"
+  root: {
    },
   bannerimg: {
     overflow: "hidden",
@@ -642,7 +642,9 @@ const BUNDLE_CONTENT_CACHE_KEY = "bundleContentCache";
   };
 
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} sx={{
+      background: (theme) => theme.custom.PageBackGround
+    }}>
       {isLoadingBunldeView ? (
          <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
                 <DataLoading />

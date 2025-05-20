@@ -88,7 +88,7 @@ const MembershipTiers = () => {
         }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="membership tiers table">
-          <TableHead sx={{ background:"linear-gradient(to top left,#900098,#4d0051)" }}>
+          <TableHead sx={{ background: (theme) => theme.custom.CarBackGround }}>
             <TableRow>
               <TableCell sx={{ color: 'white', fontWeight: 700 }}>Membership</TableCell>
               <TableCell align="right" sx={{ color: 'white', fontWeight: 700 }}>$MAS Balance</TableCell>
@@ -156,7 +156,7 @@ const MembershipTiers = () => {
           maxWidth: '600px',
           mx: 'auto'
         }}>
-          <InfoIcon sx={{ mr: 1, color: "#4d0051"}} />
+          <InfoIcon sx={{ mr: 1, color:  (theme) => theme.custom.mainButton}} />
           <Typography variant="body1" sx={{ fontStyle: 'italic' }}>
             When using MAS Tokens for withdrawal, fees drop to only 0.5%.
           </Typography>

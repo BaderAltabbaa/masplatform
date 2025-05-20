@@ -234,7 +234,7 @@ const listAllItemsHandler = async () => {
       
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }} className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
-              <img src="/assets/Images/wave10.png" alt="Description" style={{ display: 'block', transform: "scale(0.7)" }} />
+              <img src="/assets/Images/wave20.png" alt="Description" style={{ display: 'block', maxHeight:"120px" }} />
               <div style={{
                 position: 'absolute',
                 top: '50%',
@@ -257,7 +257,7 @@ const listAllItemsHandler = async () => {
             </div>
             <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>
               <img style={{ display: "inline", width: "100%", borderRadius: "20px" }} 
-                src="/assets/Images/item.webp" alt="" />
+                src="/assets/Images/marketCrop.png" alt="" />
             </div>
           </div>
 

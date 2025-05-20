@@ -1,12 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="Component_1_45" width="236.368" height="102.209" viewBox="0 0 236.368 102.209">
-    <defs>
-        <style>
-            .cls-1{fill:#fff}
-        </style>
-    </defs>
-    <path id="Subtraction_20" d="M156.036 78.018h-53.945L78.018 53.944 53.944 78.018H0L78.018 0l78.018 78.018z" class="cls-1" transform="translate(40.139 24.191)"/>
-    <path id="Subtraction_21" d="M76.985 75.052H57.871L0 17.181 17.181 0l67.428 67.428-7.624 7.624z" class="cls-1" transform="translate(151.759 27.157)"/>
-    <path id="Subtraction_22" d="M26.585 75.205H7.777L0 67.428 67.428 0l17.181 17.181-58.024 58.024z" class="cls-1" transform="translate(0 27.004)"/>
-    <path id="Rectangle_135" d="M0 0H25.979V24.451H0z" class="cls-1" transform="translate(141.893 0.108) rotate(45)"/>
-    <path id="Rectangle_136" d="M0 0H25.979V24.451H0z" class="cls-1" transform="translate(111.506 17.289) rotate(135)"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Component_1_45" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 236.4 102.2" style="enable-background:new 0 0 236.4 102.2;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<g>
+	<g id="Layer_2_00000007401920778346106420000013563933988227156875_">
+		<g id="Component_1_45_00000165928541390177391510000016711852473615460789_">
+			<path id="Subtraction_20_00000125571539926284558660000010473502367032122538_" class="st0" d="M1149.2-372.1h-53.9l-24.1-24.1
+				l-24.1,24.1h-53.9l78-78L1149.2-372.1z"/>
+			<path id="Subtraction_21_00000053507924233342458100000003562591658179670446_" class="st0" d="M1181.8-372.1h-19.1l-57.9-57.9
+				l17.2-17.2l67.4,67.4L1181.8-372.1z"/>
+			<path id="Subtraction_22_00000158746068124896538360000010840427337440035714_" class="st0" d="M979.6-372.1h-18.8l-7.8-7.8
+				l67.4-67.4l17.2,17.2L979.6-372.1z"/>
+			<path id="Rectangle_135_00000110459733682258328070000013581498196084911756_" class="st0" d="M1094.9-474.2l18.4,18.4
+				l-17.3,17.3l-18.4-18.4L1094.9-474.2z"/>
+			<path id="Rectangle_136_00000077306673240560660980000002060771647135125429_" class="st0" d="M1064.6-457l-18.4,18.4l-17.3-17.3
+				l18.4-18.4L1064.6-457z"/>
+		</g>
+	</g>
+</g>
 </svg>

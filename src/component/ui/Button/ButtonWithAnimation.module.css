@@ -35,9 +35,7 @@
   .buttonContainer {
     position: relative;
     overflow: hidden;
-    border-radius: 6px;
-    background: #581454;
-   
+    border-radius: 6px;   
     text-align: center;
     width:200px;
     left: 0px;
@@ -68,7 +66,6 @@
  
   .animatedBackground {
     content: '';
-    background: conic-gradient(transparent 270deg, rgb(196, 1, 218), transparent);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -81,7 +78,6 @@
   
   .innerBlurEffect {
     content: '';
-    background: #5121619c;
     border-radius: inherit;
     position: absolute;
     inset: var(--offset);

@@ -33,6 +33,7 @@ import ShareTheLessonDialog from "../../../../../component/shareTheLessonDialog"
 import MainCard from '../../ui-component/cards/MainCard'
 import Cardcourse from "../../../../../component/ui/Card/Cardcourse";
 import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
+import { useNavigate } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "20px",
+    padding:"5px 10px",
+    borderRadius:"20px",
+    background:"#c7c7c7",
     [theme.breakpoints.down("xs")]: {
       display: "block",
     },
@@ -168,6 +172,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyEducation() {
   const {t} = useTranslation();
+    const navigate = useNavigate();
+  
   const courseCache = useRef({});
   const [state, setState] = useState({
     OpenAuction: false,
@@ -188,31 +194,55 @@ export default function MyEducation() {
   }, [page]);
 
   return (<>
-        <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Education</ButtonwithAnimation></Box>
+        <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center"}} mb={2} mt={10}><ButtonwithAnimation>My Education</ButtonwithAnimation></Box>
     
     <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
-        <Typography variant="h6" color="black"></Typography>
-        <Box display="flex" mt={2}>
-          <Button
+        <Box>
+          <Typography color="#c7c7c7">
+            leesons left: 100
+          </Typography>
+        </Box>
+        <Box display="flex" justifyContent={"center"} alignItems={"center"} mt={0}>
+          
+           <Button
             variant="contained"
-            size="large"
-            color="white"
-            style={{ marginRight: "10px" }}
-            onClick={() => updateState({ openShareTheLesson: true })}
-          >
-            {t("share The lesson")}
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
+            size="medium"
             color=""
-            style={{background:"#2f0032",color:'white'}}
+            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight:"10px"}}
             onClick={() => updateState({ OpenAuction: true })}
           >
             {t("add a Course")}
           </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            color="white"
+            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight:"10px"}}
+            onClick={() => updateState({ openShareTheLesson: true })}
+          >
+            {t("share The lesson")}
+          </Button>
+         
+           <Button
+            variant="contained"
+            size="medium"
+            color="white"
+            style={{ marginRight: "10px",background:"white" }}
+          >
+            {t("plan: basic")}
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            color="white"
+            style={{ marginRight: "10px",background:"white" }}
+            onClick={() => {navigate("/plans")}}
+          >
+            {t("upgrade plan")}
+          </Button>
         </Box>
+        <Box sx={{background:(theme) => theme.custom.mainButton ,color:"white",padding:"5px", borderRadius:"5px"}}>Lessons Left: 100</Box>
       </Box>
       <Box>
         {!courseList[0] ? (

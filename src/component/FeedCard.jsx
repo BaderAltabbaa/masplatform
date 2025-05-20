@@ -56,7 +56,6 @@ const useStyles = makeStyles(() => ({
     maxHeight: "600px",
     padding: "10px",
     borderRadius: "34px",
-    backgroundColor: "rgba(85, 84, 84, 0.7)",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     marginRight : "10px",
@@ -67,8 +66,6 @@ const useStyles = makeStyles(() => ({
    
     margin: "0 10px",
     position: "relative",
-    backgroundImage:
-      "linear-gradient(to top right,rgb(126, 34, 121), rgb(64, 0, 75))",
     "&:hover": {
       transform: "scale(0.85)",
       transition: "all 0.4s ease-in-out 0s",
@@ -202,7 +199,7 @@ export default function UsersCard({ data, index, updateList }) {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
   return (
-    <Box className={classes.cards}>
+    <Box className={classes.cards} sx={{background: (theme) => theme.custom.CarBackGround}}>
       <Box className={classes.feedBox}>
         <Box display="flex" justifyContent="space-between">
           <Box display="flex" alignItems="center">

@@ -18,6 +18,14 @@ import {
 import { UserContext } from "src/context/User";
 import { jsPDF } from "jspdf";
 import { FiDownload } from "react-icons/fi";
+import { makeStyles } from '@mui/styles';
+import BalanceBox from "src/component/ui/BalanceBox";
+import {
+  tokensDetails,
+} from "src/constants";
+
+
+
 
 
 
@@ -30,6 +38,8 @@ const FundDetails = () => {
   const [error, setError] = useState(false);
       const user = useContext(UserContext);
         const receiptRef = useRef(null);
+       const [selectedToken, setSelectedToken] = useState(tokensDetails[0]);
+     
 
   
 
@@ -109,8 +119,15 @@ const FundDetails = () => {
     doc.save(`Donation_Receipt_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
+
+    const availableBalance = {
+    masBalance : parseFloat(user.userData.masBalance),
+    fdusdBalance : parseFloat(user.userData.fdusdBalance),
+    usdtBalance : parseFloat(user.userData.usdtBalance),
+  }
+
   return (
-     <div style={{ background: "linear-gradient(to right,#280026,#4a004f)", minHeight: "100vh" }}>
+     <Box sx={{ background: (theme) => theme.custom.PageBackGround, minHeight: "100vh" }}>
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <CardMedia
@@ -124,13 +141,31 @@ const FundDetails = () => {
         <Typography variant="h3" component="h1" sx={{ mb: 2, fontWeight: "bold" ,color:"white"}}>
           {fundraiser.title}
         </Typography>
-        
-        <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-          <Typography variant="subtitle1" sx={{ mr: 2 ,color:"white"}}>
-            Organized by: <strong>{fundraiser.organizer}</strong>
-          </Typography>
-          <Chip label="Verified" color="success" size="small" />
-        </Box>
+
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}>
+            <Typography variant="subtitle1" sx={{ mr: 2, color: "white" }}>
+              Organized by: <strong>{fundraiser.organizer}</strong> <Chip label="Verified" color="success" size="small" />
+            </Typography>
+
+            <Button
+              variant="contained"
+              onClick={handleOpenDonationDialog}
+
+              size="large"
+              sx={{
+                background: (theme) => theme.custom.gradientButton,
+                "&:hover": {
+                  background:(theme) => theme.custom.hoverGradientButton
+                },
+                px: 4,
+                py: 1,
+                borderRadius: "50px",
+                fontSize: "1.1rem"
+              }}
+            >
+              Donate Now
+            </Button>
+          </Box>
         
         <Box sx={{ 
           backgroundColor: "#f5f5f5", 
@@ -140,7 +175,7 @@ const FundDetails = () => {
         }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography variant="h6">
-              <strong>${fundraiser.raised}</strong> raised of ${fundraiser.amount} goal
+              <strong>{fundraiser.raised} MAS</strong> raised of {fundraiser.amount} MAS goal
             </Typography>
             <Typography variant="h6">
               {Math.round((fundraiser.raised / fundraiser.amount) * 100)}% funded
@@ -156,7 +191,7 @@ const FundDetails = () => {
             <Box sx={{ 
               height: "100%", 
               width: `${(fundraiser.raised / fundraiser.amount) * 100}%`, 
-              backgroundColor: "#4a004f",
+              backgroundColor: (theme) => theme.custom.mainButton,
               borderRadius: 5
             }} />
           </Box>
@@ -172,34 +207,24 @@ const FundDetails = () => {
         </Typography>
         
                   <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-                      <Button
-                          variant="contained"
-                          onClick={handleOpenDonationDialog}
-
-                          size="large"
-                          sx={{
-                              backgroundColor: "#4a004f",
-                              "&:hover": {
-                                  backgroundColor: "#280026"
-                              },
-                              px: 6,
-                              py: 2,
-                              borderRadius: "50px",
-                              fontSize: "1.1rem"
-                          }}
-                      >
-                          Donate Now
-                      </Button>
+                     
                   </Box>
       </Box>
     </Container>
 
-     <Dialog open={openDonationDialog} onClose={handleCloseDonationDialog} maxWidth="xs" fullWidth disableScrollLock>
-        <DialogTitle sx={{ color: "#4a004f", fontWeight: "bold" }}>
+     <Dialog open={openDonationDialog} onClose={handleCloseDonationDialog} maxWidth="sm" fullWidth disableScrollLock>
+        <DialogTitle sx={{ color: (theme) => theme.custom.mainButton, fontWeight: "bold" }}>
           Donate to {fundraiser.title}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
+            <Box mb={3}>
+              <BalanceBox 
+                          availableBalance={availableBalance} 
+                          tokensDetails={tokensDetails}
+                          setSelectedToken={setSelectedToken} 
+                        />
+                        </Box>
             <TextField
               fullWidth
               label="Donation Amount"
@@ -208,12 +233,16 @@ const FundDetails = () => {
               error={error}
               helperText={error ? "Please enter a valid amount" : ""}
               InputProps={{
-                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                startAdornment: <InputAdornment position="start">{selectedToken?.name}</InputAdornment>,
                 type: "number",
-                inputProps: { min: 0 }
+                inputProps: { min: 0 },
+                endAdornment:<Box style={{ cursor: "pointer" }}>
+                        <img src={selectedToken?.img} alt="" width="20px"/>
+                      </Box>
               }}
               autoFocus
             />
+
           </Box>
           <Typography variant="body2" sx={{ mt: 2, color: "text.secondary" }}>
             Your donation will help support: {fundraiser.description}
@@ -222,7 +251,7 @@ const FundDetails = () => {
         <DialogActions sx={{ p: 3 }}>
           <Button 
             onClick={handleCloseDonationDialog}
-            sx={{ color: "#4a004f" }}
+            sx={{ color: (theme) => theme.custom.mainButton, }}
           >
             Cancel
           </Button>
@@ -231,7 +260,7 @@ const FundDetails = () => {
             variant="contained"
             disabled={!donationAmount || error}
             sx={{ 
-              backgroundColor: "#4a004f",
+              backgroundColor: (theme) => theme.custom.mainButton,
               "&:hover": {
                 backgroundColor: "#280026"
               },
@@ -287,12 +316,12 @@ const FundDetails = () => {
           justifyContent: "center",
           mb: 3,
           gap: 2,
-          background:"linear-gradient(to right, #280026, #4a004f)",
+          background:(theme) => theme.custom.gradientButton,
           width:"100%",
           p:3,
           borderRadius:"10px"
         }}>
-          <img src="/assets/Images/masfooter-logo.svg" style={{ width: "50px" }} />
+          <img src="/assets/Images/masfooter-logo1.svg" style={{ width: "50px" }} />
           <Typography align="center" sx={{
             color: "white",
             fontSize: "24px",
@@ -303,7 +332,7 @@ const FundDetails = () => {
           }}>
             Donation Receipt
           </Typography>
-          <img src="/assets/Images/masfooter-logo.svg" style={{ width: "50px" }} />
+          <img src="/assets/Images/masfooter-logo1.svg" style={{ width: "50px" }} />
         </Box>
 
         <Box sx={{ width: "100%" }}>
@@ -341,7 +370,7 @@ const FundDetails = () => {
 
           <Box my={2}>
             <Typography variant="h3" sx={{ marginRight: "5px" }}>
-              Amount: ${parseFloat(donationAmount).toFixed(2)}
+              Amount: {parseFloat(donationAmount).toFixed(2)} {selectedToken?.name} 
             </Typography>
           </Box>
 
@@ -371,7 +400,7 @@ const FundDetails = () => {
         size="large"
         onClick={downloadReceipt}
         sx={{
-          backgroundColor: "#4a004f",
+          backgroundColor: (theme) => theme.custom.mainButton,
           "&:hover": {
             backgroundColor: "rgb(112, 2, 120)"
           }
@@ -382,7 +411,7 @@ const FundDetails = () => {
     </Box>
   </Box>
 </Dialog>
-    </div>
+    </Box>
   );
 };
 

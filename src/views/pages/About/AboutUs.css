@@ -15,10 +15,9 @@
 
 .who-top-sec{
     display: flex;
+    gap: 10px;
     flex-direction: column;
     align-items: start;
-    padding:0 28px;
-    margin-bottom: 30px;
     opacity: 0; 
     transform: translateX(-50%); 
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -30,28 +29,31 @@
 }
 
 .who-title{
-    color: #c300c6;
+    color: #320035;
     font-size: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .who-text1{
     color: white;
     font-weight: bold;
-    font-size: 25px;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .who-text2{
     color: rgb(179, 179, 179);
-    margin-bottom: 10px;
 }
 
 .who-bottom-sec{
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     opacity: 0; 
     transform: translateX(50%); 
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    max-height: 300px;
 }
 
 .who-bottom-sec.animate {
@@ -60,14 +62,7 @@
 }
 
 
-.small-screen{
-    width: 100%;
-    object-fit: cover;
-    
-}
-.big-screen{
-    display: none;
-}
+
 
 .we-do-text{
     font-family: 'Helvetica Neue', sans-serif;
@@ -78,7 +73,7 @@
 }
 
 .learn-btn{
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px;
     font-size: 20px;
     color: white !important;
@@ -86,6 +81,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 
@@ -390,25 +386,20 @@
         flex-direction: row;
         padding:20px 90px;
         align-items: center;
+        justify-content: space-between;
         
     }
 
-    .small-screen{
-        display: none;
-    }
+    
 
-    .big-screen{
-        display: inline;
-        width: 100%;
-        border-radius: 20px;
-    }
+  
 
     .who-title{
         font-size: 35px;
     }
 
     .who-text1{
-        font-size: 40px;
+        font-size: 2.5rem;
     }
 
 .cards {

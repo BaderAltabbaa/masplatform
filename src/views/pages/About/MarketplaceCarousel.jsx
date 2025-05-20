@@ -15,27 +15,27 @@ const marketplaceItems = [
   {
     title: "Digital Products",
     description: "Courses, e-books, designs, videos",
-    image: "/assets/Images/2.jpg"
+    image: "/assets/Images/digi.jpg"
   },
   {
     title: "Physical Products",
     description: "Tools, clothing, supplies, electronics",
-    image: "/assets/Images/22.jpg"
+    image: "/assets/Images/phy.jpeg"
   },
   {
     title: "Professional Services",
     description: "Programming, editing, writing, design",
-    image: "/assets/Images/12.jpg"
+    image: "/assets/Images/pro.avif"
   },
   {
     title: "Game Content",
     description: "In-game tools, licenses, accounts",
-    image: "/assets/Images/4.jpg"
+    image: "/assets/Images/game.jpg"
   },
   {
     title: "Custom Subscriptions",
     description: "Exclusive access to future content",
-    image: "/assets/Images/31.jpg"
+    image: "/assets/Images/custom.avif"
   }
 ];
 
@@ -73,7 +73,7 @@ const MarketplaceCarousel = () => {
     <Box sx={{ 
       px: isMobile ? 2 : 6,
       py: 8,
-      maxWidth: '1400px',
+      maxWidth: '1200px',
       mx: 'auto',
       position: 'relative'
     }}>
@@ -105,10 +105,11 @@ const MarketplaceCarousel = () => {
 
       <Box sx={{
         position: 'relative',
-        height: isMobile ? '600px' : '400px',
+        height: isMobile ? '500px' : '350px',
         width: '100%',
         overflow: 'hidden',
-        borderRadius: '16px'
+        borderRadius: '16px',
+        boxShadow:10
       }}>
         <AnimatePresence 
           custom={direction}
@@ -128,14 +129,14 @@ const MarketplaceCarousel = () => {
             style={{
               position: 'absolute',
               width: '100%',
-              height: '100%'
+              height: '100%',
             }}
           >
             <Paper elevation={6} sx={{
               height: '100%',
               width: '100%',
               borderRadius: '16px',
-              overflow: 'hidden'
+              overflow: 'hidden',
             }}>
               <Grid container sx={{ height: '100%', flexDirection: isMobile ? 'row' : 'row' }}>
                 {/* Image Section - Now visible on all screens */}
@@ -154,8 +155,8 @@ const MarketplaceCarousel = () => {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   p: isMobile ? 3 : 6,
-                  background:"linear-gradient(to top left,#900098,#4d0051)"
-                }}>
+                  background: (theme) => theme.custom.CarBackGround             
+                     }}>
                   <Typography variant="h3" sx={{ 
                     fontWeight: 700,
                     mb: 3,

@@ -1,6 +1,5 @@
 .footer {
   width: 100%;
-  background: linear-gradient(to right, rgb(40, 0, 38), rgb(74, 0, 79));
   padding: 0px 20px 20px;
   color: white;
   text-align: center;
@@ -65,7 +64,6 @@
 .footer-list-dot {
   width: 12px;
   height: 12px;
-  background: linear-gradient(to top right, rgb(111, 14, 98), rgb(79, 20, 116));
   border-radius: 50%;
 }
 
@@ -92,7 +90,6 @@
 }
 
 .footer-icon-wrapper {
-  background: linear-gradient(to top, #180226, rgba(156, 51, 158, 0.7));
   border-radius: 50%;
   padding: 15px;
   display: flex;
