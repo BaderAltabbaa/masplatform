@@ -63,7 +63,7 @@ const Roadmap = () => {
 
   return (
     <Box sx={{ 
-      px: isMobile ? 2 : 6,
+      px: isMobile ? 2 : 2,
       py: 2,
       mx: 'auto',
       overflow: 'hidden',
@@ -71,7 +71,7 @@ const Roadmap = () => {
     }}>
       <Typography 
         variant="h2" 
-        align="left"
+        align={isMobile ? "left" : "center"}
         sx={{ 
           fontWeight: 800,
           mb: 3,
@@ -84,47 +84,15 @@ const Roadmap = () => {
         Roadmap
       </Typography>
 
-      {!isMobile && (
-        <>
-          <IconButton 
-            onClick={() => scroll('left')}
-            sx={{
-              position: 'absolute',
-              left: 10,
-              top: '50%',
-              zIndex: 2,
-              backgroundColor: 'rgba(255,255,255,0.9)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,1)'
-              }
-            }}
-          >
-            <ChevronLeft fontSize="large" />
-          </IconButton>
-          <IconButton 
-            onClick={() => scroll('right')}
-            sx={{
-              position: 'absolute',
-              right: 10,
-              top: '50%',
-              zIndex: 2,
-              backgroundColor: 'rgba(255,255,255,0.9)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,1)'
-              }
-            }}
-          >
-            <ChevronRight fontSize="large" />
-          </IconButton>
-        </>
-      )}
+     
 
       <Box 
         ref={containerRef}
         sx={{ 
           display: 'flex',
-          gap: 4,
-          px: isMobile ? 2 : 4,
+          justifyContent: isMobile ? "flex-start" : "center",
+          gap: 2,
+          px: isMobile ? 2 : 0,
           py: 2,
           overflowX: 'auto',
           overflowY: 'hidden',
@@ -143,9 +111,9 @@ const Roadmap = () => {
             key={index}
             elevation={3}
             sx={{
-              minWidth: isMobile ? '85vw' : '400px',
+              minWidth: isMobile ? '85vw' : '350px',
               width:"100%",
-              maxWidth:"400px",
+              maxWidth:"350px",
               flexShrink: 0,
               p: 3,
               background: (theme) => theme.custom.CarBackGround,

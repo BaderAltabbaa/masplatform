@@ -100,7 +100,7 @@ const Features = () => {
         
         <Typography variant="h5" component="h3" sx={{
           mb: 2,
-          color: 'rgb(139, 137, 137)',
+          color: 'white',
           textAlign: 'center',
           fontSize: { xs: '1rem', sm: '1rem', md: '1.2rem' },
           }}>
@@ -142,7 +142,7 @@ const Features = () => {
                 },
                 borderRadius: 3,
                 boxShadow: 2,
-              background: (theme) => theme.custom.secCardBackGround,
+              background:"#b8b6b6",
               }}>
                 <CardContent sx={{
                   flexGrow: 1,
@@ -151,8 +151,8 @@ const Features = () => {
                 }}>
                   <Box sx={{
                     display: 'inline-flex',
-                    p: 1.5,
-                    mb: 2,
+                    p: 1,
+                    mb: 1,
                     backgroundColor: (theme) => theme.custom.mainButton,
                     borderRadius: '30%',
                     color: 'white'
@@ -162,12 +162,12 @@ const Features = () => {
                   <Typography variant="h5" component="h4" gutterBottom sx={{
                     fontWeight: 600,
                     fontSize: { xs: '1rem', md: '1.1rem' },
-                    color: "white"
+                    color: (theme) => theme.custom.mainButton
                   }}>
                     {feature.title}
                   </Typography>
                   <Typography variant="body1" sx={{
-                    color: 'white',
+                    color: (theme) => theme.custom.mainButton,
                     fontSize: { xs: '0.8rem', md: '0.9rem' }
                   }}>
                     {feature.description}

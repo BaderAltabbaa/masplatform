@@ -78,7 +78,7 @@ const DigitalEcosystem = () => {
               sx={{ 
                 mb: 4,
                 fontSize: isMobile ? '1.1rem' : '1.3rem',
-                color: 'rgb(139, 137, 137)'
+                color: 'white'
               }}
             >
               MAS is more than a platform

@@ -39,8 +39,13 @@ const NFTSection = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Container maxWidth="xl" sx={{ py: 1 }}>
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box 
+      sx={{
+        mx: 'auto',
+        px:2,
+       maxWidth: 1400,
+
+             }} >
         <AnimatedBox fromLeft={false}>
           <Box
             component={motion.div}
@@ -61,11 +66,9 @@ const NFTSection = () => {
               borderRadius: "50px",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
               overflow: "hidden",
-              paddingTop: '0px',
-              gap: '100px',
+              gap: '10px',
               position: "relative",
               width: '100%',
-              maxWidth: isLargeScreen ? '1400px' : isMediumScreen ? '900px' : '100%',
             }}
           >
             <Box sx={{ 
@@ -147,7 +150,6 @@ const NFTSection = () => {
           </Box>
         </AnimatedBox>
       </Box>
-    </Container>
   );
 }
 

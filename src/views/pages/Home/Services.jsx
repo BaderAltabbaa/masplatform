@@ -37,9 +37,11 @@ const Services = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-      <Box display="flex" justifyContent="center" alignItems="center" 
+      <Box  
       sx={{
-        px:{xs:"10px" , md:"0"}
+        mx: 'auto',
+        px:2,
+       maxWidth: 1400,
         }}>
         <AnimatedBox fromLeft={true}>
           <Box
@@ -61,11 +63,9 @@ const Services = () => {
               borderRadius: "50px",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
               overflow: "hidden",
-              paddingTop: '0px',
-              gap: '200px',
+              gap: '10px',
               position: "relative",
               width: '100%',
-              maxWidth: isLargeScreen ? '1400px' : isMediumScreen ? '900px' : '100%',
             }}
           >
             <Box sx={{ 
@@ -85,9 +85,9 @@ const Services = () => {
                 </Typography>
               </Box>
 
-              <Box textAlign="center" mb={4}>
+              <Box textAlign="center" mb={1}>
                 <Typography variant="h3" color='white' sx={{
-                  fontSize: { xs: '1rem', sm: '1rem', md: '1.2rem' },
+                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
                   lineHeight: 1.2
                 }}>
                   A Smarter Way to Support, Create, and Earn

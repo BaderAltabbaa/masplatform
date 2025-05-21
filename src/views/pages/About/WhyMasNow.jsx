@@ -83,15 +83,9 @@ const WhyMasNow = () => {
             color: "white"
           }}
         >
-          Why MAS, Why Now?
+          Why MAS Why Now?
         </Typography>
-        <Divider sx={{ 
-          width: '80px', 
-          height: '4px', 
-          bgcolor: "white",
-          mx: 'auto',
-          mb: 4
-        }} />
+       
       </motion.div>
 
       <Grid container spacing={4} sx={{ mb: 6 ,display:"flex" ,alignItems:"center"}}>

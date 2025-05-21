@@ -88,7 +88,7 @@ const TokenUtility = () => {
       
       <Typography variant="h5" component="h3" sx={{
         mb: 2,
-        color: 'rgb(139, 137, 137)',
+        color: 'white',
         fontSize: { xs: '1.25rem', md: '1.5rem' }
       }}>
         The MAS Token: Fueling the Ecosystem

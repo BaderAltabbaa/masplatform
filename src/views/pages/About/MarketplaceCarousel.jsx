@@ -97,7 +97,7 @@ const MarketplaceCarousel = () => {
         sx={{ 
           mb: 6, 
           fontSize: isMobile ? '1.1rem' : '1.5rem',
-          color: 'rgb(139, 137, 137)'
+          color: 'white'
         }}
       >
         A comprehensive marketplace offering:

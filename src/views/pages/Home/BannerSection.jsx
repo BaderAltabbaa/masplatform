@@ -1,195 +1,265 @@
 import React from "react";
-import {  Box, Typography, Grid} from '@mui/material'
+import { Box, Typography, Grid, Button, useMediaQuery, useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { isMobile } from "react-device-detect";
 import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useNavigate } from "react-router-dom";
 
+// Mock data for crypto platform with image backgrounds
+const cryptoBannerData = [
+  {
+    id: 1,
+    title: "Trade Smarter",
+    subtitle: "With Our Advanced Platform",
+    cta: "Start Trading",
+    background: "/assets/Images/b3.jpg",
+    media: "/assets/Images/masfooter-logo1.svg",
+    mediaType: "image",
+    nav:"/user-list"
+  },
+  {
+    id: 2,
+    title: "Secure Wallet",
+    subtitle: "For Your Digital Assets",
+    cta: "Explore Wallets",
+    background: "/assets/Images/b5.jpg",
+    media: "/assets/Images/masfooter-logo1.svg",
+    mediaType: "image",
+    nav:"/connectWallet"
+  },
+  {
+    id: 3,
+    title: "Staking Rewards",
+    subtitle: "Earn Passive Income",
+    cta: "Start Earning",
+    background: "/assets/Images/b1.jpg",
+    media: "/assets/Images/bader-logo.svg",
+    mediaType: "image",
+   nav:"/bundles"
+  }
+];
 
 const useStyles = makeStyles((theme) => ({
-  bannerSectionBody: {
-    minHeight: "50vh",
-    display:"flex",
-    alignItems:"center",
-    backgroundImage: "linear-gradient(45deg, #240b36 30%, #c31432 90%)",
-    width: "100%",
-    borderRadius:"0 0 50px 50px",
-    paddingTop:"60px"
-    
+  carouselContainer: {
+    width: '100%',
+    overflow: 'hidden',
+    borderRadius: '0 0 24px 24px',
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
   },
-  bannerBackground: {
-
-    width: "100%",
-    height: "60vh",
-  },
-
-  leftSection: {
-    padding: "0px 0px",
-    "@media(max-width:667px)": {
-      marginTop: "11px",
-    },
-
-    "& h1": {
-      fontSize: "60px",
-      fontWeight: "800",
-      lineHeight: "70px",
-      letterSpacing: "5px",
-      color: "#fffa",
-      textShadow: "rgb(207 81 111) 2px 2px 1px",
-      "@media(max-width:1156px)": {
-        fontSize: "50px",
-        lineHeight: "65px",
-      },
-      "@media(max-width:667px)": {
-        fontSize: "40px",
-        lineHeight: "55px",
-      },
-      "@media(max-width:450px)": {
-        fontSize: "35px",
-        lineHeight: "45px",
-      },
-    },
-    "& h2": {
-      fontSize: "48px",
-      fontWeight: "600",
-      lineHeight: "60px",
-      letterSpacing: "2px",
-      color: "#d0dfde",
-      "@media(max-width:1156px)": {
-        fontSize: "38px",
-        lineHeight: "52px",
-      },
-      "@media(max-width:667px)": {
-        fontSize: "26px",
-        lineHeight: "42px",
-      },
-      "@media(max-width:450px)": {
-        fontSize: "24px",
-        lineHeight: "38px",
-      },
-    },
-    "& h3": {
-      fontSize: "26px",
-      fontWeight: "350",
-      lineHeight: "48px",
-      letterSpacing: "2px",
-      color: "#d0dfde",
-      "@media(max-width:1156px)": {
-        fontSize: "20px",
-        lineHeight: "36px",
-      },
-      "@media(max-width:667px)": {
-        fontSize: "17px",
-        lineHeight: "32px",
-      },
-    },
-    "& h4": {
-      margin: "26px 0px",
-      fontSize: "16px",
-      fontWeight: "300",
-      lineHeight: "28px",
-      letterSpacing: "2px",
-      color: "#d0dfde",
-    },
-    "& button": {
-      borderRadius: "30px",
-      background: "#fc424d",
-      color: "#d0dfde",
-      padding: "8px 14px",
-    },
-  },
-  rightSection: {
-    display: "flex",
-    justifyContent: "center",
+  bannerSlide: {
+    minHeight: '65vh',
+    display: 'flex',
     alignItems: 'center',
-    '& img, & video': {
-      width: '500px',
-      height: '250px',
-      borderRadius: 12,
-      [theme.breakpoints.only('sm')]: {
-        width: '400px !important',
-        height: '200px !important'
-      },
-      [theme.breakpoints.only('xs')]: {
-        width: '90% !important',
-        height: '200px !important'
-      },
+    padding: theme.spacing(4, 0),
+    position: 'relative',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0, 0, 0, 0.5)',
+    },
+    [theme.breakpoints.down('md')]: {
+      minHeight: '60vh',
+      padding: theme.spacing(8, 0, 4),
+    },
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '50vh',
+    },
+  },
+  contentContainer: {
+     maxWidth: 1280,
+    width: '100%',
+    margin: '0 auto',
+    padding: theme.spacing(0, 4),
+    position: 'relative',
+    zIndex: 1,
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0, 2),
+    },
+  },
+   gridContainer: {
+    width: '100%',
+    justifyContent: 'space-between', // Space between on large screens
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center', // Center on smaller screens
+    },
+  },
+  leftSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems:"center",
+    justifyContent: 'center',
+    height: '100%',
+    gap:"20px",
+    padding: theme.spacing(4, 0),
+    [theme.breakpoints.down('md')]: {
+      alignItems: 'center',
+      textAlign: 'center',
+      padding: theme.spacing(2, 0),
+      marginBottom: theme.spacing(4), // Add space between sections on mobile
+
+    },
+  },
+ 
+ 
+ 
+  rightSection: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    height: '100%',
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(4),
+      height: 'auto',
+    },
+  },
+  mediaContainer: {
+    position: 'relative',
+    width: '100%',
+    maxWidth: 500,
+    height: 300,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      height: 250,
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: 200,
+    },
+  },
+  cryptoImage: {
+    maxWidth: '80%',
+    maxHeight: '80%',
+    objectFit: 'contain',
+    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5))',
+    animation: '$float 6s ease-in-out infinite',
+  },
+  '@keyframes float': {
+    '0%': {
+      transform: 'translateY(0px)',
+    },
+    '50%': {
+      transform: 'translateY(-20px)',
+    },
+    '100%': {
+      transform: 'translateY(0px)',
+    },
+  },
+  indicator: {
+    background: 'white !important',
+    width: '10px !important',
+    height: '10px !important',
+    margin: '0 5px !important',
+    display: 'inline-block !important',
+    borderRadius: '50% !important',
+    opacity: '0.5 !important',
+    '&.selected': {
+      opacity: '1 !important',
     },
   },
 }));
 
-export default function BannerSection({ bannerDetails, bannerDuration }) {
+export default function CryptoBannerCarousel() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const navigate = useNavigate();
 
   return (
-    <Box dir={'ltr'}>
-    <Carousel
-      axis={"horizontal"}
-      autoPlay
-      infiniteLoop
-      transitionTime={1000}
-      showThumbs={false}
-      showStatus={false}
-      showIndicators={false}
-      showArrows={false}
-      interval={bannerDuration * 500}
-    >
-      {bannerDetails.map((item) => (
-        <Box
-          key={item._id}
-          className={classes.bannerSectionBody}
-          style={{
-           
-            backgroundImage: `url(${item?.background})`,
-            backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-          }}
-        >
-          <Grid container spacing={5}>
-            <Grid item lg={6} sm={12} md={6} xs={12}>
-              {item && (
-                <Box className={classes.leftSection}>
-                  <Box style={{ position: "relative" }}>
-                    <Typography variant="h1">{item.title}</Typography>
-                  </Box>
-
-                  <Typography variant="h3">{item.description}</Typography>
-                </Box>
-              )}
-            </Grid>
-            <Grid item lg={6} sm={12} md={6} xs={12}>
-              {item && item.media.length > 1 && (
-                <Box className={classes.rightSection}>
-                  {item.mediaType === "video" ? (
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      style={{
-                        width: isMobile ? '50%' : '500px',
-                        height: isMobile ? 'auto' : '250px',
-                        borderRadius: 12
+    <Box className={classes.carouselContainer}>
+      <Carousel
+        autoPlay
+        infiniteLoop
+        interval={6000}
+        transitionTime={1000}
+        showThumbs={false}
+        showStatus={false}
+        showIndicators={!isMobile}
+        showArrows={false}  // Removed arrows as requested
+        renderIndicator={(onClickHandler, isSelected, index, label) => (
+          <div
+            className={`${classes.indicator} ${isSelected ? 'selected' : ''}`}
+            onClick={onClickHandler}
+            onKeyDown={onClickHandler}
+            key={index}
+            role="button"
+            tabIndex={0}
+            aria-label={`Slide ${index + 1}`}
+          />
+        )}
+        swipeable={true}
+        emulateTouch={true}
+      >
+        {cryptoBannerData.map((item) => (
+          <Box
+            key={item.id}
+            className={classes.bannerSlide}
+            style={{
+              backgroundImage: `url(${item.background})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
+            <Box className={classes.contentContainer}>
+              <Grid container  className={classes.gridContainer} alignItems="center">
+                <Grid item xs={12} md={5} lg={5}>
+                  <Box className={classes.leftSection}>
+                    <Typography  color="white" sx={{fontSize:"3rem",fontWeight:"800"}}>
+                      {item.title}
+                    </Typography>
+                    <Typography variant="h3" color="white" sx={{fontSize:"1.5rem" ,fontWeight:"700"}}>
+                      {item.subtitle}
+                    </Typography>
+                   
+                    <Button
+                      variant="contained"
+                      sx={{ background: (theme) => theme.custom.gradientButton,
+                        width:"100%",
+                        maxWidth:"150px",
+                        borderRadius:"50px",
+                        "&:hover":{
+                          background: (theme) => theme.custom.hoverGradientButton
+                        }
                       }}
+                      onClick={() => {navigate(item.nav)}}
                     >
-                      <source src={item.media} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <img
-                      src={item.media}
-                      alt=""
-                      style={{
-                        width: isMobile ? '50%' : '500px',
-                        height: isMobile ? 'auto' : '250px'
-                      }}
-                    />
-                  )}
-                </Box>
-              )}
-            </Grid>
-          </Grid>
-        </Box>
-      ))}
-    </Carousel>
+                      {item.cta}
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={5} lg={5}>
+                  <Box className={classes.rightSection}>
+                    <Box className={classes.mediaContainer}>
+                      {item.mediaType === 'image' ? (
+                        <img
+                          src={item.media}
+                          alt={item.title}
+                          className={classes.cryptoImage}
+                        />
+                      ) : (
+                        <video
+                          autoPlay
+                          muted
+                          loop
+                          className={classes.cryptoImage}
+                        >
+                          <source src={item.media} type="video/mp4" />
+                        </video>
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        ))}
+      </Carousel>
     </Box>
   );
 }

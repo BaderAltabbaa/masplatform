@@ -303,7 +303,7 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/rwa.png"
    },
    {name:t("Fashion"),
-    image:"/assets/Images/17.jpg"
+    image:"/assets/Images/fashion.png"
    },
    {name:t("Video"),
     image:"/assets/Images/video.png"
@@ -330,7 +330,7 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/1.jpg"
    },
    {name:t("News"),
-    image:"/assets/Images/5.jpg"
+    image:"/assets/Images/news.png"
    },
    {name:t("Gaming"),
     image:"/assets/Images/gaming.png"
@@ -342,13 +342,13 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/8.jpg"
    },
    {name:t("Web3"),
-    image:"/assets/Images/10.jpg"
+    image:"/assets/Images/web3.png"
    },
    {name:t("Security"),
-    image:"/assets/Images/11.jpg"
+    image:"/assets/Images/security.png"
    },
    {name:t("Wallets"),
-    image:"/assets/Images/12.jpg"
+    image:"/assets/Images/wallet.png"
    },
    {name:t("Metaverse"),
     image:"/assets/Images/meta.png"
@@ -597,15 +597,27 @@ const auctionNftListHandler = async () => {
   {/*  */}
   function popularCategory() {
     return(
-      <Box sx={{py: 4,maxWidth:1400 ,mx: 'auto',px:{xs:4 , md: 0}
-}} 
-      display="flex" flexDirection="column" alignItems="center" justifyContent="center"> 
-        <Typography align="center" variant="h1" color="white">{t("Popular Categories")}</Typography>
-        <Box mt={2} sx={{               background: (theme) => theme.custom.CarBackGround,
+      <Box sx={{
+        py: 4,
+        maxWidth: 1400,
+        mx: 'auto',
+        px: { xs: 4, md: 0 }
+      }}
+      > 
+        <Typography align="center" color="white"
+        sx={{
+          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+          fontWeight: 700,
 
-        boxShadow:"0px 4px 8px rgba(0, 0, 0, 0.5)",
-        borderRadius:"20px", 
-       width:"100%",
+        }}>
+          {t("Popular Categories")}
+        </Typography>
+
+        <Box mt={2} sx={{
+          background: (theme) => theme.custom.CarBackGround,
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+          borderRadius: "20px",
+          width: "100%",
         }}>
         
         <Box mt={1} sx={{ display: "grid",

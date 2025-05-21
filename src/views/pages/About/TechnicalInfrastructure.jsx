@@ -75,13 +75,7 @@ const TechnicalInfrastructure = () => {
           Technical Infrastructure
         </Typography>
         
-        <Divider sx={{ 
-          mb: 6, 
-          width: '100px', 
-          height: '4px', 
-          background: "white",
-          mx: 'auto'
-        }} />
+        
       </motion.div>
     <Box sx={{ 
       px: isMobile ? 2 : 3,

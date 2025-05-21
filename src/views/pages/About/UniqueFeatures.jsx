@@ -99,7 +99,7 @@ const UniqueFeatures = () => {
           sx={{ 
             mb: 2, 
             fontSize: isMobile ? '1.1rem' : '1.3rem',
-            color: 'rgb(139, 137, 137)'
+            color: 'white'
           }}
         >
           MAS doesn't replicate traditional platforms—it redefines the creator-user relationship through:

@@ -33,7 +33,7 @@ const RoadMap = () => {
   ];
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', px: { xs: 2, md: 4 }, py: 2, overflowX: 'auto'  , overflowY:"hidden"}}>
+    <Box sx={{ maxWidth: 1300, mx: 'auto', px: { xs: 2, md: 4 }, py: 2, overflowX: 'auto'  , overflowY:"hidden"}}>
       <Typography variant="h3" component="h2" sx={{
         fontWeight: 'bold', textAlign: 'center', color: 'white', mb: 2,
         fontSize: { xs: '2rem', md: '2.5rem' }
@@ -42,7 +42,7 @@ const RoadMap = () => {
       </Typography>
 
       <Typography variant="h5" component="h3" sx={{
-        textAlign: 'center', mb: 6, color: 'rgb(139, 137, 137)',
+        textAlign: 'center', mb: 6, color: 'white',
         fontSize: { xs: '1.2rem', md: '1.5rem' }
       }}>
         Our Journey — Built for the Future
@@ -89,7 +89,7 @@ const RoadMap = () => {
                 width: { xs: '100%', md: 240 },
                 position: 'relative',
                 zIndex: 1,
-                background: (theme) => theme.custom.secCardBackGround,
+                background:"#b8b6b6",
                 borderRadius: 3,
                 transition: 'transform 0.3s',
                 '&:hover': {
@@ -113,7 +113,7 @@ const RoadMap = () => {
               </Box>
               <Typography variant="h6" component="h4" sx={{
                 fontWeight: 600,
-                color: "white",
+                color: (theme) => theme.custom.mainButton,
                 mb: 1
               }}>
                 {milestone.period}
@@ -121,11 +121,11 @@ const RoadMap = () => {
               <Typography variant="h5" component="h3" sx={{
                 fontWeight: 700,
                 mb: 1.5,
-                color:"white"
+                color:(theme) => theme.custom.mainButton
               }}>
                 {milestone.title}
               </Typography>
-              <Typography variant="body1" sx={{ color: 'white' }}>
+              <Typography variant="body1" sx={{ color: (theme) => theme.custom.mainButton }}>
                 {milestone.description}
               </Typography>
             </MotionPaper>
