@@ -130,11 +130,11 @@ export default function Subscribers({ type }) {
   <Table  aria-label="subscribers table">
     <TableHead sx={{background: (theme) => theme.custom.CarBackGround}}>
       <TableRow>
-        <TableCell sx={{color:"white"}}>{t("Icon")}</TableCell>
-        <TableCell sx={{color:"white"}} >{t("Username")}</TableCell>
-        <TableCell sx={{color:"white"}} >{t("Speciality")}</TableCell>
-        <TableCell sx={{color:"white"}} >{t("Type")}</TableCell>
-        <TableCell sx={{color:"white"}} align="center">{t("Actions")}</TableCell>
+        <TableCell sx={{color:"white" ,fontSize:"1.2rem"}}>{t("Icon")}</TableCell>
+        <TableCell sx={{color:"white" ,fontSize:"1.2rem"}} >{t("Username")}</TableCell>
+        <TableCell sx={{color:"white" ,fontSize:"1.2rem"}} >{t("Speciality")}</TableCell>
+        <TableCell sx={{color:"white" ,fontSize:"1.2rem"}} >{t("Type")}</TableCell>
+        <TableCell sx={{color:"white" ,fontSize:"1.2rem"}} align="center">{t("Actions")}</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -151,9 +151,9 @@ export default function Subscribers({ type }) {
              
             </Box>
           </TableCell>
-          <TableCell > {subscriber.name}</TableCell>
-          <TableCell > {subscriber.speciality}</TableCell>
-          <TableCell > {subscriber.userType}</TableCell>
+          <TableCell sx={{ fontSize: "1rem", fontWeight: 800 }}> {subscriber.name}</TableCell>
+          <TableCell sx={{ fontSize: "1rem", fontWeight: 800 }}> {subscriber.speciality}</TableCell>
+          <TableCell sx={{ fontSize: "1rem", fontWeight: 800 }}> {subscriber.userType}</TableCell>
 
           
           <TableCell align="center">

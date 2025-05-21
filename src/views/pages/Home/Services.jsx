@@ -62,7 +62,7 @@ const Services = () => {
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
               overflow: "hidden",
               paddingTop: '0px',
-              gap: '10px',
+              gap: '200px',
               position: "relative",
               width: '100%',
               maxWidth: isLargeScreen ? '1400px' : isMediumScreen ? '900px' : '100%',

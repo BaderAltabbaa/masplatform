@@ -122,11 +122,11 @@ export default function purchases() {
             <Table>
               <TableHead sx={{background: (theme) => theme.custom.CarBackGround}}>
                 <TableRow>
-                         <TableCell sx={{color:"white"}}>{t("Title")}</TableCell>
-                         <TableCell sx={{color:"white"}}>{t("Name")}</TableCell>
-                         <TableCell sx={{color:"white"}}>{t("Price")}</TableCell>
-                         <TableCell sx={{color:"white"}}>{t("Status")}</TableCell>
-                         <TableCell sx={{color:"white"}}>{t("Action")}</TableCell>
+                         <TableCell sx={{color:"white" ,fontSize:"1.2rem"}}>{t("Title")}</TableCell>
+                         <TableCell sx={{color:"white" ,fontSize:"1.2rem"}}>{t("Name")}</TableCell>
+                         <TableCell sx={{color:"white" ,fontSize:"1.2rem"}}>{t("Price")}</TableCell>
+                         <TableCell sx={{color:"white" ,fontSize:"1.2rem"}}>{t("Status")}</TableCell>
+                         <TableCell sx={{color:"white" ,fontSize:"1.2rem"}}>{t("Action")}</TableCell>
 
                 </TableRow>
                 </TableHead>
@@ -134,19 +134,19 @@ export default function purchases() {
                 {purchases.map((items, i) => {
                   return (
                    <TableRow key={i}>
-                    <TableCell>
+                    <TableCell sx={{fontSize:"1rem",fontWeight:800}}>
                      {items.title}
                     </TableCell>
-                    <TableCell>
+                    <TableCell  sx={{fontSize:"1rem",fontWeight:800}}>
                      {items.name}
                     </TableCell>
-                    <TableCell>
+                    <TableCell  sx={{fontSize:"1rem",fontWeight:800}}>
                      {items.masPrice} MAS
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{fontSize:"1rem",fontWeight:800}} >
                      {items.status}
                     </TableCell>
-                    <TableCell>
+                    <TableCell  sx={{fontSize:"1rem",fontWeight:800}}>
                     <Tooltip title="View" placement="right"><Link to={"/items-details?"+ items.nft1Id}><FaEye size={20} color='#4d0051'/></Link></Tooltip>
                     </TableCell>
                    </TableRow>)

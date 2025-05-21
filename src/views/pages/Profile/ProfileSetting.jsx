@@ -1125,7 +1125,7 @@ export default function ProfileSettings() {
         <Box
          sx={{
       width: "100%",
-      height: "300px", // Adjust height as needed
+      height: "250px", // Adjust height as needed
       overflow: "hidden", // Ensure the image doesn't overflow
     }}
         >

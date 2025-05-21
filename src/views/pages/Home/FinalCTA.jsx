@@ -37,7 +37,7 @@ const FinalCTA = () => {
         lineHeight: 1.2,
         color: "white"
       }}>
-        Join the Decentralized Creator Economy
+        JOIN THE WEB 0.3 SERVICES ECOSYSTEMS
       </Typography>
 
       {/* Subheading */}
