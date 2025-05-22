@@ -98,7 +98,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
       borderRight: 'none',
       height: 'calc(100vh )', // ارتفاع مناسب
       position:"absolute",
-      top:"100%"
+      top:"100%",
+      zIndex:100
     }
   }}
   ModalProps={{ keepMounted: true }}

@@ -667,6 +667,8 @@ useEffect(() => {
 
                <Typography
        variant="h6"
+                 className="contentTypo"
+
        component="h6"
        style={{ color: "white", fontWeight: "bold" }}
      >
@@ -675,6 +677,8 @@ useEffect(() => {
 <Typography
        variant="h6"
        component="h6"
+                        className="contentTypo"
+
        style={{ color: "white", fontWeight: "bold", marginTop: 5,marginBottom :'10px' }}
      >
       {"( "}

@@ -220,47 +220,48 @@ export default function Login() {
 
   };
   const Login = async () => {
-    setemailvalid(isValidEmail(email));
-    setpassvalid(isValidPassword(pass));
-    if (emailvalid && passvalid) {
-      setLoader(true);
-      try {
-        const res = await axios({
-          method: "POST",
-          url: Apiconfigs.userlogin,
-          data: {
-            email: email,
-            password: pass,
-          },
-        });
-        if (Object.entries(res.data.result).length > 0) {
-          if (!res.data?.result?.isNewUser) {
-            toast(
-              ` 👋 Welcome Back ${res.data?.result?.name
-                ? res.data?.result?.name
-                : res.data?.result?.userName
-              }`
-            );
-          }
-          await user.updatetoken(res.data.result.token);
-          if (!res.data?.result?.isEmailVerified || !res.data?.result?.isPhoneVerified) {
-            navigate("/profilesettings");
-          } else {
-            navigate("/");
-          }
-        } else {
-          toast.error(res.data.responseMessage);
+  setemailvalid(isValidEmail(email));
+  setpassvalid(isValidPassword(pass));
+  if (emailvalid && passvalid) {
+    setLoader(true);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: Apiconfigs.userlogin,
+        data: {
+          email: email,
+          password: pass,
+        },
+      });
+
+      if (Object.entries(res.data.result).length > 0) {
+        if (!res.data?.result?.isNewUser) {
+          toast(
+            ` 👋 Welcome Back ${res.data?.result?.name || res.data?.result?.userName}`
+          );
         }
-      } catch (error) {
-        if (error.response) {
-          toast.error(error.response.data.responseMessage);
+
+        sessionStorage.setItem("AccessToken", res.data.result.token); 
+        await user.updatetoken(res.data.result.token);
+
+        if (!res.data?.result?.isEmailVerified || !res.data?.result?.isPhoneVerified) {
+          navigate("/profilesettings");
         } else {
-          toast.error(error.message);
+          navigate("/");
         }
+      } else {
+        toast.error(res.data.responseMessage);
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.responseMessage);
+      } else {
+        toast.error(error.message);
       }
     }
     setLoader(false);
-  };
+  }
+};
 
   useEffect(() => {
     const url = 'https://api.unsplash.com/photos/random?client_id=YC94t2S3Nge47lJvxYFndgORX0JUr4Ym7BfrSqfHUzU'

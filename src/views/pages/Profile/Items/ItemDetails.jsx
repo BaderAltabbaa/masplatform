@@ -311,13 +311,13 @@ const getItemContentListHandler = async (ItemId) => {
       ) : (
 
         <>
-          <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,overflow: "hidden"}}   className="bunner-animaton">
+          <div style={{display:"flex" ,flexDirection:"column" ,alignItems:"center", justifyContent:"center" ,overflow: "hidden", padding:"20px 0"}}   className="bunner-animaton">
    
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <img 
-            src="/assets/Images/wave10.png" 
+            src="/assets/Images/wave20.png" 
             alt="Description" 
-            style={{ display: 'flex' ,transform:" scale(0.7)"  }}
+            style={{ display: 'flex' , maxHeight:"120px"   }}
           />
           <div style={{
              position: 'absolute',

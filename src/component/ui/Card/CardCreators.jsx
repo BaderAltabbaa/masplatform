@@ -84,6 +84,7 @@ console.log("bra",userID)
         console.log('Setting subscription count:', response.data.result.nb);
         
         setisSubscribed(response.data.result.subscribed == "yes");
+        
         setnbSubscribed(response.data.result.nb);
       } else {
         console.log('Non-200 status code received:', response.data.statusCode);
@@ -102,6 +103,8 @@ console.log("bra",userID)
   console.log('Finished subscribeToUserHandler execution');
 }
   // End Handle subscribe function
+
+  
 
   const likeDislikeUserHandler = async (id) => {
     if (auth.userData?._id) {
@@ -143,6 +146,7 @@ console.log("bra",userID)
   sx={{
      
     background: (theme) => theme.custom.CarBackGround,
+    
    
   }}
     
@@ -203,9 +207,9 @@ console.log("bra",userID)
     }}>
       {nbSubscribed
         ? nbSubscribed > 0
-          ? nbSubscribed + t("subs")
-          : "0" + t("sub")
-        : "0" + t("sub")}
+          ? nbSubscribed + t(" subs")
+          : " 0 " + t("sub")
+        : " 0 " + t("sub")}
     </span>
   </div>
 

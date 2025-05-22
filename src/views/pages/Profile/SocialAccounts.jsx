@@ -91,10 +91,10 @@ export default function SocialAccounts() {
 
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} style={{ background:"rgba(180, 0, 234, 0.37)" }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}  sx={{borderRadius:"20px"}}>
         <Typography>Social Accounts</Typography>
       </AccordionSummary>
-      <AccordionDetails style={{ background:"rgba(223, 127, 252, 0.37)" }}>
+      <AccordionDetails >
         <Box>
           <Box mb={2}>
             <TextField

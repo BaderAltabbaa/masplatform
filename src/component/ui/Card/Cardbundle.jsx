@@ -316,7 +316,7 @@ function Cardbundle({
 
 <Box display="flex" alignItems="center">
    <Typography
-          
+          className="contentTypo"
           component="h6"
           sx={{ color: "white", fontWeight: "bold" ,margin:"0 5px",fontSize:"18px" }}
         >
@@ -332,6 +332,8 @@ function Cardbundle({
         </Box>
   <Typography
           component="h6"
+                    className="contentTypo"
+
           style={{ color: "white", fontWeight: "bold", marginTop: 5 ,fontSize:"12px"}}
         >
           {"( "}
@@ -346,6 +348,8 @@ function Cardbundle({
         <Typography
           variant="body2"
           color="textSecondary"
+                    className="contentTypo"
+
           component="p"
           style={{ marginTop: 5 }}
         >

@@ -1,518 +1,184 @@
-import React ,{useState ,useContext} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-  List,
-  ListItem,
-  ListItemIcon,
-  Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions
+  Card, CardContent, Typography, Button, Box, List,
+  ListItem, ListItemIcon, Divider, Dialog, DialogTitle,
+  DialogContent, DialogActions, Snackbar
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
+import { AiOutlineClose } from "react-icons/ai";
 import { UserContext } from "src/context/User";
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@mui/styles';
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { FiDownload } from "react-icons/fi";
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
+import { tokensDetails, websiteName } from "src/constants";
+import BalanceBox from "../../../component/ui/BalanceBox";
+import axios from "axios";
+import Apiconfigs from "../../../Apiconfig/Apiconfigs";
 
+const PlanCard = ({ plan, currencyType, billingType }) => {
+  const [open, setOpen] = useState(false);
+  const [openReceipt, setOpenReceipt] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const auth = useContext(UserContext);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const user = useContext(UserContext);
+  const [download, setDownload] = useState(false);
 
-
-
-
-const useStyles = makeStyles((theme) => ({
-
-   
-      
-    
-      heading: {
-        background:"linear-gradient(to right, #280026, #4a004f)",
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "20px",
-        alignItems: "center",
-        color: "#fff",
-        borderRadius:"10px",
-        [theme.breakpoints.down("xs")]: {
-          padding: "10px",
-        },
-        "& img": {
-          width: "60px",
-          [theme.breakpoints.down("xs")]: {
-            width: "20px",
-          },
-        },
-        "& h6": {
-          fontSize: "15px",
-          fontWeight: "400",
-          padding: "0 20px",
-          [theme.breakpoints.down("xs")]: {
-            padding: "0 5px",
-            fontSize: "10px",
-          },
-        },
-      },
-      body: {
-        position: "relative",
-        zIndex: 2,
-        padding: "20px",
-        backgroundColor:"rgb(223, 223, 223)",
-        marginBottom:"20px",
-        borderRadius:"20px",
-        boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
-    
-        [theme.breakpoints.down("xs")]: {
-          padding: "50px 20px 60px 20px",
-        },
-        "& h5": {
-          fontSize: "15px",
-          fontWeight: "400",
-          lineHeight: "1.53",
-          color: "#141518",
-        },
-        "& h2": {
-          fontSize: "23px",
-          fontWeight: "600",
-          lineHeight: "1.51",
-          paddingLeft: "5px",
-          color: "#141518",
-          [theme.breakpoints.down("xs")]: {
-            fontSize: "18px",
-          },
-        },
-        "& img": {
-          width: "30px",
-          margin: "0 5px",
-        },
-      },
-      
-      certificateBox: {
-        position: "relative",
-      },
-     
-      certificate: {
-        [theme.breakpoints.down("xs")]: {
-          padding: "10px",
-        },
-      },
-    
-      downloadButton: {
-        maxWidth: "100px",
-        backgroundColor: "#a33748",
-        borderRadius: "33px",
-        color: "white",
-        "&:hover": {
-          backgroundColor: "red",
-        },
-      },
-      nftImg: {
-        width: "100%",
-        overflow: "hidden",
-        backgroundPosition: "center !important",
-        backgroundSize: "cover !important",
-        backgroundRepeat: " no-repeat !important",
-        backgroundColor: "#ccc !important",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        border: " solid 0.5px #e5e3dd",}
-}))
-
-
-
-const PlanCard = ({ plan }) => {
-
-    const [open, setOpen] = useState(false);
-    const [openReceipt, setOpenReceipt] = useState(false);
-    const auth = useContext(UserContext);
-    const navigate = useNavigate();
-    const { t } = useTranslation();
-    const classes = useStyles();
-    const [download, setDownload] = useState(false);
-    const currentDate = new Date();
-    let cHour = currentDate.getHours().toString().padStart(1, 0);
-    cHour = cHour % 12 || 12;
-    const ampm = cHour >= 12 ? "AM" : "PM";
-    const cMin = currentDate.getMinutes().toString().padStart(2, 0);
-    const cSec = currentDate.getSeconds().toString().padStart(2, 0);
-    const cDay = currentDate.getDate();
-    const cMonth = currentDate.getMonth() + 1;
-    const cYear = currentDate.getFullYear();
-
-  const cDate = `${cDay}/${cMonth}/${cYear}  ${cHour}:${cMin}:${cSec}${ampm}  `
-
-console.log("auth",auth)
-
-const handleOpen = () => {
-    setOpen(true);
-} 
-
-const handleClose = () => {
-    setOpen(false);
-} 
-
-const handleOpenReceipt = () => {
-    setOpenReceipt(true);
-} 
-
-const handleCloseReceipt = () => {
-    setOpenReceipt(false);
-} 
-
-const donloadBadge = () => {
-    setDownload(true);
-    const certificate = document.getElementById(`certificate_UI`);
-
-    html2canvas(certificate, { useCORS: true, allowTaint: true }).then(
-      (canvas) => {
-        canvas.toBlob(
-          function (blob) {
-            const imgData = URL.createObjectURL(blob);
-
-            var pdf = new jsPDF({
-              orientation: "landscape",
-            });
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addImage(
-              imgData,
-              "JPEG",
-              0,
-              0,
-              pdfWidth,
-              pdfHeight,
-              "",
-              "FAST"
-            );
-            pdf.save(`1.pdf`);
-            setDownload(false);
-          },
-          "image/jpeg",
-          1.0
-        );
-      }
-    );
+  const availableBalance1 = {
+    masBalance: parseFloat(user.userData.masBalance),
+    fdusdBalance: parseFloat(user.userData.fdusdBalance),
+    usdtBalance: parseFloat(user.userData.usdtBalance),
   };
 
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay:  0.5, // Stagger animation based on index
-        duration: 0.5,
-        ease: "easeOut"
+  const handleBuyPlan = async () => {
+    try {
+      const token = sessionStorage.getItem("AccessToken");
+if (!token) {
+  console.error("🚫 No token found, user must log in");
+  return;
+}
+      const res = await axios.post(
+        Apiconfigs.buyPlan,
+        {
+          planId: plan._id,
+          coinName: currencyType,
+          //billingType,
+        },
+        {
+          headers: {
+          token: sessionStorage.getItem("AccessToken")
+}
+        }
+      );
+      if (res.data.statusCode === 200) {
+        setSuccessMessage("Plan purchased successfully!");
+        setOpen(false);
+        setOpenReceipt(true);
+      } else {
+        setErrorMessage(res.data.responseMessage || "Failed to buy plan.");
       }
+    } catch (err) {
+      setErrorMessage(err.response?.data?.responseMessage || "An error occurred.");
     }
   };
-    
+
+
+  const currentDate = new Date();
+  const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+
+  const currentPrice = plan.price?.[currencyType]?.[billingType] ?? "N/A";
+  const billingLabel = billingType === "monthly" ? "per month" : "per year";
+
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { delay: 0.5, duration: 0.5, ease: "easeOut" } }
+  };
+
   return (
-
     <>
-
-<motion.div
-      ref={ref}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={cardVariants}
-    >
-
-    <Card sx={{ maxWidth: 345, borderRadius:10,border:"2px solid rgb(255, 255, 255)" ,
-      "&:hover":{transform:"scale(1.02)",transition: "ease-out 0.3s",boxShadow:"0px 0px 10px white"}}} >
-      {/* Top Section - Plan Name and Subtext */}
-      <Box 
-        sx={{ 
-          p: 3, 
-          textAlign: 'center',
-          background: (theme) => theme.custom.CarBackGround,
-          color: "white"
-        }}
-      >
-        <Typography variant="h2" component="div" gutterBottom color='white'>
-          {plan.name}
-        </Typography>
-        <Typography variant="body2" color='white'>
-          {plan.subtext}
-        </Typography>
-      </Box>
-
-      {/* Middle Section - Price and Benefits */}
-      <CardContent sx={{ textAlign: 'center' }}>
-        <Typography variant="h1" component="div" sx={{ fontWeight: 'bold', my: 1 ,color:"#2f0032" }}>
-          {plan.price}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          {plan.billingCycle}
-        </Typography>
-
-        <Divider sx={{ my: 2 }} />
-
-        <List>
-          {plan.features.map((feature, index) => (
-            <ListItem key={index} sx={{ px: 0, py: 0.5 }}>
-              <ListItemIcon sx={{ minWidth: 30 }}>
-                <CheckIcon color="primary" fontSize="small" />
-              </ListItemIcon>
-              <Typography variant="body2">
-                {feature}
-              </Typography>
-            </ListItem>
-          ))}
-        </List>
-      </CardContent>
-
-      {/* Bottom Section - Buy Now Button */}
-      <Box sx={{ p: 2, textAlign: 'center' ,background: (theme) => theme.custom.CarBackGround}}>
-        <Button 
-          variant="contained" 
-          
-          size="large"
-          sx={{ py: 1.5, borderRadius: 10 ,backgroundColor:"#2f0032" ,fontWeight:"bold",
-            "&:hover":{
-                backgroundColor:"#3e0142"
+      <motion.div ref={ref} initial="hidden" animate={inView ? "visible" : "hidden"} variants={cardVariants}>
+        <Card
+          sx={{
+            width: 300,
+            maxHeight:550,
+            background:"rgb(220, 220, 220)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            borderRadius: 10,
+            border: "2px solid rgb(220, 220, 220)",
+            "&:hover": {
+              transform: "scale(1.02)",
+              transition: "ease-out 0.3s",
+              boxShadow: "0px 0px 10px rgb(220, 220, 220)"
             }
-           }}
-          onClick={handleOpen}
+          }}
         >
-          Buy Now
-        </Button>
-      </Box>
-    </Card>
-    </motion.div>
+          <Box sx={{ p: 3, textAlign: 'center', background: (theme) => theme.custom?.CarBackGround || "#4a004f" }}>
+            <Typography variant="h2" gutterBottom sx={{ color: "white", fontWeight: "bold" }}>{plan.name}</Typography>
+            <Typography variant="body2" sx={{ color: "white", opacity: 0.9 }}>{plan.subtext}</Typography>
+          </Box>
 
+          <CardContent sx={{ textAlign: 'center', flexGrow: 1 }}>
+            <Typography variant="h2" component="div" sx={{ fontWeight: 'bold', my: 0, color: "#2f0032" }}>
+              {currentPrice} {currencyType}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{billingLabel}</Typography>
+            <Divider sx={{ my: 0 }} />
+            <List sx={{  display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              {plan.features.map((feature, index) => (
+                <ListItem key={index} sx={{ px: 0, py: 0.5 }}>
+                  <ListItemIcon sx={{  }}><CheckIcon color="primary" fontSize="small" /></ListItemIcon>
+                  <Typography variant="body2">{feature}</Typography>
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
 
-<Dialog open={open} onClose={handleClose}  disableScrollLock  fullWidth maxWidth="sm" PaperProps={{
-  sx: {
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:"rgb(255, 250, 238)"
-    
-  }
-}}>
-    <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center"}} color=" #43005e"> 
-        <span style={{
-                      fontSize:"24px" ,fontWeight:"bold"
-                    }}>{plan.name}</span>
-                    <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleClose}><AiOutlineClose/></div>
-    </DialogTitle>
-    <DialogContent>
-         <Box sx={{
-                               background:"rgba(255, 255, 255, 0.68)",
-                               padding:"10px",
-                               borderRadius:"20px"
-                             }}>
-    <Typography variant="h1" component="div" sx={{ fontWeight: 'bold', my: 1,color:"#2f0032" }}>
-          {plan.price}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          {plan.billingCycle}
-        </Typography>
-        <Divider sx={{ my: 2 }} />
+          <Box sx={{ p: 2, textAlign: 'center', background: (theme) => theme.custom?.CarBackGround || "#4a004f" }}>
+            <Button variant="contained" size="large" sx={{ py: 1.5, borderRadius: 10, backgroundColor: "#2f0032" }} onClick={() => setOpen(true)}>
+              Buy Now
+            </Button>
+          </Box>
+        </Card>
+      </motion.div>
 
-<List>
-  {plan.features.map((feature, index) => (
-    <ListItem key={index} sx={{ px: 0, py: 0.5 }}>
-      <ListItemIcon sx={{ minWidth: 30 }}>
-        <CheckIcon color="primary" fontSize="small" />
-      </ListItemIcon>
-      <Typography variant="body2">
-        {feature}
-      </Typography>
-    </ListItem>
-  ))}
-</List>
-        </Box>
-    </DialogContent>
-    <DialogActions   sx={{display:"flex" ,justifyContent:"center" ,alignItems:"center"}}>
-        {!auth.userLoggedIn ? (
-                    <Box textAlign="center">
-                      <Button 
-                       
-                      onClick={handleClose}
-                      style={{background:"#2f0032",color:"white" }}
-        
-                      >
-                        Cancel
-                      </Button>
-                      &nbsp;&nbsp;
-                      <Button
-                        onClick={() => {
-                            navigate("/login");
-                          }}
-                        style={{background:"#2f0032",color:"white" }}
-        
-                      >
-                        Login
-                      </Button>
-                    </Box>
-                  ) :
-                  
-                  (<>
-                  <Box  textAlign="center">
-                                  <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    size="large"
-                                    style={{ background:"#2f0032",color:'white'}}
-                  
-                                    onClick={() => {
-                                      handleClose();
-                                    }}
-                                  >
-                                  Cancel
-                  
-                                  </Button>
-                                  &nbsp;&nbsp;
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+       
+        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span style={{ fontSize: "24px", fontWeight: "bold" }}>{plan.name} Plan</span>
+          <div style={{ fontSize: "20px", cursor: "pointer" }} onClick={() => setOpen(false)}><AiOutlineClose /></div>
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ background: "rgba(255, 255, 255, 0.68)", padding: "10px", borderRadius: "20px" }}>
+        <BalanceBox availableBalance={availableBalance1} tokensDetails={tokensDetails} />
+            <Typography variant="h2" sx={{ fontWeight: 'bold', mt:4, color: "#2f0032" }}>{currentPrice} {currencyType}</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{billingLabel}</Typography>
+            <Divider sx={{ my: 1 }} />
+            <List>
+              {plan.features.map((feature, index) => (
+                <ListItem key={index} sx={{ px: 0, py: 0.5 }}>
+                  <ListItemIcon sx={{ minWidth: 30 }}><CheckIcon color="primary" fontSize="small" /></ListItemIcon>
+                  <Typography variant="body2">{feature}</Typography>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          {!auth.userLoggedIn ? (
+            <>
+              <Button onClick={() => setOpen(false)} sx={{ background: "#2f0032", color: "white" }}>Cancel</Button>
+              <Button onClick={() => navigate("/login")} sx={{ background: "#2f0032", color: "white" }}>Login</Button>
+            </>
+          ) : (
+            <>
+              <Button onClick={() => setOpen(false)} sx={{ background: "#2f0032", color: "white" }}>Cancel</Button>
+              <Button onClick={handleBuyPlan} sx={{ background: "#2f0032", color: "white" }}>Buy Plan</Button>
+            </>
+          )}
+        </DialogActions>
+      </Dialog>
 
-                                  <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        size="large"
-                                        style={{ background:"#2f0032",color:'white'}}
-                  
-                                        onClick={handleOpenReceipt}
-                                      
-                                      >
-                                       Buy Plan
-                                      </Button>
-                                      </Box></>)
-                  }
+      <Snackbar open={!!successMessage} autoHideDuration={6000} onClose={() => setSuccessMessage("")}>
+        <Box sx={{ px: 2, py: 1, background: "green", color: "white", borderRadius: 1 }}>{successMessage}</Box>
+      </Snackbar>
 
-
-                
-
-    </DialogActions>
-</Dialog>
-
-
-<Dialog open={openReceipt} onClose={handleCloseReceipt}  disableScrollLock  fullWidth maxWidth="md" PaperProps={{
-  sx: {
-    backgroundImage: 'url(/assets/Images/doodle2.png)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    
-  }
-}}>
-
-    <Box id="certificate_UI">
-    <DialogContent className={classes.certificate}>
-                 <Box className={classes.certificateBox}>
-                   
-                   <Box className={classes.body} align="start">
-        <Box className={classes.heading} mb={2}>
-                          <img src="\assets\Images\masfooter-logo.svg"  style={{width:"50px"}}/>
-                          <Typography align="center" sx={{color:"white" ,fontSize:"24px" ,fontWeight:"bold" ,
-                            "@media(max-width:700px)":{
-                              fontSize:"16px"
-                            }
-                          }}>
-                          {t("Transaction Receipt")}
-                          </Typography>
-                          <img src="\assets\Images\masfooter-logo.svg"  style={{width:"50px"}}/>
-                        </Box>
-                        <Box overflow='hidden'>
-                           <Box my={2}>
-                          <Typography variant="h3" sx={{ marginRight: "5px" }}>
-                              {t("Name")}:   {auth.userData.name}
-
-                          </Typography>
-                          </Box> 
-
-                          <Box my={2}>
-                          <Typography variant="h3" sx={{ marginRight: "5px" }}>
-                              {t("Email")}:  <Typography sx={{
-                                fontSize:"20px",
-                                "@media(max-width: 800px)":{
-                      fontSize:"14px"
-                    }
-                              }}> {auth.userData.email} </Typography>
-
-                          </Typography>
-                          </Box>
-
-                          <Box my={2}>
-                          <Typography variant="h3" sx={{ marginRight: "5px" }}>
-                              {t("Wallet")}: <Typography sx={{
-                                fontSize:"20px",
-                                "@media(max-width: 800px)":{
-                      fontSize:"14px"
-                    }
-                              }}>{auth.userData.walletAddress}</Typography>  
-
-                          </Typography>
-                          </Box>
-
-                          <Box my={2}>
-                          <Typography variant="h3" sx={{ marginRight: "5px" }}>
-                              {t("Plan")}:  {plan.name}
-
-                          </Typography>
-                          </Box>
-
-                         <Box my={2}>
-                          <Typography variant="h3" sx={{ marginRight: "5px" }}>
-                              {t("Amount")}:  {plan.price}
-
-                          </Typography>
-                          </Box>
-
-                          <Box my={2}>
-                          <Typography variant="h3" sx={{ marginRight: "5px" }}>
-                              {t("Date")}:  {cDate}
-
-                          </Typography>
-                          </Box>
-                          </Box>
-                        </Box>
-                        </Box>
-    </DialogContent>
-    </Box>
-     <Box
-                mt={2}
-                pb={4}
-                sx={{ width: "100%", maxWidth: "200px", margin: "auto",display:"flex",alignItems:"center",justifyContent:"center" }}
-              >
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={donloadBadge}
-                  disabled={download}
-                  sx={{
-                    backgroundColor:"#4a004f",
-                    "&:hover":{
-                      backgroundColor:"rgb(112, 2, 120)"
-                    }
-                  }}
-                >
-                  {t("Download")} <FiDownload /> {download && <ButtonCircularProgress />}
-                </Button>
-              </Box>
-</Dialog>
-
-
-
+      <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={() => setErrorMessage("")}>
+        <Box sx={{ px: 2, py: 1, background: "red", color: "white", borderRadius: 1 }}>{errorMessage}</Box>
+      </Snackbar>
     </>
   );
 };
 
-export default PlanCard
+export default PlanCard;

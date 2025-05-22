@@ -1,5 +1,4 @@
-
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Container,
@@ -13,639 +12,67 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
-} from '@mui/material'; 
-import { makeStyles } from '@mui/styles'; 
+  DialogTitle,
+  Avatar,
+  Card,
+  CardContent,
+  Typography,
+  Divider,
+  Paper,
+  Alert,
+  AlertTitle,
+  CircularProgress
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-
 import axios from "axios";
+import { FiCopy, FiEdit } from "react-icons/fi";
+import { toast } from "react-toastify";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { CheckCircleOutline, ErrorOutline, Edit, Save, Cancel } from '@mui/icons-material';
+
+// Project imports
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { UserContext } from "src/context/User";
-import { FiCopy, FiEdit } from "react-icons/fi"; 
-import { toast } from "react-toastify"; 
-import { CopyToClipboard } from "react-copy-to-clipboard"; 
-import { CheckCircleOutline, ErrorOutline, Edit, Save, Cancel, Grid3x3 } from '@mui/icons-material'; // MUI v5 Icons (Updated)
-import SocialAccounts from "./SocialAccounts"; 
+import SocialAccounts from "./SocialAccounts";
 import { VerifyOtp } from "src/component/Modals/VerifyOtp";
-import { isMobile } from 'react-device-detect';
-import { Alert, AlertTitle } from '@mui/material';
-import { green, red } from '@mui/material/colors'; 
-import "./style.css"; 
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from '@mui/icons-material/Cancel';
 import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 
+// Styled Components
 
 
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import EditIcon from "@mui/icons-material/Edit";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { object } from "yup";
+const ProfileAvatar = styled(Avatar)(({ theme }) => ({
+  width: 180,
+  height: 180,
+  border: `4px solid ${theme.palette.common.white}`,
+  margin: '-120px 0 0 0',
+  boxShadow: theme.shadows[6],
+}));
 
-const useStyles = makeStyles((theme) => ({
-  LoginBox: {
-    paddingBottom: "50px",
-    overflow : "hidden",
-    backgroundColor:"#cdc8c8"
- 
-  },
-  basic: {
-    textAlign: "center",
-    // fontFamily: "Poppins",
-    fontFamily: "Roboto",
-    fontSize: "30px",
-    paddingTop: "20px",
-    color: "#141518",
-  
-  },
-  input_fild2: {
-    width: "100%",
-    borderRadius: "120px",
-
-    "& input": {
-      boxShadow: "0 0 5px #7b6c81",
-      border: "1px soild white !important",
-      
-      borderRadius: "120px",
-      paddingLeft: "15px",
-      fontSize: "18px",
-      "@media(max-width:960px)": {
-        height: "15px",
-        marginTop: "-15px",
-      },
-    },
-  },
-  Button: {
-    display: "flex",
-    justifyContent: "center",
-    paddingBottom: "25px",
-    "@media(max-width:660px)": {
-      display: "grid",
-      
-    }
-  },
-  ButtonBtn: {
-    paddingTop: "30px",
-    paddingRight: "10px",
-    width: "fit-content",
-    "& a": {
-      height: "41px!important",
-      width: "115px",
-      // fontSize:"16px",
-
-      padding: "5px 16px",
-    },
-  },
-  ButtonBtn1: {
-    paddingTop: "30px",
-    paddingRight: "10px",
-    width: "fit-content",
-    "& button": {
-      height: "41px!important",
-      // fontSize:"16px",
-      width: "120px",
-      padding: "5px 16px",
-    },
-  },
-  ButtonBtn2: {
-    paddingTop: "30px",
-    paddingRight: "10px",
-    width: "fit-content",
-    "& button": {
-      height: "41px!important",
-      // fontSize:"16px",
-      width: "120px",
-      padding: "5px 16px",
-    },
-  },
-  ButtonBtn3: {
-    paddingTop: "30px",
-    paddingRight: "10px",
-    width: "fit-content",
-    "& button": {
-      height: "41px!important",
-      // fontSize:"16px",
-      width: "120px",
-      padding: "5px 16px",
-    },
-  },
-  ButtonBtn4: {
-    paddingTop: "30px",
-    paddingRight: "10px",
-    width: "fit-content",
-    "& button": {
-      height: "41px!important",
-      // fontSize:"16px",
-      width: "120px",
-      padding: "5px 16px",
-    },
-  },
-  name: {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "15px",
-    color: "#141518",
-    [theme.breakpoints.down("sm")]: {
-      display: "block",
-    },
-    "& p": {
-      fontSize: "15px",
-      color: "#707070",
-      paddingLeft: "5px",
-    },
-  },
-  inputbox: {
-    width: "100%",
-    height: "120px",
-    borderRadius: "120px",
-  },
-  profile: {
-    margin: "auto",
-    display: "flex",
-    flexDirection: "column",
-    // marginTop: "-75px",
-    width: "fit-content",
-    padding: "5px 20px",
-    marginBottom: "10px",
-  },
-  coverpic: {
-    width: "100%",
-  },
-
-  coverback: {
-    height: "127.7px",
-    width: "100%",
-  },
-
-  CoverBox: {
-    background: "#5d0164",
-    display: "flex",
-    alignItems: "flex-end",
-    flexDirection: "column",
-  },
-  coverEdit: {
-    color: "#fff",
-    fontSize: "16px",
-    marginTop: "-40px",
-    padding: "10px",
-    position: "relative",
-    // backgroundColor: "red",
-    "& input": {
-      position: "absolute",
-      left: "10px",
-      top: "-10px",
-      width: "100%",
-      height: "100%",
-      opacity: "0",
-      cursor: "pointer!important",
-    },
-    "& svg": {
-      marginLeft: "7px",
-    },
-  },
-  profilePic: {
-    width: "320px",
-    position: "relative",
-    margin: "auto",
-    display: "block",
-    justifyContent: "space-between",
-    alignItems: "center",
-    // height: "120px",
-    borderRadius: "50%",
-    // padding: "10px",
-    borderColor: "#fff",
-    "& img": {
-      width: "200px!important",
-      height: "200px",
-      marginRight: "10px",
-      borderRadius: "50%",
-    },
-    "& input": {
-      position: "absolute",
-      left: "27%",
-      top: "43%",
-      width: "75%",
-      height: "15%",
-      opacity: "0",
-    },
-  },
- 
-  newsec: {
-    display: "flex",
-    "@media(max-width:560px)": {
-      display: "block",
-    },
-  },
-  mainadd: {
-    paddingTop: "8px",
-    "@media(max-width:560px)": {},
-  },
-  title: {
-    textAlign: "center",
-    display: "block",
-    background: "linear-gradient(to bottom right, #640D5F, rgb(27, 1, 98))",
-    width: "20% ",
-    padding: "10px 20px",
-    borderRadius: "10px",
-    color: "#fff",
-    "@media(max-width:680px)": {
-      width: "40% !important",
-    },
-  },
-  parentOfInput: {
-    width: "97%",
-    marginLeft: "20px",
-    marginTop: "25px",
-    "& div:before": {
-      width: "0px",
-    },
-    "& div:after": {
-      width: "91%",
-      left: "18px",
-      borderRadius: "20px",
-    },
-  },
-  parentOfInput1: {
-    marginLeft: "0px",
-    marginTop: "0px",
-    "& div:before": {
-      width: "0px",
-    },
-    "& div:after": {
-      width: "91%",
-      left: "18px",
-      borderRadius: "20px",
-    },
-  },
-  phoneEmail: {
-    background: " #c695da61",
-    boxShadow: "0 0 10px #7b6c81",
-    width: "97%",
-    marginLeft: "10px",
-    marginTop: "0px",
-    "& div": {
-      borderRadius: "5px",
-      padding: "10px",
-    },
-  },
-  linkBox: {
-    width: "100%",
-    marginLeft: "14px",
-    marginTop: "20px",
-    fontSize: "16px",
-    color: " #777",
-    border: "1px solid #ddd",
-    padding: "12px",
-    borderRadius: "15px",
-    justifyContent: "space-between",
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    paddingRight: "15px",
-    "& span": {
-      color: "#777",
-      fontSize: "13px",
-    },
-  },
-  btnPro: {
-    background: "linear-gradient(to bottom right, #640D5F, #1b0162)  !important",
-    transition: "background  .6s",
-    "&:hover": {
-        background: "linear-gradient(to bottom right, #640D5F,rgb(76, 55, 131))!important", 
-    },
-  },
-  btnOutPro: {
-    background : "#fff !important",
-    border: "#6345ED 1px solid !important",
-    color: "#6345ED  !important",
-    "&:hover": {
-        background: "linear-gradient(to bottom right, #640D5F, rgb(76, 55, 131))!important", 
-      color: "white !important",
-      border: "none !important",
-    },
-  },
-  homeSetting: {
-    // background: "linear-gradient(0deg, #c53bf92b, #7d43f012)",
-    background: "linear-gradient(to bottom left, #640D5F, black)" ,
-    borderRadius: "20px",
-    padding: "1rem",
-    margin: "1rem auto",
-    width: "100%",
-    boxShadow: "0 0 10px #a2a2a2",
-  },
-  boxSitting: {
-    borderRadius: "20px",
-    padding: "2rem 1rem",
-    boxShadow: "0 0 15px #7b6c8157",
-    // background: " #c695da61",
-     background: " #fff",
-
-    margin: "2rem 0",
-  },
-
-  inputField: {
-    width: "100%",
-    borderRadius: "8px",
-    "& input": {
-      boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
-      padding: "10px 15px",
-      fontSize: "16px",
-      borderRadius: "8px",
-      border: "1px solid #ccc",
-      transition: "all 0.3s ease",
-      "&:focus": {
-        borderColor: theme.palette.primary.main,
-        outline: "none",
-      },
-    },
-    "& .MuiInput-underline:before": {
-      borderBottom: "1px solid #ddd",
-    },
-    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-      borderBottom: "2px solid #6345ED",
-    },
+const SectionTitle = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  color: "black",
+  display: 'flex',
+  alignItems: 'center',
+  '&:after': {
+    content: '""',
+    flex: 1,
+    height: 1,
+    backgroundColor: theme.palette.divider,
+    marginLeft: theme.spacing(2),
   },
 }));
 
-// const useStyles = makeStyles((theme) => ({
-//   LoginBox: {
-//     paddingBottom: "50px",
-//   },
-//   basic: {
-//     textAlign: "center",
-//     fontFamily: "Poppins",
-//     fontSize: "30px",
-//     paddingTop: "20px",
-//     color: "#141518",
-//   },
-//   input_fild2: {
-//     width: "100%",
-//     "& input": {
-//       height: "33px",
-//       border: "1px solid #DDD",
-//       borderRadius: "20px",
-//       paddingLeft: "15px",
-//       fontSize: "18px",
-//       "@media(max-width:960px)": {
-//         height: "15px",
-//         marginTop: "-15px",
-//       },
-//     },
-//   },
-//   Button: {
-//     display: "flex",
-//     justifyContent: "center",
-//     paddingBottom: "25px",
-//   },
-//   ButtonBtn: {
-//     paddingTop: "30px",
-//     paddingRight: "10px",
-//     width: "fit-content",
-//     "& a": {
-//       height: "41px!important",
-//       width: "115px",
-//       // fontSize:"16px",
-
-//       padding: "5px 16px",
-//     },
-//   },
-//   ButtonBtn1: {
-//     paddingTop: "30px",
-//     paddingRight: "10px",
-//     width: "fit-content",
-//     "& button": {
-//       height: "41px!important",
-//       // fontSize:"16px",
-//       width: "120px",
-//       padding: "5px 16px",
-
-
-//     },
-//   },
-//   ButtonBtn2: {
-//     paddingTop: "30px",
-//     paddingRight: "10px",
-//     width: "fit-content",
-//     "& button": {
-//       height: "41px!important",
-//       // fontSize:"16px",
-//       width: "120px",
-//       padding: "5px 16px",
-
-
-//     },
-//   },
-//   ButtonBtn3: {
-//     paddingTop: "30px",
-//     paddingRight: "10px",
-//     width: "fit-content",
-//     "& button": {
-//       height: "41px!important",
-//       // fontSize:"16px",
-//       width: "120px",
-//       padding: "5px 16px",
-
-
-//     },
-//   },
-//   ButtonBtn4: {
-//     paddingTop: "30px",
-//     paddingRight: "10px",
-//     width: "fit-content",
-//     "& button": {
-//       height: "41px!important",
-//       // fontSize:"16px",
-//       width: "120px",
-//       padding: "5px 16px",
-
-
-//     },
-//   },
-//   name: {
-//     display: "flex",
-//     alignItems: "center",
-//     fontSize: "15px",
-//     color: "#141518",
-//     [theme.breakpoints.down("sm")]: {
-//       display: "block",
-//     },
-//     "& p": {
-//       fontSize: "15px",
-//       color: "#707070",
-//       paddingLeft: "5px",
-//     },
-//   },
-//   inputbox: {
-//     width: "10s0%",
-//     height: "120px",
-//     borderRadius: "120px",
-
-
-//   },
-//   profile: {
-//     display: "flex",
-//     flexDirection: "column",
-//     // marginTop: "-75px",
-//     width: "fit-content",
-//     padding: "5px 20px",
-//     marginBottom: "10px"
-//   },
-//   coverpic: {
-//     width: "100%",
-//   },
-
-//   coverback: {
-//     height: "127.7px",
-//     width: "100%",
-//   },
-
-//   CoverBox: {
-//     display: "flex",
-//     alignItems: "flex-end",
-//     flexDirection: "column",
-//   },
-//   coverEdit: {
-//     color: "#fff",
-//     fontSize: "16px",
-//     marginTop: "-40px",
-//     padding: "10px",
-//     position: "relative",
-//     // backgroundColor: "red",
-//     "& input": {
-//       position: "absolute",
-//       left: "10px",
-//       top: "-10px",
-//       width: "100%",
-//       height: "100%",
-//       opacity: "0",
-//       cursor: "pointer!important",
-//     },
-//     "& svg": {
-//       marginLeft: "7px"
-//     },
-//   },
-//   profilePic: {
-//     width: "320px",
-//     position: "relative",
-//     margin: "auto",
-//     display: "block",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     // height: "120px",
-//     borderRadius: "50%",
-//     // padding: "10px",
-//     "& img": {
-//       width: "200px!important",
-//       height: "200px",
-//       marginRight: "10px",
-//       borderRadius: "50%",
-//     },
-//     "& input": {
-//       position: "absolute",
-//       left: "27%",
-//       top: "43%",
-//       width: "75%",
-//       height: "15%",
-//       opacity: "0",
-//     },
-//   },
-//   Box: {
-//     width: "100%",
-//     height: isMobile ? "80px" : "200px",
-//     backgroundImage: "linear-gradient(to bottom, #c04848, #480048)",
-//     backgroundRepeat: "no-repeat",
-//     backgroundSize: "100%",
-//     backgroundPosition: "center center",
-//   },
-//   newsec: {
-//     display: "flex",
-//     "@media(max-width:560px)": {
-//       display: "block",
-//     },
-//   },
-//   mainadd: {
-//     paddingTop: "8px",
-//     "@media(max-width:560px)": {},
-//   },
-//   title: {
-//     width: "fit-content",
-//     padding: "10px",
-//     borderBottom: "1px solid #ddd",
-//     borderRadius: "10px",
-//     color: "#878484"
-//   },
-//   parentOfInput: {
-//     // width: "80%",
-//     marginLeft: "20px",
-//     marginTop: "25px",
-//     "& div:before": {
-//       width: "0px"
-//     },
-//     "& div:after": {
-//       width: "91%",
-//       left: "18px",
-//       borderRadius: "20px",
-//     }
-//   },
-//   parentOfInput1: {
-//     marginLeft: "0px",
-//     marginTop: "0px",
-//     "& div:before": {
-//       width: "0px"
-//     },
-//     "& div:after": {
-//       width: "91%",
-//       left: "18px",
-//       borderRadius: "20px",
-//     }
-//   },
-//   phoneEmail: {
-//     width: "97%",
-//     marginLeft: "10px",
-//     marginTop: "0px",
-//     "& div": {
-//       borderRadius: "15px",
-//       padding: "10px",
-//     }
-//   },
-//   linkBox: {
-//     width: "95%",
-//     marginLeft: "14px",
-//     marginTop: "20px",
-//     fontSize: "16px",
-//     color: "#777",
-//     border: "1px solid #ddd",
-//     padding: "12px",
-//     borderRadius: "15px",
-//     justifyContent: "space-between",
-//     display: "flex",
-//     flexWrap: "wrap",
-//     alignItems: "center",
-//     paddingRight: "15px",
-//     "& span": {
-//       color: "#777",
-//       fontSize: "13px"
-//     }
-    
-//   }
-  
-// }));
-export function copyTextById(id) {
-  var copyText = document.getElementById(id);
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); /* For mobile devices */
-  navigator.clipboard.writeText(copyText.value);
-  alert(`Copied ${copyText.value}`);
-}
-
 const VerificationAlert = ({ verify }) => {
   const user = useContext(UserContext);
-
   const [verifyOTPOpen, setVerifyOTPOpen] = useState(false);
+  
   return (
-    <Box style={{ width: "340px", marginLeft: "17px", marginBottom: "10px" }} >
-      <Alert severity="warning" variant="outlined">
+    <Box sx={{ mb: 1 ,width:"fit-content"}}>
+      <Alert severity="error" variant="filled">
         <AlertTitle>Security Verification</AlertTitle>
         To secure your account and enjoy full MAS Platform features please verify
         {' '}
@@ -655,7 +82,7 @@ const VerificationAlert = ({ verify }) => {
         <Button
           variant="text"
           onClick={() => setVerifyOTPOpen(true)}
-          style={{ color: "red" }}
+          sx={{ color: "white",textDecoration:"underline" }}
         >
           Click here!
         </Button>
@@ -674,1034 +101,617 @@ const VerificationAlert = ({ verify }) => {
         }}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default function ProfileSettings() {
+const ProfileSettings = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const user = useContext(UserContext);
-  const classes = useStyles();
   const navigate = useNavigate();
-      const {t} = useTranslation();
+  const { t } = useTranslation();
 
-  const [isLoading, setIsloading] = useState(false);
-  const [name, setname] = useState(user.userProfileData?.name);
-  const [speciality, setspeciality] = useState(user.userProfileData?.speciality);
-  const [bio, setbio] = useState(user.userProfileData?.userbio);
-  const [phone, setphone] = useState(user.userData?.phone);
-  const [email, setemail] = useState(user.userData?.email);
-  const [profilePic, setProfilePic] = useState(user.userProfileData?.userprofilepic);
-  const [cover, setcover] = useState(user.userProfileData?.usercover);
+  // State management
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: user.userProfileData?.name || '',
+    speciality: user.userProfileData?.speciality || '',
+    bio: user.userProfileData?.userbio || '',
+    profilePic: user.userProfileData?.userprofilepic || '',
+    cover: user.userProfileData?.usercover || ''
+  });
   const [editingPhone, setEditingPhone] = useState(false);
   const [editingEmail, setEditingEmail] = useState(false);
+  const [editedPhone, setEditedPhone] = useState(user.userData?.phone || '');
+  const [editedEmail, setEditedEmail] = useState(user.userData?.email || '');
   const [needVerification, setNeedVerification] = useState([]);
-  const [editedPhone, setEditedPhone] = useState("");
-  const [editedEmail, setEditedEmail] = useState("");
-  const [phonevalid, setphonevalid] = useState(true);
-  const [isLogOutOpen, setIsLogoutOpen] = useState(false);
-  const auth = useContext(UserContext);
-  const [open, setOpen] = useState(false);
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [OpenKYCDialog, setOpenKYDialog] = useState(false);
-  const [openDeactivateDialog, setOpenDeactivateDialog] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    dateOfBirth: '',
-    document: null,
+  const [dialogOpen, setDialogOpen] = useState({
+    delete: false,
+    deactivate: false
   });
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [file, setFile] = useState(null);
 
-  const getBase64 = (file, cb) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      cb(reader.result);
-    };
-    reader.onerror = function (err) {
-      console.log("Error: ", err);
-    };
+  // Handle form changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  const handleFileChange = (field) => (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData(prev => ({ ...prev, [field]: event.target.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // API calls
   const updateProfile = async () => {
-     // if (!name || !bio || !speciality || !profilePic ) {
-      // toast.error("Check field Errors !");
-    // } else {
-
-    setIsloading(true);
-    axios({
-      method: "PUT",
-      url: Apiconfigs.updateprofile,
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-      data: {
-        name: name,
-        speciality: speciality,
-        profilePic: profilePic,
-        coverPic: cover,
-        bio: bio,
-        facebook: user.link.userfacebook,
-        twitter: user.link.usertwitter,
-        youtube: user.link.useryoutube,
-        telegram: user.link.usertelegram,
-      },
-    }).then(async (res) => {
-      if (res.data.statusCode === 200) {
-        toast.success("Your profile has been updated successfully");
-        user.updateUserData();
-        navigate("/profile");
-      } else {
-        toast.error(res.data.responseMessage);
-      
-      }
-      setIsloading(false);
-    })
-      .catch((error) => {
-        setIsloading(false);
-
-        if (error.response) {
-          toast.error(error.response.data.responseMessage);
-        } else {
-          toast.error(error.message);
-        }
-      });
-   // }
-  };
-  const handleSaveEmailClick = () => {
-    // Add logic to save edited email
-    if (!email) {
-      toast.error("Check field Errors !");
-     } else {
-    setEditingEmail(true);
-    axios({
-      method: "PUT",
-      url: Apiconfigs.updateprofile,
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-      data: {
-        email : editedEmail
-      },
-    }).then(async (res) => {
-      if (res.data.statusCode === 200) {
-        toast.success("Your profile has been updated successfully");
-        setemail(email);
-        user.updateUserData();
-        //navigate("/profile");
-      } else {
-        toast.error(res.data.responseMessage);
-      }
-      setEditingEmail(false);
-    })
-    .catch((error) => {
-      setIsloading(false);
-
-      if (error.response) {
-        toast.error(error.response.data.responseMessage);
-      } else {
-        toast.error(error.message);
-      }
-    });
-  }
-  };
-  const handleCancelEmailClick = () => {
-    // Add logic to cancel email edit
-    setEditingEmail(false);
-  };
-  const handleSavePhoneClick = () => {
-    // Add logic to save edited phone number
-    if (!phone) {
-      toast.error("Check field Errors !");
-     } else {
-    setEditingPhone(true);
-    axios({
-      method: "PUT",
-      url: Apiconfigs.updateprofile,
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-      data: {
-        phone : editedPhone
-      },
-    }).then(async (res) => {
-      if (res.data.statusCode === 200) {
-        toast.success("Your profile has been updated successfully");
-        setphone(phone);
-        user.updateUserData();
-        //navigate("/profile");
-      } else {
-        toast.error(res.data.responseMessage);
-      }
-      setEditingPhone(false);
-    })
-    .catch((error) => {
-      setIsloading(false);
-
-      if (error.response) {
-        toast.error(error.response.data.responseMessage);
-      } else {
-        toast.error(error.message);
-      }
-    });
-  }
-  };
-  const handleCancelPhoneClick = () => {
-    // Add logic to cancel phone number edit
-    setEditingPhone(false);
-  };
-  const deleteProfile = async () => {
+    setIsLoading(true);
     try {
       const response = await axios({
-        method: "delete",
-        url: Apiconfigs.deleteProfile,
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
+        method: "PUT",
+        url: Apiconfigs.updateprofile,
+        headers: { token: sessionStorage.getItem("token") },
+        data: {
+          ...formData,
+          facebook: user.link.userfacebook,
+          twitter: user.link.usertwitter,
+          youtube: user.link.useryoutube,
+          telegram: user.link.usertelegram,
+        }
       });
-  
+      
       if (response.data.statusCode === 200) {
-        toast.success("Your profile has been deleted successfully");
-        // You might want to navigate to a different page or perform other actions after deletion
-        auth.logOut();
-        navigate("/create-account");
+        toast.success("Profile updated successfully");
+        user.updateUserData();
+        window.location.reload()
+
       } else {
         toast.error(response.data.responseMessage);
       }
     } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.responseMessage);
-      } else {
-        toast.error(error.message);
-      }
-      setIsloading(true);
-
-    // Simulate asynchronous operation (replace with your actual logic)
-    setTimeout(() => {
-      setIsloading(false);
-      handleClose();
-    }, 2000);
+      toast.error(error.response?.data?.responseMessage || error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
-  const handleOpenDelete = () => {
-    setOpenDeleteDialog(true);
-  };
-  const handleOpenDeactivate = () => {
-    setOpenDeactivateDialog(true);
-  };
-  const handleOpenKYC = () => {
-    setOpenKYDialog(true);
-  };
-  const handleClose = () => {
-    setOpenDeleteDialog(false);
-    setOpenDeactivateDialog(false);
-    setOpenKYDialog(false);
-  };
-  const deactivateProfile = () => {
-    // Perform your deactivation logic here
+
+  const handleSaveEmailClick = async () => {
+    setIsLoading(true);
     try {
-      const response =  axios({
+      const response = await axios({
         method: "PUT",
-        url: Apiconfigs.deactivateProfile, // Update the URL to your new endpoint
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
+        url: Apiconfigs.updateprofile,
+        headers: { token: sessionStorage.getItem("token") },
+        data: { email: editedEmail }
       });
-  
+      
       if (response.data.statusCode === 200) {
-        toast.success("Your profile has been deactivated successfully");
-        // You might want to navigate to a different page or perform other actions after deactivation
-        auth.logOut();
+        toast.success("Email updated successfully");
+        user.updateUserData();
+        setEditingEmail(false);
+      } else {
+        toast.error(response.data.responseMessage);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.responseMessage || error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSavePhoneClick = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios({
+        method: "PUT",
+        url: Apiconfigs.updateprofile,
+        headers: { token: sessionStorage.getItem("token") },
+        data: { phone: editedPhone }
+      });
+      
+      if (response.data.statusCode === 200) {
+        toast.success("Phone number updated successfully");
+        user.updateUserData();
+        setEditingPhone(false);
+      } else {
+        toast.error(response.data.responseMessage);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.responseMessage || error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteProfile = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios({
+        method: "DELETE",
+        url: Apiconfigs.deleteProfile,
+        headers: { token: sessionStorage.getItem("token") }
+      });
+      
+      if (response.data.statusCode === 200) {
+        toast.success("Profile deleted successfully");
+        user.logOut();
+        navigate('/create-account');
+      } else {
+        toast.error(response.data.responseMessage);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.responseMessage || error.message);
+    } finally {
+      setIsLoading(false);
+      handleDialog('delete', false)();
+    }
+  };
+
+  const deactivateProfile = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios({
+        method: "PUT",
+        url: Apiconfigs.deactivateProfile,
+        headers: { token: sessionStorage.getItem("token") }
+      });
+      
+      if (response.data.statusCode === 200) {
+        toast.success("Profile deactivated successfully");
+        user.logOut();
         navigate('/login');
       } else {
         toast.error(response.data.responseMessage);
       }
     } catch (error) {
-      console.error("Error deactivating profile:", error);
-      // Handle error, show an error message, etc.
+      toast.error(error.response?.data?.responseMessage || error.message);
+    } finally {
+      setIsLoading(false);
+      handleDialog('deactivate', false)();
     }
-    setIsloading(true);
-
-    // Simulate asynchronous operation (replace with your actual logic)
-    setTimeout(() => {
-      setIsloading(false);
-      handleClose(); // Close the modal after deactivation is complete
-      history.push('/create-account');
-    }, 2000);
-  };
-  const KYCForm = () => {
-    
-    const handleChange = (e) => {
-      const { name, value, files } = e.target;
-  
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: name === 'document' ? files[0] : value,
-      }));
-    };
-    const handleSubmit = (e) => {
-      e.preventDefault();
-  
-      // Perform KYC verification here using formData
-  
-      console.log('KYC Form submitted:', formData);
-      // You can send the form data to a server for further processing and verification.
-    };
-  
-  };
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === 'document' ? files[0] : value,
-    }));
-  };
-  const handleNameChange = (e) => {
-    setname(e.target.value);
   };
 
-  const handleDateOfBirthChange = (e) => {
-    setDateOfBirth(e.target.value);
+  const handleDialog = (type, open) => () => {
+    setDialogOpen(prev => ({ ...prev, [type]: open }));
   };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  // Verification check
+  useEffect(() => {
+    if (user.isLogin && user.userData._id) {
+      const verify = [];
+      if (!user.userData.emailVerification) verify.push('email');
+      if (!user.userData.phoneVerification) verify.push('sms');
+      setNeedVerification(verify);
+    }
+  }, [user]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('dateOfBirth', dateOfBirth);
-    formData.append('document', file);
-     // Log the FormData object
-     console.log('FormData:', formData);
-    try {
-      const response = await fetch('http://localhost:1865/upload', {
-        method: 'POST',
-        body: formData,
+  // Initialize form data
+  useEffect(() => {
+    if (user.userProfileData) {
+      setFormData({
+        name: user.userProfileData.name || '',
+        speciality: user.userProfileData.speciality || '',
+        bio: user.userProfileData.userbio || '',
+        profilePic: user.userProfileData.userprofilepic || '',
+        cover: user.userProfileData.usercover || ''
       });
-        
-      if (response.ok) {
-        console.log('File uploaded successfully');
-      } else {
-        console.error('Failed to upload file');
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
+      setEditedPhone(user.userData?.phone || '');
+      setEditedEmail(user.userData?.email || '');
     }
-  };
-  const SelfieCapture = () => {
-    const [stream, setStream] = useState(null);
-    const videoRef = useRef(null);
-  
-    const startCamera = async () => {
-      try {
-        const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        setStream(mediaStream);
-        if (videoRef.current) {
-          videoRef.current.srcObject = mediaStream;
-        }
-      } catch (error) {
-        console.error('Error accessing camera:', error);
-      }
-    };
-  
-    const stopCamera = () => {
-      if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-        setStream(null);
-      }
-    };
-  
-    const takePicture = () => {
-      if (videoRef.current) {
-        const canvas = document.createElement('canvas');
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        const context = canvas.getContext('2d');
-        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-  
-        // Convert the canvas content to a data URL
-        const imageDataUrl = canvas.toDataURL('image/png');
-        console.log('Captured image:', imageDataUrl);
-  
-        // Stop the camera
-        stopCamera();
-      }
-    }
-  }
-  const [stream, setStream] = useState(null);
-    const videoRef = useRef(null);
-  const startCamera = async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
-    } catch (error) {
-      console.error('Error accessing camera:', error);
-    }
-  };
-  const stopCamera = () => {
-    if (stream) {
-      const tracks = stream.getTracks();
-      tracks.forEach(track => track.stop());
-      setStream(null);
-    }
-  };
-
-  const takePicture = () => {
-    if (videoRef.current) {
-      // Wait for the loadedmetadata event before capturing the image
-      videoRef.current.addEventListener('loadedmetadata', () => {
-        console.log('Video metadata loaded');
-        const canvas = document.createElement('canvas');
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        const context = canvas.getContext('2d');
-        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-  
-        // Convert the canvas content to a data URL
-        const imageDataUrl = canvas.toDataURL('image/png');
-        console.log('Captured image:', imageDataUrl);
-  
-        // Stop the camera
-        stopCamera();
-      }, { once: true }); // Ensure the event listener runs only once
-    }
-  };
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.addEventListener('loadedmetadata', () => {
-        // Now it's safe to call takePicture or startCamera
-      });
-    }
-  }, [videoRef]);
-  useEffect(() => {
-    let timer1;
-    function checkechecko() {
-      if (user.isLogin && user.userData._id) {
-        let verify = new Set(needVerification);
-        if (user.userData.emailVerification === false) {
-          verify.add('email')
-        } else {
-          verify.delete('email')
-        }
-        if (user.userData.phoneVerification === false) {
-          verify.add('sms');
-        } else {
-          verify.delete('sms')
-        }
-        setNeedVerification([...verify]);
-
-        return () => {
-          clearTimeout(timer1);
-        };
-      } else {
-        timer1 = setTimeout(() => {
-          checkechecko()
-        }, 500);
-      }
-    }
-    checkechecko()
-  }, []);
-  useEffect(() => {
-    setname(user.userProfileData?.name);
-    //setphone(user.userProfileData?.phone);
-    //setemail(user.userProfileData?.email);
-    setspeciality(user.userProfileData?.speciality);
-    setbio(user.userProfileData?.userbio);
-    setProfilePic(user.userProfileData?.userprofilepic);
-    setcover(user.userProfileData?.usercover);
-  }, [user.userProfileData])
+  }, [user.userProfileData, user.userData]);
 
   return (
-    <Box className={classes.LoginBox}>
-      {/* Start Cover */}
-      <Grid className={classes.CoverBox}>
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+      {/* Cover Photo Section */}
+      <Box sx={{ position: 'relative', height: 250, overflow: 'hidden' }}>
         <Box
-         sx={{
-      width: "100%",
-      height: "250px", // Adjust height as needed
-      overflow: "hidden", // Ensure the image doesn't overflow
-    }}
-        >
-        <img src={cover? `${cover}` : null} style={{
-        width: "100%",
-        height: "100%",
-        objectFit: "cover", // Ensures the image covers the entire box
-      }}/>
-        </Box>
-        
-      </Grid>
-      <Box className={classes.coverEdit} style={{ cursor: "pointer!important" }}>
-          {t("Edit Cover")}
-          <FiEdit />
-          <input
-            style={{ cursor: "pointer" }}
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              getBase64(e.target.files[0], (result) => {
-                setcover(result);
-              });
+          component="img"
+          src={formData.cover || "/images/default-cover.jpg"}
+          sx={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            filter: 'brightness(0.8)'
+          }}
+          alt="Cover"
+        />
+        <Box sx={{ 
+          position: 'absolute', 
+          bottom: 16, 
+          right: 16,
+          display: 'flex',
+          gap: 1
+        }}>
+          <Button
+            component="label"
+            variant="contained"
+            size="small"
+            startIcon={<FiEdit />}
+            sx={{
+              bgcolor: 'rgba(0,0,0,0.7)',
+              '&:hover': { bgcolor: 'rgba(0,0,0,0.9)' }
             }}
-          />
-        </Box>
-      {/* End Cover */}
-
-      <Container maxWidth="md" className={classes.homeSetting}>
-
-        {/* Start Profile Img */}
-        <Box className={classes.profile}>
-          <Box className={classes.profilePic}
-            style={!profilePic ? {
-              border: ""
-            } : null}
           >
-            <img
-              src={profilePic || "/images/users/profilepic1.svg"}
-              alt="Edit profile picture"
-              style={
-                profilePic
-                  ? {
-                      padding: "4px",
-                      border: "solid 2px #fff",
-                      display: "block",
-                      width: "fit-content",
-                      margin: "auto",
-                      objectFit:"cover"
-                    }
-                  : {
-                      border: "solid 2px #fff !important",
-                      marginTop: "3px",
-                      display: "block",
-                      width: "fit-content",
-                      margin: "auto",
-                    }
-              }
+            {t("Edit Cover")}
+            <input
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={handleFileChange('cover')}
             />
-               <Box dir='ltr'
-              style={{
-                width: "fit-content",
-                margin: "15px auto",
-                textAlign: "center",
-                padding: ".7rem 1rem",
-                borderRadius: "20px",
-                color: "white",
-                fontWeight: "700",
-                cursor: "pointer",
-              }}
-              className={classes.btnPro}
-            >
-              <label
-                htmlFor="upload-photo"
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <FiEdit style={{ marginRight: "8px" }} /> {t("Edit Picture")}
-              </label>
-              <input
-                type="file"
-                id="upload-photo"
-                accept="image/*"
-                style={{ display: "none" }} // إخفاء زر التحميل
-                onChange={(e) => {
-                  getBase64(e.target.files[0], (result) => {
-                    setProfilePic(result);
-                  });
-                }}
-              />
-            </Box>
-          </Box>
+          </Button>
         </Box>
-        {/* End Profile Img */}
-        {/* Start Name */}
-        <Box mt={0} style={{ marginTop: "-15px" }}>
-          <Grid  container spacing={1} alignItems="center" >
-            <Grid item xs={12} >
-              <label className={classes.title}>{t("NickName")}</label>
-            </Grid>
-            <Grid item xs={12} className={classes.parentOfInput}>
-              <TextField
-                value={name}
-                // error={!name}
-                // helperText={!name && "Please enter valid name"}
-                required="true"
-                onChange={(e) => setname(e.target.value)}
-                // className={classes.input_fild2}
-                className={classes.inputField}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-        {/* End Name */}
-        {/* Start Specilaity */}
-        <Box mt={2} >
-          <Grid container spacing={1} alignItems="center" >
-            <Grid item xs={12}>
-              <label className={classes.title}>{t("Speciality")}</label>
-            </Grid>
-            <Grid item xs={12} className={classes.parentOfInput}>
-              <TextField
-                value={speciality}
-                // error={!speciality}
-                // helperText={!speciality && "Please enter valid speciality"}
-                required="true"
-                onChange={(e) => setspeciality(e.target.value)}
-                // className={classes.input_fild2}
-                className={classes.inputField}
-              />
+      </Box>
 
-            </Grid>
-          </Grid>
-        </Box>
-        {/* End Speciality */}
+      <Box p={4} >
+        <Box sx={{ 
+          display: 'flex', 
+  alignItems: 'center',
+  gap: 1, // Adds spacing between avatar and button
+  justifyContent: 'center',
+  flexWrap: 'wrap' // Allows wrapping on small screens
+        }}>
+                <ProfileAvatar
+                  src={formData.profilePic || "/images/users/profilepic1.svg"}
+                  alt="Profile"
+                />
+               <IconButton 
+   component="label"
+    color="primary"
+    sx={{
+      bgcolor: 'rgba(0,0,0,0.7)',
+      '&:hover': { 
+        bgcolor: 'rgba(0,0,0,0.9)',
+      },
+      width: 40,
+      height: 40,
+    }}
+  >
+    <FiEdit fontSize="large" color="white" />
+    <input
+      type="file"
+      hidden
+      accept="image/*"
+      onChange={handleFileChange('profilePic')}
+    />
+</IconButton>
+              </Box>
 
-        {/* Start About Me */}
-        <Box mt={2}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12} >
-              <label className={classes.title}>{t("About me")}</label>
-            </Grid>
+               <Grid container spacing={3} sx={{ mt: 2 }}>
+              {/* Basic Information */}
+             
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label={t("Username")}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  variant="outlined"
+                  required
+                />
+              </Grid>
 
-            <Grid item xs={12} className={classes.parentOfInput}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label={t("Speciality")}
+                  name="speciality"
+                  value={formData.speciality}
+                  onChange={handleChange}
+                  variant="outlined"
+                />
+              </Grid>
 
-              <TextField
-                // id="outlined-multiline-static"
-                value={bio}
-                // focused="true"
-                // multiline
-                // error={!bio}
-                // helperText={!bio && "Please Fill in something about you"}
-                required="false"
-                onChange={(e) => setbio(e.target.value)}
-                // className={classes.input_fild2}
-                className={classes.inputField}
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={4}
+                  label={t("About me")}
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleChange}
+                  variant="outlined"
+                />
+              </Grid>
+
+              {/* Contact Information */}
+              <Grid item xs={12}>
+                <SectionTitle variant="h6">{t("Contact Information")}</SectionTitle>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label={t("Email")}
+                  value={editingEmail ? editedEmail : user.userData?.email}
+                  onChange={(e) => setEditedEmail(e.target.value)}
+                  variant="outlined"
+                  disabled={!editingEmail}
+                   InputLabelProps={{
+    shrink: true, // This forces the label to always appear above the field
+  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {user.userData?.emailVerification ? (
+                          <CheckCircleOutline color="success" fontSize="small" />
+                        ) : (
+                          <Tooltip title="Email not verified">
+                            <ErrorOutline color="error" fontSize="small" />
+                          </Tooltip>
+                        )}
+                        {editingEmail ? (
+                          <>
+                            <IconButton onClick={() => {
+                              setEditingEmail(false);
+                              setEditedEmail(user.userData?.email);
+                            }}>
+                              <Cancel color="error" fontSize="small" />
+                            </IconButton>
+                            <IconButton onClick={handleSaveEmailClick}>
+                              <Save color="primary" fontSize="small" />
+                            </IconButton>
+                          </>
+                        ) : (
+                          <IconButton onClick={() => setEditingEmail(true)}>
+                            <Edit color="primary" fontSize="small" />
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label={t("Phone Number")}
+                  value={editingPhone ? editedPhone : user.userData?.phone}
+                  onChange={(e) => setEditedPhone(e.target.value)}
+                  variant="outlined"
+                  disabled={!editingPhone}
+                   InputLabelProps={{
+    shrink: true, // This forces the label to always appear above the field
+  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {user.userData?.phoneVerification ? (
+                          <CheckCircleOutline color="success" fontSize="small" />
+                        ) : (
+                          <Tooltip title="Phone not verified">
+                            <ErrorOutline color="error" fontSize="small" />
+                          </Tooltip>
+                        )}
+                        {editingPhone ? (
+                          <>
+                            <IconButton onClick={() => {
+                              setEditingPhone(false);
+                              setEditedPhone(user.userData?.phone);
+                            }}>
+                              <Cancel color="error" fontSize="small" />
+                            </IconButton>
+                            <IconButton onClick={handleSavePhoneClick}>
+                              <Save color="primary" fontSize="small" />
+                            </IconButton>
+                          </>
+                        ) : (
+                          <IconButton onClick={() => setEditingPhone(true)}>
+                            <Edit color="primary" fontSize="small" />
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+
+              {needVerification.length > 0 && (
+                <Grid item xs={12}>
+                  <VerificationAlert verify={needVerification} />
+                </Grid>
+              )}
+
+              {/* Account Information */}
+              <Grid item xs={12}>
+                <SectionTitle variant="h6">{t("Account Information")}</SectionTitle>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box display={"flex"} flexDirection={"column"} gap={1} justifyContent={"center"}>
+                  <Typography variant="body1" ml={1}>Profile Link</Typography>
                 
-               
-              />
-            </Grid>
-          </Grid>
-        </Box>
-        {/* End About Me */}
-
-        {/* Start Email */}
-        <Box mt={2}>
-  <Grid container spacing={1} alignItems="center">
-    <Grid item xs={12}>
-      <label className={classes.title}>{t("Email")}</label>
-    </Grid>
-    <Grid item xs={12} className={classes.parentOfInput}>
-      {editingEmail ? (
-        <TextField
-          fullWidth
-          variant="outlined"
-          required={false}
-          margin="normal"
-          className={classes.inputField}
-
-          value={editedEmail}
-          onChange={(e) => setEditedEmail(e.target.value)}
-        />
-      ) : (
-        <TextField
-          disabled={true}
-          fullWidth
-          variant="outlined"
-          required={false}
-          margin="normal"
-          className={classes.inputField}
-
-          value={user.userData?.email}
-          style={{color :"white !important"}}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                {user.userData?.emailVerification ? (
-                  <CheckCircleOutlineIcon fontSize="16" style={{ color: green[500] }} />
-                ) : (
-                  <Tooltip title="Email not verified" placement="right">
-                    <ErrorOutlineIcon fontSize="16" style={{ color: red[500] }} />
-                  </Tooltip>
-                )}
-                <IconButton color="primary" onClick={() => setEditingEmail(true)}>
-                  <EditIcon fontSize="16" />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-      )}
-      {editingEmail ? (
-  <>
-    <IconButton onClick={handleSaveEmailClick} color="primary">
-      <SaveIcon fontSize="16" style={{ color: 'green' }} />
-    </IconButton>
-    <IconButton onClick={handleCancelEmailClick} color="secondary">
-      <CancelIcon fontSize="16" style={{ color: 'red' }} />
-    </IconButton>
-  </>
-) : (
-  <>
-  </>
-)}
-    </Grid>
-  </Grid>
-        </Box>
-        {/* End Email */}
-
-        {/*Start  Phone Number */}
-        <Box mt={2}>
-         <Grid container spacing={1} alignItems="center">
-          <Grid item xs={12} md={0}>
-          <label  className={classes.title}>{t("Phone Number")}</label>
-         </Grid>
-         <Grid   item xs={12} className={classes.parentOfInput}>
-      {editingPhone ? (
-        <TextField
-          defaultCountry="US"
-          // fullWidth
-          // variant="outlined"
-          margin="normal"
-          value={editedPhone}
-          onChange={(e) => setEditedPhone(e.target.value)}
-          className={classes.inputField}
-
-        />
-      ) : (
-        <TextField
-          defaultCountry="US"
-          disabled={true}
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          value={user.userData?.phone}
-          className={classes.inputField}
-
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                {user.userData?.phoneVerification ? (
-                  <CheckCircleOutlineIcon fontSize="16" style={{ color: green[500] }} />
-                ) : (
-                  <Tooltip title="Phone number not verified" placement="right">
-                    <ErrorOutlineIcon fontSize="16" style={{ color: red[500] }} />
-                  </Tooltip>
-                )}
-                <IconButton color="primary" onClick={() => setEditingPhone(true)}>
-                  <EditIcon fontSize="16" />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-        />
-      )}
-          {editingPhone ? (
-          <>
-    <IconButton onClick={handleSavePhoneClick} color="primary">
-      <SaveIcon fontSize="16" style={{ color: 'green' }} />
-    </IconButton>
-    <IconButton onClick={handleCancelPhoneClick} color="secondary">
-      <CancelIcon fontSize="16" style={{ color: 'red' }} />
-    </IconButton>
-  </>
-) : (
-  <>
-  </>
-)}
-    </Grid>
-         </Grid>
-        </Box>
-        {/* End Phone Number */}
-
-        {needVerification.length == 1 && <VerificationAlert verify={needVerification} />}
-
-        {/* Start profile URL */}
-        <Box mt={2}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12}>
-              <label  className={classes.title} mb={1}>{t("Profile URL")}</label>
-            </Grid>
-            <Grid item xs={12} className={classes.linkBox} mt={1} >
-              <span >
-                https://masplatform.net/user-profile/{user?.userData?.userName}
-              </span>  &nbsp;
-              <CopyToClipboard
-                style={{ cursor: "pointer", }}
-                text={`https://masplatform.net/user-profile/${user.userData?.userName}`}
-              >
-                <FiCopy onClick={() => toast.info("Profile url Copied")} />
-              </CopyToClipboard>
-            </Grid>
-          </Grid>
-        </Box>
-        {/* End Profile URL */}
-
-        {/* Start Wllet Addrss */}
-        <Box mt={2}>
-          <Grid container spacing={1} alignItems="center"
-          >
-            <Grid  item xs={12} >
-              <label  className={classes.title}>{t("Wallet Address")}</label>
-            </Grid>
-            <Grid item xs={12} className={classes.linkBox} mt={1}>
-              <span >
-                {user.userData?.ethAccount?.address}
-              </span> &nbsp;
-              <CopyToClipboard
-                style={{ cursor: "pointer" }}
-                text={user.userData?.ethAccount?.address}
-              >
-                <FiCopy onClick={() => toast.info("Wallet Copied")} />
-              </CopyToClipboard>
-            </Grid>
-          </Grid>
-        </Box>
-        {/* End Wallet Address */}
-
-        {/* Start Referral  */}
-        <Box mt={2}>
-          <Grid container style={{ display: "block" }} alignItems="center">
-            <Grid item xs={12}>
-              <label  className={classes.title}>{t("Referral")}</label>
-            </Grid>
-            <Grid item xs={12} className={classes.linkBox} mt={1}>
-              <span >{user.userData?.referralCode}</span>
-              &nbsp;
-              <CopyToClipboard text={user.userData?.referralCode}>
-                <FiCopy onClick={() => toast.info("Referral Code Copied")} />
-              </CopyToClipboard>
-            </Grid>
-
-          </Grid>
-        </Box>
-        {/* End Referral */}
-
-        {/* Start Social Medya */}
-        <Box mt={4}>
-          <SocialAccounts />
-        </Box>
-        {/* End Social Medya */}
-        {/* Start buttons */}
-        <Box>
-          <Box className={classes.Button}>
-            <Box className={classes.ButtonBtn}>
-              <Button
-                variant="contained"
-                size="large"
-                // color="primary"
-                component={Link}
-                to="/"
-                disabled={isLoading}
-                className={classes.btnOutPro}
-              >
-                {t("Cancel")}
-              </Button>
-            </Box>
-             {/* start Deletion Button */}
-             <Box  className={classes.ButtonBtn2}>
-               <Button
-        variant="contained"
-        size="large"
-        color="secondary"
-        disabled={isLoading}
-        onClick={handleOpenDelete}
-        className={classes.btnPro}
-        style={{
-          padding: "10px 20px!important",
-          backgroundColor: "blue",
-          color: "white",
-        }}
-      >
-        {isLoading ? "Delete..." : t("Delete")}
-               </Button>
-               <Dialog
-        open={openDeleteDialog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" sx={{fontSize:"18px"}}>{t("Confirmation")}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {t("Are you sure you want to delete your profile?")}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} sx={{color:"#2f0032"}}>
-            {t("Cancel")}
-          </Button>
-          <Button
-            onClick ={deleteProfile}
-            color="secondary"
-            variant="contained"
-            disabled={isLoading}
-            sx={{background: "#2f0032", color: "white"}}
-          >
-            {isLoading ? t("Deleting...") : t("Confirm")}
-          </Button>
-        </DialogActions>
-               </Dialog>
+                <Paper variant="outlined" sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="body2">
+                    https://masplatform.net/user-profile/{user?.userData?.userName}
+                  </Typography>
+                  <CopyToClipboard
+                    text={`https://masplatform.net/user-profile/${user.userData?.userName}`}
+                    onCopy={() => toast.info("Profile URL copied")}
+                  >
+                    <IconButton size="small">
+                      <FiCopy />
+                    </IconButton>
+                  </CopyToClipboard>
+                </Paper>
                 </Box>
-               {/* end Deletion Button */}
+              </Grid>
 
-                {/* start deactivaite Button */}
-            <Box className={classes.ButtonBtn3}>
+              <Grid item xs={12}>
+              <Box display={"flex"} flexDirection={"column"} gap={1} justifyContent={"center"}>
+                  <Typography variant="body1" ml={1}>Wallet Address</Typography>
+                <Paper variant="outlined" sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="body2" noWrap sx={{ maxWidth: '80%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {user.userData?.ethAccount?.address}
+                  </Typography>
+                  <CopyToClipboard
+                    text={user.userData?.ethAccount?.address}
+                    onCopy={() => toast.info("Wallet address copied")}
+                  >
+                    <IconButton size="small">
+                      <FiCopy />
+                    </IconButton>
+                  </CopyToClipboard>
+                </Paper>
+                </Box>
+              </Grid>
+
+              <Grid item xs={12}>
+                 <Box display={"flex"} flexDirection={"column"} gap={1} justifyContent={"center"}>
+                  <Typography variant="body1" ml={1}>Referral Code</Typography>
+                <Paper variant="outlined" sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="body2">
+                    {user.userData?.referralCode}
+                  </Typography>
+                  <CopyToClipboard
+                    text={user.userData?.referralCode}
+                    onCopy={() => toast.info("Referral code copied")}
+                  >
+                    <IconButton size="small">
+                      <FiCopy />
+                    </IconButton>
+                  </CopyToClipboard>
+                </Paper>
+                </Box>
+              </Grid>
+
+              {/* Social Accounts */}
+              <Grid item xs={12}>
+                <SocialAccounts />
+              </Grid>
+            </Grid>
+        {/* Profile Card */}
+       
+         
+
+          {/* Action Buttons */}
+          <Box sx={{ 
+            p: 2, 
+            display: 'flex', 
+            flexWrap: 'wrap', 
+            gap: 2, 
+            justifyContent: 'center',
+            borderTop: `1px solid ${theme.palette.divider}`
+          }}>
+            <Button
+              variant="outlined"
+              
+              component={Link}
+              to="/"
+              disabled={isLoading}
+              sx={{ minWidth: 120 ,
+                color:(theme) => theme.custom?.mainButton,
+                borderColor: (theme) => theme.custom?.mainButton,
+              }}
+            >
+              {t("Cancel")}
+            </Button>
+
+              <Button
+              variant="outlined"
+              color="error"
+              disabled={isLoading}
+              onClick={handleDialog('deactivate', true)}
+              sx={{ minWidth: 120 }}
+            >
+              {t("Deactivate")}
+            </Button>
+
              <Button
-        variant="contained"
-        size="large"
-        color="secondary"
-        disabled={isLoading}
-        onClick={handleOpenDeactivate}
-        className={classes.btnPro}
-        style={{
-          padding: "10px 20px!important",
-          backgroundColor: "blue",
-          color: "white",
-        }}
+              variant="contained"
+              color="error"
+              disabled={isLoading}
+              onClick={handleDialog('delete', true)}
+              sx={{ minWidth: 120 }}
+            >
+              {t("Delete")}
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+              onClick={() => navigate('/kyc')}
+              sx={{ minWidth: 120 ,background:(theme) => theme.custom?.mainButton}}
+            >
+              KYC
+            </Button>
+
+             <Button
+              variant="contained"
+              color="secondary"
+              disabled={isLoading}
+              onClick={updateProfile}
+              sx={{ minWidth: 120,background:(theme) => theme.custom?.mainButton }}
+              startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+            >
+              {isLoading ? t("Updating...") : t("Update")}
+            </Button>
+          </Box>
+       
+      </Box>
+
+      {/* Confirmation Dialogs */}
+      <Dialog
+        open={dialogOpen.delete}
+        onClose={handleDialog('delete', false)}
       >
-        {isLoading ? 'deactivate...' : t('Deactivate')}
-             </Button>
-             <Dialog
-        open={openDeactivateDialog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" sx={{fontSize:"18px"}}>{t('Confirmation')}</DialogTitle>
+        <DialogTitle>{t("Delete Account")}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {t("Are you sure you want to deactivate your profile?")}
+          <DialogContentText>
+            {t("Are you sure you want to permanently delete your account? This action cannot be undone.")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{color:"#2f0032"}}>
+          <Button onClick={handleDialog('delete', false)} color="primary">
             {t("Cancel")}
           </Button>
-          <Button
-            buttonText="Deactivate"
-            onClick={() => {deactivateProfile;auth.logOut();
-              navigate('/login');}} 
-            color="secondary"
+          <Button 
+            onClick={deleteProfile} 
+            color="error"
             variant="contained"
             disabled={isLoading}
-            sx={{background: "#2f0032", color: "white"}}
+            startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
           >
-            {isLoading ? 'deactivat...' : t('Confirm')}
-            
+            {isLoading ? t("Deleting...") : t("Delete")}
           </Button>
         </DialogActions>
-            </Dialog>
-               </Box>
-                 {/* end deactivaite Button */}
-                 {/* start  kyc Button */}
-                 <Box className={classes.ButtonBtn4}>
-             <Button
-        variant="contained"
-        size="large"
-        color="secondary"
-        disabled={isLoading}
-        onClick={() => navigate('/kyc')}
-        className={classes.btnPro}
-        style={{
-          padding: "10px 20px!important",
-          backgroundColor: "blue",
-          color: "white",
-        }}
+      </Dialog>
+
+      <Dialog
+        open={dialogOpen.deactivate}
+        onClose={handleDialog('deactivate', false)}
       >
-        {isLoading ? 'KYC...' : 'KYC'}
-             </Button>
-             <Dialog
-        open={OpenKYCDialog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-      <DialogContent style={{ width: '1000px', height: '800px' }}>
-      <h2><div className={classes.kycFormContainer}>
-      <h2>KYC Form</h2>
-      <form className={classes.kycForm} onSubmit={handleSubmit}>
-        <div className={classes.formGroup}>
-          <label>
-            <span className={classes.span}>Name:</span>
-            <input type="text" value={name} onChange={handleNameChange} className={classes.input} />
-          </label>
-        </div>
-        <div className={classes.formGroup}>
-          <label>
-            <span className={classes.span}>Date of Birth:</span>
-            <input type="text" value={dateOfBirth} onChange={handleDateOfBirthChange} className={classes.input} />
-          </label>
-        </div>
-        <div className={classes.formGroup}>
-          <label>
-            <span className={classes.span}>Document:</span>
-            <input type="file" name="document" onChange={handleFileChange} className={classes.input} />
-          </label>
-        </div>
-      </form>
-    </div></h2>
-    <div>
-      <button onClick={startCamera}>Start Camera</button>
-      <button onClick={stopCamera}>Stop Camera</button>
-      <button onClick={takePicture}>Take Picture</button>
-      <video ref={videoRef} autoPlay playsInline muted style={{ width: '100%', height: 'auto' }} />
-    </div>
-    </DialogContent>
+        <DialogTitle>{t("Deactivate Account")}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {t("Are you sure you want to deactivate your account? You can reactivate it later by logging in.")}
+          </DialogContentText>
+        </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
+          <Button onClick={handleDialog('deactivate', false)} color="primary">
+            {t("Cancel")}
           </Button>
-          <Button
-            buttonText="KYC"
-            type="submit"
-            onClick={handleSubmit}
+          <Button 
+            onClick={deactivateProfile} 
             color="secondary"
             variant="contained"
             disabled={isLoading}
-            
+            startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
           >
-            {isLoading ? 'KYC...' : t('Confirm')}
-            
+            {isLoading ? t("Deactivating...") : t("Deactivate")}
           </Button>
         </DialogActions>
-            </Dialog>
-               </Box>
-                 {/* end kyc Button */}
-            <Box className={classes.ButtonBtn1}>
-              <Button
-                variant="contained"
-                size="large"
-                color="secondary"
-                disabled={isLoading}
-                onClick={updateProfile}
-                className={classes.btnPro}
-                style={{
-                  padding: "10px 20px!important",
-                  backgroundColor: "blue",
-                  color: "white",
-                }}
-              >
-                {isLoading ? t("Updating...") : t("Update")}
-                {isLoading && <ButtonCircularProgress />}
-              </Button>
-            </Box>
-          </Box>
-
-        </Box>
-        {/* End buttons */}
-         
-      </Container>
+      </Dialog>
     </Box>
-    
-  );  
-}
+  );
+};
 
- 
+export default ProfileSettings;

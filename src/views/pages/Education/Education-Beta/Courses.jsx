@@ -201,9 +201,9 @@ const Courses = () => {
           className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
       <img 
-        src="/assets/Images/wave10.png" 
+        src="/assets/Images/wave20.png" 
         alt="Description" 
-        style={{ display: 'block' ,transform:" scale(0.7)" }}
+        style={{ display: 'block' , maxHeight:"120px"}}
       />
       <div style={{
          position: 'absolute',

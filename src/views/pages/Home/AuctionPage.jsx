@@ -327,7 +327,7 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/transfer.png"
    },
    {name:t("Analytics"),
-    image:"/assets/Images/1.jpg"
+    image:"/assets/Images/analytic.png"
    },
    {name:t("News"),
     image:"/assets/Images/news.png"
@@ -339,7 +339,7 @@ const auctionNftListHandler = async () => {
     image:"/assets/Images/market.png"
    },
    {name:t("Startups"),
-    image:"/assets/Images/8.jpg"
+    image:"/assets/Images/startup.png"
    },
    {name:t("Web3"),
     image:"/assets/Images/web3.png"

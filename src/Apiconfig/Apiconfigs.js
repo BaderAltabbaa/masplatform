@@ -17,9 +17,9 @@ export let pageURL = "https://masplatform.net"
 export let socketURL = "wss://node.masplatform.net";
 
 
-// export let  baseURL = "http://localhost:1865";
+//export let  baseURL = "http://localhost:1865";
 //export let socketURL = "ws://localhost:1865";
- //export let pageURL = "http://localhost:1865"
+//export let pageURL = "http://localhost:1865"
 
 
 /*if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -96,7 +96,9 @@ const Apiconfigs = {
     forgotPassword: `${url}/user/forgotPassword/`,
     resetPassword: `${url}/user/resetPassword/`,
     Buy: `${url}/admin/Buy/`,
+    buyPlan: `${url}/user/purchasePlan/`,
     price: `${url}/admin/price/`,
+    getpublicPlans: `${url}/admin/getpublicPlans/`,
     bill: `${url}/user/bill/`,
     order: `${url}/user/order/`,
 
