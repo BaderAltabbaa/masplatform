@@ -235,7 +235,7 @@ function Cardbundle({
         setisLike(BundleData.likesUsers?.includes(auth.userData._id));
         setisSubscribed(BundleData.subscribers?.includes(auth.userData._id));
       }
-      if (auth.userData._id && BundleData._id) {
+      if (auth.userData?._id && BundleData?._id) {
         //getSubscription().catch(console.error);
       }
     }, []);

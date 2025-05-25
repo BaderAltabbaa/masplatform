@@ -6,38 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 
 // Mock data for crypto platform with image backgrounds
-const cryptoBannerData = [
-  {
-    id: 1,
-    title: "Trade Smarter",
-    subtitle: "With Our Advanced Platform",
-    cta: "Start Trading",
-    background: "/assets/Images/b3.jpg",
-    media: "/assets/Images/masfooter-logo1.svg",
-    mediaType: "image",
-    nav:"/user-list"
-  },
-  {
-    id: 2,
-    title: "Secure Wallet",
-    subtitle: "For Your Digital Assets",
-    cta: "Explore Wallets",
-    background: "/assets/Images/b5.jpg",
-    media: "/assets/Images/masfooter-logo1.svg",
-    mediaType: "image",
-    nav:"/connectWallet"
-  },
-  {
-    id: 3,
-    title: "Staking Rewards",
-    subtitle: "Earn Passive Income",
-    cta: "Start Earning",
-    background: "/assets/Images/b1.jpg",
-    media: "/assets/Images/bader-logo.svg",
-    mediaType: "image",
-   nav:"/bundles"
-  }
-];
+
 
 const useStyles = makeStyles((theme) => ({
   carouselContainer: {
@@ -62,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
       background: 'rgba(0, 0, 0, 0.5)',
     },
     [theme.breakpoints.down('md')]: {
-      minHeight: '60vh',
+      minHeight: '100%',
       padding: theme.spacing(8, 0, 4),
     },
     [theme.breakpoints.down('sm')]: {
-      minHeight: '50vh',
+      minHeight: '100%',
     },
   },
   contentContainer: {
@@ -164,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CryptoBannerCarousel() {
+export default function CryptoBannerCarousel( {bannerData , subtitleStyle , buttonDisplay} ) {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -195,7 +164,7 @@ export default function CryptoBannerCarousel() {
         swipeable={true}
         emulateTouch={true}
       >
-        {cryptoBannerData.map((item) => (
+        {bannerData.map((item) => (
           <Box
             key={item.id}
             className={classes.bannerSlide}
@@ -213,7 +182,7 @@ export default function CryptoBannerCarousel() {
                     <Typography  color="white" sx={{fontSize:"3rem",fontWeight:"800"}}>
                       {item.title}
                     </Typography>
-                    <Typography variant="h3" color="white" sx={{fontSize:"1.5rem" ,fontWeight:"700"}}>
+                    <Typography variant="h3" color="white" sx={{ ...(item.subtitleStyle || subtitleStyle),}}>
                       {item.subtitle}
                     </Typography>
                    
@@ -225,7 +194,9 @@ export default function CryptoBannerCarousel() {
                         borderRadius:"50px",
                         "&:hover":{
                           background: (theme) => theme.custom.hoverGradientButton
-                        }
+                        },
+                        ...(item.buttonDisplay || buttonDisplay)
+                        ,
                       }}
                       onClick={() => {navigate(item.nav)}}
                     >

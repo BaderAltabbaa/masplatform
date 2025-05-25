@@ -3,11 +3,13 @@ import { Box, Typography, Button, useTheme } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
 
 const MotionBox = motion(Box);
 
 const FinalCTA = () => {
-  const theme = useTheme();
+    const navigate = useNavigate();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
@@ -73,6 +75,7 @@ Open your wallet, create your account, and start building your professional and 
             minWidth: 200,
             backgroundColor:  (theme) => theme.custom.mainButton
           }}
+          onClick={() => {navigate("/login")}}
         >
           Get Started
         </Button>
@@ -91,6 +94,7 @@ Open your wallet, create your account, and start building your professional and 
             borderWidth: 2,
             '&:hover': { borderWidth: 2 }
           }}
+          onClick={() => {navigate("/Contact_Us")}}
         >
           Learn More
         </Button>

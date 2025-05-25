@@ -24,6 +24,8 @@ import { FaSearch } from "react-icons/fa";
 import "src/views/pages/About/AboutUs.css"
 import { transform } from "lodash";
 import MostPopular from "../Home/MostPopular";
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 
 const useStyles = makeStyles(() => ({
@@ -292,6 +294,14 @@ const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSe
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
+                     {search && (
+                      <IconButton 
+                        onClick={() => setsearch("")}
+                        size="small"
+                      >
+                        <ClearIcon fontSize="small" />
+                      </IconButton>
+                    )}
                     <SearchIcon sx={{ color: '#2d013a' }} />
                   </InputAdornment>
                 ),

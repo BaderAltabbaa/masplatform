@@ -247,7 +247,7 @@ return (
             </> 
             ))}
 
-{staticContent.slice(7, 8).map((row) => (
+{staticContent.slice(3, 4).map((row) => (
   <>  
             <li className="footer-list-item" onClick={() => handleFormOpen(row)}>
             <span style={{cursor:"pointer"}}>{row.title}</span>
@@ -260,15 +260,7 @@ return (
       
 
       <Dialog open={open} onClose={handleClose}  maxWidth="lg" fullWidth  disableScrollLock={true}
- PaperProps={{
-  sx: {
-    backgroundImage: 'url(/assets/Images/doodle2.png)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    
-  }
-}}>
+ >
         <DialogTitle sx={{display:"flex" ,justifyContent:"space-between" ,alignItems:"center", color: (theme) => theme.custom.mainButton}}>
           <span style={{
             fontSize:"24px"
@@ -276,17 +268,12 @@ return (
           <div style={{fontSize:"20px",cursor:"pointer"}} onClick={handleClose}><AiOutlineClose/></div>
           </DialogTitle>
          <DialogContent>
-          <Box sx={{
-            background:"rgba(255, 255, 255, 0.68)",
-            padding:"20px",
-            borderRadius:"20px"
-          }}>
+          
     {selectedItem?.description ? ( // Check if description exists
       <DialogContentText>{selectedItem.description}</DialogContentText>
     ) : (
      <div style={{padding:"20px 60px"}}> <NoDataFound /> </div>// Render NoDataFound if no description
     )}
-    </Box>
   </DialogContent>
       </Dialog>
 
@@ -297,7 +284,7 @@ return (
         <div>
           <h3 className="footer-section-header"></h3>
           <ul className="footer-list">
-          {staticContent.slice(3,5).map((row) => (
+          {staticContent.slice(4,6).map((row) => (
             <>
             <Link
                         style={{ color: 'white', textDecoration: 'none', }}
@@ -323,7 +310,7 @@ return (
             ))}
 
             
-{staticContent.slice(5, 7).map((row) => (
+{staticContent.slice(6, 8).map((row) => (
             <>     
             <li key={row.title} className="footer-list-item"  onClick={() => handleClickOpen(row)}>
                 <span style={{cursor:"pointer"}}>{row.title}</span>
@@ -418,7 +405,7 @@ return (
          <DialogContent>
           <Box sx={{
                       background:"rgba(255, 255, 255, 0.68)",
-                      padding:"20px",
+                      padding:{sm: "0" , md: "20px"},
                       borderRadius:"20px"
                     }}>
           <ContactForm/>

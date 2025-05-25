@@ -166,6 +166,39 @@ console.log("mm",landingSections)*/}
     console.log(bannerDuration);
   }, [bannerDuration]);
 
+  const cryptoBannerData = [
+    {
+      id: 1,
+      title: "Trade Smarter",
+      subtitle: "With Our Advanced Platform",
+      cta: "Start Trading",
+      background: "/assets/Images/b3.jpg",
+      media: "/assets/Images/masfooter-logo1.svg",
+      mediaType: "image",
+      nav:"/user-list"
+    },
+    {
+      id: 2,
+      title: "Secure Wallet",
+      subtitle: "For Your Digital Assets",
+      cta: "Explore Wallets",
+      background: "/assets/Images/b5.jpg",
+      media: "/assets/Images/masfooter-logo1.svg",
+      mediaType: "image",
+      nav:"/connectWallet"
+    },
+    {
+      id: 3,
+      title: "Staking Rewards",
+      subtitle: "Earn Passive Income",
+      cta: "Start Earning",
+      background: "/assets/Images/b1.jpg",
+      media: "/assets/Images/bader-logo.svg",
+      mediaType: "image",
+     nav:"/bundles"
+    }
+  ];
+
 
   
   return (
@@ -191,12 +224,9 @@ console.log("mm",landingSections)*/}
   <Box>
     <CookieConsent/>
 
-{bannerDetails.length > 0 && (
-  <BannerSection
-    bannerDetails={bannerDetails}
-    bannerDuration={bannerDuration}
-  />
-)}
+<BannerSection bannerData={cryptoBannerData} subtitleStyle={{
+  fontSize:"1.5rem" ,fontWeight:"700"
+}}/>
 
 <Services/>
 

@@ -26,7 +26,7 @@ import { useInView } from 'react-intersection-observer';
 import "src/views/pages/About/AboutUs.css"
 import SearchIcon from '@mui/icons-material/Search'; // Import search icon
 import { FaSearch } from "react-icons/fa";
-import { Clear } from "@mui/icons-material";
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 
@@ -88,6 +88,7 @@ const [serverSearchSupported, setServerSearchSupported] = useState(true);
 const [isClientSideMode, setIsClientSideMode] = useState(false); // Track if we're in client-side mode
 const inMemoryCache = useRef({});
 const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
+
 
 
   // Debounce search term
@@ -370,7 +371,7 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
                         onClick={() => setSearchTerm("")}
                         size="small"
                       >
-                        <Clear fontSize="small" />
+                        <ClearIcon fontSize="small" />
                       </IconButton>
                     )}
                     <SearchIcon sx={{ color: '#2d013a' }} />

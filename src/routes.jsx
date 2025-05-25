@@ -12,12 +12,14 @@ export const routes = [
 
   {
     path: "/login",
+    layout: HomeLayout,
     element: lazy(() =>
       import("src/views/pages/UserSignUp/login/login")
     ),
   },
   {
     path: "/Forget",
+    layout: HomeLayout,
     element: lazy(() =>
       import("src/views/pages/UserSignUp/forgetPassword/forgetPassword")
     ),
@@ -226,6 +228,7 @@ export const routes = [
   },
   {
     path: "/create-account",
+    layout: HomeLayout,
     element: lazy(() =>
       import("src/views/pages/UserSignUp/register/register")
     ),
@@ -421,7 +424,6 @@ export const routes = [
 {
   path: "/Blogs",
   layout: HomeLayout,
-  guard: true,
   element: lazy(() => import("src/views/pages/About/Blog")),
 },
 {
@@ -444,8 +446,16 @@ export const routes = [
   layout: HomeLayout,
   element: lazy(() => import("src/views/pages/Fundraise/FundDetails")),
 },
+
+{
+  path: "/RWA",
+  layout: HomeLayout,
+  element: lazy(() => import("src/views/pages/RWA/RWA")),
+},
   {
     path: "/404",
+      layout: HomeLayout,
+
     element: lazy(() => import("src/views/errors/NotFound")),
   },
   {

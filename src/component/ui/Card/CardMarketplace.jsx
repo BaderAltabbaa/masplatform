@@ -239,7 +239,7 @@ useEffect(() => {
             setisLike(itemData.likesUsers?.includes(auth.userData._id));
             setisBuyed(itemData.subscribers?.includes(auth.userData._id));
           }
-          if (auth.userData._id && itemData._id) {
+          if (auth.userData?._id && itemData?._id) {
             //getSubscription().catch(console.error);
           }
         }, []);      

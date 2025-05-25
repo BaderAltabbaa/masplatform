@@ -377,7 +377,7 @@ export const theme = (customization) => {
       custom: {
 PageBackGround :"linear-gradient(to right, #280026,#660a6c)", //Main Background
 
-CarBackGround :"linear-gradient(to top right,rgb(158, 20, 165), #4d0051)", //Main Cards
+CarBackGround :"linear-gradient(to top right,#9e14a5, #4d0051)", //Main Cards
 
 secCardBackGround: "linear-gradient(135deg, #4d0051 0%,rgba(255, 255, 255, 0.58) 100%)", //Secondary Cards
 

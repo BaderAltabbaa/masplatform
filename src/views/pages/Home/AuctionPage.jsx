@@ -430,7 +430,7 @@ const auctionNftListHandler = async () => {
     { img: "/assets/Images/bundleIcon.png", text: "Bundles", link: "/bundles" },
     { img: "/assets/Images/edu.png", text: "Education", link: "/education" },
     { img: "/assets/Images/market.png", text: "MarketPlace", link: "/items" },
-    { img: "/assets/Images/rwa.png", text: "RWA", link: "/items" },
+    { img: "/assets/Images/rwa.png", text: "RWA", link: "/RWA" },
     { img: "/assets/Images/transfer.png", text: "Transfer", link: "/user-list" },
     { img: "/assets/Images/fundraise.png", text: "Fundraise", link: "/Fundraise" },
   ];

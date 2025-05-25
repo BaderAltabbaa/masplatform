@@ -272,10 +272,16 @@ export default function Login() {
     fetchSplash();
 
   }, [])
+
+  const handleKeyDown = (e) => {
+     if (e.key === 'Enter' && !loader && passvalid && emailvalid) {
+    Login();
+  }
+  }
   return (
     <div dir="ltr" className="Loginstyle">
     <section className="section1">
-   <form onSubmit={Login}>
+   <form onSubmit={Login} onKeyDown={handleKeyDown}>
        <span className="Logintitle">{t("LOGIN")}</span>
        <div className="">
           

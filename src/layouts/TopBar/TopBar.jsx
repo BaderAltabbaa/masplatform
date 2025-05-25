@@ -295,7 +295,7 @@ export default function Header() {
   const servicesDropdownRef = useRef(null);
   const educationDropdownRef = useRef(null);
   const gameDropdownRef = useRef(null);
-  const relativeBar =  ['/']
+  const relativeBar =  ['/' , '/login' ,'/Forget','/About_us']
 
 
 
@@ -1004,7 +1004,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           <Box>
         <Button
             onClick={() => {
-              navigate("/");
+              navigate("/RWA");
               onClose();
             }}
             sx={{color:"#dadada",

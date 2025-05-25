@@ -382,14 +382,7 @@ const listAllItemsHandler = async () => {
                       </Box>
                     )}
 
-                    {/* Show indicator when using client-side filtering */}
-                    {isClientSideMode && debouncedSearchTerm && (
-                      <Box textAlign="center" mt={2}>
-                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                          Showing client-side filtered results
-                        </Typography>
-                      </Box>
-                    )}
+                   
                   </>
                 )}
               </Container>

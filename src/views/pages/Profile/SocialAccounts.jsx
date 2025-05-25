@@ -175,10 +175,12 @@ export default function SocialAccounts() {
           </Box>
           <Box>
             <Button
-              variant="outlined"
+              variant="contained"
               disabled={isLoading}
               onClick={save}
-              style={{ background:"rgb(86, 1, 112)" ,color:"white"}}
+              sx={{ background:(theme) => theme.custom.mainButton ,color:"white", "&:hover":{
+                  background:(theme) => theme.custom?.mainButton
+                }}}
             >
               {isLoading ? "Updating social links..." : "Save"}
               {isLoading && <ButtonCircularProgress />}

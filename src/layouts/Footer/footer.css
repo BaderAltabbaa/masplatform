@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  padding: 0px 20px 20px;
+  padding: 20px 60px 20px;
   color: white;
   text-align: center;
   font-family: 'Arial', sans-serif;
@@ -23,15 +23,15 @@
 /* Logo Section */
 .footer-logo-container {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .footer-logo-img {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 100px;
 }
 
 .footer-title {
@@ -72,7 +72,7 @@
   margin-bottom: 40px;
   font-size: 22px;
   font-weight: bold;
-  text-shadow: 0px 0px 2px rgb(147, 128, 255), 0px 0px 5px rgb(12, 0, 81);
+  text-shadow: 0px 0px 5px rgb(255, 255, 255);
 }
 
 /* Community Section */

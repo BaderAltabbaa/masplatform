@@ -629,7 +629,11 @@ const ProfileSettings = () => {
               color="error"
               disabled={isLoading}
               onClick={handleDialog('delete', true)}
-              sx={{ minWidth: 120 }}
+              sx={{ minWidth: 120
+                ,"&:hover":{
+                  background:"rgb(254, 26, 26)"
+                }
+               }}
             >
               {t("Delete")}
             </Button>
@@ -639,7 +643,11 @@ const ProfileSettings = () => {
               color="primary"
               disabled={isLoading}
               onClick={() => navigate('/kyc')}
-              sx={{ minWidth: 120 ,background:(theme) => theme.custom?.mainButton}}
+              sx={{ minWidth: 120 ,background:(theme) => theme.custom?.mainButton,
+                "&:hover":{
+                  background:(theme) => theme.custom?.mainButton
+                }
+              }}
             >
               KYC
             </Button>
@@ -649,7 +657,11 @@ const ProfileSettings = () => {
               color="secondary"
               disabled={isLoading}
               onClick={updateProfile}
-              sx={{ minWidth: 120,background:(theme) => theme.custom?.mainButton }}
+              sx={{ minWidth: 120,background:(theme) => theme.custom?.mainButton,
+                 "&:hover":{
+                  background:(theme) => theme.custom?.mainButton
+                }
+               }}
               startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
             >
               {isLoading ? t("Updating...") : t("Update")}

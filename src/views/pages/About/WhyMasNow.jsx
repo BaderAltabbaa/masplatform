@@ -88,7 +88,8 @@ const WhyMasNow = () => {
        
       </motion.div>
 
-      <Grid container spacing={4} sx={{ mb: 6 ,display:"flex" ,alignItems:"center"}}>
+      <Grid container spacing={4} sx={{ mb: 6 ,display:"flex" }}>
+        
         {/* Large featured card */}
         <Grid item xs={12} md={6}>
           <motion.div
@@ -134,6 +135,13 @@ const WhyMasNow = () => {
                 <TrendingUp fontSize="large" />
               </Avatar>
             </Paper>
+            <Box my={4} sx={{display:{xs:"none" , lg:"flex" }, justifyContent:"center" ,alignItems:"center"}}>
+                     <img
+                  src="\assets\Images\masfooter-logo1.svg"
+                  alt="Logo"
+                  width="250px"
+                />
+                    </Box>
           </motion.div>
         </Grid>
 

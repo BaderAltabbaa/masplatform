@@ -193,7 +193,7 @@ const MarketplaceCarousel = () => {
             position: 'absolute',
             left: '16px',
             top: isMobile ? '40%' : '50%',
-            transform: 'translateY(-50%)',
+            transform: 'translateY(-50%) rotate(180deg)',
             zIndex: 2,
             backgroundColor: 'rgba(255,255,255,0.8)',
             '&:hover': {
@@ -201,7 +201,7 @@ const MarketplaceCarousel = () => {
             }
           }}
         >
-          <ArrowBackIos />
+            <ArrowForwardIos />
         </IconButton>
         
         <IconButton
