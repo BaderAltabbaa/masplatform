@@ -231,6 +231,7 @@ const listAllItemsHandler = async () => {
 
   return (
     <Box className={classes.container} sx={{ background: (theme) => theme.custom.PageBackGround }}>
+      <Container maxWidth="lg">
       
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }} className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -328,7 +329,7 @@ const listAllItemsHandler = async () => {
             </IconButton>
           </Box>
     
-    
+    </Container>
     
     
       {isLoading ? (

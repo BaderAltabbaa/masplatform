@@ -133,7 +133,7 @@ if (!token) {
         </Card>
       </motion.div>
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm" disableScrollLock>
        
         <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontSize: "24px", fontWeight: "bold" }}>{plan.name} Plan</span>

@@ -643,6 +643,7 @@ function Cardbundle({
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            padding:"0"
             
           }
         }}

@@ -285,6 +285,7 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
      
     }}
     >
+      <Container maxWidth="xl">
 <div style={{
             display:"flex",
             justifyContent:"center",
@@ -397,7 +398,7 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
            
            
           </Box>
-
+</Container>
 
       {isLoading ? (
         <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>

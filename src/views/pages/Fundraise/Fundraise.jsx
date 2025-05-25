@@ -70,6 +70,7 @@ const Fundraise = () => {
   return (
     <Box sx={{   background: (theme) => theme.custom.PageBackGround, minHeight: "100vh" }}>
       {/* Header Section */}
+      
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "25px", overflow: "hidden" }}>
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <img
@@ -93,6 +94,7 @@ const Fundraise = () => {
       </div>
 
       {/* Welcome Section */}
+      <Container maxWidth="lg">
       <div className="who-we-are-sec">
         <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
           <span className="who-text1">Welcome to MAS Fundraisers</span>
@@ -108,6 +110,7 @@ const Fundraise = () => {
             src="/assets/Images/fundCrop.png" alt="" />
         </div>
       </div>
+      </Container>
 
       {/* Fundraisers Grid Section */}
       <Container maxWidth="lg" sx={{ py: 4 }}>

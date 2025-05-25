@@ -82,7 +82,6 @@ const MembershipTiers = () => {
         component={Paper} 
         sx={{ 
           borderRadius: '16px',
-          overflow: 'hidden',
           boxShadow: theme.shadows[3],
           mb: 2
         }}

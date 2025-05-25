@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding:"0 50px",
+    padding:"0 20px",
     "& h6": {
       fontSize: "28px",
       color: "#000",
@@ -63,7 +63,7 @@ const useStyles = makeStyles(() => ({
     }
   },
   paddingContainer: {
-    padding: "20px 30px  10px 30px",
+    padding: "20px 0",
     // marginTop: "-30px",
     
   },

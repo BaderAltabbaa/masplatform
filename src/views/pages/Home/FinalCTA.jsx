@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button,Container } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
@@ -12,6 +12,7 @@ const FinalCTA = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
+<Container maxWidth="lg">
     <MotionBox
       ref={ref}
       initial={{ opacity: 0, x: 100 }}
@@ -100,6 +101,7 @@ const FinalCTA = () => {
         </Button>
       </Box>
     </MotionBox>
+    </Container>
   );
 };
 

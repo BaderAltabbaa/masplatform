@@ -11,6 +11,7 @@
   .who-we-are-sec{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
+    
 }
 
 .who-top-sec{
@@ -54,6 +55,7 @@
     max-width: 450px;
     height: 100%;
     max-height: 300px;
+    margin-top: 10px;
 }
 
 .who-bottom-sec.animate {

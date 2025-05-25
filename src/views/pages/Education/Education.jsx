@@ -212,14 +212,14 @@ const Education = () => {
         />
       </div>
     </div>
-<Box display={"flex"} justifyContent={"center"}>
+<Box display={"flex"} justifyContent={"center"} textAlign={"center"} mt={1}>
  <Typography variant="h2" color="white">Browse Through Our Educators</Typography>
 </Box>
     <Box sx={{ 
   flexGrow: 1, 
   padding: 3,
   display: 'flex',
-  justifyContent: 'center'
+  justifyContent: 'center',
 }}>
    
   <Grid 

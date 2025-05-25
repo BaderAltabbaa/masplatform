@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent ,Container} from '@mui/material';
 import {
   AccountTree as BlockchainIcon,
   Receipt as PodIcon,
@@ -87,6 +87,7 @@ const Features = () => {
 
   return (
     <>
+    <Container maxWidth="lg">
     <Box>
        <Typography variant="h3" component="h2" sx={{
           fontWeight: 700,
@@ -179,6 +180,7 @@ const Features = () => {
         ))}
       </Grid>
     </Box>
+    </Container>
  </> );
 };
 

@@ -56,7 +56,7 @@ const TechnicalInfrastructure = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box>
+    <Box px={1}>
          <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
