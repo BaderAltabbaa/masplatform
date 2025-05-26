@@ -121,8 +121,8 @@ const VisionMission = () => {
 
   const RotatedGridContainer = styled(Box)({
     transform: "rotate(45deg)",
-    width: "500px",
-    height: "500px",
+    width: "400px",
+    height: "400px",
     margin: "50px auto",
     overflow: "hidden",
   });
@@ -243,7 +243,7 @@ const VisionMission = () => {
 
   return (
     <>
-      <Box px={4} sx={{ py: { xs: 3, md: 6 } }} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+      <Box px={4} sx={{ pt: { xs: 3, md: 4 } }} display={"flex"} justifyContent={"space-evenly"} alignItems={"center"}>
         <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "end", alignItems: "center" }}>
           <AnimatedRotatedGrid />
         </Box>
@@ -278,7 +278,7 @@ const VisionMission = () => {
         </Box>
       </Box>
 
-      <Box px={4} sx={{ py: { xs: 0, md: 6 } }} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+      <Box px={4} sx={{ pt: { xs: 0, md: 4 } }} display={"flex"} justifyContent={"space-evenly"} alignItems={"center"}>
         <Box sx={{ ml: { xs: 0, md: 5 } }}>
           <Grid item xs={12} md={6}>
             <TitleWithDecorations isMobile={isMobile}>Our Mission</TitleWithDecorations>

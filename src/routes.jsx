@@ -439,16 +439,22 @@ export const routes = [
 {
   path: "/Fundraise",
   layout: HomeLayout,
+      guard: true,
+
   element: lazy(() => import("src/views/pages/Fundraise/Fundraise")),
 },
 {
   path: "/FundDetails",
+      guard: true,
+
   layout: HomeLayout,
   element: lazy(() => import("src/views/pages/Fundraise/FundDetails")),
 },
 
 {
   path: "/RWA",
+      guard: true,
+
   layout: HomeLayout,
   element: lazy(() => import("src/views/pages/RWA/RWA")),
 },

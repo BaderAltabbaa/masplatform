@@ -64,19 +64,42 @@ const Plans = () => {
         </Box>
 
         {/* Switchers */}
-        <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          <Button
-          variant="contained"
-          sx={{background:(theme) => theme.custom.gradientButton,
-            borderRadius:"20px",
-            "&:hover":{
-              background:(theme) => theme.custom.hoverGradientButton
-            }
-          }}
-          onClick={() => {setOpenCustom(true)}}
-          >customize payments</Button>
-         
-    
+      
+           <Box sx={{ display: "flex", justifyContent: "space-evenly",my: 1,gap:2, flexWrap: "wrap" }}>
+         <Box display={"flex"} alignItems={"center"} gap={1}>
+          <Typography variant="h4" color="white">Coin:</Typography>
+          {["MAS", "USDT", "COIN"].map((currency) => (
+            <Button
+              key={currency}
+              variant={currencyType === currency ? "contained" : "outlined"}
+              onClick={() => setCurrencyType(currency)}
+              sx={{background: currencyType === currency ? (theme) => theme.custom.CarBackGround : "",
+                   color:"white",
+                   borderColor: currencyType === currency ? "" : "white",
+               }}
+            >
+              {currency}
+            </Button>
+          ))}
+          </Box>
+
+           <Box display={"flex"} alignItems={"center"} gap={1}>
+          <Typography variant="h4" color="white">Duration:</Typography>
+          {["monthly", "yearly"].map((type) => (
+            <Button
+              key={type}
+              variant={billingType === type ? "contained" : "outlined"}
+              onClick={() => setBillingType(type)}
+              sx={{background: billingType === type ? (theme) => theme.custom.CarBackGround : "",
+                 color:"white" ,
+                   borderColor: billingType === type ? "" : "white",
+               }}
+
+            >
+              {type === "monthly" ? "Monthly" : "Yearly"}
+            </Button>
+          ))}
+          </Box>
         </Box>
 
         {/* Plans Grid */}
@@ -130,51 +153,7 @@ const Plans = () => {
           <Typography variant="h3" sx={{color:(theme) => theme.custom.mainButton}}>Customize How You Want To Pay</Typography>
         </DialogTitle>
         <DialogContent>
-          <Box sx={{ display: "flex",justifyContent:"center"}}>
-          <Box sx={{
-            display: "flex",
-            width: '70%',
-            height: '3px',
-            backgroundColor: (theme) => theme.custom.mainButton,
-            mb: 2,
-          }} />
-          </Box>
-           <Box sx={{ display: "flex", justifyContent: "start",flexDirection:"column", gap: 2, mb: 3, flexWrap: "wrap" }}>
-         <Box display={"flex"} alignItems={"center"} gap={1}>
-          <Typography variant="h4">Coin:</Typography>
-          {["MAS", "USDT", "COIN"].map((currency) => (
-            <Button
-              key={currency}
-              variant={currencyType === currency ? "contained" : "outlined"}
-              onClick={() => setCurrencyType(currency)}
-              sx={{background: currencyType === currency ? (theme) => theme.custom.mainButton : "",
-                   color: currencyType === currency ? "white" : (theme) => theme.custom.mainButton,
-                   borderColor: currencyType === currency ? "" : (theme) => theme.custom.mainButton,
-               }}
-            >
-              {currency}
-            </Button>
-          ))}
-          </Box>
-
-           <Box display={"flex"} alignItems={"center"} gap={1}>
-          <Typography variant="h4">Duration:</Typography>
-          {["monthly", "yearly"].map((type) => (
-            <Button
-              key={type}
-              variant={billingType === type ? "contained" : "outlined"}
-              onClick={() => setBillingType(type)}
-              sx={{background: billingType === type ? (theme) => theme.custom.mainButton : "",
-                 color: billingType === type ? "white" : (theme) => theme.custom.mainButton,
-                   borderColor: billingType === type ? "" : (theme) => theme.custom.mainButton,
-               }}
-
-            >
-              {type === "monthly" ? "Monthly" : "Yearly"}
-            </Button>
-          ))}
-          </Box>
-        </Box>
+          
         </DialogContent>
 
       </Dialog>

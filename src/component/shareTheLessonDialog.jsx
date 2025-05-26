@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
   Button,
-  Box,
+  Box,TextField
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -119,16 +119,7 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
     aria-labelledby="max-width-dialog-title"
     dir='ltr'
     scroll="body"
-    PaperProps={{
-      sx: {
-        backgroundImage: 'url(/assets/Images/doodle2.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        maxHeight: '90vh',
-        overflow: 'hidden'
-      }
-    }}
+   
     >
       <DialogTitle
  sx={{ 
@@ -141,14 +132,7 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
         {isEdit ? t("Edit Lesson") : t("Share The Lesson")}
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
-        <Box sx={{
-                    background: "rgba(255, 255, 255, 0.85)",
-                    borderRadius: "12px",
-                    p: 2,
-                    maxHeight: 'calc(90vh - 64px)',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}>
+       
         <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -157,7 +141,6 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
           </Grid>
           {FormButtons()}
         </Grid>
-        </Box>
       </DialogContent>
     </Dialog>
   );
@@ -179,6 +162,7 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
       <Box
         style={{ display: mediaUrl !== "" ? "block" : "none" }}
         className={classes.mediaBox}
+        mb={1}
       >
         {isVideo ? (
           <div style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}>
@@ -194,9 +178,8 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
           <img
             src={mediaUrl}
             width="100%"
-            height={"50%"}
             alt={"Course image"}
-            style={{ borderRadius: "10px 10px 0px 0px" }}
+            style={{ borderRadius: "10px 10px 0px 0px" ,height:"200px"}}
           />
         )}
         <div className={classes.mediaBoxInfo}>
@@ -313,17 +296,21 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", border: "1px solid rgb(184, 180, 180)", height: "100%", padding: "0 10px", borderRadius: "10px" }}>
-              <div className={classes.uploadIcon}>
+ <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid rgb(199, 196, 196)",
+                padding: "60px 10px",
+                borderRadius: "10px",
+              }}
+            >              <div className={classes.uploadIcon}>
                 <CloudUploadIcon />
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
               <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Drag And Drop Files")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Accept All Video/Image Formats")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Max File Size: 1024 MP")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Width Size: ")}300px</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Height Size: ")}160px</p>
+               
               </div>
             </div>
           </Button>
@@ -335,59 +322,73 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
   function InputList() {
     return (
       <Grid item xs={12} sm={7}>
-        <>
-          <CourseSelector />
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors.title ? "red" : "rgba(43, 31, 42, 0)" }}
-          >
-            <label style={{ color: "#2d013a" }}>{t("Title")}</label>
-            <Input
-              {...register("title")}
-              className={classes.input}
-              placeholder={t("Enter Course Title")}
-              disabled={true}
-              value={selectedItemName} // Bind the selected item's name to the input
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors.title?.message}
-          </p>
-        </>
-        <Grid sm={12} className={classes.inputContainer}>
-          <label style={{ color: "#2d013a" }}>{t("Type")}</label>
-          <Input
-            {...register("type")}
-            className={classes.input}
-            placeholder={t("Enter Course Type")}
-            disabled={true}
-            endAdornment={
-              <Box sx={{ position: 'relative', top: '-15px' }}> {/* Adjust `top` value as needed */}
-              <TypeSelector />
-            </Box>
-            }
-          />
-        </Grid>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors.details ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: "#2d013a" }}>{t("Details")}</label>
-            <Input
-              {...register("details")}
-              className={classes.input}
-              placeholder={t("Enter Course Details")}
-              multiline={true}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors.details?.message}
-          </p>
-        </>
-      </Grid>
+  {/* Course Selector */}
+  <CourseSelector />
+
+  {/* Title Field */}
+  <TextField
+    {...register("title")}
+    label={t("Title")}
+    placeholder={t("Enter Course Title")}
+    disabled={true}
+    value={selectedItemName}
+    fullWidth
+    margin="normal"
+    error={!!errors.title}
+    helperText={errors.title?.message}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.title ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  {/* Type Field */}
+  <TextField
+    {...register("type")}
+    label={t("Type")}
+    placeholder={t("Enter Course Type")}
+    disabled={true}
+    fullWidth
+    margin="normal"
+    InputProps={{
+      endAdornment: (
+        <Box sx={{ position: 'relative'}}>
+          <TypeSelector />
+        </Box>
+      )
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: ""
+        },
+      },
+    }}
+  />
+
+  {/* Details Field */}
+  <TextField
+    {...register("details")}
+    label={t("Details")}
+    placeholder={t("Enter Course Details")}
+    multiline
+    rows={1}
+    fullWidth
+    margin="normal"
+    error={!!errors.details}
+    helperText={errors.details?.message}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.details ? "red" : ""
+        },
+      },
+    }}
+  />
+</Grid>
     );
   }
 
@@ -399,6 +400,16 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
           value={watch("type")}
           onChange={(event) => setValue("type", event.target.value)}
           disabled={isEdit && lessonData.postType === "PUBLIC"}
+           sx={{
+          height: '40px',
+          '& .MuiSelect-select': {
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: '24px !important',
+            gap:1,
+
+          }
+        }}
         >
           {["PUBLIC", "PRIVATE"].map((item, index) => (
             <MenuItem key={index} value={item}>

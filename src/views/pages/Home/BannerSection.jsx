@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
   },
   bannerSlide: {
-    minHeight: '65vh',
+    minHeight: '55vh',
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(4, 0),
@@ -68,8 +68,6 @@ const useStyles = makeStyles((theme) => ({
       alignItems: 'center',
       textAlign: 'center',
       padding: theme.spacing(2, 0),
-      marginBottom: theme.spacing(4), // Add space between sections on mobile
-
     },
   },
  
@@ -176,7 +174,7 @@ export default function CryptoBannerCarousel( {bannerData , subtitleStyle , butt
             }}
           >
             <Box className={classes.contentContainer}>
-              <Grid container  className={classes.gridContainer} alignItems="center">
+              <Grid container className={classes.gridContainer} alignItems="center" >
                 <Grid item xs={12} md={5} lg={5}>
                   <Box className={classes.leftSection}>
                     <Typography  color="white" sx={{fontSize:"3rem",fontWeight:"800"}}>

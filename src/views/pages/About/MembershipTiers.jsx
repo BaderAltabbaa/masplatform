@@ -15,6 +15,7 @@ import {
   Chip
 } from '@mui/material';
 import { Info as InfoIcon } from '@mui/icons-material';
+import "src/views/pages/Users/UsersList.css"
 
 const membershipTiers = [
   { name: "Basic", masBalance: "0", withdrawalFee: "3%" },
@@ -78,12 +79,17 @@ const MembershipTiers = () => {
         </Typography>
       </motion.div>
 
+       <div className="tableWrapper">
+            <div className="tableAnimatedBackground"></div>
+            <div className="tableInnerBlurEffect"></div>
       <TableContainer 
         component={Paper} 
         sx={{ 
           borderRadius: '16px',
           boxShadow: theme.shadows[3],
-          mb: 2
+          border:"none",
+          position:"relative"
+        
         }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="membership tiers table">
@@ -139,6 +145,7 @@ const MembershipTiers = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      </div>
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -153,7 +160,8 @@ const MembershipTiers = () => {
           borderRadius: '8px',
           bgcolor: theme.palette.primary.light,
           maxWidth: '600px',
-          mx: 'auto'
+          mx: 'auto',
+          mt:2
         }}>
           <InfoIcon sx={{ mr: 1, color:  (theme) => theme.custom.mainButton}} />
           <Typography variant="body1" sx={{ fontStyle: 'italic' }}>

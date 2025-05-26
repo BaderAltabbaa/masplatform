@@ -94,7 +94,7 @@ const Fundraise = () => {
       </div>
 
       {/* Welcome Section */}
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
       <div className="who-we-are-sec">
         <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
           <span className="who-text1">Welcome to MAS Fundraisers</span>

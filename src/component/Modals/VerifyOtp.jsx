@@ -254,9 +254,9 @@ export const VerifyOtp = ({
     <Dialog fullWidth maxWidth="sm" open={open} onClose={() => handleClose}>
       <DialogTitle>
         <Typography
-          variant="h4"
-          style={{
-            color: "rgb(114, 32, 121)",
+          variant="h3"
+          sx={{
+            color: (theme) => theme.custom.mainButton,
             marginBottom: "10px",
             textAlign: "center",
           }}
@@ -367,7 +367,7 @@ export const VerifyOtp = ({
         sx={{
                   
                     
-          backgroundColor: 'rgb(112, 2, 146)', 
+          backgroundColor: (theme) => theme.custom.mainButton, 
         
       }}
           variant="contained"

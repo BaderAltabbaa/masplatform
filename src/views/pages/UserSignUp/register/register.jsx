@@ -360,8 +360,8 @@ export default function SignUp() {
             <DialogContentText id="alert-dialog-slide-description">
               <Box>
                 <Typography
-                  variant="h4"
-                  style={{ color: "rgb(74, 1, 84)", marginBottom: "10px", textAlign: 'center' }}
+                  variant="h2"
+                  sx={{ color: (theme) => theme.custom.mainButton, marginBottom: "10px", textAlign: 'center' }}
                 >
                   Last step to create your account
                 </Typography>
@@ -385,7 +385,7 @@ export default function SignUp() {
                       sx={{
                          // Default color
                         '&.Mui-checked': {
-                          color: 'rgb(112, 2, 146)', // Color when checked
+                          color: (theme) => theme.custom.mainButton, // Color when checked
                         },
                       }}
                       
@@ -410,7 +410,7 @@ export default function SignUp() {
                       sx={{
                         // Default color
                        '&.Mui-checked': {
-                         color: 'rgb(112, 2, 146)', // Color when checked
+                         color: (theme) => theme.custom.mainButton, // Color when checked
                        },
                      }}
                     />
@@ -434,7 +434,7 @@ export default function SignUp() {
                       sx={{
                         // Default color
                        '&.Mui-checked': {
-                         color: 'rgb(112, 2, 146)', // Color when checked
+                         color: (theme) => theme.custom.mainButton, // Color when checked
                        },
                      }}
                     />
@@ -458,7 +458,7 @@ export default function SignUp() {
                       sx={{
                         // Default color
                        '&.Mui-checked': {
-                         color: 'rgb(112, 2, 146)', // Color when checked
+                         color: (theme) => theme.custom.mainButton, // Color when checked
                        },
                      }}
                     />
@@ -479,7 +479,7 @@ export default function SignUp() {
                     sx={{
                       // Default color
                      '&.Mui-checked': {
-                       color: 'rgb(112, 2, 146)', // Color when checked
+                       color: (theme) => theme.custom.mainButton, // Color when checked
                      },
                    }}
                       checked={all}
@@ -511,7 +511,7 @@ export default function SignUp() {
                 <label>I have Read and agree to all.</label>
               </Box>
 
-              <Box mt={2} mb={5} pb={3} className={classes.btBox}>
+              <Box mt={2}  pb={3} className={classes.btBox}>
                 <Button
                   variant="contained"
                   size="large"
@@ -519,7 +519,7 @@ export default function SignUp() {
                   sx={{
                   
                     
-                     backgroundColor: '#700292', 
+                     backgroundColor: (theme) => theme.custom.mainButton, 
                      "&:hover":{
                        backgroundColor: 'rgb(80, 1, 104)'
                      }

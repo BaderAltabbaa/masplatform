@@ -27,25 +27,13 @@ const useStyles = makeStyles(() => ({
   container: {
     padding: "20px 0px",
   },
-  heading: {
-    padding: "1.5px 0 0",
-    backgroundColor: "var(--white)",
-    display: "flex",
-    justifyContent: "center",
-  },
-  search: {
-    border: "0.5px solid #e5e3dd",
-    display: "flex",
-    alignItems: "center",
-    borderRadius: "6.5px",
-  },
+ 
+ 
   gridbox: {
     marginBottom: '50px',
     justifyContent: "center",
   },
-  gridboxHover: {
-    border: '10px solid red',
-  },
+
 }));
 
 const AllItemsPage = () => {
@@ -231,7 +219,7 @@ const listAllItemsHandler = async () => {
 
   return (
     <Box className={classes.container} sx={{ background: (theme) => theme.custom.PageBackGround }}>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
       
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }} className="bunner-animaton">
             <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -329,8 +317,9 @@ const listAllItemsHandler = async () => {
             </IconButton>
           </Box>
     
-    </Container>
-    
+  
+                </Container>
+
     
       {isLoading ? (
         <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>

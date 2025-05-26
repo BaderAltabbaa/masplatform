@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
   Button,
-  Box,
+  Box,TextField
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -124,16 +124,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
     aria-labelledby="max-width-dialog-title"
     dir='ltr'
     scroll="body"
-    PaperProps={{
-      sx: {
-        backgroundImage: 'url(/assets/Images/doodle2.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        maxHeight: '90vh',
-        overflow: 'hidden'
-      }
-    }}
+    
     >
       <DialogTitle
   sx={{ 
@@ -146,14 +137,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
         {isEdit ? t("Edit Audience") : t("Add Photo")}
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
-        <Box sx={{
-                     background: "rgba(255, 255, 255, 0.85)",
-                     borderRadius: "12px",
-                     p: 2,
-                     maxHeight: 'calc(90vh - 64px)',
-                     display: 'flex',
-                     flexDirection: 'column'
-                  }}>
+       
         <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -162,7 +146,6 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
           </Grid>
           {FormButtons()}
         </Grid>
-        </Box>
       </DialogContent>
     </Dialog>
   );
@@ -199,9 +182,8 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
           <img
             src={mediaUrl}
             width="100%"
-            height={"50%"}
-            alt={"bundle image"}
-            style={{ borderRadius: "10px 10px 0px 0px" }}
+            alt={"item image"}
+            style={{ borderRadius: "10px 10px 0px 0px" ,height:"200px"}}
           />
         )}
         <div className={classes.mediaBoxInfo}>
@@ -254,7 +236,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          sx={{ fontSize: "15px", backgroun:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
         >
           {t("Cancel")}
         </Button>
@@ -309,17 +291,21 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", border: "1px solid rgb(184, 180, 180)", height: "100%", padding: "0 10px", borderRadius: "10px" }}>
-              <div className={classes.uploadIcon}>
+ <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px solid rgb(199, 196, 196)",
+                padding: "60px 10px",
+                borderRadius: "10px",
+              }}
+            >              <div className={classes.uploadIcon}>
                 <CloudUploadIcon />
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
               <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Drag And Drop Files")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Accept All Video/Image Formats")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Max File Size: 1024 MP")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Width Size: ")}300px</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Height Size: ")}160px</p>
+               
               </div>
             </div>
           </Button>
@@ -333,25 +319,29 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
       <Grid item xs={12} sm={7}>
         <>
           <ItemSelector />
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors.title ? "red" : "rgba(43, 31, 42, 0)" }}
-          >
-            <label style={{ color: "#2d013a" }}>{t("Title")}</label>
-            <Input
-              {...register("title")}
-              className={classes.input}
-              placeholder={t("Enter Bundle Title")}
-              disabled={true}
-              value={selectedItemName} // Bind the selected item's name to the input
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors.title?.message}
-          </p>
-       
           
+       
+          <TextField
+          {...register("title")}
+              label={t("Title")}
+              placeholder={t("Select Item Name")}
+              disabled={true}
+              value={selectedItemName}
+               fullWidth
+    margin="normal"
+    error={!!errors.title}
+    helperText={errors.title?.message}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.title ? "red" : ""
+        },
+      },
+
+
+    }}
+          />
+
          
         </>
       </Grid>

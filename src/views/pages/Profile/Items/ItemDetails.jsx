@@ -330,7 +330,7 @@ const getItemContentListHandler = async (ItemId) => {
              textShadow:"0px 0px 10px white",
           }}
         >
-                             {itemDetails?.itemName ? itemDetails?.itemName : ""}
+                             {itemDetails?.itemName ? itemDetails?.itemName : "Item"}
 
           </div>
         </div>
@@ -346,7 +346,7 @@ const getItemContentListHandler = async (ItemId) => {
           "@media(max-width:750px)":{flexDirection:"column"
           }}}>
 
-            <Box sx={{display:"flex" ,padding:"20px" ,alignItems:"center"}}>
+            <Box sx={{display:"flex" ,padding:"20px" ,alignItems:"center" ,flexDirection:{xs:"column",md:"row"}}}>
               {isVideo ? (
                 
                   <Box  sx={{width:"100%" ,height:"200px" ,border:"2px solid white", borderRadius:"20px"}}>
@@ -383,6 +383,7 @@ const getItemContentListHandler = async (ItemId) => {
                 
                 <Box display="flex"
                     alignItems="center">
+                      
                 <Typography variant="h5" sx={{color:"grey" ,fontSize:"1.2rem",
                    "@media(max-width:750px)":{
                     fontSize:"0.8rem"

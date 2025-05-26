@@ -13,7 +13,7 @@ import {
   FormControl,
   Button,
   Box,
-  Popover,
+  Popover,TextField
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -163,16 +163,6 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     aria-labelledby="max-width-dialog-title"
     dir='ltr'
     scroll="body"
-    PaperProps={{
-      sx: {
-        backgroundImage: 'url(/assets/Images/doodle2.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        maxHeight: '90vh',
-        overflow: 'hidden'
-      }
-    }}
     >
       <DialogTitle
         sx={{ 
@@ -186,14 +176,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         {isEdit ? t("Edit Bundle") : t("Create A Bundle")}
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
-         <Box sx={{
-                    background: "rgba(255, 255, 255, 0.85)",
-                    borderRadius: "12px",
-                    p: 2,
-                    maxHeight: 'calc(90vh - 64px)',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}>
+       
         <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -202,7 +185,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           </Grid>
           {FormButtons()}
         </Grid>
-        </Box>
+        
       </DialogContent>
 
       {/* Category Selection Dialog */}
@@ -243,8 +226,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
 
     return (
       <Box
-        style={{ display: mediaUrl !== "" ? "block" : "none" }}
+        sx={{ display: mediaUrl !== "" ? "block" : "none" }}
         className={classes.mediaBox}
+        mb={1}
       >
         {isVideo ? (
           <div style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}>
@@ -260,9 +244,9 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           <img
             src={mediaUrl}
             width="100%"
-            height={"50%"}
+            
             alt={"bundle image"}
-            style={{ borderRadius: "10px 10px 0px 0px" }}
+            style={{ borderRadius: "10px 10px 0px 0px" ,height:"200px" }}
           />
         )}
         <div className={classes.mediaBoxInfo}>
@@ -291,7 +275,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 borderRadius: 5,
                 backgroundColor: " #e0e0e0",
                 "& .MuiLinearProgress-bar": {
-                  backgroundColor: "rgb(67, 0, 90)",
+                  backgroundColor: (theme) => theme.custom.mainButton,
                 },
               }}
             />
@@ -376,8 +360,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
             color="primary"
             component="span"
             className={classes.uploadBox}
-            style={{
-              borderColor: error ? "red" : "#ddd",
+            sx={{
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
@@ -386,7 +369,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                border: "1px solid rgb(184, 180, 180)",
+                border: "1px solid rgb(199, 196, 196)",
                 padding: "60px 10px",
                 borderRadius: "10px",
               }}
@@ -396,11 +379,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
                 <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Drag And Drop Files")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Accept All Video/Image Formats")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Max File Size: 1024 MP")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Width Size: ")}300px</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Height Size: ")}160px</p>
+              
               </div>
             </div>
           </Button>
@@ -412,139 +391,141 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   function InputList() {
     return (
       <Grid item xs={12} sm={7}>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["bundleTitle"] ? "red" : "rgba(45, 34, 45, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Bundle Title")}</label>
-            <Input
-              {...register("bundleTitle")}
-              className={classes.input}
-              placeholder={t("Enter Bundle Title")}
-              disabled={isEdit}
-              inputProps={{ maxLength: 16 }}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["bundleTitle"]?.message}
-          </p>
-        </>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["bundleName"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Bundle Name")}</label>
-            <Input
-              {...register("bundleName")}
-              className={classes.input}
-              placeholder={t("Enter Bundle Name")}
-              disabled={isEdit}
-              inputProps={{ maxLength: 16 }}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["bundleName"]?.message}
-          </p>
-        </>
-        <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Category")}</label>
-            <Input
-              {...register("category")}
-              className={classes.input}
-              placeholder={t("Select a Category")}
-              disabled={isEdit}
-              readOnly
-              onClick={handleOpenCategoryDialog}
-              endAdornment={
-                <InputAdornment position="end" sx={{cursor:"pointer"}}>
-                  <ArrowDropDown />
-                </InputAdornment>
-              }
-            />
-          </Grid>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Amount")}</label>
-            <Input
-              {...register("donationAmount")}
-              className={classes.input}
-              placeholder={t("Enter Donation Amount")}
-              inputProps={{
-                min: 0,
-              }}
-             
-              disabled={isEdit}
-              type={"number"}
+  <TextField
+    {...register("bundleTitle")}
+    label={t("Bundle Title")}
+    placeholder={t("Enter Bundle Title")}
+    disabled={isEdit}
+    inputProps={{ maxLength: 16 }}
+    fullWidth
+    margin="normal"
+    error={!!errors["bundleTitle"]}
+    helperText={errors["bundleTitle"]?.message}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors["bundleTitle"] ? "red" : ""
+        },
+      },
+    }}
+  />
 
-                endAdornment=
-                {<Box zIndex='1'>{CoinSelector()}</Box>}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {typeof watch("donationAmount") === "number" &&
-              errors["donationAmount"]?.message}
-          </p>
-        </>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Duration")}</label>
-            <Input
-              {...register("duration")}
-              inputProps={{
-                min: 0,
+  <TextField
+    {...register("bundleName")}
+    label={t("Bundle Name")}
+    placeholder={t("Enter Bundle Name")}
+    disabled={isEdit}
+    inputProps={{ maxLength: 16 }}
+    fullWidth
+    margin="normal"
+    error={!!errors["bundleName"]}
+    helperText={errors["bundleName"]?.message}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors["bundleName"] ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  <TextField
+    {...register("category")}
+    label={t("Category")}
+    placeholder={t("Select a Category")}
+    disabled={isEdit}
+    fullWidth
+    margin="normal"
+    InputLabelProps={{
+                shrink: true,
               }}
-              className={classes.input}
-              placeholder={t("Enter Duration")}
-              disabled={isEdit}
-              type={"number"}
-              endAdornment={<p style={{ margin: "0px 10px", fontSize: 14 }}>{t("Days")}</p>}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {typeof watch("duration") === "number" && errors["duration"]?.message}
-          </p>
-        </>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Details")}</label>
-            <Input
-              {...register("details")}
-              className={classes.input}
-              placeholder={t("Enter a details about your bundle")}
-              disabled={isEdit}
-              multiline={true}
-              inputProps={{ maxLength: 50 }}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["details"]?.message}
-          </p>
-        </>
-        <>
-         
-         
-        </>
-      </Grid>
+    InputProps={{
+      readOnly: true,
+      endAdornment: (
+        <InputAdornment position="end" sx={{cursor:"pointer"}}>
+          <ArrowDropDown />
+        </InputAdornment>
+      ),
+    }}
+    onClick={handleOpenCategoryDialog}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: ""
+        },
+      },
+    }}
+  />
+
+  <TextField
+    {...register("donationAmount")}
+    label={t("Amount")}
+    placeholder={t("Enter Amount")}
+    type="number"
+    fullWidth
+    margin="normal"
+    disabled={isEdit}
+    error={!!errors["donationAmount"]}
+    helperText={typeof watch("donationAmount") === "number" && errors["donationAmount"]?.message}
+    InputProps={{
+      inputProps: { min: 0 },
+      endAdornment: <InputAdornment position="end">
+                    <CoinSelector />
+                  </InputAdornment>
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors["donationAmount"] ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  <TextField
+    {...register("duration")}
+    label={t("Duration")}
+    placeholder={t("Enter Duration")}
+    type="number"
+    fullWidth
+    margin="normal"
+    disabled={isEdit}
+    error={!!errors["duration"]}
+    helperText={typeof watch("duration") === "number" && errors["duration"]?.message}
+    InputProps={{
+      inputProps: { min: 0 },
+      endAdornment: <p style={{ margin: "0px 10px", fontSize: 14 }}>{t("Days")}</p>
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors["duration"] ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  <TextField
+    {...register("details")}
+    label={t("Details")}
+    placeholder={t("Enter a details about your bundle")}
+    fullWidth
+    margin="normal"
+    disabled={isEdit}
+    multiline
+    rows={1}
+    error={!!errors["details"]}
+    helperText={errors["details"]?.message}
+    inputProps={{ maxLength: 50 }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors["details"] ? "red" : ""
+        },
+      },
+    }}
+  />
+</Grid>
     );
   }
 
@@ -556,21 +537,34 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           value={watch("coinName")}
           onChange={(event) => setValue("coinName", event.target.value)}
           disabled={isEdit}
+           sx={{
+          height: '40px',
+          '& .MuiSelect-select': {
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: '24px !important',
+            gap:1,
+
+          }
+        }}
         >
           {tokensDetails.map((item, index) => (
             <MenuItem
-              key={index}
-              value={item.name}
-              style={{
-                padding: "5px",
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <p style={{ margin: 0, width: 50 }}>{item.name}</p>
-              <img src={"/"+ item.img} style={{ width: 25 }} />
-            </MenuItem>
+                        key={index}
+                        value={item.name}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1
+                        }}
+                      >
+                        <img 
+                          src={`/${item.img}`} 
+                          alt={item.name} 
+                          style={{ width: '20px', height: '20px' }} 
+                        />
+                        {item.name}
+                      </MenuItem>
           ))}
         </Select>
       </InputAdornment>

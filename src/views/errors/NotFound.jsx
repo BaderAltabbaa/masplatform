@@ -10,7 +10,7 @@ export default function NotFound() {
   const navigate = useNavigate();
   return (
     <Page  title="404 Not Found">
-      <Box p={5} align="center" sx={{background:(theme) => theme.custom.PageBackGround ,display:"flex" ,flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+      <Box p={9} align="center" sx={{background:(theme) => theme.custom.PageBackGround ,display:"flex" ,flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
         <Link to="/">
           <img src="/images/E404.png" width={"500px"}/> <br />
         </Link>

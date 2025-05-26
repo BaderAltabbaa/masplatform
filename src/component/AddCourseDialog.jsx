@@ -13,7 +13,7 @@ import {
   FormControl,
   Button,
   Box,
-  Popover,
+  Popover,TextField,Typography
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -163,16 +163,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
     aria-labelledby="max-width-dialog-title"
     dir='ltr'
     scroll="body"
-    PaperProps={{
-      sx: {
-        backgroundImage: 'url(/assets/Images/doodle2.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        maxHeight: '90vh',
-        overflow: 'hidden'
-      }
-    }}
+   
     >
       <DialogTitle
         sx={{ 
@@ -186,14 +177,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
         {isEdit ? t("Edit course") : t("Create A Course")}
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
-        <Box sx={{
-                            background: "rgba(255, 255, 255, 0.85)",
-                            borderRadius: "12px",
-                            p: 2,
-                            maxHeight: 'calc(90vh - 64px)',
-                            display: 'flex',
-                            flexDirection: 'column'
-                          }}>
+      
         <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
@@ -202,7 +186,6 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
           </Grid>
           {FormButtons()}
         </Grid>
-        </Box>
       </DialogContent>
 
       {/* Category Selection Dialog */}
@@ -245,6 +228,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
       <Box
         style={{ display: mediaUrl !== "" ? "block" : "none" }}
         className={classes.mediaBox}
+        mb={1}
       >
         {isVideo ? (
           <div style={{ borderRadius: "10px 10px 0px 0px", overflow: "hidden" }}>
@@ -260,9 +244,8 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
           <img
             src={mediaUrl}
             width="100%"
-            height={"50%"}
             alt={"course image"}
-            style={{ borderRadius: "10px 10px 0px 0px" }}
+            style={{ borderRadius: "10px 10px 0px 0px",height:"200px" }}
           />
         )}
         <div className={classes.mediaBoxInfo}>
@@ -397,11 +380,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
                 <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Drag And Drop Files")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Accept All Video/Image Formats")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Max File Size: 1024 MP")}</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Width Size: ")}300px</p>
-                <p style={{ margin: "5px 0px 0px 0px" }}>{t("Min Height Size: ")}160px</p>
+               
               </div>
             </div>
           </Button>
@@ -413,138 +392,147 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
   function InputList() {
     return (
       <Grid item xs={12} sm={7}>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["courseTitle"] ? "red" : "rgba(45, 34, 45, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("course Title")}</label>
-            <Input
-              {...register("courseTitle")}
-              className={classes.input}
-              placeholder={t("Enter course Title")}
-              disabled={isEdit}
-              inputProps={{ maxLength: 16 }}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["courseTitle"]?.message}
-          </p>
-        </>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["courseName"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("course Name")}</label>
-            <Input
-              {...register("courseName")}
-              className={classes.input}
-              placeholder={t("Enter course Name")}
-              disabled={isEdit}
-              inputProps={{ maxLength: 16 }}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["courseName"]?.message}
-          </p>
-        </>
-        <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Category")}</label>
-            <Input
-              {...register("category")}
-              className={classes.input}
-              placeholder={t("Select a Category")}
-              disabled={isEdit}
-              readOnly
-              onClick={handleOpenCategoryDialog}
-              endAdornment={
-                <InputAdornment position="end" sx={{cursor:"pointer"}}>
-                  <ArrowDropDown />
-                </InputAdornment>
-              }
-            />
-          </Grid>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["donationAmount"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Amount")}</label>
-            <Input
-              {...register("donationAmount")}
-              className={classes.input}
-              inputProps={{
-                min: 0,
-              }}
-              placeholder={t("Enter Donation Amount")}
-              disabled={isEdit}
-              type={"number"}
-                endAdornment= {<Box zIndex='1'>{CoinSelector()}</Box>}
+  {/* Course Title */}
+  <TextField
+    {...register("courseTitle")}
+    label={t("Course Title")}
+    placeholder={t("Enter Course Title")}
+    disabled={isEdit}
+    fullWidth
+    margin="normal"
+    error={!!errors.courseTitle}
+    helperText={errors.courseTitle?.message}
+    inputProps={{ maxLength: 16 }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.courseTitle ? "red" : ""
+        },
+      },
+    }}
+  />
 
-              
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {typeof watch("donationAmount") === "number" &&
-              errors["donationAmount"]?.message}
-          </p>
-        </>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["duration"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Duration")}</label>
-            <Input
-              {...register("duration")}
-              inputProps={{
-                min: 0,
+  {/* Course Name */}
+  <TextField
+    {...register("courseName")}
+    label={t("Course Name")}
+    placeholder={t("Enter Course Name")}
+    disabled={isEdit}
+    fullWidth
+    margin="normal"
+    error={!!errors.courseName}
+    helperText={errors.courseName?.message}
+    inputProps={{ maxLength: 16 }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.courseName ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  {/* Category */}
+  <TextField
+    {...register("category")}
+    label={t("Category")}
+    placeholder={t("Select a Category")}
+    disabled={isEdit}
+    fullWidth
+    margin="normal"
+     InputLabelProps={{
+                shrink: true,
               }}
-              className={classes.input}
-              placeholder={t("Enter Duration")}
-              disabled={isEdit}
-              type={"number"}
-              endAdornment={<p style={{ margin: "0px 10px", fontSize: 14 }}>{t("Days")}</p>}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {typeof watch("duration") === "number" && errors["duration"]?.message}
-          </p>
-        </>
-        <>
-          <Grid
-            sm={12}
-            className={classes.inputContainer}
-            style={{ borderColor: errors["details"] ? "red" : "rgba(140, 0, 135, 0)" }}
-          >
-            <label style={{ color: " #2d013a" }}>{t("Details")}</label>
-            <Input
-              {...register("details")}
-              className={classes.input}
-              placeholder={t("Enter a details about your course")}
-              disabled={isEdit}
-              multiline={true}
-              inputProps={{ maxLength: 50 }}
-            />
-          </Grid>
-          <p style={{ margin: "-5px 0px 15px 5px", color: "red" }}>
-            {errors["details"]?.message}
-          </p>
-        </>
-        <>
-         
-         
-        </>
-      </Grid>
+    InputProps={{
+      readOnly: true,
+      endAdornment: (
+        <InputAdornment position="end" sx={{ cursor: "pointer" }}>
+          <ArrowDropDown />
+        </InputAdornment>
+      ),
+    }}
+    onClick={handleOpenCategoryDialog}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: ""
+        },
+      },
+    }}
+  />
+
+  {/* Donation Amount */}
+  <TextField
+    {...register("donationAmount")}
+    label={t("Amount")}
+    placeholder={t("Enter Amount")}
+    type="number"
+    fullWidth
+    margin="normal"
+    disabled={isEdit}
+    error={!!errors.donationAmount}
+    helperText={typeof watch("donationAmount") === "number" && errors.donationAmount?.message}
+    InputProps={{
+      inputProps: { min: 0 },
+      endAdornment: <InputAdornment position="end">
+                         <CoinSelector />
+                       </InputAdornment>
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.donationAmount ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  {/* Duration */}
+  <TextField
+    {...register("duration")}
+    label={t("Duration")}
+    placeholder={t("Enter Duration")}
+    type="number"
+    fullWidth
+    margin="normal"
+    disabled={isEdit}
+    error={!!errors.duration}
+    helperText={typeof watch("duration") === "number" && errors.duration?.message}
+    InputProps={{
+      inputProps: { min: 0 },
+      endAdornment: <Typography variant="body2" sx={{ margin: "0px 10px" }}>{t("Days")}</Typography>
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.duration ? "red" : ""
+        },
+      },
+    }}
+  />
+
+  {/* Details */}
+  <TextField
+    {...register("details")}
+    label={t("Details")}
+    placeholder={t("Enter details about your course")}
+    disabled={isEdit}
+    multiline
+    rows={1}
+    fullWidth
+    margin="normal"
+    error={!!errors.details}
+    helperText={errors.details?.message}
+    inputProps={{ maxLength: 50 }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: errors.details ? "red" : ""
+        },
+      },
+    }}
+  />
+</Grid>
     );
   }
 
@@ -556,21 +544,34 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
           value={watch("coinName")}
           onChange={(event) => setValue("coinName", event.target.value)}
           disabled={isEdit}
+           sx={{
+          height: '40px',
+          '& .MuiSelect-select': {
+            display: 'flex',
+            alignItems: 'center',
+            paddingRight: '24px !important',
+            gap:1,
+
+          }
+        }}
         >
           {tokensDetails.map((item, index) => (
-            <MenuItem
-              key={index}
-              value={item.name}
-              style={{
-                padding: "5px",
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <p style={{ margin: 0, width: 50 }}>{item.name}</p>
-              <img src={"/"+ item.img} style={{ width: 25 }} />
-            </MenuItem>
+             <MenuItem
+                                    key={index}
+                                    value={item.name}
+                                    sx={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: 1
+                                    }}
+                                  >
+                                    <img 
+                                      src={`/${item.img}`} 
+                                      alt={item.name} 
+                                      style={{ width: '20px', height: '20px' }} 
+                                    />
+                                    {item.name}
+                                  </MenuItem>
           ))}
         </Select>
       </InputAdornment>

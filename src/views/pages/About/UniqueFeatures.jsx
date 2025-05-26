@@ -69,7 +69,7 @@ const UniqueFeatures = () => {
     <Box sx={{ 
       px: isMobile ? 2 : 6,
       py: 1,
-      maxWidth: '1000px',
+      maxWidth: '1200px',
       mx: 'auto'
     }}>
       <motion.div
@@ -156,8 +156,9 @@ const UniqueFeatures = () => {
                   flexGrow: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  p: 3,
-                  '&:last-child': { pb: 4 }
+                  justifyContent:"center",
+                  alignItems:"center",
+                  p: 2,
                 }}>
                   <Typography 
                     variant="h1" 
@@ -176,7 +177,7 @@ const UniqueFeatures = () => {
                     component="h3"
                     sx={{ 
                       fontWeight: 700,
-                      mb: 2,
+                      mb: 1,
                       textAlign: 'center',
                       color:"white"
                     }}

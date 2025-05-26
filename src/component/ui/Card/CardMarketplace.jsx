@@ -491,7 +491,7 @@ useEffect(() => {
 >
   <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
   <DialogContent>
-    <Typography variant="body1" sx={{color:"#2f0032"}}>
+    <Typography variant="body1" sx={{color:(theme) => theme.custom.mainButton}}>
       {t("Please enter your billing information below:")}
     </Typography>
     {error && <Typography color="error">{error}</Typography>}
@@ -537,12 +537,12 @@ useEffect(() => {
   </DialogContent>
   <br />
   <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
-    <Button onClick={onClose} sx={{color:"#2f0032"}}>{t("Cancel")}</Button>
+    <Button onClick={onClose} sx={{color:(theme) => theme.custom.mainButton}}>{t("Cancel")}</Button>
     <Button 
       onClick={handleBuy} 
       color="secondary" 
       variant="contained" 
-      style={{background:"#2f0032",color:"white" }}
+      sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
       disabled={Object.keys(formData).some(key => 
         !["address2"].includes(key) && !formData[key]?.trim()
       )}
@@ -554,12 +554,12 @@ useEffect(() => {
 </Dialog>
               
               <Dialog disableScrollLock={true} open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
-                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}>{t("successed Purchase")}</DialogTitle>
+                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:(theme) => theme.custom.mainButton}}>{t("successed Purchase")}</DialogTitle>
                   <DialogContent>
                       <Typography variant="body1"> {t("Your purchase was successful. You can download your bill now.")}</Typography>
                       <Box textAlign="center" mt={2}>
-                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:"#2f0032",color:"white" }}>{t("Download Bill")}</Button>
-                          <Button onClick={handleCancel} sx={{color:"#2f0032"}}>{t("Cancel")}</Button>
+                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:(theme) => theme.custom.mainButton,color:"white" }}>{t("Download Bill")}</Button>
+                          <Button onClick={handleCancel} sx={{color:(theme) => theme.custom.mainButton}}>{t("Cancel")}</Button>
                       </Box>
                   </DialogContent>
               </Dialog>
@@ -567,14 +567,14 @@ useEffect(() => {
               <Dialog open={showPurchaseDialog} onClose={() => {}} aria-labelledby="bill-dialog-title" maxWidth="sm" fullWidth={true}>
             <DialogTitle id="bill-dialog-title">{t("Bill Preview")}</DialogTitle>
             <DialogContent>
-            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:"#2f0032"}}> 
+            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:(theme) => theme.custom.mainButton}}> 
             {t("Successful Purchase")}
             </Typography>
             <Typography variant="body1" gutterBottom align="center">
             {t("Your purchase was successful. You can view your bill below:")}
             </Typography>
             <Box textAlign="center" mt={2}>
-            <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:" #2f0032",color:"white" ,"&:hover":{
+            <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:(theme) => theme.custom.mainButton,color:"white" ,"&:hover":{
               backgroundColor:"rgb(99, 0, 96)"
             } }}>{t("View Bill now")}</Button>
             </Box>
@@ -594,7 +594,7 @@ useEffect(() => {
             </DialogContent>
             <br />
             <Box textAlign="center" mt={2}>
-                <Button onClick={handleCancel} color="primary">{t("Close")}</Button>
+                <Button onClick={handleCancel} sx={{background:(theme) => theme.custom.mainButton,color:"white`"}}>{t("Close")}</Button>
                 </Box>
                 <br />
                 
@@ -851,7 +851,7 @@ useEffect(() => {
                     variant="contained"
                     size="large"
                     color="primary"
-                    style={{background:"#2f0032",color:"white" }}
+                    style={{background:(theme) => theme.custom.mainButton,color:"white" }}
                     onClick={handleClose}
                   >
                     {t("Cancel")}
@@ -862,7 +862,7 @@ useEffect(() => {
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{background:"#2f0032",color:"white" }}
+                    style={{background:(theme) => theme.custom.mainButton,color:"white" }}
                     onClick={handleClose}
                   >
                     {t("Save Changes")}
@@ -949,7 +949,7 @@ useEffect(() => {
       <Dialog
   fullWidth
   disableScrollLock={true}
-  maxWidth="md"
+  maxWidth="lg"
   open={open2}
   onClose={handleClose2}
   aria-labelledby="max-width-dialog-title"
@@ -995,7 +995,6 @@ useEffect(() => {
           alt="Selected"
           style={{
             width: "100%",
-            maxWidth: "370px",
             height: "300px", // Make height responsive
             objectFit: "cover",
             borderRadius: "20px",
@@ -1011,7 +1010,7 @@ useEffect(() => {
           display: "flex",
           flexDirection: "column",
           gap: 2, // Add spacing between items
-          backgroundColor: " #2f0032",
+          backgroundColor: (theme) => theme.custom.mainButton,
           borderRadius: "20px",
           padding: { xs: "10px", sm: "15px" },
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
@@ -1061,7 +1060,7 @@ useEffect(() => {
           flexWrap:"wrap",
           overflowX: "auto", // Allows horizontal scrolling if there are too many images
           padding: 1, // Adds some padding at the bottom
-          background:" #2f0032",
+          background:(theme) => theme.custom.mainButton,
           borderRadius:"10px",
           width: "fit-content", // Ensures the Box only takes up as much space as its content
           boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
@@ -1111,13 +1110,13 @@ useEffect(() => {
        color="secondary"  // This gives the button a distinctive color, usually the primary theme color
        variant="contained"  // This makes the button have a filled style
        disabled={isLoading}
-       style={{background:"#2f0032",color:"white" }}
+       sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
      >
        {isLoading ? t("Pending...") : t("Buy Now")}
        {isLoading && <ButtonCircularProgress />}
      </Button>
      &nbsp;&nbsp;
-     <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
+     <Button className={classes.LoginButton} onClick={handleClose2}  sx={{background:(theme) => theme.custom.mainButton,color:"white" }} >
        {t("Cancel")}
      </Button>
    </Box>
@@ -1138,13 +1137,13 @@ useEffect(() => {
          onClick={() => {
            navigate("/login");
          }}
-         style={{background:"#2f0032",color:"white" }}
+         sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
  
        >
          {t("Login")}
        </Button>
        &nbsp;&nbsp;
-       <Button className={classes.LoginButton} onClick={handleClose2}  style={{background:"#2f0032",color:"white" }} >
+       <Button className={classes.LoginButton} onClick={handleClose2}  sx={{background:(theme) => theme.custom.mainButton,color:"white" }} >
          {t("Cancel")}
        </Button>
      </Box>
@@ -1211,7 +1210,7 @@ useEffect(() => {
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary"  style={{background:"#2f0032",color:"white" }} >
+              <Button variant="contained" size="large" color="secondary"  sx={{background:(theme) => theme.custom.mainButton,color:"white" }} >
                 {t("Donate now")}
               </Button>
             </Box>

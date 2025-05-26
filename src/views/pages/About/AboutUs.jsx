@@ -111,10 +111,11 @@ export default function AboutUs() {
 }}
 buttonDisplay={{display:"none"}}/>
                 <VisionMission/>
+                <DigitalEcosystem/>
                 <UniqueFeatures/>    
                 <MarketplaceCarousel/>
                 <TechnicalInfrastructure/>
-                <DigitalEcosystem/>
+                
                 <MembershipTiers/>
                 <Roadmap/>
                 <WhyMasNow/>

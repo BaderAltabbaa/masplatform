@@ -375,7 +375,7 @@ export const theme = (customization) => {
     },
     typography: themeTypography(themeOption),
       custom: {
-PageBackGround :"linear-gradient(to right, #280026,#660a6c)", //Main Background
+PageBackGround :"rgb(55, 0, 53)", //Main Background
 
 CarBackGround :"linear-gradient(to top right,#9e14a5, #4d0051)", //Main Cards
 

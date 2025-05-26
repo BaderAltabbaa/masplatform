@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogActions, DialogTitle, InputAdornment, Text
 import { ButtonwithAnimation } from "../../../../../component/ui/Button/button";
 import { makeStyles } from "@mui/styles";
 import { tokensDetails } from "../../../../../constants";
+import { DocumentScanner } from "@mui/icons-material";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +56,8 @@ const Fundraise = () => {
     coinName: tokensDetails[0]?.name || '', // Default to first coin
     description: '',
     passportPhoto: null,
-    coverPhoto: null
+    coverPhoto: null,
+    documents: null
   });
 
   const [errors, setErrors] = useState({
@@ -271,6 +273,19 @@ const Fundraise = () => {
               }}
               label="Upload Passport Photo"
               name="passportPhoto"
+              onChange={handleFileChange}
+              required
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              type="file"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              label="Upload Document"
+              name="Document"
               onChange={handleFileChange}
               required
             />

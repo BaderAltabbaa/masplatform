@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions,  
+  DialogActions, FormControlLabel ,Checkbox 
 } from "@mui/material"; 
 import { makeStyles } from "@mui/styles"; 
 import axios from "axios";
@@ -127,6 +127,7 @@ export default function Login() {
   const [code, setcode] = useState("");
   const [resendTimer, setresendTimer] = useState();
     const {t} = useTranslation();
+    const [rememberMe, setRememberMe] = useState(false);
   
 
   useEffect(() => {
@@ -241,6 +242,15 @@ export default function Login() {
           );
         }
 
+         if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+          localStorage.setItem('rememberedPassword', pass);
+        } else {
+          // Clear stored credentials if Remember Me is unchecked
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberedPassword');
+        }
+
         sessionStorage.setItem("AccessToken", res.data.result.token); 
         await user.updatetoken(res.data.result.token);
 
@@ -272,6 +282,19 @@ export default function Login() {
     fetchSplash();
 
   }, [])
+
+
+useEffect(() => {
+  // Load remembered credentials if they exist
+  const rememberedEmail = localStorage.getItem('rememberedEmail');
+  const rememberedPassword = localStorage.getItem('rememberedPassword');
+  
+  if (rememberedEmail && rememberedPassword) {
+    setemail(rememberedEmail);
+    setpass(rememberedPassword);
+    setRememberMe(true);
+  }
+}, []);
 
   const handleKeyDown = (e) => {
      if (e.key === 'Enter' && !loader && passvalid && emailvalid) {
@@ -356,13 +379,36 @@ export default function Login() {
               />
       
        </div>
-       <div className="forget">
-           <label>
-               <input type="checkbox" /> {t("Remember Me")}
-           </label>
-         
-           <Link to="/Forget">{t("Forget Password")}</Link>
-       </div>
+      <div className="forget" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+  <FormControlLabel
+    control={
+      <Checkbox
+        checked={rememberMe}
+        onChange={(e) => setRememberMe(e.target.checked)}
+        color="primary"
+        sx={{
+          color: "white",
+          '&.Mui-checked': {
+            color: (theme) => theme.custom.mainButton,
+          },
+        }}
+      />
+    }
+    label={t("Remember Me")}
+    sx={{
+      '& .MuiTypography-root': {
+        fontSize: "14px",
+        color: "white",
+      },
+      '& .MuiButtonBase-root': {
+        padding: "0 9px 0 0",
+      }
+    }}
+  />
+  <Link to="/Forget" sx={{ color: "white", textDecoration: "none" }}>
+    {t("Forget Password")}
+  </Link>
+</div>
 
       
          <Button
