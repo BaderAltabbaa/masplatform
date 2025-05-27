@@ -72,7 +72,7 @@ const MembershipTiers = () => {
           sx={{ 
             mb: 4, 
             fontSize: isMobile ? '1.1rem' : '1.3rem',
-            color: 'rgb(139, 137, 137)'
+            color: 'white'
           }}
         >
           Multi-level membership system with benefits based on $MAS token holdings

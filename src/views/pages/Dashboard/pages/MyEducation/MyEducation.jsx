@@ -209,7 +209,10 @@ export default function MyEducation() {
             variant="contained"
             size="medium"
             color=""
-            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight:"10px"}}
+            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight:"10px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
             onClick={() => updateState({ OpenAuction: true })}
           >
             {t("add a Course")}
@@ -218,10 +221,13 @@ export default function MyEducation() {
             variant="contained"
             size="medium"
             color="white"
-            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight:"10px"}}
+            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight:"10px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
             onClick={() => updateState({ openShareTheLesson: true })}
           >
-            {t("share The lesson")}
+            {t("add a lesson")}
           </Button>
          
            <Button

@@ -309,7 +309,10 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 5px" }}
+          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 5px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {t("Cancel")}
         </Button>
@@ -319,7 +322,10 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           onClick={onSubmit}
           size="large"
           disabled={isEdit && !dirtyFields.file}
-          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 5px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 5px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {isEdit ? t("Edit") : t("Create")}
         </Button>

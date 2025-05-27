@@ -199,16 +199,19 @@ export default function Bundles() {
             variant="contained"
             size="large"
             color="white"
-            style={{ marginRight: "10px" }}
+            sx={{ marginRight: "10px" ,}}
             onClick={() => updateState({ openShareAudience: true })}
           >
-            {t("share for audience")}
+            {t("Add to Bundle")}
           </Button>
           <Button
             variant="contained"
             size="large"
-            color=""
-            sx={{background:(theme) => theme.custom.mainButton,color:'white'}}
+            sx={{background:(theme) => theme.custom.mainButton,color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }
+            }}
             onClick={() => updateState({ OpenAuction: true })}
           >
             {t("add a bundle")}

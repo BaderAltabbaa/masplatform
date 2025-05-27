@@ -39,7 +39,7 @@
 }
 
 .nav-links1 ul a:hover {
-  color:  #8602ba; /* لون التمرير */
+  color: #8033a1 ; 
 }
 
 
@@ -115,7 +115,7 @@
 
 .burger-icon:hover{
   background: none;
-  color: #8602ba;
+  color: #8033a1;
 }
 
 .nav-links1.active {

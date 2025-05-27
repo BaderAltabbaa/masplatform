@@ -946,9 +946,9 @@ useEffect(() => {
       
       
       {/* buy now */}
-      <Dialog
+   <Dialog
   fullWidth
-  disableScrollLock={true}
+  disableScrollLock
   maxWidth="lg"
   open={open2}
   onClose={handleClose2}
@@ -961,216 +961,276 @@ useEffect(() => {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      
+      borderRadius: '16px',
+      overflow: 'hidden'
     }
   }}
 >
-  <DialogContent sx={{ overflow:{xs: "auto", sm: "hidden"} , padding: { xs: 2, sm: 3 } }} dir="ltr">
+  <DialogContent sx={{ p: 0 }}>
     <Box sx={{
-            background:"rgba(255, 255, 255, 0.68)",
-            padding:"20px",
-            borderRadius:"20px"
-          }}>
-   
+      background: "rgba(255, 255, 255, 0.85)",
+      backdropFilter: "blur(8px)",
+      p: 2,
+      borderRadius: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      overflow: 'hidden'
+    }}>
 
-    {/* Big Image and Details */}
-    <Box
-      sx={{
+      {/* Main Content Row - No scrolling */}
+      <Box sx={{
         display: "flex",
-        flexDirection: { xs: "column", md: "row" }, // Stack on small screens, row on larger screens
-        gap: { xs: 2, md: 3 }, // Add spacing between elements
+        flexDirection: { xs: "column", md: "row" },
+        gap: 2,
         width: "100%",
-      }}
-    >
-      {/* Big Image */}
-      <Box
-        sx={{
+        overflow: 'hidden'
+      }}>
+
+        {/* Image Section */}
+        <Box sx={{
           flex: 1,
+          minWidth: { md: '50%' },
           display: "flex",
           justifyContent: "center",
-        }}
-      >
-        <img
-          src={selectedImage ? selectedImage : itemData.mediaUrl1}
-          alt="Selected"
-          style={{
-            width: "100%",
-            height: "300px", // Make height responsive
-            objectFit: "cover",
-            borderRadius: "20px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-          }}
-        />
-      </Box>
+          alignItems: "center",
+          position: 'relative',
+          maxHeight: { xs: '300px', md: '400px' },
+          borderRadius:"16px"
+        }}>
+          <img
+            src={selectedImage || itemData.mediaUrl1}
+            alt="Selected"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "contain",
+              borderRadius: "16px",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+            }}
+          />
+        </Box>
 
-      {/* Details Box */}
-      <Box
-        sx={{
+        {/* Details Section */}
+        <Box sx={{
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          gap: 2, // Add spacing between items
-          backgroundColor: (theme) => theme.custom.mainButton,
-          borderRadius: "20px",
-          padding: { xs: "10px", sm: "15px" },
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-        }}
-      >
-        {[
-          { label: t("Title"), value: itemData.itemTitle },
-          { label: t("Name"), value: itemData.itemName },
-          { label: t("Price"), value: `${itemData.donationAmount} ${itemData.coinName}` },
-          { label: t("Details"), value: itemData.details },
-          { label: t("Owner"), value: userName },
-          { label: t("Speciality"), value: userSpeciality },
-        ].map((item, index) => (
-          <Typography
-            key={index}
-            variant="h4"
-            align="left"
-            sx={{
-              color: "#000",
-              fontWeight: "bold",
-              backgroundColor: "rgb(240, 240, 240)",
-              borderRadius: "20px",
-              padding: "5px",
-            }}
-          >
-            {item.label}: <span>{item.value}</span>
-          </Typography>
-        ))}
+          justifyContent:"center",
+          gap: 2,
+          backgroundColor: (theme) => theme.palette.background.paper,
+          borderRadius: "16px",
+          p: 1,
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          overflow: 'hidden'
+        }}>
+          {[
+            { label: t("Title"), value: itemData.itemTitle },
+            { label: t("Name"), value: itemData.itemName },
+            { label: t("Price"), value: `${itemData.donationAmount} ${itemData.coinName}` },
+            { label: t("Details"), value: itemData.details },
+            { label: t("Owner"), value: userName },
+            { label: t("Speciality"), value: userSpeciality },
+          ].filter(item => item.value).map((item, index) => (
+            <Box key={index} sx={{
+              backgroundColor: 'rgba(0, 0, 0, 0.03)',
+              borderRadius: "12px",
+              p: 1.5,
+            }}>
+              <Typography variant="subtitle1" sx={{ 
+                fontWeight: 600,
+                color: 'text.primary',
+                display: 'flex',
+                gap: 1
+              }}>
+                <Box component="span" sx={{ color: 'text.secondary' }}>
+                  {item.label}:
+                </Box>
+                <Box component="span">
+                  {item.value}
+                </Box>
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Thumbnail Gallery - Only show if images exist */}
+      {groupedImages.flat().filter(url => url).length > 0 && (
+        <Box sx={{
+          display: "flex",
+          justifyContent: "center",
+          width: '100%',
+          bgcolor: 'background.paper',
+          borderRadius: '12px',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          p: 1
+        }}>
+          <Box sx={{
+            display: "flex",
+            gap: 1,
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}>
+            {groupedImages.flat().filter(url => url).map((url, idx) => (
+              <Box
+                key={idx}
+                onClick={() => handleImageClick(url)}
+                sx={{
+                  width: 64,
+                  height: 64,
+                  flexShrink: 0,
+                  cursor: 'pointer',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  border: '2px solid',
+                  borderColor: selectedImage === url ? 'primary.main' : 'transparent',
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    borderColor: 'primary.main'
+                  }
+                }}
+              >
+                <img
+                  src={url}
+                  alt={`Thumbnail ${idx}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
+
+      {/* Action Buttons */}
+      <Box sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        gap: 2,
+        flexWrap: 'wrap'
+      }}>
+        {auth.userLoggedIn ? (
+          <>
+            <Button 
+              onClick={handleClose2}
+              variant="outlined"
+              sx={{
+                color: (theme) => theme.custom.mainButton,
+                borderColor: (theme) => theme.custom.mainButton,
+                '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+              }}
+            >
+              {t("Cancel")}
+            </Button>
+            <Button 
+              variant="contained"
+              onClick={() => setOpenBillingDialog(true)}
+              disabled={isLoading}
+              sx={{
+                minWidth: 120,
+                bgcolor: (theme) => theme.custom.mainButton,
+                '&:hover': {
+                  bgcolor: (theme) => theme.custom.hoverMainButton,
+                  opacity: 0.9
+                }
+              }}
+            >
+              {isLoading ? (
+                <>
+                  {t("Pending...")}
+                  <ButtonCircularProgress />
+                </>
+              ) : t("Buy Now")}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button 
+              onClick={handleClose2}
+             variant="outlined"
+              sx={{
+                color: (theme) => theme.custom.mainButton,
+                borderColor: (theme) => theme.custom.mainButton,
+                '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+              }}
+            >
+              {t("Cancel")}
+            </Button>
+            <Button 
+              variant="contained"
+              onClick={() => navigate("/login")}
+              sx={{
+                minWidth: 120,
+                bgcolor: (theme) => theme.custom.mainButton,
+                '&:hover': {
+                  bgcolor: (theme) => theme.custom.mainButton,
+                  opacity: 0.9
+                }
+              }}
+            >
+              {t("Login")}
+            </Button>
+          </>
+        )}
       </Box>
     </Box>
+  </DialogContent>
 
-    {/* Thumbnail Images */}
-    <Box
+  {/* Billing Dialog */}
+  <BillingDialog
+    open={openBillingDialog}
+    onClose={() => setOpenBillingDialog(false)}
+    onSuccessfulPurchase={handleCloseParentDialog} 
+  />
+
+  {/* Image Preview Dialog */}
+  <Dialog
+    open={openImageDialog}
+    onClose={handleCloseImageDialog}
+    maxWidth="md"
+    fullWidth
+    PaperProps={{
+      sx: {
+        position: 'relative',
+        overflow: 'hidden',
+        maxHeight: 'none'
+      }
+    }}
+  >
+    <IconButton
+      onClick={handleCloseImageDialog}
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        mt: 2,
+        position: 'absolute',
+        right: 8,
+        top: 8,
+        zIndex: 1,
+        bgcolor: 'rgba(0,0,0,0.5)',
+        color: 'white',
+        '&:hover': {
+          bgcolor: 'rgba(0,0,0,0.7)'
+        }
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems:"center",
-          justifyContent:"center",
-          gap: 0, // Adds spacing between images
-          flexWrap:"wrap",
-          overflowX: "auto", // Allows horizontal scrolling if there are too many images
-          padding: 1, // Adds some padding at the bottom
-          background:(theme) => theme.custom.mainButton,
-          borderRadius:"10px",
-          width: "fit-content", // Ensures the Box only takes up as much space as its content
-          boxShadow:" 0 4px 8px rgba(0, 0, 0,0.5)",
-          maxWidth: "100%", // Prevents the Box from exceeding the parent container's width
-        }}
-      >
-        {groupedImages.flat().map((url, idx) => (
-          <Box
-            key={idx}
-            sx={{
-              flexShrink: 0,
-              cursor: "pointer",
-              borderRadius: "10px",
-              "&:hover": {
-                transform: "scale(1.07)",
-              },
-            }}
-            onClick={() => handleImageClick(url)}
-          >
-            {url && (
-              <img
-                src={url}
-                alt={`Thumbnail ${idx}`}
-                style={{
-                  width: "60px", // Fixed width for thumbnails
-                  height: "60px", // Fixed height for thumbnails
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  border: "2px solid white",
-                    margin:"0 2px"
-                }}
-              />
-            )}
-          </Box>
-        ))}
-      </Box>
-    </Box>
-
-    {/* Buttons */}
-   {/* Buy Now and Cancel Buttons */}
- {auth.userLoggedIn && (
-    <Box mt={2} mb={0} textAlign="center" display="flex" justifyContent="right">
-    
-     <Button
-       className={classes.BuyButton}
-       onClick={() => setOpenBillingDialog(true)}
-       color="secondary"  // This gives the button a distinctive color, usually the primary theme color
-       variant="contained"  // This makes the button have a filled style
-       disabled={isLoading}
-       sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
-     >
-       {isLoading ? t("Pending...") : t("Buy Now")}
-       {isLoading && <ButtonCircularProgress />}
-     </Button>
-     &nbsp;&nbsp;
-     <Button className={classes.LoginButton} onClick={handleClose2}  sx={{background:(theme) => theme.custom.mainButton,color:"white" }} >
-       {t("Cancel")}
-     </Button>
-   </Box>
-   )}
-   <BillingDialog
-   open={openBillingDialog}
-   onClose={() => setOpenBillingDialog(false)}
-   onSuccessfulPurchase={handleCloseParentDialog} 
- />
- 
-   
- 
-   {/* Login and Subscribe Buttons */}
-   {!auth.userLoggedIn && (
-     <Box mt={3} mb={3} textAlign="center" display="flex" justifyContent="right">
-       <Button
-         className={classes.LoginButton}
-         onClick={() => {
-           navigate("/login");
-         }}
-         sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
- 
-       >
-         {t("Login")}
-       </Button>
-       &nbsp;&nbsp;
-       <Button className={classes.LoginButton} onClick={handleClose2}  sx={{background:(theme) => theme.custom.mainButton,color:"white" }} >
-         {t("Cancel")}
-       </Button>
-     </Box>
-   )}
-   </Box>
-  </DialogContent>
-      {/* New Image Dialog */}
-      <Dialog
-        open={openImageDialog}
-        disableScrollLock={true}
-        onClose={handleCloseImageDialog}
-        aria-labelledby="image-dialog-title"
-        fullWidth
-        maxWidth="md"
-      >
-        <IconButton
-          onClick={handleCloseImageDialog}
-          style={{ position: 'absolute', right: '10px', top: '10px' }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent>
-          <img src={selectedImageUrl} alt="Selected" style={{ width: '100%' }} />
-        </DialogContent>
-      </Dialog>
-
-      </Dialog>
+      <CloseIcon />
+    </IconButton>
+    <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
+      <img 
+        src={selectedImageUrl} 
+        alt="Full Preview" 
+        style={{ 
+          width: '100%',
+          height: 'auto',
+          objectFit: 'contain'
+        }} 
+      />
+    </DialogContent>
+  </Dialog>
+</Dialog>
 
       <Dialog
         open={open3}

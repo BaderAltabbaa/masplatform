@@ -74,7 +74,10 @@ const FinalCTA = () => {
             fontWeight: 600,
             borderRadius: '50px',
             minWidth: 200,
-            backgroundColor: (theme) => theme.custom.mainButton
+            background: (theme) => theme.custom.mainButton,
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }
           }}
           onClick={() => {navigate("/login")}}
         >
@@ -93,7 +96,7 @@ const FinalCTA = () => {
             borderRadius: '50px',
             minWidth: 200,
             borderWidth: 2,
-            '&:hover': { borderWidth: 2 }
+            '&:hover': { borderWidth: 2 ,backgroundColor:"transparent" }
           }}
           onClick={() => {navigate("/About_us")}}
         >

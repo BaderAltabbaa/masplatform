@@ -181,7 +181,10 @@ const Fundraise = () => {
             <Button
               variant="contained"
               size="large"
-              sx={{background:(theme) => theme.custom.mainButton, color:'white'}}
+              sx={{background:(theme) => theme.custom.mainButton, color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
               onClick={handleOpen}
             >
               Create a Fundraiser
@@ -329,7 +332,10 @@ const Fundraise = () => {
             onClick={handleSubmit} 
             variant="contained"
             type="submit"
-            sx={{background:(theme) => theme.custom.mainButton, color:'white'}}
+            sx={{background:(theme) => theme.custom.mainButton, color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
           >
             Submit
           </Button>
@@ -362,7 +368,10 @@ const Fundraise = () => {
             <Button 
               variant="contained" 
               size="small"
-              sx={{background:(theme) => theme.custom.mainButton, color:'white'}}
+              sx={{background:(theme) => theme.custom.mainButton, color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
               onClick={handleDonate}
             >
               Donate

@@ -103,7 +103,7 @@ const CanDoMas = () => {
         
         <Typography variant="h5" component="h3" sx={{
           mb: 4,
-          color: 'rgba(255,255,255,0.8)',
+          color: 'rgb(255, 255, 255)',
           fontSize: { xs: '1.1rem', lg: '1.3rem' },
           lineHeight: 1.6
         }}>

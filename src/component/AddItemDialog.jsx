@@ -242,7 +242,10 @@ function FormButtons() {
           onClick={handleClose}
           color="primary"
           size="large"
-          sx={{ background:(theme) => theme.custom.mainButton,color:'white',margin:"0 5px"}}
+          sx={{ background:(theme) => theme.custom.mainButton,color:'white',margin:"0 5px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
 
         >
           {t("Cancel")}
@@ -251,9 +254,11 @@ function FormButtons() {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          sx={{ background:(theme) => theme.custom.mainButton,color:'white',margin:"0 5px"}}
+          sx={{ background:(theme) => theme.custom.mainButton,color:'white',margin:"0 5px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
 
-          className={classes.submitButton}
           disabled={isEdit && !dirtyFields.file}
         >
           {isEdit ? t("Edit") : t("Create")}
@@ -634,13 +639,6 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
 
-  submitButton: {
-
-    "&:hover": {
-      boxShadow: "0px 0px 0px 0px",
-      backgroundColor: "rgba(81, 0, 94, 0.95) !important",
-    },
-  },
 
   mediaBox: {
     width: "100%",

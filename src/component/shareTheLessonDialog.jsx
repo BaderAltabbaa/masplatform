@@ -129,7 +129,7 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
   fontSize: "1.5rem",
   py: 1
 }}      >
-        {isEdit ? t("Edit Lesson") : t("Share The Lesson")}
+        {isEdit ? t("Edit Lesson") : t("Add a Lesson")}
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
        
@@ -241,7 +241,10 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {t("Cancel")}
         </Button>
@@ -250,7 +253,10 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {isEdit ? t("Edit") : t("Share")}
         </Button>
@@ -425,7 +431,7 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
     return (
       <div style={{ margin:"0 10px" }}>
         <p className={classes.selectorTitleStyle} style={{ color: " #2d013a" }}>
-          Choose Courses To Share with
+          Choose The Course You Wish To A Lesson To: 
         </p>
         <Grid container spacing={2}>
         {Array.isArray(courseList) && courseList.map((item) => {
@@ -433,17 +439,17 @@ const ShareTheLessonDialog = ({ show, handleClose, lessonData }) => {
             const isChosen = formCourses.includes(item._id);
             return (
               <Grid item key={item._id} lg={3} md={4} sm={6} xm={12}>
-                <div
+                <Box
                   className={classes.courseCardStyle}
-                  style={{
-                    backgroundColor: isChosen ? "rgb(85, 0, 82)" : "#2f0032",
+                  sx={{
+                    backgroundColor: isChosen ? (theme) => theme.custom.hoverMainButton : (theme) => theme.custom.mainButton,
                     cursor: "pointer",
                       color: "white"
                   }}
                   onClick={() => handleItemClick(item)}
                 >
                   <p style={{ textAlign: "center" }}>{item.courseName}</p>
-                </div>
+                </Box>
               </Grid>
             );
           })}

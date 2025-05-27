@@ -242,7 +242,10 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background: (theme) => theme.custom.mainButton, color: "white", margin: "0 10px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {t("Cancel")}
         </Button>
@@ -251,7 +254,10 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px",
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {isEdit ? t("Edit") : t("Share")}
         </Button>
@@ -429,17 +435,17 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             const isChosen = formBundles.includes(item._id);
             return (
               <Grid item key={item._id} lg={3} md={4} sm={6} xm={12}>
-                <div
+                <Box
                   className={classes.bundleCardStyle}
-                  style={{
-                    backgroundColor: isChosen ? "rgb(85, 0, 82)" : "#2f0032",
+                  sx={{
+                    backgroundColor: isChosen ? (theme) => theme.custom.hoverMainButton : (theme) => theme.custom.mainButton,
                     cursor: "pointer",
                       color: "white"
                   }}
                   onClick={() => handleItemClick(item)}
                 >
                   <p style={{ textAlign: "center" }}>{item.bundleName}</p>
-                </div>
+                </Box>
               </Grid>
             );
           })}

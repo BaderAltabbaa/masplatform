@@ -375,15 +375,17 @@ export const theme = (customization) => {
     },
     typography: themeTypography(themeOption),
       custom: {
-PageBackGround :"rgb(55, 0, 53)", //Main Background
+PageBackGround :" #370035", //Main Background
 
-CarBackGround :"linear-gradient(to top right,#9e14a5, #4d0051)", //Main Cards
+CarBackGround :"linear-gradient(to top right, #9e14a5, #4d0051)", //Main Cards
 
 secCardBackGround: "linear-gradient(135deg, #4d0051 0%,rgba(255, 255, 255, 0.58) 100%)", //Secondary Cards
 
 miniUserCard:" #8033a1",
 
 mainButton: " #4d0051", //Main Button
+
+hoverMainButton: " #700076", //hover main button
 
 gradientButton: "linear-gradient(to bottom right, #760072, #2d013a)", //Gradient Button
 
@@ -392,20 +394,10 @@ hoverGradientButton: "linear-gradient(to bottom right, #2d013a,#d300cc)", //hove
     // Button With Animation
 buttonContainer:" #581454",
 
-animatedBackground:"conic-gradient(transparent 270deg, rgb(196, 1, 218), transparent)",
+animatedBackground:"conic-gradient(transparent 270deg, #c401da, transparent)",
 
-innerBlurEffect:"#5121619c",
+innerBlurEffect:" #5121619c",
     // Button With Animation
-
-
-   
-    BoxBackGround :"linear-gradient(to right, rgba(54, 26, 58, 0.533), #180226)",
-    // BoxBackGround :"linear-gradient(to top right,#0bab8f,#a8d1d3)",
-    // BoxBackGround :"linear-gradient(to top right,#67554d, #c98a77 , #986b5f ,#f7f2c5)",
-
-
-    BoxBackGroundReseve :"linear-gradient(to top right,#75017b,#3a013d)",
-
 
 
   },

@@ -533,7 +533,7 @@ function Cardbundle({
                     variant="contained"
                     size="large"
                     color="primary"
-                    style={{background:"#2f0032",color:"white" }}
+                    sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
                     onClick={handleClose}
                   >
                     {t("Cancel")}
@@ -544,7 +544,7 @@ function Cardbundle({
                     variant="contained"
                     size="large"
                     color="secondary"
-                    style={{background:"#2f0032",color:"white" }}
+                    sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
                     onClick={handleClose}
                   >
                     {t("Save Changes")}
@@ -627,167 +627,220 @@ function Cardbundle({
         </DialogContent>
       </Dialog>
       {/* Subscribe now */}
-      <Dialog
-        fullWidth="sm"
-        maxWidth="sm"
-        disableScrollLock={true}
+     <Dialog
+  fullWidth
+  maxWidth="md"
+  open={open2}
+  disableScrollLock
+  onClose={handleClose2}
+  aria-labelledby="responsive-dialog-title"
+  disableBackdropClick={isLoading}
+  disableEscapeKeyDown={isLoading}
+  sx={{
+    '& .MuiDialog-paper': {
+      backgroundImage: 'url(/assets/Images/doodle2.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      borderRadius: '16px',
+      overflow: 'hidden',
+      maxHeight: '90vh'
+    }
+  }}
+>
+  <DialogContent sx={{ p: 0 }}>
+    <Box sx={{
+      background: "rgba(255, 255, 255, 0.85)",
+      backdropFilter: "blur(8px)",
+      p:2,
+      display: 'flex',
+      flexDirection: 'column',
+      gap:2,
+      borderRadius:2
+    }}>
+      {/* Media Section - Smaller on desktop */}
+      <Box sx={{
+        borderRadius: '12px',
+        overflow: 'hidden',
+        position: 'relative',
+        aspectRatio: '16/9',
+        width: '100%',
+        maxHeight: { xs: 'auto', md: '320px' } // Fixed height on desktop
+      }}>
+        {isVideo ? (
+          <ReactPlayer
+            url={BundleData.mediaUrl}
+            muted
+            controls
+            playing
+            width="100%"
+            height="100%"
+            style={{ position: 'absolute', top: 0, left: 0 }}
+          />
+        ) : (
+          <img
+            src={BundleData.mediaUrl}
+            alt=""
+            style={{ 
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              position: 'absolute',
+              top: 0,
+              left: 0
+            }}
+          />
+        )}
+      </Box>
 
-        open={open2}
-        onClose={handleClose2}
-        aria-labelledby="max-width-dialog-title"
-        disableBackdropClick={isLoading}
-        disableEscapeKeyDown={isLoading}
-        PaperProps={{
-          sx: {
-            backgroundImage: 'url(/assets/Images/doodle2.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            padding:"0"
-            
-          }
-        }}
-      >
-        <DialogContent>
-          <Box sx={{
-            background:"rgba(255, 255, 255, 0.68)",
-            padding:"20px",
-            borderRadius:"20px"
+      {/* Download Button */}
+      {isVideo && auth.userData && auth.userLoggedIn && auth.userData._id !== userId && isSubscribed && (
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={downLoadFile}
+          sx={{
+            bgcolor: (theme) => theme.custom.mainButton,
+            color: 'white',
+            '&:hover': { bgcolor: (theme) => theme.custom.hoverMainButton },
+            maxWidth: { md: '300px' }, // Narrower button on desktop
+            alignSelf: 'center' // Center on desktop
+          }}
+        >
+          {t("Download")}
+        </Button>
+      )}
+
+      {/* Title */}
+      <Typography variant="h4" sx={{ 
+        fontWeight: 600,
+        textAlign: 'center',
+        color: (theme) => theme.custom.mainButton,
+        fontSize: { xs: '1.5rem', md: '1.75rem' }
+      }}>
+        {BundleData.bundleTitle}
+      </Typography>
+
+      {/* Details Section - Compact layout */}
+      <Box sx={{ 
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        '& > div': {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }
+      }}>
+        <div>
+          <Typography variant="body1" color="text.secondary">
+            {t("Donation amount")}:
+          </Typography>
+          <Typography variant="body1" fontWeight={500}>
+            {BundleData.donationAmount} {BundleData.coinName}
+          </Typography>
+        </div>
+
+        <div>
+          <Typography variant="body1" color="text.secondary">
+            {t("Duration")}:
+          </Typography>
+          <Typography variant="body1" fontWeight={500}>
+            {BundleData.duration}
+          </Typography>
+        </div>
+
+        <Box>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            {t("Details")}:
+          </Typography>
+          <Typography variant="body2" sx={{ 
+            bgcolor: 'rgba(47, 0, 50, 0.05)',
+            p: 2,
+            borderRadius: '8px',
+            lineHeight: 1.6,
+            maxHeight: { md: '120px' }, // Shorter on desktop
+            overflowY: 'auto' // Scrollable if content is long
           }}>
-          <Box>
-            {isVideo ? (
-              <div>
-                <ReactPlayer
-                  url={BundleData.mediaUrl}
-                  muted
-                  controls
-                  playing
-                  width="100%"
-                  height="auto"
-                />
-                {auth.userData &&
-                  auth.userLoggedIn &&
-                  auth.userData._id !== userId &&
-                  isSubscribed && (
-                    <Box>
-                      <Grid
-                        lg={12}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Button
-                          className={classes.downloadButton}
-                          fullWidth
-                          onClick={downLoadFile}
-                        >
-                          {t("Download")}
-                        </Button>
-                      </Grid>
-                    </Box>
-                  )}
-              </div>
-            ) : (
-              <div style={{width:"100%" ,height:"300px"}}>
-              <img
-                src={BundleData.mediaUrl}
-                alt=""
-                style={{ width: "100%", height: "300px", objectFit:"fill" ,borderRadius:"20px" }}
-              /></div>
-            )}
-          </Box>
-          <Box mt={3} className={classes.bundleText} textAlign="center">
-            <Typography variant="h4">{BundleData.bundleTitle}</Typography>
-          </Box>
+            {BundleData?.details}
+          </Typography>
+        </Box>
+      </Box>
 
-          <Box mt={2} className={classes.deskiText}>
-            <Typography variant="h4" align="left" color="textSecondary">
-              {t("Donation amount")}:
-              <span>
-                {BundleData.donationAmount} {BundleData.coinName}
-              </span>
-            </Typography>
-            <Typography variant="h4" align="left" color="textSecondary">
-              {t("Duration")}: <span> {BundleData.duration}</span>
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={3} lg={2}>
-                <Typography variant="h4" align="left" color="textSecondary">
-                  {t("Details")}:
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={9} lg={10}>
-                <Typography variant="body2" align="left" color="textSecondary">
-                  {BundleData?.details}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-          {!auth.userLoggedIn && (
-            <Box mt={3} mb={3} textAlign="center">
-              <Button 
-              className={classes.LoginButton} 
+      {/* Action Buttons - Optimized spacing */}
+      <Box sx={{ 
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: 2,
+        justifyContent: 'center',
+        pt: 2
+      }}>
+        {!auth.userLoggedIn ? (
+          <>
+            <Button
+              variant="outlined"
+              sx={{
+                color: (theme) => theme.custom.mainButton,
+                borderColor: (theme) => theme.custom.mainButton,
+                '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+                flex: { xs: 1, md: 0.5 } // Half width on desktop
+              }}
               onClick={handleClose2}
-              style={{background:"#2f0032",color:"white" }}
-
-              >
-                {t("Cancel")}
-              </Button>
-              &nbsp;&nbsp;
-              <Button
-                className={classes.LoginButton}
-                onClick={() => {
-                  navigate("/login");
-                }}
-                style={{background:"#2f0032",color:"white" }}
-
-              >
-                {t("Login")}
-              </Button>
-            </Box>
-          )}
-          {auth.userData &&
-            auth.userLoggedIn &&
-            auth.userData._id !== data.userId && (
-              <Box mt={3} mb={3} textAlign="center">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  style={{ background:"#2f0032",color:'white'}}
-
-                  onClick={() => {
-                    handleClose2();
-                  }}
-                  disabled={isLoading}
-                >
-                {t("Cancel")}
-
-                </Button>
-                &nbsp;&nbsp;&nbsp;
-                {auth.userData &&
-                  auth.userLoggedIn &&
-                  auth.userData._id !== userId && (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      style={{ background:"#2f0032",color:'white'}}
-
-                      onClick={subscribeToBundleHandler}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? t("pending...") : t("Subscribe now")}
-                      {isLoading && <ButtonCircularProgress />}
-                    </Button>
-                  )}
-              </Box>
-            )}
-            </Box>
-        </DialogContent>
-      </Dialog>
+            >
+              {t("Cancel")}
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: (theme) => theme.custom.mainButton,
+                color: 'white',
+                '&:hover': { bgcolor: (theme) => theme.custom.hoverMainButton},
+                flex: { xs: 1, md: 0.5 } // Half width on desktop
+              }}
+              onClick={() => navigate("/login")}
+            >
+              {t("Login")}
+            </Button>
+          </>
+        ) : auth.userData._id !== data.userId && (
+          <>
+            <Button
+              variant="outlined"
+              sx={{
+                color: (theme) => theme.custom.mainButton,
+                borderColor: (theme) => theme.custom.mainButton,
+                '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+                flex: { xs: 1, md: 0.5 }
+              }}
+              onClick={handleClose2}
+              disabled={isLoading}
+            >
+              {t("Cancel")}
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: (theme) => theme.custom.mainButton,
+                color: 'white',
+                '&:hover': { bgcolor: (theme) => theme.custom.hoverMainButton },
+                flex: { xs: 1, md: 0.5 }
+              }}
+              onClick={subscribeToBundleHandler}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  {t("pending...")}
+                  <ButtonCircularProgress />
+                </>
+              ) : t("Subscribe now")}
+            </Button>
+          </>
+        )}
+      </Box>
+    </Box>
+  </DialogContent>
+</Dialog>
 
       <Dialog
         open={open3}
@@ -828,7 +881,7 @@ function Cardbundle({
               />
             </Box>
             <Box mt={2} mb={4}>
-              <Button variant="contained" size="large" color="secondary" style={{background:"#2f0032",color:"white" }} >
+              <Button variant="contained" size="large" color="secondary" sx={{background:(theme) => theme.custom.mainButton,color:"white" }} >
               {t("Donate now")}
               </Button>
             </Box>

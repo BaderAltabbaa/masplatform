@@ -487,7 +487,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
                        startIcon={
@@ -515,7 +515,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
                      >
@@ -537,7 +537,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
                      >
@@ -553,7 +553,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
                        startIcon={
@@ -597,7 +597,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -616,7 +616,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color:(theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -634,7 +634,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -653,7 +653,7 @@ export default function Header() {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -767,7 +767,7 @@ const GamesDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color:(theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -786,7 +786,7 @@ const GamesDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -833,7 +833,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -852,7 +852,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -871,7 +871,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -916,7 +916,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -935,7 +935,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -953,7 +953,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -972,7 +972,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -991,7 +991,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            
@@ -1010,7 +1010,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
             sx={{color:"#dadada",
               "&:hover":{
                   background:"none",
-                  color: "#8602ba"
+                  color: (theme) => theme.custom.miniUserCard
               }
             }}
            

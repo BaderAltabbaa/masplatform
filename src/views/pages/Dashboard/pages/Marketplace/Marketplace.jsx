@@ -208,7 +208,10 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="primary"
-            sx={{ marginRight: "10px",background:(theme) => theme.custom.mainButton,color:'white' }}
+            sx={{ marginRight: "10px",background:(theme) => theme.custom.mainButton,color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
             onClick={() => updateState({ openShareAudience: true })}
           >
             {t("add a Photos")}
@@ -217,7 +220,10 @@ export default function Marketplace() {
             variant="contained"
             size="large"
             color="secondary"
-            sx={{ background:(theme) => theme.custom.mainButton,color:'white'}}
+            sx={{ background:(theme) => theme.custom.mainButton,color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}
 
             onClick={() => updateState({ OpenAuction: true })}
           >

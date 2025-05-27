@@ -48,7 +48,7 @@ const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   width: 180,
   height: 180,
   border: `4px solid ${theme.palette.common.white}`,
-  margin: '-120px 0 0 0',
+  margin: '0px 0 0 0',
   boxShadow: theme.shadows[6],
 }));
 
@@ -336,7 +336,7 @@ const ProfileSettings = () => {
               '&:hover': { bgcolor: 'rgba(0,0,0,0.9)' }
             }}
           >
-            {t("Edit Cover")}
+          {!isMobile ? "Edit Cover" : ""}  
             <input
               type="file"
               hidden
@@ -352,8 +352,9 @@ const ProfileSettings = () => {
           display: 'flex', 
   alignItems: 'center',
   gap: 1, // Adds spacing between avatar and button
-  justifyContent: 'center',
-  flexWrap: 'wrap' // Allows wrapping on small screens
+  justifyContent: 'start',
+  flexWrap: 'wrap', // Allows wrapping on small screens
+  margin:"-180px 0 0 0"
         }}>
                 <ProfileAvatar
                   src={formData.profilePic || "/images/users/profilepic1.svg"}
@@ -644,9 +645,9 @@ const ProfileSettings = () => {
               disabled={isLoading}
               onClick={() => navigate('/kyc')}
               sx={{ minWidth: 120 ,background:(theme) => theme.custom?.mainButton,
-                "&:hover":{
-                  background:(theme) => theme.custom?.mainButton
-                }
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }
               }}
             >
               KYC
@@ -658,9 +659,9 @@ const ProfileSettings = () => {
               disabled={isLoading}
               onClick={updateProfile}
               sx={{ minWidth: 120,background:(theme) => theme.custom?.mainButton,
-                 "&:hover":{
-                  background:(theme) => theme.custom?.mainButton
-                }
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }
                }}
               startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
             >

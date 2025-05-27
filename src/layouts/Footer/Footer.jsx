@@ -177,7 +177,10 @@ return (
         onChange={(e) => setMessage(e.target.value)}
         required
       />
-      <Button type="submit" variant="contained"  fullWidth sx={{backgroundColor: (theme) => theme.custom.mainButton,marginTop:"10px" ,"&:hover":{backgroundColor:"rgb(99, 0, 139)"}}}>
+      <Button type="submit" variant="contained"  fullWidth sx={{background: (theme) => theme.custom.mainButton,marginTop:"10px" ,
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              }}}>
         {t("Submit")}
       </Button>
     </form>
