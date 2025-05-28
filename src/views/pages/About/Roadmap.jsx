@@ -136,11 +136,8 @@ const Roadmap = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 
-                  item.status === 'completed' ? theme.palette.success.dark :
-                  item.status === 'in-progress' ? theme.palette.warning.dark :
-                  item.status === 'upcoming' ? theme.palette.info.dark :
-                  theme.palette.secondary.dark
+                color: (theme) => theme.custom.mainButton
+                 
               }}>
                 {item.icon}
               </Box>
@@ -162,11 +159,8 @@ const Roadmap = () => {
               }
               sx={{
                 bgcolor: "white",
-                color: 
-                  item.status === 'completed' ? theme.palette.success.dark :
-                  item.status === 'in-progress' ? theme.palette.warning.dark :
-                  item.status === 'upcoming' ? theme.palette.info.dark :
-                  theme.palette.secondary.dark,
+                color: (theme) => theme.custom.mainButton,
+                
                 fontWeight: 600
               }}
             />

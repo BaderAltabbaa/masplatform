@@ -285,7 +285,7 @@ const FundDetails = () => {
   maxWidth="md" 
   PaperProps={{
     sx: {
-      backgroundImage: 'url(/assets/Images/doodle2.png)',
+      backgroundImage: 'url(/assets/Images/doodle2.webp)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',

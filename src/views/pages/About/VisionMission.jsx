@@ -62,7 +62,7 @@ const VisionMission = () => {
       <Box
         ref={ref}
         display="flex"
-        alignItems="flex-start"
+        alignItems="center"
         mb={4}
         ml={{ xs: 0, md: ml }}
         component={motion.div}
@@ -91,7 +91,7 @@ const VisionMission = () => {
           }}
         >
           {/* Re-rotate the icon */}
-          <Box sx={{ transform: 'rotate(-45deg)' }}>{icon}</Box>
+          <Box sx={{ transform: 'rotate(-45deg)',p:2 }}>{icon}</Box>
         </Box>
 
         {/* Text content */}

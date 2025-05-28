@@ -37,7 +37,7 @@ return(
       <div className={`faq-top ${inView3 ? 'animate' : ''}`} ref={ref3}>
         <span className='faq-title2'>Frequently Ask Questions.</span>
         <span className='faq-desc'>here some questions that you ask a lot about</span>
-        <img className='questimg' src="\assets\Images\creator2.jpg" alt="" />
+        <img className='questimg' src="\assets\Images\creator2.webp" alt="" />
       </div>
       <div className={`faq-bottom ${inView4 ? 'animate' : ''}`} ref={ref4}>
 <FAQmodel/>

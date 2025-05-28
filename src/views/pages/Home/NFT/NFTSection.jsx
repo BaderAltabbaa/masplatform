@@ -136,7 +136,7 @@ const NFTSection = () => {
             }}>
               <Box
                 component="img"
-                src={'assets/Images/rwaCrop.png'}
+                src={'assets/Images/rwaCrop.webp'}
                 alt="Real World Assets"
                 sx={{
                   width: '100%',

@@ -1,172 +1,306 @@
 import React from "react";
-import { Typography, Box, Container, useTheme, useMediaQuery } from '@mui/material';
+import { Typography, Box, Container, useTheme, useMediaQuery ,Grid,styled} from '@mui/material';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import BoltIcon from '@mui/icons-material/Bolt';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import GroupIcon from '@mui/icons-material/Group';
+import PublicIcon from '@mui/icons-material/Public';
+import { Favorite } from "@mui/icons-material";
+import { CurrencyExchange } from "@mui/icons-material";
 
-const AnimatedBox = ({ fromLeft = true, children }) => {
-  const [ref, inView] = useInView({
-    threshold: 0.2,
-    triggerOnce: true
-  });
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ 
-        opacity: 0,
-        x: fromLeft ? -100 : 100
-      }}
-      animate={{ 
-        opacity: inView ? 1 : 0,
-        x: inView ? 0 : (fromLeft ? -100 : 100)
-      }}
-      transition={{
-        duration: 0.8,
-        ease: "easeOut"
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-};
+
+
+
 
 const Services = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('xl'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'xl'));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  return (
-      <Box  
-      sx={{
-        mx: 'auto',
-        px:2,
-       maxWidth: 1400,
-        }}>
-        <AnimatedBox fromLeft={true}>
+
+     const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: { 
+          opacity: 1,
+          transition: { duration: 0.8 }
+        }
+      };
+    
+      const slideInFromRight = {
+        hidden: { opacity: 0, x: 100 },
+        visible: { 
+          opacity: 1, 
+          x: 0,
+          transition: { duration: 0.8, ease: "easeOut" }
+        }
+      };
+    
+      const slideInFromLeft = {
+        hidden: { opacity: 0, x: -100 },
+        visible: { 
+          opacity: 1, 
+          x: 0,
+          transition: { duration: 0.8, ease: "easeOut" }
+        }
+      };
+    
+      const featureItemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: (i) => ({
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: i * 0.15,
+            duration: 0.6,
+            ease: "easeOut"
+          }
+        })
+      };
+    
+      const FeatureItem = ({ icon, title, desc, ml = 0, index }) => {
+        const [ref, inView] = useInView({
+          triggerOnce: true,
+          threshold: 0.1,
+        });
+    
+        return (
           <Box
+            ref={ref}
+            display="flex"
+            alignItems="center"
+            mb={4}
+            ml={{ xs: 0, md: ml }}
             component={motion.div}
-            animate={{
-              scale: [1, 1.001, 1]
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              justifyContent: 'space-between',
-              background: (theme) => theme.custom.CarBackGround,
-              marginTop: { xs: '10px', sm: '20px' },
-              borderRadius: "50px",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-              overflow: "hidden",
-              gap: '10px',
-              position: "relative",
-              width: '100%',
-            }}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={featureItemVariants}
+            custom={index}
           >
-            <Box sx={{ 
-              padding: { xs: '15px', md: '15px' },
-              flex: 1,
-              minWidth: { md: '50%' }
-            }}>
-              <Box textAlign="center">
-                <Typography sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.7rem" },
-                  color: "white",
-                  fontWeight: "bold",
-                  textShadow: "0px 0px 10px white",
-                  mb: 2
-                }}>
-                  How MAS Works
-                </Typography>
-              </Box>
-
-              <Box textAlign="center" mb={1}>
-                <Typography variant="h3" color='white' sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
-                  lineHeight: 1.2
-                }}>
-                  A Smarter Way to Support, Create, and Earn
-                </Typography>
-              </Box>
-
-              <Box sx={{ 
-                textAlign: { xs: 'center', md: 'left' },
+            {/* Diamond icon wrapper */}
+            <Box
+              component={motion.div}
+              initial={{ rotate: 0 }}
+              animate={inView ? { rotate: 45 } : { rotate: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              sx={{
+                width: 60,
+                height: 60,
+                backgroundColor: 'transparent',
+                border: '4px solid rgb(255, 255, 255)',
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: { xs: 'center', md: 'flex-start' },
-                color: 'white',
-                gap: '10px',
-                px: { xs: 1, md: 0 }
-              }}>
-                <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1rem' },
-                  fontWeight: 'bold',
-                  textAlign: { xs: 'center', md: 'left' },
-                  color:"white"
-                }}>
-                  1. Create Your Wallet-Linked Account: Seamless sign-up with MetaMask or Trust Wallet.
-                </Typography>
-                <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1rem', md: '0.9rem' },
-                  fontWeight: 'bold',
-                  textAlign: { xs: 'center', md: 'left' },
-                  color:"white"
-                }}>
-                  2. Choose a Role: Creator, Supporter, or Both.
-                </Typography>       
-                <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1rem', md: '0.9rem' },
-                  fontWeight: 'bold',
-                  textAlign: { xs: 'center', md: 'left' },
-                  color:"white"
-                }}>
-                  3. Donate, Sell, or Subscribe: Support creators through bundles, donations, or purchases.
-                </Typography>      
-                <Typography variant="h4" sx={{
-                  fontSize: { xs: '1rem', sm: '1rem', md: '0.9rem' },
-                  fontWeight: 'bold',
-                  textAlign: { xs: 'center', md: 'left' },
-                  color:"white"
-                }}>
-                  4. Earn and Track Everything Transparently: Every action is logged through Proof of Donation.
-                </Typography>   
-              </Box>                 
+                alignItems: 'center',
+                justifyContent: 'center',
+                mr: 2,
+                borderRadius: 2,
+                mb: 1
+              }}
+            >
+              {/* Re-rotate the icon */}
+              <Box sx={{ transform: 'rotate(-45deg)' ,p:2}}>{icon}</Box>
             </Box>
-        
-            <Box sx={{ 
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              maxWidth: { md: '50%' },
-              width: '100%',
-              height: { xs: '300px', md: '300px' },
-              position: 'relative',
-              zIndex: 3,
-              p: { xs: 0, md: 0 }
-            }}>
-              <Box
-                component="img"
-                src={'assets/Images/22.jpg'}
-                alt="How Works"
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: { xs: '0 0 50px 50px', md: '50px' },
-                  maxHeight: { md: '100%' }
-                }}
-              />
+    
+            {/* Text content */}
+            <Box>
+              <Typography variant="h4" fontWeight="bold" color='rgb(242, 196, 253)' mb={1}>
+                {title}
+              </Typography>
+              <Typography variant="h5" color="white">
+                {desc}
+              </Typography>
             </Box>
           </Box>
-        </AnimatedBox>
+        );
+      };
+    
+      const Diamond = () => (
+        <Box
+          sx={{
+            width: 15,
+            height: 15,
+            background: (theme) => theme.custom.CarBackGround,
+            transform: 'rotate(45deg)',
+            mx: 0.5,
+          }}
+        />
+      );
+    
+      const RotatedGridContainer = styled(Box)({
+        transform: "rotate(45deg)",
+        width: "400px",
+        height: "400px",
+        margin: "50px auto",
+        overflow: "hidden",
+      });
+    
+      const ImageBox = styled(Box)({
+        width: "100%",
+        height: "100%",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        transition: "transform 0.3s ease",
+        margin: 20,
+      });
+    
+      const AnimatedRotatedGrid = () => {
+        const [ref, inView] = useInView({
+          triggerOnce: true,
+          threshold: 0.1,
+        }); 
+        return (
+              <RotatedGridContainer 
+                ref={ref}
+                component={motion.div}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={containerVariants}
+              >
+                <Grid container spacing={2} sx={{ width: "100%", height: "100%" }}>
+                  {[1,2,3,4].map((img, index) => (
+                    <Grid item xs={6} key={index} sx={{ padding: "0 !important" }}>
+                      <Box
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          paddingTop: "100%",
+                          position: "relative",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <ImageBox
+                          sx={{
+                            background: (theme) => theme.custom.CarBackGround,
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            borderRadius: 10
+                          }}
+                        />
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </RotatedGridContainer>
+            );
+          };
+
+            const TitleWithDecorations = ({ children, isMobile }) => {
+              const [ref, inView] = useInView({
+                triggerOnce: true,
+                threshold: 0.1,
+              });
+          
+              return (
+                <Box textAlign="center" ref={ref}>
+                  {/* Top Decoration - slides in from right */}
+                  <Box 
+                    display="flex" 
+                    justifyContent="center" 
+                    alignItems="center" 
+                    mr={40}
+                    component={motion.div}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
+                    variants={slideInFromRight}
+                  >
+                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                    <Diamond />
+                    <Diamond />
+                    <Diamond />
+                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                  </Box>
+          
+                  {/* Main Heading */}
+                  <Typography
+                    fontWeight="bold"
+                    gutterBottom
+                    color='white'
+                    sx={{ fontSize: isMobile ? "1.8rem" : "3rem" }}
+                    mb={1}
+                    mt={1}
+                    component={motion.div}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    {children}
+                  </Typography>
+          
+                  {/* Bottom Decoration - slides in from left */}
+                  <Box 
+                    display="flex" 
+                    justifyContent="center" 
+                    alignItems="center" 
+                    ml={40}
+                    component={motion.div}
+                    initial="hidden"
+                    animate={inView ? "visible" : "hidden"}
+                    variants={slideInFromLeft}
+                  >
+                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                    <Diamond />
+                    <Diamond />
+                    <Diamond />
+                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                  </Box>
+                </Box>
+              );
+            };
+          
+  
+
+  return (
+    <>
+    
+<Box px={4} sx={{ pt: { xs: 2, md: 2 } }} display={"flex"} justifyContent={"space-evenly"} alignItems={"center"}>
+        <Box sx={{ ml: { xs: 0, md: 5 } }}>
+          <Grid item xs={12} md={6}>
+            <TitleWithDecorations isMobile={isMobile}>How MAS Platform Works</TitleWithDecorations>
+
+            <Box px={2} pt={2}>
+              <FeatureItem
+                icon={<MonetizationOnIcon sx={{ color: 'white' }} />}
+                title="Create Your Wallet-Linked Account"
+                desc="Seamless sign-up with MetaMask or Trust Wallet."
+                ml={0}
+                index={0}
+              />
+              <FeatureItem
+                icon={<GroupIcon sx={{ color: 'white' }} />}
+                title="Choose a Role"
+                desc="Creator, Supporter, or Both."
+                ml={4}
+                index={1}
+              />
+              <FeatureItem
+                icon={<Favorite sx={{ color: 'white' }} />}
+                title="Donate, Sell, or Subscribe"
+                desc="Support creators through bundles, donations, or purchases."
+                ml={8}
+                index={2}
+              />
+              <FeatureItem
+                icon={<CurrencyExchange sx={{ color: 'white' }} />}
+                title="Earn and Track Everything Transparently"
+                desc="Every action is logged through Proof of Donation."
+                ml={12}
+                index={3}
+              />
+            </Box>
+          </Grid>
+        </Box>
+
+        <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "end", alignItems: "center" }}>
+          <AnimatedRotatedGrid />
+        </Box>
       </Box>
+
+
+      </>
   );
 }
 

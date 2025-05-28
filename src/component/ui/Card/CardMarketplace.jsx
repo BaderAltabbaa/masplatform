@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect,useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Apiconfigs, { pageURL } from "src/Apiconfig/Apiconfigs";
@@ -35,6 +36,7 @@ import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { transform } from "lodash";
 import { useTranslation } from 'react-i18next';
 import "./cardComponent.css";
+import theme from "../../../theme";
 
 
 
@@ -244,143 +246,140 @@ useEffect(() => {
           }
         }, []);      
 
- function BillingDialog({ open, onClose }) {
-          const [formData, setFormData] = useState({
-              name: '',
-              surname: '',
-              phoneNumber: '',
-              email: '',
-              postcode: '',
-              address1: '',
-              address2: '',
-              serialNumber: '',
-          });
-          const [error, setError] = useState('');
-          const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-          const isMounted = useRef(true);
-          const [showBillDialog, setShowBillDialog] = useState(false);
-          const [showPurchaseDialog, setshowPurchaseDialog] = useState(false);
-          const [billPdfUrl, setBillPdfUrl] = useState(null);
-      
-      
-          useEffect(() => {
-            // Function to generate the serial number
-            const generateSerialNumber = () => {
-                const now = new Date();
-                return 'SN' + now.getFullYear().toString() + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0') + now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(3, '0') + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            };
-        
-            if (open) {
-                const newSerialNumber = generateSerialNumber();
-                setFormData(prevFormData => ({
-                    ...prevFormData,
-                    serialNumber: newSerialNumber  // Set the new serial number
-                }));
-            }
-        
-            // Cleanup function
-            return () => {
-                isMounted.current = false;
-            };
-        }, [open]);  // Dependency array includes `open` to trigger the effect when it changes
-        
-      
-        const handleChange = (e) => {
-          const { name, value } = e.target;
-          setFormData(prevState => ({
-              ...prevState,
-              [name]: value,
-          }));
-      };
-      
-          const handleSubmit = async () => {
-              try {
-                  console.log("data:", formData);
-                  const res = await axios({
-                      method: "PUT",
-                      url: Apiconfigs.bill,
-                      data: formData,
-                      headers: {
-                          token: sessionStorage.getItem("token") || "default-token",
-                      },
-                  });
-      
-                  console.log("Response from server:", res.data);
-                  if (res.status !== 200) {
-                      throw new Error('Form submission failed with status: ' + res.status);
-                  }
-              } catch (error) {
-                  console.error("Error submitting form:", error);
-                  if (isMounted.current) {
-                      setError("Failed to submit form: " + error.message);
-                  }
-              }
-          };
-      
-          const buyNow = async () => {
-              try {
-                  console.log("Initiating purchase:");
-                  console.log("Data needed:", itemData.details, itemData.coinName, itemData.donationAmount,userName);
-                  console.log("sellerId", userId);
-                  console.log("ItemId", itemData._id);
-                  console.log("buyerId",auth.userData._id );
-                  const response = await axios({
-                      method: "PUT",
-                      url: Apiconfigs.order ,
-                      data: {
-                          //sellerId:userId, 
-                          userBuyer:auth.userData._id,
-                          nft1Id: itemData._id,
-                          //mediaUrl: itemData.mediaUrl1,
-                          //details: itemData.details,
-                          //tokenName: itemData.coinName,
-                          //Price: itemData.donationAmount,
-                          
-                      },
-                      headers: {
-                        token: sessionStorage.getItem("token"),
-                      },
-                  });
-      
-                  console.log("Order response:", response.data);
-                  if (response.status !== 200) {
-                    throw new Error('Order placement failed with status: ' + response.status);
-                }
-                if (isMounted.current) {
-                    //setShowConfirmationDialog(true);
-                    //setShowBillDialog(true);
-                    setshowPurchaseDialog(true);
-                }
-            } catch (error) {
-                console.error("Order placement error:", error);
-                if (isMounted.current) {
-                    if (axios.isAxiosError(error) && error.response && error.response.status === 400) {
-                        setError("Failed to place order: your balance is low");
-                    } else {
-                        setError("Failed to place order: " + error.message);
-                    }
-                }
-            }
-        };
-      
-        const handleBuy = async () => {
-          // First validate all fields
-          const requiredFields = ["name", "surname", "phoneNumber", "email", "postcode", "address1", "serialNumber"];
-          const emptyFields = requiredFields.filter(field => !formData[field]?.trim());
-          
-          if (emptyFields.length > 0) {
-            setError(`Please fill in all required fields: ${emptyFields.join(", ")}`);
-            return; // Stop execution if fields are empty
-          }
-        
-          try {
-            await handleSubmit();
-            await buyNow();
-          } catch (error) {
-            console.error("Unable to complete purchase:", error.message);
-            setError(error.message);
-          }
-        };
+function BillingDialog({ open, onClose }) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      surname: '',
+      phoneNumber: '',
+      email: '',
+      postcode: '',
+      address1: '',
+      address2: '',
+      serialNumber: '',
+    },
+        shouldUnregister: false
+
+  });
+
+    // Rehydrate form state on mount
+  useEffect(() => {
+    const savedForm = sessionStorage.getItem("cardMarketplaceForm");
+    if (savedForm) {
+      reset(JSON.parse(savedForm));
+    }
+  }, [reset]);
+
+
+   useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("cardMarketplaceForm", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  const [error, setError] = useState('');
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const isMounted = useRef(true);
+  const [showBillDialog, setShowBillDialog] = useState(false);
+  const [showPurchaseDialog, setshowPurchaseDialog] = useState(false);
+  const [billPdfUrl, setBillPdfUrl] = useState(null);
+
+  useEffect(() => {
+    const generateSerialNumber = () => {
+      const now = new Date();
+      return 'SN' + now.getFullYear().toString() + 
+        (now.getMonth() + 1).toString().padStart(2, '0') + 
+        now.getDate().toString().padStart(2, '0') + 
+        now.getHours().toString().padStart(2, '0') + 
+        now.getMinutes().toString().padStart(3, '0') + 
+        Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    };
+
+    if (open) {
+      const newSerialNumber = generateSerialNumber();
+      setValue('serialNumber', newSerialNumber);
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [open, setValue]);
+
+  const onSubmit = async (data) => {
+    try {
+      console.log("Form data:", data);
+      const res = await axios({
+        method: "PUT",
+        url: Apiconfigs.bill,
+        data: data,
+        headers: {
+          token: sessionStorage.getItem("token") || "default-token",
+        },
+      });
+
+      console.log("Response from server:", res.data);
+      if (res.status !== 200) {
+        throw new Error('Form submission failed with status: ' + res.status);
+      }
+      return true;
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setError("Failed to submit form: " + error.message);
+      return false;
+    }
+  };
+
+  const buyNow = async (formData) => {
+    try {
+      console.log("Initiating purchase with:", formData);
+      const response = await axios({
+        method: "PUT",
+        url: Apiconfigs.order,
+        data: {
+          userBuyer: auth.userData._id,
+          nft1Id: itemData._id,
+        },
+        headers: {
+          token: sessionStorage.getItem("token"),
+        },
+      });
+
+      console.log("Order response:", response.data);
+      if (response.status !== 200) {
+        throw new Error('Order placement failed with status: ' + response.status);
+      }
+      setshowPurchaseDialog(true);
+          sessionStorage.removeItem("cardMarketplaceForm"); // Optional clear
+
+    } catch (error) {
+      console.error("Order placement error:", error);
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        setError("Failed to place order: your balance is low");
+      } else {
+        setError("Failed to place order: " + error.message);
+      }
+    }
+  };
+
+  const handleBuy = async (data) => {
+    const submitSuccess = await onSubmit(data);
+    if (!submitSuccess) return;
+    
+    try {
+      await buyNow(data);
+    } catch (error) {
+      console.error("Unable to complete purchase:", error.message);
+      setError(error.message);
+    }
+  };
         
         const generatePDF = async (formData, itemData) => {
           const doc = new jsPDF();
@@ -476,82 +475,89 @@ useEffect(() => {
           setShowBillDialog(false);
           onClose();  // Also close the main dialog
           setOpen2(false);
+                    sessionStorage.removeItem("cardMarketplaceForm"); // Optional clear
+
           };
         
         
           return (
             <>
-             <Dialog
-             disableScrollLock={true}
-  open={open}
-  onClose={onClose}
-  aria-labelledby="billing-dialog-title"
-  maxWidth="sm"
-  fullWidth={true}
->
-  <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
-  <DialogContent>
-    <Typography variant="body1" sx={{color:(theme) => theme.custom.mainButton}}>
-      {t("Please enter your billing information below:")}
-    </Typography>
-    {error && <Typography color="error">{error}</Typography>}
-    
-    {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2", "serialNumber"].map((item) => (
-      <TextField
-        key={item}
-        margin="dense"
-        label={`${item.charAt(0).toUpperCase() + item.slice(1).replace(/([A-Z])/g, ' $1').trim()}${["address2"].includes(item) ? "" : ""}`}
-        type={item === "phoneNumber" ? "number" : "text"}  // Set type to "number" for phoneNumber
-        fullWidth
-        name={item}
-        value={formData[item]}
-        onChange={handleChange}
-        required={!["address2"].includes(item)} // address2 is optional
-        error={error?.includes(item) && !formData[item]?.trim()}
-        helperText={error?.includes(item) && !formData[item]?.trim() ? "This field is required" : ""}
-        inputProps={{
-          inputMode: item === "phoneNumber" ? "numeric" : "text",
-          pattern: item === "phoneNumber" ? "[0-9]*" : undefined,
-          min: item === "phoneNumber" ? "0" : undefined,
-          style: {
-            // Hide arrows in most browsers
-            MozAppearance: item === "phoneNumber" ? 'textfield' : undefined,
-            WebkitAppearance: item === "phoneNumber" ? 'none' : undefined,
-            appearance: item === "phoneNumber" ? 'none' : undefined,
-            margin: 0
-          }
-        }}
-        sx={item === "phoneNumber" ? {
-          // Hide arrows in Chrome/Safari
-          '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
-            WebkitAppearance: 'none',
-            margin: 0
-          },
-          // Hide arrows in Firefox
-          '& input[type=number]': {
-            MozAppearance: 'textfield'
-          }
-        } : undefined}
-      />
-    ))}
-  </DialogContent>
-  <br />
-  <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
-    <Button onClick={onClose} sx={{color:(theme) => theme.custom.mainButton}}>{t("Cancel")}</Button>
-    <Button 
-      onClick={handleBuy} 
-      color="secondary" 
-      variant="contained" 
-      sx={{background:(theme) => theme.custom.mainButton,color:"white" }}
-      disabled={Object.keys(formData).some(key => 
-        !["address2"].includes(key) && !formData[key]?.trim()
-      )}
-    >
-      {t("Buy Now")}
-    </Button>
-  </Box>
-  <br />
-</Dialog>
+           <Dialog
+        disableScrollLock={true}
+        open={open}
+        onClose={onClose}
+        aria-labelledby="billing-dialog-title"
+        maxWidth="sm"
+        fullWidth={true}
+      >
+        <form onSubmit={handleSubmit(handleBuy)}>
+          <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1" sx={{color: (theme) => theme.custom.mainButton}}>
+              {t("Please enter your billing information below:")}
+            </Typography>
+            {error && <Typography color="error">{error}</Typography>}
+            
+            {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2", "serialNumber"].map((field) => (
+              <TextField
+                key={field}
+                autoComplete="off"
+                margin="dense"
+                label={`${field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1').trim()}`}
+                type={field === "phoneNumber" ? "number" : "text"}
+                fullWidth
+                {...register(field, { 
+                  required: !["address2"].includes(field) && "This field is required",
+                  pattern: field === "phoneNumber" ? {
+                    value: /^[0-9]*$/,
+                    message: "Please enter a valid phone number"
+                  } : undefined
+                })}
+                error={!!errors[field]}
+                helperText={errors[field]?.message}
+                InputProps={{
+                  inputProps: field === "phoneNumber" ? {
+                    min: 0,
+                    style: {
+                      MozAppearance: 'textfield',
+                      WebkitAppearance: 'none',
+                      appearance: 'none',
+                      margin: 0
+                    }
+                  } : {}
+                }}
+                sx={field === "phoneNumber" ? {
+                  '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                    WebkitAppearance: 'none',
+                    margin: 0
+                  },
+                  '& input[type=number]': {
+                    MozAppearance: 'textfield'
+                  }
+                } : undefined}
+              />
+            ))}
+          </DialogContent>
+          <br />
+          <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
+            <Button type="button" onClick={handleCancel} sx={{color: (theme) => theme.custom.mainButton}}>
+              {t("Cancel")}
+            </Button>
+            <Button 
+              type="submit"
+              color="secondary" 
+              variant="contained" 
+              sx={{background: (theme) => theme.custom.mainButton, color: "white",
+                "&:hover":{
+                        background: (theme) => theme.custom.hoverMainButton
+              }}}
+            >
+              {t("Buy Now")}
+            </Button>
+          </Box>
+          <br />
+        </form>
+      </Dialog>
               
               <Dialog disableScrollLock={true} open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
                   <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:(theme) => theme.custom.mainButton}}>{t("successed Purchase")}</DialogTitle>
@@ -949,7 +955,7 @@ useEffect(() => {
    <Dialog
   fullWidth
   disableScrollLock
-  maxWidth="lg"
+  maxWidth="xl"
   open={open2}
   onClose={handleClose2}
   aria-labelledby="max-width-dialog-title"
@@ -957,7 +963,7 @@ useEffect(() => {
   disableEscapeKeyDown={isLoading}
   PaperProps={{
     sx: {
-      backgroundImage: 'url(/assets/Images/doodle2.png)',
+      backgroundImage: 'url(/assets/Images/doodle2.webp)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -990,7 +996,7 @@ useEffect(() => {
         {/* Image Section */}
         <Box sx={{
           flex: 1,
-          minWidth: { md: '50%' },
+          minWidth: { md: '75%' },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -1025,25 +1031,28 @@ useEffect(() => {
           overflow: 'hidden'
         }}>
           {[
-            { label: t("Title"), value: itemData.itemTitle },
-            { label: t("Name"), value: itemData.itemName },
-            { label: t("Price"), value: `${itemData.donationAmount} ${itemData.coinName}` },
-            { label: t("Details"), value: itemData.details },
-            { label: t("Owner"), value: userName },
-            { label: t("Speciality"), value: userSpeciality },
+            { label: t("Title "), value: itemData.itemTitle },
+            { label: t("Name "), value: itemData.itemName },
+            { label: t("Price "), value: `${itemData.donationAmount} ${itemData.coinName}` },
+            { label: t("Details "), value: itemData.details },
+            { label: t("Owner "), value: userName },
+            { label: t("Speciality "), value: userSpeciality },
           ].filter(item => item.value).map((item, index) => (
             <Box key={index} sx={{
               backgroundColor: 'rgba(0, 0, 0, 0.03)',
               borderRadius: "12px",
               p: 1.5,
+              overflow:"hidden"
             }}>
               <Typography variant="subtitle1" sx={{ 
-                fontWeight: 600,
+                fontWeight: "bold",
                 color: 'text.primary',
                 display: 'flex',
-                gap: 1
+                gap: 1,
+                fontSize:"1rem",
+                whiteSpace:"nowrap"
               }}>
-                <Box component="span" sx={{ color: 'text.secondary' }}>
+                <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
                   {item.label}:
                 </Box>
                 <Box component="span">
@@ -1123,6 +1132,8 @@ useEffect(() => {
                 color: (theme) => theme.custom.mainButton,
                 borderColor: (theme) => theme.custom.mainButton,
                 '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+                                flex: { xs: 1, md: 0.5 }
+
               }}
             >
               {t("Cancel")}
@@ -1136,8 +1147,9 @@ useEffect(() => {
                 bgcolor: (theme) => theme.custom.mainButton,
                 '&:hover': {
                   bgcolor: (theme) => theme.custom.hoverMainButton,
-                  opacity: 0.9
-                }
+                },
+                                flex: { xs: 1, md: 0.5 }
+
               }}
             >
               {isLoading ? (
@@ -1157,6 +1169,8 @@ useEffect(() => {
                 color: (theme) => theme.custom.mainButton,
                 borderColor: (theme) => theme.custom.mainButton,
                 '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+                                flex: { xs: 1, md: 0.5 }
+
               }}
             >
               {t("Cancel")}
@@ -1168,9 +1182,10 @@ useEffect(() => {
                 minWidth: 120,
                 bgcolor: (theme) => theme.custom.mainButton,
                 '&:hover': {
-                  bgcolor: (theme) => theme.custom.mainButton,
-                  opacity: 0.9
-                }
+                  bgcolor: (theme) => theme.custom.hoverMainButton,
+                },
+                                flex: { xs: 1, md: 0.5 }
+
               }}
             >
               {t("Login")}
@@ -1180,13 +1195,14 @@ useEffect(() => {
       </Box>
     </Box>
   </DialogContent>
+  
 
   {/* Billing Dialog */}
   <BillingDialog
-    open={openBillingDialog}
-    onClose={() => setOpenBillingDialog(false)}
-    onSuccessfulPurchase={handleCloseParentDialog} 
-  />
+   open={openBillingDialog}
+   onClose={() => setOpenBillingDialog(false)}
+   onSuccessfulPurchase={handleCloseParentDialog} 
+ />
 
   {/* Image Preview Dialog */}
   <Dialog

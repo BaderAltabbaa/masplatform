@@ -246,7 +246,7 @@ const listAllItemsHandler = async () => {
             </div>
             <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>
               <img style={{ display: "inline", width: "100%", borderRadius: "20px" }} 
-                src="/assets/Images/marketCrop.png" alt="" />
+                src="/assets/Images/marketCrop.webp" alt="" />
             </div>
           </div>
 

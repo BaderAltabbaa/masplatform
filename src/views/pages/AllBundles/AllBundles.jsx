@@ -327,7 +327,7 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
             width:"100%",
             borderRadius:"20px"
           }} 
-          src="/assets/Images/bundleIconCropped.png" alt="" />
+          src="/assets/Images/bundleIconCropped.webp" alt="" />
         </div>
       </div>
 

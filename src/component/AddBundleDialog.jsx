@@ -13,7 +13,7 @@ import {
   FormControl,
   Button,
   Box,
-  Popover,TextField
+  Popover,TextField,Tooltip
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -157,7 +157,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
   return (
     <Dialog
     fullWidth={true}
-    maxWidth={"md"}
+    maxWidth={"lg"}
     open={show}
     onClose={uploadCounter === 0 ? handleClose : null}
     aria-labelledby="max-width-dialog-title"
@@ -177,7 +177,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
        
-        <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
+        <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto',maxWidth:"100%" }}>
           {InputList()}
           <Grid item xs={12} sm={5}>
             {MediaInput()}
@@ -345,6 +345,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     const { onChange, ref, name } = field;
 
     return (
+      
       <label htmlFor="raised-button-file">
         <input
           accept="image/*,video/*"
@@ -361,6 +362,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           type="file"
         />
         <label htmlFor="contained-button-file-add-bun">
+         
           <Button
             variant="outined"
             color="primary"
@@ -370,8 +372,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
               display: mediaUrl === "" ? "flex" : "none",
             }}
           >
+            
             <div
               style={{
+                width:"100%",
+                height:"100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -380,17 +385,27 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
                 borderRadius: "10px",
               }}
             >
+               <Tooltip title={<div>
+        <div>Max-Size: 1024 Mb</div>
+        <div>min-width: 300px</div>
+        <div>min-hieght: 160px</div>
+        </div>}
+         placement="bottom" >
               <div className={classes.uploadIcon}>
-                <CloudUploadIcon />
+                <CloudUploadIcon sx={{fontSize:"60px"}}/>
               </div>
+               </Tooltip>
               <div style={{ margin: 15, textAlign: "center" }}>
                 <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
               
               </div>
             </div>
+           
           </Button>
+          
         </label>
       </label>
+      
     );
   }
 
@@ -699,8 +714,8 @@ const useStyles = makeStyles(() => ({
   },
 
   uploadIcon: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

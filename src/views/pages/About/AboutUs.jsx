@@ -29,7 +29,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "In an era defined by accelerating digitization and the intersection of commerce, knowledge, and creativity, MAS was born as an advanced digital platform, pulsing with innovation and powered by blockchain. ",
       cta: "",
-      background: "/assets/Images/b3.jpg",
+      background: "/assets/Images/b3.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
       nav:""
@@ -39,7 +39,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "MAS is not just a tech project—it is a response to a profound global need: a space that empowers content creators, innovators, businesses, educational institutions, and charities, giving them the wings to thrive in a secure and decentralized digital ecosystem.",
       cta: "",
-      background: "/assets/Images/b5.jpg",
+      background: "/assets/Images/b5.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
       nav:""
@@ -49,7 +49,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "We don’t offer a single service; we’re building a smart, integrated digital ecosystem that unites commerce with creativity, education with financial transactions, and services with real experiences",
       cta: "",
-      background: "/assets/Images/b1.jpg",
+      background: "/assets/Images/b1.webp",
       media: "/assets/Images/bader-logo.svg",
       mediaType: "image",
      nav:""
@@ -59,7 +59,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "all through a unified, flexible, and seamless interface. No traditional intermediaries. Minimal cost.",
       cta: "",
-      background: "/assets/Images/b5.jpg",
+      background: "/assets/Images/b5.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
      nav:""
@@ -69,7 +69,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "Because the future doesn’t wait, MAS bridges the familiar world of Web2 and the decentralized universe of Web3. ",
       cta: "",
-      background: "/assets/Images/b3.jpg",
+      background: "/assets/Images/b3.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
      nav:""
@@ -80,7 +80,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "We provide traditional internet users with a welcoming and intuitive gateway to the digital industries of tomorrow. ",
       cta: "",
-      background: "/assets/Images/b1.jpg",
+      background: "/assets/Images/b1.webp",
       media: "/assets/Images/bader-logo.svg",
       mediaType: "image",
      nav:""
@@ -90,7 +90,7 @@ export default function AboutUs() {
       title: "About Us",
       subtitle: "With a user-friendly experience and familiar design, we open the doors of the new economy to millions—allowing them to become active participants in this global transformation without technical or knowledge barriers.",
       cta: "",
-      background: "/assets/Images/b5.jpg",
+      background: "/assets/Images/b5.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
      nav:""

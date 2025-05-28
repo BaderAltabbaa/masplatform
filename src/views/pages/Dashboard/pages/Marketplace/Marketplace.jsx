@@ -204,23 +204,12 @@ export default function Marketplace() {
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6"></Typography>
         <Box display="flex" mt={2}>
-          <Button
-            variant="contained"
-            size="large"
-            color="primary"
-            sx={{ marginRight: "10px",background:(theme) => theme.custom.mainButton,color:'white',
-              "&:hover":{
-                background:(theme) => theme.custom.hoverMainButton
-              } }}
-            onClick={() => updateState({ openShareAudience: true })}
-          >
-            {t("add a Photos")}
-          </Button>
+         
           <Button
             variant="contained"
             size="large"
             color="secondary"
-            sx={{ background:(theme) => theme.custom.mainButton,color:'white',
+            sx={{ marginRight: "10px",background:(theme) => theme.custom.mainButton,color:'white',
               "&:hover":{
                 background:(theme) => theme.custom.hoverMainButton
               }}}
@@ -228,6 +217,19 @@ export default function Marketplace() {
             onClick={() => updateState({ OpenAuction: true })}
           >
             {t("add a item")}
+          </Button>
+
+           <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            sx={{ background:(theme) => theme.custom.mainButton,color:'white',
+              "&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
+            onClick={() => updateState({ openShareAudience: true })}
+          >
+            {t("add a Photos")}
           </Button>
         </Box>
       </Box>

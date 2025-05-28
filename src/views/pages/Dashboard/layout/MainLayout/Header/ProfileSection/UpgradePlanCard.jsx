@@ -620,7 +620,7 @@ const UpgradePlanCard = () => {
         style={isMobile ? { height: "70%" } : { height: "100%" }}
         PaperProps={{
           sx: {
-            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundImage: 'url(/assets/Images/doodle2.webp)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

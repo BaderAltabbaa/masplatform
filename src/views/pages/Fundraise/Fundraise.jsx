@@ -26,7 +26,7 @@ const Fundraise = () => {
       id: 1,
       title: "Education for Children",
       description: "Help us provide education to underprivileged children in rural areas",
-      coverPhoto: "/assets/Images/edu.png",
+      coverPhoto: "/assets/Images/edu.webp",
       amount: 5000,
       raised: 3200,
       organizer: "Education Foundation",
@@ -36,7 +36,7 @@ const Fundraise = () => {
       id: 2,
       title: "Medical Relief Fund",
       description: "Support our mission to provide medical care to those in need",
-      coverPhoto: "/assets/Images/market.png",
+      coverPhoto: "/assets/Images/market.webp",
       amount: 10000,
       raised: 4500,
       organizer: "Health Care Initiative",
@@ -55,7 +55,7 @@ const Fundraise = () => {
       id: 4,
       title: "Community Development",
       description: "Funds for building community centers in underserved areas",
-      coverPhoto: "/assets/Images/22.jpg",
+      coverPhoto: "/assets/Images/22.webp",
       amount: 15000,
       raised: 10000,
       organizer: "Neighborhood Builders"
@@ -107,7 +107,7 @@ const Fundraise = () => {
             width: "100%",
             borderRadius: "20px"
           }}
-            src="/assets/Images/fundCrop.png" alt="" />
+            src="/assets/Images/fundCrop.webp" alt="" />
         </div>
       </div>
       </Container>

@@ -66,7 +66,7 @@ const RWA = () => {
             width:"100%",
             borderRadius:"20px"
           }} 
-          src="/assets/Images/rwaCrop2.png" alt="" />
+          src="/assets/Images/rwaCrop2.webp" alt="" />
         </div>
       </div>
             </Container>

@@ -480,7 +480,7 @@ const getItemContentListHandler = async (ItemId) => {
    justifyContent:"center",
     gap: 2,
     width: "fit-content",
-    backgroundImage: 'url(/assets/Images/doodle3.png)',
+    backgroundImage: 'url(/assets/Images/doodle3.webp)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

@@ -72,7 +72,7 @@ const VerificationAlert = ({ verify }) => {
   
   return (
     <Box sx={{ mb: 1 ,width:"fit-content"}}>
-      <Alert severity="error" variant="filled">
+      <Alert  variant="filled" sx={{background:(theme) => theme.custom.mainButton,color:"white"}}>
         <AlertTitle>Security Verification</AlertTitle>
         To secure your account and enjoy full MAS Platform features please verify
         {' '}
@@ -310,7 +310,7 @@ const ProfileSettings = () => {
       <Box sx={{ position: 'relative', height: 250, overflow: 'hidden' }}>
         <Box
           component="img"
-          src={formData.cover || "/images/default-cover.jpg"}
+          src={formData.cover || "/images/dcover.png"}
           sx={{
             width: '100%',
             height: '100%',
@@ -348,22 +348,46 @@ const ProfileSettings = () => {
       </Box>
 
       <Box p={4} >
-        <Box sx={{ 
-          display: 'flex', 
-  alignItems: 'center',
-  gap: 1, // Adds spacing between avatar and button
-  justifyContent: 'start',
-  flexWrap: 'wrap', // Allows wrapping on small screens
-  margin:"-180px 0 0 0"
-        }}>
-                <ProfileAvatar
-                  src={formData.profilePic || "/images/users/profilepic1.svg"}
-                  alt="Profile"
-                />
-               <IconButton 
-   component="label"
-    color="primary"
+
+     <Box sx={{ 
+  position: 'relative',
+  width: 180, // Match avatar width
+  height: 180, // Match avatar height
+  margin: '-230px 0 0 0',
+  cursor: 'pointer'
+}}>
+  {/* Make the entire avatar clickable */}
+  <Box 
+    component="label" // Makes the whole area act as a label for the file input
     sx={{
+      display: 'block',
+      width: '100%',
+      height: '100%',
+      cursor: 'pointer'
+    }}
+  >
+    <ProfileAvatar
+      src={formData.profilePic || "/images/users/dprofile.avif"}
+      alt="Profile"
+    />
+    <input
+      type="file"
+      hidden
+      accept="image/*"
+      onChange={handleFileChange('profilePic')}
+      id="avatar-upload" // Add an ID for the label
+    />
+  </Box>
+
+  {/* Edit button (also triggers the file input) */}
+  <IconButton 
+    component="label"
+    color="primary"
+    htmlFor="avatar-upload" // Associate with the same file input
+    sx={{
+      position: 'absolute',
+      bottom: 8,
+      right: 8,
       bgcolor: 'rgba(0,0,0,0.7)',
       '&:hover': { 
         bgcolor: 'rgba(0,0,0,0.9)',
@@ -373,16 +397,10 @@ const ProfileSettings = () => {
     }}
   >
     <FiEdit fontSize="large" color="white" />
-    <input
-      type="file"
-      hidden
-      accept="image/*"
-      onChange={handleFileChange('profilePic')}
-    />
-</IconButton>
-              </Box>
+  </IconButton>
+</Box>
 
-               <Grid container spacing={3} sx={{ mt: 2 }}>
+               <Grid container spacing={3} sx={{ mt: 5 }}>
               {/* Basic Information */}
              
               <Grid item xs={12} md={6}>

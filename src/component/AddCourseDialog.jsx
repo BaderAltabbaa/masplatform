@@ -13,7 +13,7 @@ import {
   FormControl,
   Button,
   Box,
-  Popover,TextField,Typography
+  Popover,TextField,Typography,Tooltip
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -157,7 +157,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
   return (
     <Dialog
     fullWidth={true}
-    maxWidth={"md"}
+    maxWidth={"lg"}
     open={show}
     onClose={uploadCounter === 0 ? handleClose : null}
     aria-labelledby="max-width-dialog-title"
@@ -345,6 +345,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
     const { onChange, ref, name } = field;
 
     return (
+      
       <label htmlFor="raised-button-file">
         <input
           accept="image/*,video/*"
@@ -373,6 +374,8 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
           >
             <div
               style={{
+                width:"100%",
+                height:"100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -381,9 +384,16 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
                 borderRadius: "10px",
               }}
             >
+               <Tooltip title={<div>
+              <div>Max-Size: 1024 Mb</div>
+              <div>min-width: 300px</div>
+              <div>min-hieght: 160px</div>
+              </div>}
+               placement="bottom" >
               <div className={classes.uploadIcon}>
-                <CloudUploadIcon />
+                <CloudUploadIcon  sx={{fontSize:"60px"}}/>
               </div>
+              </Tooltip>
               <div style={{ margin: 15, textAlign: "center" }}>
                 <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
                
@@ -392,6 +402,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
           </Button>
         </label>
       </label>
+      
     );
   }
 
@@ -723,8 +734,8 @@ const useStyles = makeStyles(() => ({
   },
 
   uploadIcon: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

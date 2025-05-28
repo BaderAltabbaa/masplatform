@@ -470,7 +470,7 @@ export default function Header() {
           top: '100%',
           left: '50%', // Center it horizontally
           transform: 'translateX(-50%)', // Adjust for exact centering
-          backgroundColor: 'rgba(0, 0, 0, 0.77)',
+          backgroundColor: 'rgba(55, 0, 53, 0.70)',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           borderRadius: '4px',
           padding: '10px',
@@ -578,7 +578,7 @@ export default function Header() {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
+          backgroundColor:isMobile ? 'none': 'rgba(55, 0, 53, 0.70)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -748,7 +748,7 @@ const GamesDropDown = ({ onClose, isMobile }) => {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
+          backgroundColor:isMobile ? 'none': 'rgba(55, 0, 53, 0.70)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -814,7 +814,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
+          backgroundColor:isMobile ? 'none': 'rgba(55, 0, 53, 0.70)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -897,7 +897,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           top: isMobile ? 'unset' : '100%', // Reset top in mobile
           left: isMobile ? 'unset' : '50%', // Reset left in mobile
           transform: isMobile ? 'none' : 'translateX(-50%)', // Only center in desktop
-          backgroundColor:isMobile ? 'none': 'rgba(0, 0, 0, 0.77)',
+          backgroundColor:isMobile ? 'none': 'rgba(55, 0, 53, 0.70)',
           borderRadius: isMobile ? '0' : '0 0 5px 5px', // Sharp edges in mobile
           padding: '10px',
           zIndex: 1000,
@@ -1104,10 +1104,10 @@ const scrollToTop = () => {
       >
 
 
-        <header style={{display:"flex",backgroundColor: "rgba(0, 0, 0, 0.77)" ,padding:"0 10px"}}>
+        <header style={{display:"flex",backgroundColor: "rgba(55, 0, 53, 0.70)" ,padding:"0 10px"}}>
           <div className='logo1_contanier '>
             <Link to={"/"}>
-              <img className="logo1" src="\assets\Images\bader-logo.svg" alt="Logo11" />
+              <img className="logo1" src="\assets\Images\masfooter-logo1.svg" alt="Logo11" />
             </Link>
           </div>
 
@@ -1793,7 +1793,7 @@ const scrollToTop = () => {
         }}
         PaperProps={{
           sx: {
-            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundImage: 'url(/assets/Images/doodle2.webp)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -1919,7 +1919,7 @@ const scrollToTop = () => {
         fullWidth
         PaperProps={{
           sx: {
-            backgroundImage: 'url(/assets/Images/doodle2.png)',
+            backgroundImage: 'url(/assets/Images/doodle2.webp)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

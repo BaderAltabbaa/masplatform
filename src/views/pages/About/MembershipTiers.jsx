@@ -95,9 +95,9 @@ const MembershipTiers = () => {
         <Table sx={{ minWidth: 650 }} aria-label="membership tiers table">
           <TableHead sx={{ background: (theme) => theme.custom.CarBackGround }}>
             <TableRow>
-              <TableCell sx={{ color: 'white', fontWeight: 700 }}>Membership</TableCell>
-              <TableCell align="right" sx={{ color: 'white', fontWeight: 700 }}>$MAS Balance</TableCell>
-              <TableCell align="right" sx={{ color: 'white', fontWeight: 700 }}>Withdrawal Fee</TableCell>
+              <TableCell align="center" sx={{ color: 'white', fontWeight: "bold" ,fontSize:"1.1rem" }}>Membership</TableCell>
+              <TableCell align="center" sx={{ color: 'white', fontWeight: "bold" ,fontSize:"1.1rem" }}>$MAS Balance</TableCell>
+              <TableCell align="center" sx={{ color: 'white', fontWeight: "bold" ,fontSize:"1.1rem" }}>Withdrawal Fee</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -117,7 +117,7 @@ const MembershipTiers = () => {
                   '&:last-child td, &:last-child th': { border: 0 }
                 }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" align="center">
                   <Chip 
                     label={tier.name} 
                     color={
@@ -129,12 +129,13 @@ const MembershipTiers = () => {
                     sx={{ 
                       fontWeight: 700,
                       px: 1,
-                      fontSize: '0.9rem'
+                      fontSize: '0.9rem',
+                      width:"120px"
                     }} 
                   />
                 </TableCell>
-                <TableCell align="right" sx={{ fontWeight: 600 }}>{tier.masBalance}</TableCell>
-                <TableCell align="right" sx={{ 
+                <TableCell align="center" sx={{ fontWeight: 700 }}>{tier.masBalance}</TableCell>
+                <TableCell align="center" sx={{ 
                   fontWeight: 700,
                   color: theme.palette.error.main
                 }}>

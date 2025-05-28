@@ -11,7 +11,7 @@ import {
   Button,
   IconButton,
   Box,Popover,
-  Typography,TextField
+  Typography,TextField,Tooltip
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 import { ArrowDropDown, ArrowUpward } from "@mui/icons-material";
@@ -85,7 +85,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
   return (
     <Dialog
     fullWidth={true}
-      maxWidth={"md"}
+      maxWidth={"lg"}
       open={show}
       onClose={uploadCounter === 0 ? handleClose : null}
       aria-labelledby="max-width-dialog-title"
@@ -98,11 +98,11 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
         textAlign: "center", 
         color: "black", 
         fontWeight: "bold",
-        fontSize: "1.2rem",
+        fontSize: "1.5rem",
         py: 1
       }}
       >
-        {isEdit ? t("Edit item") : t("Create an item")}
+        {isEdit ? t("Edit item") : t("Create Item")}
       </DialogTitle>
       <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
         
@@ -188,7 +188,7 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
                   }
                 }}
               >
-                <CloudUploadIcon sx={{ color: 'text.disabled' }} />
+                <CloudUploadIcon sx={{ color: 'text.disabled' ,fontSize:"40px"}} />
               </Box>
             </Grid>
           ))}
@@ -623,8 +623,8 @@ const useStyles = makeStyles(() => ({
   },
 
   uploadIcon: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

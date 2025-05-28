@@ -172,7 +172,7 @@ console.log("mm",landingSections)*/}
       title: "Trade Smarter",
       subtitle: "With Our Advanced Platform",
       cta: "Start Trading",
-      background: "/assets/Images/b3.jpg",
+      background: "/assets/Images/b3.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
       nav:"/user-list"
@@ -182,7 +182,7 @@ console.log("mm",landingSections)*/}
       title: "Secure Wallet",
       subtitle: "For Your Digital Assets",
       cta: "Explore Wallets",
-      background: "/assets/Images/b5.jpg",
+      background: "/assets/Images/b5.webp",
       media: "/assets/Images/masfooter-logo1.svg",
       mediaType: "image",
       nav:"/connectWallet"
@@ -192,7 +192,7 @@ console.log("mm",landingSections)*/}
       title: "Staking Rewards",
       subtitle: "Earn Passive Income",
       cta: "Start Earning",
-      background: "/assets/Images/b1.jpg",
+      background: "/assets/Images/b1.webp",
       media: "/assets/Images/bader-logo.svg",
       mediaType: "image",
      nav:"/bundles"

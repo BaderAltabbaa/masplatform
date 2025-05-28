@@ -294,64 +294,64 @@ const auctionNftListHandler = async () => {
 
  const Categories = [
   {name:t("Art"),
-   image:"/assets/Images/art.png"
+   image:"/assets/Images/art.webp"
   },
   {name:t("Sports"),
-    image:"/assets/Images/sports.png"
+    image:"/assets/Images/sports.webp"
    },
    {name:t("Real Estate"),
-    image:"/assets/Images/rwa.png"
+    image:"/assets/Images/rwa.webp"
    },
    {name:t("Fashion"),
-    image:"/assets/Images/fashion.png"
+    image:"/assets/Images/fashion.webp"
    },
    {name:t("Video"),
-    image:"/assets/Images/video.png"
+    image:"/assets/Images/video.webp"
    },
    {name:t("Music"),
-    image:"/assets/Images/music.png"
+    image:"/assets/Images/music.webp"
    },
    {name:t("Cars"),
-    image:"/assets/Images/cars.png"
+    image:"/assets/Images/cars.webp"
    },
    {name:t("Coding"),
-    image:"/assets/Images/coding.png"
+    image:"/assets/Images/coding.webp"
    },
    {name:t("Crypto"),
-    image:"/assets/Images/bundleIcon.png"
+    image:"/assets/Images/bundleIcon.webp"
    },
    {name:t("Education"),
-    image:"/assets/Images/edu.png"
+    image:"/assets/Images/edu.webp"
    },
    {name:t("Trading"),
-    image:"/assets/Images/transfer.png"
+    image:"/assets/Images/transfer.webp"
    },
    {name:t("Analytics"),
-    image:"/assets/Images/analytic.png"
+    image:"/assets/Images/analytic.webp"
    },
    {name:t("News"),
-    image:"/assets/Images/news.png"
+    image:"/assets/Images/news.webp"
    },
    {name:t("Gaming"),
-    image:"/assets/Images/gaming.png"
+    image:"/assets/Images/gaming.webp"
    },
    {name:t("E-commerce"),
-    image:"/assets/Images/market.png"
+    image:"/assets/Images/market.webp"
    },
    {name:t("Startups"),
-    image:"/assets/Images/startup.png"
+    image:"/assets/Images/startup.webp"
    },
    {name:t("Web3"),
-    image:"/assets/Images/web3.png"
+    image:"/assets/Images/web3.webp"
    },
    {name:t("Security"),
-    image:"/assets/Images/security.png"
+    image:"/assets/Images/security.webp"
    },
    {name:t("Wallets"),
-    image:"/assets/Images/wallet.png"
+    image:"/assets/Images/wallet.webp"
    },
    {name:t("Metaverse"),
-    image:"/assets/Images/meta.png"
+    image:"/assets/Images/meta.webp"
    },
  ]
 
@@ -427,12 +427,12 @@ const auctionNftListHandler = async () => {
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'));
 
   const services = [
-    { img: "/assets/Images/bundleIcon.png", text: "Bundles", link: "/bundles" },
-    { img: "/assets/Images/edu.png", text: "Education", link: "/education" },
-    { img: "/assets/Images/market.png", text: "MarketPlace", link: "/items" },
-    { img: "/assets/Images/rwa.png", text: "RWA", link: "/RWA" },
-    { img: "/assets/Images/transfer.png", text: "Transfer", link: "/user-list" },
-    { img: "/assets/Images/fundraise.png", text: "Fundraise", link: "/Fundraise" },
+    { img: "/assets/Images/bundleIcon.webp", text: "Bundles", link: "/bundles" },
+    { img: "/assets/Images/edu.webp", text: "Education", link: "/education" },
+    { img: "/assets/Images/market.webp", text: "MarketPlace", link: "/items" },
+    { img: "/assets/Images/rwa.webp", text: "RWA", link: "/RWA" },
+    { img: "/assets/Images/transfer.webp", text: "Transfer", link: "/user-list" },
+    { img: "/assets/Images/fundraise.webp", text: "Fundraise", link: "/Fundraise" },
   ];
 
   const getCardDimensions = () => {
@@ -693,7 +693,7 @@ return(
     <div className={`faq-top ${inView3 ? 'animate' : ''}`} ref={ref3}>
       <span className='faq-title2'>Frequently Ask Questions.</span>
       <span className='faq-desc'>here some questions that you ask a lot about</span>
-      <img className='questimg' src="\assets\Images\creator2.jpg" alt="" />
+      <img className='questimg' src="\assets\Images\creator2.webp" alt="" />
     </div>
     <div className={`faq-bottom ${inView4 ? 'animate' : ''}`} ref={ref4}>
 <FAQmodel/>

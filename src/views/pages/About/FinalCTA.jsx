@@ -80,7 +80,7 @@ Open your wallet, create your account, and start building your professional and 
                 background:(theme) => theme.custom.hoverMainButton
               }
           }}
-          onClick={() => {navigate("/login")}}
+          onClick={() => {navigate("/profile")}}
         >
           Get Started
         </Button>

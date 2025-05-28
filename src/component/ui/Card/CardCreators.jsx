@@ -154,7 +154,7 @@ console.log("bra",userID)
     navigate("/user-profile/" + userCardData.userName);
   }}
 >
-  <img src={userCardData.profilePic? userCardData.profilePic : "/assets/Images/profile.jpg"} alt={title} style={{height:"210px",maxHeight: "210px"}}/>
+  <img src={userCardData.profilePic? userCardData.profilePic : "/images/users/dprofile.avif"} alt={title} style={{height:"210px",maxHeight: "210px"}}/>
   <div className="contentContainer">
     <h3
       onClick={(event) => {

@@ -118,7 +118,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
   return (
     <Dialog
     fullWidth={true}
-    maxWidth={"md"}
+    maxWidth={"lg"}
     open={show}
     onClose={uploadCounter === 0 ? handleClose : null}
     aria-labelledby="max-width-dialog-title"
@@ -134,7 +134,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
     fontSize: "1.5rem",
     py: 1
 }}      >
-        {isEdit ? t("Edit Audience") : t("Add Photo")}
+        {isEdit ? t("Edit Audience") : t("Add A Photo")}
       </DialogTitle>
       <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
        
@@ -236,7 +236,9 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
           onClick={handleClose}
           color="primary"
           size="large"
-          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px","&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {t("Cancel")}
         </Button>
@@ -245,7 +247,9 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
           variant="contained"
           onClick={onSubmit}
           size="large"
-          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px" }}
+          sx={{ fontSize: "15px", background:(theme) => theme.custom.mainButton, color: "white", margin: "0 10px","&:hover":{
+                background:(theme) => theme.custom.hoverMainButton
+              } }}
         >
           {isEdit ? t("Edit") : t("Add")}
         </Button>
@@ -267,7 +271,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
     return (
       <label htmlFor="raised-button-file">
         <input
-          accept="image/*,video/*"
+          accept="image/*"
           style={{ display: "none" }}
           className={classes.input}
           id="contained-button-file-add-bun"
@@ -293,6 +297,8 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
           >
  <div
               style={{
+                width:"100%",
+                height:"100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -301,10 +307,10 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
                 borderRadius: "10px",
               }}
             >              <div className={classes.uploadIcon}>
-                <CloudUploadIcon />
+                <CloudUploadIcon  sx={{fontSize:"60px"}}/>
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
-              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
+              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image")}</p>
                
               </div>
             </div>
@@ -583,8 +589,8 @@ const useStyles = makeStyles(() => ({
   },
 
   uploadIcon: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -646,7 +652,7 @@ const useStyles = makeStyles(() => ({
   },
 
   bundleCardStyle: {
-    width: 100,
+    width: 150,
     height: 100,
     borderRadius: 5,
     display: "flex",

@@ -629,7 +629,7 @@ function Cardbundle({
       {/* Subscribe now */}
      <Dialog
   fullWidth
-  maxWidth="md"
+  maxWidth="lg"
   open={open2}
   disableScrollLock
   onClose={handleClose2}
@@ -638,7 +638,7 @@ function Cardbundle({
   disableEscapeKeyDown={isLoading}
   sx={{
     '& .MuiDialog-paper': {
-      backgroundImage: 'url(/assets/Images/doodle2.png)',
+      backgroundImage: 'url(/assets/Images/doodle2.webp)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -665,7 +665,7 @@ function Cardbundle({
         position: 'relative',
         aspectRatio: '16/9',
         width: '100%',
-        maxHeight: { xs: 'auto', md: '320px' } // Fixed height on desktop
+        maxHeight: { xs: 'auto', md: '250px' } // Fixed height on desktop
       }}>
         {isVideo ? (
           <ReactPlayer
@@ -711,62 +711,104 @@ function Cardbundle({
         </Button>
       )}
 
-      {/* Title */}
-      <Typography variant="h4" sx={{ 
-        fontWeight: 600,
-        textAlign: 'center',
-        color: (theme) => theme.custom.mainButton,
-        fontSize: { xs: '1.5rem', md: '1.75rem' }
-      }}>
-        {BundleData.bundleTitle}
-      </Typography>
-
       {/* Details Section - Compact layout */}
-      <Box sx={{ 
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        '& > div': {
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }
-      }}>
-        <div>
-          <Typography variant="body1" color="text.secondary">
-            {t("Donation amount")}:
-          </Typography>
-          <Typography variant="body1" fontWeight={500}>
-            {BundleData.donationAmount} {BundleData.coinName}
-          </Typography>
-        </div>
+       <Box sx={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent:"center",
+                gap: 1,
+                backgroundColor: (theme) => theme.palette.background.paper,
+                borderRadius: "16px",
+                p: 1,
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                overflow: 'hidden'
+              }}>
 
-        <div>
-          <Typography variant="body1" color="text.secondary">
-            {t("Duration")}:
-          </Typography>
-          <Typography variant="body1" fontWeight={500}>
-            {BundleData.duration}
-          </Typography>
-        </div>
+                <Box  sx={{
+                              backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                              borderRadius: "12px",
+                              p: 1,
+                            }}>
+                              <Typography variant="subtitle1" sx={{ 
+                                fontWeight: "bold",
+                                color: 'text.primary',
+                                display: 'flex',
+                                gap: 1,
+                                fontSize:"1rem",
+                              }}>
+                                <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                   {t("Bundle Tile")}:
+                                </Box>
+                                <Box component="span">
+                                {BundleData.bundleTitle}
+                                </Box>
+                              </Typography>
+                            </Box>
 
-        <Box>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            {t("Details")}:
-          </Typography>
-          <Typography variant="body2" sx={{ 
-            bgcolor: 'rgba(47, 0, 50, 0.05)',
-            p: 2,
-            borderRadius: '8px',
-            lineHeight: 1.6,
-            maxHeight: { md: '120px' }, // Shorter on desktop
-            overflowY: 'auto' // Scrollable if content is long
-          }}>
-            {BundleData?.details}
-          </Typography>
-        </Box>
+                 <Box  sx={{
+                              backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                              borderRadius: "12px",
+                              p: 1,
+                            }}>
+                              <Typography variant="subtitle1" sx={{ 
+                                fontWeight: "bold",
+                                color: 'text.primary',
+                                display: 'flex',
+                                gap: 1,
+                                fontSize:"1rem",
+                              }}>
+                                <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                   {t("Donation amount")}:
+                                </Box>
+                                <Box component="span">
+                                {BundleData.donationAmount} {BundleData.coinName}
+                                </Box>
+                              </Typography>
+                            </Box>
+
+                             <Box  sx={{
+                              backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                              borderRadius: "12px",
+                              p: 1,
+                            }}>
+                              <Typography variant="subtitle1" sx={{ 
+                                fontWeight: "bold",
+                                color: 'text.primary',
+                                display: 'flex',
+                                gap: 1,
+                                fontSize:"1rem",
+                              }}>
+                                <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                   {t("Duration")}:
+                                </Box>
+                                <Box component="span">
+                               {BundleData.duration}
+                                </Box>
+                              </Typography>
+                            </Box>
+                               <Box  sx={{
+                              backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                              borderRadius: "12px",
+                              p: 1,
+                            }}>
+                              <Typography variant="subtitle1" sx={{ 
+                                fontWeight: "bold",
+                                color: 'text.primary',
+                                display: 'flex',
+                                gap: 1,
+                                fontSize:"1rem",
+                              }}>
+                                <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                     {t("Details")}:
+                              </Box>
+                                <Box component="span">
+                            {BundleData?.details}
+                                </Box>
+                              </Typography>
+                            </Box>
+
       </Box>
-
       {/* Action Buttons - Optimized spacing */}
       <Box sx={{ 
         display: 'flex',

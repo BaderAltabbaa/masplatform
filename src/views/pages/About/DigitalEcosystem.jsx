@@ -136,7 +136,7 @@ const DigitalEcosystem = () => {
           >
             <Box
               component="img"
-              src="/assets/Images/—Pngtree—business professional analyzing stock market_20116370.png" // Replace with your image path
+              src="/assets/Images/person.webp" 
               alt="Digital Ecosystem"
               sx={{
                 Width: '100%',

@@ -79,7 +79,7 @@ const FinalCTA = () => {
                 background:(theme) => theme.custom.hoverMainButton
               }
           }}
-          onClick={() => {navigate("/login")}}
+          onClick={() => {navigate("/profile")}}
         >
           Get Started
         </Button>

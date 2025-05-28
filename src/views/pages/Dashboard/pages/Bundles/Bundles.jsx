@@ -195,19 +195,11 @@ export default function Bundles() {
       <Box className={classes.masBoxFlex}>
         <Typography variant="h6" color="black"></Typography>
         <Box display="flex" mt={2}>
+         
           <Button
             variant="contained"
             size="large"
-            color="white"
-            sx={{ marginRight: "10px" ,}}
-            onClick={() => updateState({ openShareAudience: true })}
-          >
-            {t("Add to Bundle")}
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{background:(theme) => theme.custom.mainButton,color:'white',
+            sx={{background:(theme) => theme.custom.mainButton,color:'white',marginRight: "10px",
               "&:hover":{
                 background:(theme) => theme.custom.hoverMainButton
               }
@@ -215,6 +207,14 @@ export default function Bundles() {
             onClick={() => updateState({ OpenAuction: true })}
           >
             {t("add a bundle")}
+          </Button>
+           <Button
+            variant="contained"
+            size="large"
+            color="white"
+            onClick={() => updateState({ openShareAudience: true })}
+          >
+            {t("Add to Bundle")}
           </Button>
         </Box>
       </Box>

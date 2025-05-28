@@ -95,7 +95,7 @@ const Education = () => {
     },
     {
       _id: "creator2",
-      profilePic: "/assets/Images/22.jpg",
+      profilePic: "/assets/Images/22.webp",
       userName: "mike_designs",
       name: "Michael Chen",
       speciality: "3D Animator",
