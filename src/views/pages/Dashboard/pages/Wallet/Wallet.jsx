@@ -102,6 +102,45 @@ const useStyles = makeStyles((theme) => ({
           transform: "translate(-50%, -50%) scale(2.5) rotate(1turn)",
         },
       },
+
+       dialogContent: {
+    padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1.5),
+    },
+  },
+  mobileDialog: {
+    '& .MuiDialog-paper': {
+      margin: theme.spacing(2),
+      width: 'calc(100% - 32px)',
+      maxHeight: 'calc(100% - 64px)',
+    },
+  },
+  responsiveInput: {
+    width: '100%',
+    '& input': {
+      fontSize: '16px !important', // Larger font for mobile
+      padding: theme.spacing(1.5),
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1),
+        height: '48px !important', // Taller touch target
+      },
+    },
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      gap: theme.spacing(1),
+    },
+  },
+  dialogTitle: {
+    fontSize: '1.5rem !important',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.2rem !important',
+    },
+  },
       
       
 }));
@@ -315,10 +354,10 @@ const Wallet = () => {
                 gap:"20px"
             }
         }}>
-            <Link to={"/buymas"}><Button className="primaryButton">{t("Buy MAS")}</Button></Link>
-            <Link to={"/connectWallet"}><Button className="primaryButton">{t("Connect Wallet")}</Button></Link>
-          <Link> <Button className="primaryButton"  onClick={() => setOpenWithdraw(true)}>{t("WithDraw")}</Button></Link> 
-          <Link>  <Button className="primaryButton"  onClick={() => setOpenDeposit(true)}>{t("Deposit")}</Button></Link>
+            <Link to={"/buymas"}><Button className="primaryButton"><Typography sx={{fontSize:{xs:"0.8rem",md:"1rem",fontWeight:"bold"}}}>{t("Buy MAS")}</Typography></Button></Link>
+            <Link to={"/connectWallet"}><Button className="primaryButton"><Typography sx={{fontSize:{xs:"0.8rem",md:"1rem",fontWeight:"bold"}}}>{t("Connect Wallet")}</Typography></Button></Link>
+          <Link> <Button className="primaryButton"  onClick={() => setOpenWithdraw(true)}><Typography sx={{fontSize:{xs:"0.8rem",md:"1rem",fontWeight:"bold"}}}>{t("WithDraw")}</Typography></Button></Link> 
+          <Link>  <Button className="primaryButton"  onClick={() => setOpenDeposit(true)}><Typography sx={{fontSize:{xs:"0.8rem",md:"1rem",fontWeight:"bold"}}}>{t("Deposit")}</Typography></Button></Link>
 
 
         </Box>
@@ -330,18 +369,20 @@ const Wallet = () => {
 
         <Dialog
       open={openDeposit}
-      fullWidth="sm"
+      fullWidth
       maxWidth="sm"
       onClose={handleCloseDepositModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      style={isMobile ? { height: "70%" } : { height: "100%" }}
+  className={classes.mobileDialog}
       PaperProps={{
         sx: {
           borderRadius: "20px",
           overflow: "hidden",
           position: "relative",
           backgroundColor: "transparent", // Remove default background
+          maxHeight: '90vh', // Ensure it doesn't exceed screen height
+
         },
       }}
     >
@@ -422,33 +463,31 @@ const Wallet = () => {
 
 
 <Dialog
-                open={openWihdraw}
-                fullWidth="sm"
-                maxWidth="sm"
-                onClose={handleCloseWithdrawModal}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                disableBackdropClick={loader}
-                disableEscapeKeyDown={loader}
-                style={isMobile ? { height: "70%" } : { height: "100%" }}
-                PaperProps={{
-                    sx: {
-                      borderRadius: "20px",
-                      overflow: "hidden",
-                      position: "relative",
-                      backgroundColor: "transparent", // Remove default background
-                    },
-                  }}
-            >
-
-<div className={classes.dialogWrapper}>
-        <div className={classes.dialogAnimatedBackground}></div>
-        <div className={classes.dialogInnerBlurEffect}></div>
-                <DialogContent className={classes.dilogBody}>
+  open={openWihdraw}
+  fullWidth
+  maxWidth="sm"
+  onClose={handleCloseWithdrawModal}
+  className={classes.mobileDialog}
+  PaperProps={{
+    sx: {
+      borderRadius: "20px",
+      overflow: "hidden",
+      position: "relative",
+      backgroundColor: "transparent",
+      maxHeight: '90vh', // Ensure it doesn't exceed screen height
+    },
+  }}
+>
+  <div className={classes.dialogWrapper}>
+    <div className={classes.dialogAnimatedBackground}></div>
+    <div className={classes.dialogInnerBlurEffect}></div>
+    <DialogContent className={classes.dilogBody}>
                     <DialogContentText id="alert-dialog-description">
                         <Typography
                             variant="h3"
                             align="center"
+                                    className={classes.dialogTitle}
+
                             style={{ color: "white", marginBottom: "10px" }}
                         >
                             {t("Withdraw")}
@@ -469,13 +508,13 @@ const Wallet = () => {
                             setSelectedToken={setSelectedToken}
                         />
                         <Container maxWidth="md">
-                            <Box mt={4}>
+                            <Box mt={2}>
                                 <TextField
                                     placeholder={t("Wallet Address")}
                                     value={withdrawAddress}
                                     variant="standard"
 
-                                    className={classes.input_fild2}
+                                   className={classes.responsiveInput}
                                     onChange={(e) => setWithdrawAddress(e.target.value)}
                                     sx={{
                                         color: "white", // Change the text color here
@@ -494,11 +533,11 @@ const Wallet = () => {
 
                                 />
                             </Box>
-                            <Box mt={4}>
+                            <Box mt={2}>
                                 <TextField
                                     value={withdrawAmount}
                                     placeholder={"Minimum amount 10 " + selectedToken?.name?.toString()}
-                                    className={classes.input_fild2}
+                                   className={classes.responsiveInput}
                                     type="number"
                                     variant="standard"
                                     inputProps={{
@@ -548,7 +587,7 @@ const Wallet = () => {
 
                             </Box>
 
-                            <Box mt={2} mb={4}>
+                            <Box mt={1} mb={2}>
                                 <Typography
                                     variant="body2"
                                     align="left"
@@ -560,7 +599,7 @@ const Wallet = () => {
                                         <strong>{t("Total")}: {parseFloat(withdrawAmount) + parseFloat(withdrawFees)} {selectedToken.name}</strong> : ""
                                     }
                                 </Typography>
-                                <Grid  xs={12} className={classes.buttonContainerStyle}>
+                                 <Box mt={2} className={classes.buttonGroup}>
                                 <Button
                                     variant="contained"
                                     size="large"
@@ -582,7 +621,7 @@ const Wallet = () => {
                                 >
                                     {t("Close")}
                                 </Button>
-                                </Grid>
+                                </Box>
                                 <Typography
                                     variant="body2"
                                     align="center"

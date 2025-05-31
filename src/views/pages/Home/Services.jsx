@@ -195,59 +195,60 @@ const Services = () => {
               });
           
               return (
-                <Box textAlign="center" ref={ref}>
-                  {/* Top Decoration - slides in from right */}
-                  <Box 
-                    display="flex" 
-                    justifyContent="center" 
-                    alignItems="center" 
-                    mr={40}
-                    component={motion.div}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
-                    variants={slideInFromRight}
-                  >
-                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
-                    <Diamond />
-                    <Diamond />
-                    <Diamond />
-                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
-                  </Box>
-          
-                  {/* Main Heading */}
-                  <Typography
-                    fontWeight="bold"
-                    gutterBottom
-                    color='white'
-                    sx={{ fontSize: isMobile ? "1.8rem" : "3rem" }}
-                    mb={1}
-                    mt={1}
-                    component={motion.div}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  >
-                    {children}
-                  </Typography>
-          
-                  {/* Bottom Decoration - slides in from left */}
-                  <Box 
-                    display="flex" 
-                    justifyContent="center" 
-                    alignItems="center" 
-                    ml={40}
-                    component={motion.div}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
-                    variants={slideInFromLeft}
-                  >
-                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
-                    <Diamond />
-                    <Diamond />
-                    <Diamond />
-                    <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
-                  </Box>
-                </Box>
+                 <Box textAlign="center" ref={ref}>
+                        {/* Top Decoration - slides in from right */}
+                        <Box 
+                          display="flex" 
+                          justifyContent="center" 
+                          alignItems="center" 
+                          mr={30}
+                          component={motion.div}
+                          initial="hidden"
+                          animate={inView ? "visible" : "hidden"}
+                          variants={slideInFromRight}
+                          mb={1}
+                        >
+                          <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                          <Diamond />
+                          <Diamond />
+                          <Diamond />
+                          <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                        </Box>
+                
+                        {/* Main Heading */}
+                        <Typography
+                          fontWeight="bold"
+                          gutterBottom
+                          color='white'
+                          sx={{ fontSize: isMobile ? "1.3rem" : "2.5rem" }}
+                          mb={0}
+                          component={motion.div}
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                          transition={{ duration: 0.5, delay: 0.3 }}
+                        >
+                          {children}
+                        </Typography>
+                
+                        {/* Bottom Decoration - slides in from left */}
+                        <Box 
+                          display="flex" 
+                          justifyContent="center" 
+                          alignItems="center" 
+                          ml={20}
+                          component={motion.div}
+                          initial="hidden"
+                          animate={inView ? "visible" : "hidden"}
+                          variants={slideInFromLeft}
+                          mt={1}
+                        >
+                          <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                          <Diamond />
+                          <Diamond />
+                          <Diamond />
+                          <Box flex={1} maxWidth={50} height={2} bgcolor="white" />
+                        </Box>
+                      </Box>
               );
             };
           

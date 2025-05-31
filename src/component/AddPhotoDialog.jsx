@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
   Button,
-  Box,TextField
+  Box,TextField,Typography
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -307,10 +307,10 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
                 borderRadius: "10px",
               }}
             >              <div className={classes.uploadIcon}>
-                <CloudUploadIcon  sx={{fontSize:"60px"}}/>
+                <CloudUploadIcon sx={{fontSize:{xs:"2rem",md:"4rem"}}}/>
               </div>
               <div style={{ margin: 15, textAlign: "center" }}>
-              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image")}</p>
+                <Typography sx={{ margin: "5px 0px 0px 0px", fontSize:{xs:"0.8rem",md:"1.5rem"} }}>{t("Select Image")}</Typography>
                
               </div>
             </div>
@@ -397,6 +397,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
               count={pages}
               page={page}
               onChange={(e, v) => updateState({ page: v })}
+              size="small"
             />
           </Box>
         )}
@@ -527,7 +528,7 @@ const AddPhotoDialog = ({ show, handleClose, audienceData }) => {
 
 export default AddPhotoDialog;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   inputContainer: {
     borderWidth: 2,
     borderColor: "rgba(140, 0, 135, 0)",
@@ -596,6 +597,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     border: "2px #ddd solid",
     borderRadius: "50%",
+     [theme.breakpoints.down('sm')]: {
+      width:50,
+      height:"100%"
+    },
   },
 
   buttonContainerStyle: {
@@ -659,6 +664,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
     border: "2px #ddd solid",
+     [theme.breakpoints.down('sm')]: {
+      width:80,
+      height:80
+    },
   },
 
   "@keyframes upAndDown": {

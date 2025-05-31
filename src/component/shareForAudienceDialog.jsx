@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
   Button,
-  Box,TextField,Tooltip
+  Box,TextField,Tooltip,Typography
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -132,7 +132,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
       >
         {isEdit ? t("Edit Content") : t("Add Content To Bundles")}
       </DialogTitle>
-      <DialogContent  sx={{ p: "0 20px", overflow: 'hidden' }}>
+      <DialogContent  sx={{ p:0, overflow: 'hidden' }}>
        
         <Grid container spacing={2} sx={{ flex: 1, overflow: 'auto' }}>
           {InputList()}
@@ -323,11 +323,11 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
               </div>}
                placement="bottom" >
                        <div className={classes.uploadIcon}>
-                <CloudUploadIcon  sx={{fontSize:"60px"}}/>
+                <CloudUploadIcon sx={{fontSize:{xs:"2rem",md:"4rem"}}}/>
               </div>
                </Tooltip>
               <div style={{ margin: 15, textAlign: "center" }}>
-              <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
+                <Typography sx={{ margin: "5px 0px 0px 0px", fontSize:{xs:"0.8rem",md:"1.5rem"} }}>{t("Select Image/Video")}</Typography>
                 
               </div>
              
@@ -472,12 +472,12 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
             mt={2}
             display="flex"
             justifyContent="center"
-            style={{ marginTop: 20 }}
-          >
+            >
             <Pagination
               count={pages}
               page={page}
               onChange={(e, v) => updateState({ page: v })}
+              size="small"
             />
           </Box>
         )}
@@ -506,6 +506,16 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
       });
       if (res.data.statusCode === 200) {
         toast.success(res.data?.responseMessage);
+
+          Object.keys(sessionStorage).forEach(key => {
+                if (key.startsWith('bundle-content-')) {
+                  sessionStorage.removeItem(key);
+                }
+              });
+       
+             // Trigger refresh event
+             window.dispatchEvent(new CustomEvent('refreshBundleContnetList'));
+
         handleClose();
       } else {
         toast.error(res.data.responseMessage);
@@ -584,7 +594,7 @@ const ShareForAudienceDialog = ({ show, handleClose, audienceData }) => {
 
 export default ShareForAudienceDialog;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   inputContainer: {
     borderWidth: 2,
     borderColor: "rgba(140, 0, 135, 0)",
@@ -653,6 +663,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     border: "2px #ddd solid",
     borderRadius: "50%",
+     [theme.breakpoints.down('sm')]: {
+      width:50,
+      height:"100%"
+    },
   },
 
   buttonContainerStyle: {
@@ -716,6 +730,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     alignItems: "center",
     border: "2px #ddd solid",
+     [theme.breakpoints.down('sm')]: {
+      width:80,
+      height:80
+    },
   },
 
   "@keyframes upAndDown": {

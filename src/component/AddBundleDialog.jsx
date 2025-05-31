@@ -13,7 +13,8 @@ import {
   FormControl,
   Button,
   Box,
-  Popover,TextField,Tooltip
+  Popover,TextField,Tooltip,
+  Typography
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useController, useForm } from "react-hook-form";
@@ -392,11 +393,11 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
         </div>}
          placement="bottom" >
               <div className={classes.uploadIcon}>
-                <CloudUploadIcon sx={{fontSize:"60px"}}/>
+                <CloudUploadIcon sx={{fontSize:{xs:"2rem",md:"4rem"}}}/>
               </div>
                </Tooltip>
               <div style={{ margin: 15, textAlign: "center" }}>
-                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
+                <Typography sx={{ margin: "5px 0px 0px 0px", fontSize:{xs:"0.8rem",md:"1.5rem"} }}>{t("Select Image/Video")}</Typography>
               
               </div>
             </div>
@@ -533,7 +534,6 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     fullWidth
     margin="normal"
     disabled={isEdit}
-    multiline
     rows={1}
     error={!!errors["details"]}
     helperText={errors["details"]?.message}
@@ -680,7 +680,7 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
 
 export default AddBundleDialog;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   inputContainer: {
     border: "1px solid #ddd",
     borderRadius: 5,
@@ -735,6 +735,9 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     border: "2px #ddd solid",
     borderRadius: "50%",
+     [theme.breakpoints.down('sm')]: {
+      height:"100%"
+    },
   },
 
   buttonContainerStyle: {

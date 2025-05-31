@@ -185,7 +185,7 @@ const Lesson = () => {
  useEffect(() => {
   // 1. Cache key for lesson data
   const lessonCacheKey = `lessonData_${id}`;
-  const lessonsCacheKey = `allLessons_${location.state?.courseDetails?._id || courseDetails?._id}`;
+  const lessonsCacheKey = `course-content-allLessons_${location.state?.courseDetails?._id || courseDetails?._id}`;
 
   // 2. Check if lesson data is passed via state or cached
   if (!location.state?.lessonData) {

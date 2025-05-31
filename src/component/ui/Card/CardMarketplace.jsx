@@ -1049,7 +1049,7 @@ function BillingDialog({ open, onClose }) {
                 color: 'text.primary',
                 display: 'flex',
                 gap: 1,
-                fontSize:"1rem",
+               fontSize:{xs:"0.8rem",md:"1rem"},
                 whiteSpace:"nowrap"
               }}>
                 <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>

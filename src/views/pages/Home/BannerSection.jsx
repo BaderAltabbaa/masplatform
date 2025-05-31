@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, Grid, Button, useMediaQuery, useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Carousel } from "react-responsive-carousel";
@@ -137,6 +137,47 @@ export default function CryptoBannerCarousel( {bannerData , subtitleStyle , butt
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
 
+    // Add these state and ref
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+   const minSwipeDistance = 50; 
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+    
+    // If there's no touch start or we don't know the direction yet, return
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isHorizontalSwipe = Math.abs(distance) > minSwipeDistance;
+    
+    // If it's a horizontal swipe, prevent vertical scroll
+    if (isHorizontalSwipe) {
+      e.preventDefault();
+    }
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe || isRightSwipe) {
+      // Handle swipe logic here if needed
+    }
+    
+    // Reset values
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   return (
     <Box className={classes.carouselContainer}>
       <Carousel
@@ -161,6 +202,8 @@ export default function CryptoBannerCarousel( {bannerData , subtitleStyle , butt
         )}
         swipeable={true}
         emulateTouch={true}
+        preventMovementUntilSwipeScrollTolerance={true}
+        swipeScrollTolerance={50}
       >
         {bannerData.map((item) => (
           <Box
@@ -172,6 +215,9 @@ export default function CryptoBannerCarousel( {bannerData , subtitleStyle , butt
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
             }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             <Box className={classes.contentContainer}>
               <Grid container className={classes.gridContainer} alignItems="center" >

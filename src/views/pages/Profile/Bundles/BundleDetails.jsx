@@ -388,9 +388,9 @@ export default function BundleDetails() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const bundleDetailsCache = useRef({});
-  const BUNDLE_DETAILS_CACHE_KEY = "bundleDetailsCache";
+  const BUNDLE_DETAILS_CACHE_KEY = "bundle-content-bundleDetailsCache";
 const bundleContentCache = useRef({});
-const BUNDLE_CONTENT_CACHE_KEY = "bundleContentCache";
+const BUNDLE_CONTENT_CACHE_KEY = "bundle-content-bundleContentCache";
   const _onInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -414,7 +414,7 @@ const BUNDLE_CONTENT_CACHE_KEY = "bundleContentCache";
   const getBundleDetailsHandler = async (id) => {
   setIsLoadingBundleView(true);
 
-  const cacheKey = `bundle_${id}`;
+  const cacheKey = `bundle-content-bundle_${id}`;
 
   // Load from sessionStorage if available
   const storedCache = JSON.parse(sessionStorage.getItem(BUNDLE_DETAILS_CACHE_KEY) || "{}");
@@ -485,7 +485,7 @@ const BUNDLE_CONTENT_CACHE_KEY = "bundleContentCache";
   const fromDate = selectedFilter.startDate || "";
   const toDate = selectedFilter.endDate || "";
 
-  const cacheKey = `bundle_${bundleId}_search_${searchKey}_from_${fromDate}_to_${toDate}`;
+  const cacheKey = `bundle-content-bundle_${bundleId}_search_${searchKey}_from_${fromDate}_to_${toDate}`;
   const storedCache = JSON.parse(sessionStorage.getItem(BUNDLE_CONTENT_CACHE_KEY) || "{}");
 
   // Check in-memory cache
@@ -640,6 +640,18 @@ const BUNDLE_CONTENT_CACHE_KEY = "bundleContentCache";
         toast.error("Something went wrong");
       });
   };
+
+   useEffect(() => {
+          const handleRefreshList = () => {
+           getBundleContentListHandler(); // Re-fetch fresh data
+          };
+        
+          window.addEventListener('refreshBundleContnetList', handleRefreshList);
+          
+          return () => {
+            window.removeEventListener('refreshBundleContnetList', handleRefreshList);
+          };
+        }, []);
 
   return (
     <Box className={classes.root} sx={{

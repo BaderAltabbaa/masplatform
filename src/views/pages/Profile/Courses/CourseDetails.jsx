@@ -484,7 +484,7 @@ export default function CourseDetails() {
 
 
   const getCourseContentListHandler = async (courseId) => {
-  const cacheKey = `courseContentList_${courseId}_${selectedFilter.searchKey}_${selectedFilter.startDate}_${selectedFilter.endDate}`;
+  const cacheKey = `course-content-courseContentList_${courseId}_${selectedFilter.searchKey}_${selectedFilter.startDate}_${selectedFilter.endDate}`;
 
   // 1. Check sessionStorage for cached data
   const cachedSession = sessionStorage.getItem(cacheKey);
@@ -644,6 +644,19 @@ export default function CourseDetails() {
         toast.error("Something went wrong");
       });
   };
+
+
+   useEffect(() => {
+        const handleRefreshList = () => {
+         getCourseContentListHandler(); // Re-fetch fresh data
+        };
+      
+        window.addEventListener('refreshCourseContnetList', handleRefreshList);
+        
+        return () => {
+          window.removeEventListener('refreshCourseContnetList', handleRefreshList);
+        };
+      }, []);
 
   return (
     <Box sx={{background:(theme) => theme.custom.PageBackGround,}}>

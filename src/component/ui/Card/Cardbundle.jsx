@@ -735,7 +735,7 @@ function Cardbundle({
                                 color: 'text.primary',
                                 display: 'flex',
                                 gap: 1,
-                                fontSize:"1rem",
+                                fontSize:{xs:"0.8rem",md:"1rem"},
                               }}>
                                 <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
                                    {t("Bundle Tile")}:
@@ -756,7 +756,7 @@ function Cardbundle({
                                 color: 'text.primary',
                                 display: 'flex',
                                 gap: 1,
-                                fontSize:"1rem",
+                                fontSize:{xs:"0.8rem",md:"1rem"},
                               }}>
                                 <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
                                    {t("Donation amount")}:
@@ -777,7 +777,7 @@ function Cardbundle({
                                 color: 'text.primary',
                                 display: 'flex',
                                 gap: 1,
-                                fontSize:"1rem",
+                                fontSize:{xs:"0.8rem",md:"1rem"},
                               }}>
                                 <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
                                    {t("Duration")}:
@@ -797,7 +797,7 @@ function Cardbundle({
                                 color: 'text.primary',
                                 display: 'flex',
                                 gap: 1,
-                                fontSize:"1rem",
+                                fontSize:{xs:"0.8rem",md:"1rem"},
                               }}>
                                 <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
                                      {t("Details")}:

@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
   balanceBox: {
     width: '75%',
     marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(2),
     "@media(max-width:768px)": {
       width: "90%",
     },

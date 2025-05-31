@@ -862,24 +862,7 @@ const EducationDropDown = ({ onClose, isMobile }) => {
           </Button>
           </Box>
 
-           <Box>
-        <Button
-            onClick={() => {
-              navigate("/edu-home");
-              onClose();
-            }}
-            sx={{color:"#dadada",
-              "&:hover":{
-                  background:"none",
-                  color: (theme) => theme.custom.miniUserCard
-              }
-            }}
            
-          >
-
-            {t("Education Beta")}
-          </Button>
-          </Box>
          
 
          

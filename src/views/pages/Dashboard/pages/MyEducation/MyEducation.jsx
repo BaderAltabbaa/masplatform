@@ -71,9 +71,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "20px",
-    padding:"5px 10px",
     borderRadius:"20px",
-    background:"#c7c7c7",
     [theme.breakpoints.down("xs")]: {
       display: "block",
     },
@@ -210,13 +208,11 @@ export default function MyEducation() {
     
     <Box className={classes.LoginBox} mb={0}>
       <Box className={classes.masBoxFlex}>
-        <Box>
-          <Typography color="#c7c7c7">
-            leesons left: 100
-          </Typography>
-        </Box>
-        <Box display="flex" justifyContent={"center"} alignItems={"center"} mt={0}>
+       
+        
+                  <Typography variant="h6" color="black"></Typography>
           
+          <Box display="flex" mt={2}>
            <Button
             variant="contained"
             size="medium"
@@ -242,25 +238,9 @@ export default function MyEducation() {
             {t("add a lesson")}
           </Button>
          
-           <Button
-            variant="contained"
-            size="medium"
-            color="white"
-            style={{ marginRight: "10px",background:"white" }}
-          >
-            {t("plan: basic")}
-          </Button>
-          <Button
-            variant="contained"
-            size="medium"
-            color="white"
-            style={{ marginRight: "10px",background:"white" }}
-            onClick={() => {navigate("/plans")}}
-          >
-            {t("upgrade plan")}
-          </Button>
+          
+        
         </Box>
-        <Box sx={{background:(theme) => theme.custom.mainButton ,color:"white",padding:"5px", borderRadius:"5px"}}>Lessons Left: 100</Box>
       </Box>
       <Box>
         {!courseList[0] ? (

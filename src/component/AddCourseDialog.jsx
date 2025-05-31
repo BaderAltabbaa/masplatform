@@ -391,11 +391,11 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
               </div>}
                placement="bottom" >
               <div className={classes.uploadIcon}>
-                <CloudUploadIcon  sx={{fontSize:"60px"}}/>
+             <CloudUploadIcon sx={{fontSize:{xs:"2rem",md:"4rem"}}}/>         
               </div>
               </Tooltip>
               <div style={{ margin: 15, textAlign: "center" }}>
-                <p style={{ margin: "5px 0px 0px 0px", fontSize: 18 }}>{t("Select Image/Video")}</p>
+                <Typography sx={{ margin: "5px 0px 0px 0px", fontSize:{xs:"0.8rem",md:"1.5rem"} }}>{t("Select Image/Video")}</Typography>
                
               </div>
             </div>
@@ -534,7 +534,6 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
     label={t("Details")}
     placeholder={t("Enter details about your course")}
     disabled={isEdit}
-    multiline
     rows={1}
     fullWidth
     margin="normal"
@@ -682,7 +681,7 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
 
 export default AddcourseDialog;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   inputContainer: {
     borderWidth: 2,
     borderColor: "#ddd",
@@ -754,6 +753,9 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     border: "2px #ddd solid",
     borderRadius: "50%",
+     [theme.breakpoints.down('sm')]: {
+      height:"100%"
+    },
   },
 
   buttonContainerStyle: {

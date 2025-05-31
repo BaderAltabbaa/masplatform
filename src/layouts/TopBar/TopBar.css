@@ -4,7 +4,6 @@
   padding: 0px 10px; 
   font-family: 'Calibri', sans-serif;
   color: #ffffff;
-  background-color: #cdc8c8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     
 }
@@ -187,7 +186,7 @@
     position: absolute;
     top: 100%; 
     right: 0; 
-    background-color: rgba(0, 0, 0, 0.77);
+    background-color:rgba(55, 0, 53, 0.9);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 25%;
     overflow: hidden;
