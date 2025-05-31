@@ -592,40 +592,54 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     );
   }
   
-  async function createBundle(data) {
-    try {
-      const formData = new FormData();
-      formData.append("file", data.file);
-      formData.append("tokenName", data.bundleName);
-      formData.append("bundleTitle", data.bundleTitle);
-      formData.append(
-        "duration",
-        `${data.duration} ${data.duration > 1 ? "days" : "day"}`
-      );
-      formData.append("bundleName", data.bundleName);
-      formData.append("details", data.details);
-      formData.append("donationAmount", data.donationAmount);
-      formData.append("coinName", data.coinName);
-      formData.append("category", data.category); // Add category to form data
+ async function createBundle(data) {
+  try {
+    const formData = new FormData();
+    formData.append("file", data.file);
+    formData.append("tokenName", data.bundleName);
+    formData.append("bundleTitle", data.bundleTitle);
+    formData.append(
+      "duration",
+      `${data.duration} ${data.duration > 1 ? "days" : "day"}`
+    );
+    formData.append("bundleName", data.bundleName);
+    formData.append("details", data.details);
+    formData.append("donationAmount", data.donationAmount);
+    formData.append("coinName", data.coinName);
+    formData.append("category", data.category);
 
-      const res = await axios({
-        method: "POST",
-        url: Apiconfigs.addNft,
-        data: formData,
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
-        onUploadProgress: (progressEvent) => onUploadProgress(progressEvent),
-      });
+    const res = await axios({
+      method: "POST",
+      url: Apiconfigs.addNft,
+      data: formData,
+      headers: {
+        token: sessionStorage.getItem("token"),
+      },
+      onUploadProgress: (progressEvent) => onUploadProgress(progressEvent),
+    });
 
-      if (res.data.statusCode === 200) {
-        toast.success("Bundle created");
-        handleClose();
-      }
-    } catch (err) {
-      console.log(err);
+    if (res.data.statusCode === 200) {
+      toast.success("Bundle created");
+      
+    
+      
+      // Clear bundle-specific caches if you have any
+       Object.keys(sessionStorage).forEach(key => {
+         if (key.startsWith('bundle-page-')) {
+           sessionStorage.removeItem(key);
+         }
+       });
+
+      // Trigger refresh event
+      window.dispatchEvent(new CustomEvent('refreshBundleList'));
+      
+      handleClose();
     }
+  } catch (err) {
+    console.log(err);
+    toast.error("Failed to create bundle");
   }
+}
 
   async function editBundle(data) {
     const formData = new FormData();

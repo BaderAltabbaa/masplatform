@@ -114,7 +114,7 @@ const auctionNftListHandler = async () => {
 
 
     const listAllNftHandler = async () => {
-    const cacheKey = "listAllNft_page1_limit10";
+    const cacheKey = "bundle-page-all-list";
 
     // Check sessionStorage
     const sessionData = sessionStorage.getItem(cacheKey);
@@ -163,7 +163,7 @@ const auctionNftListHandler = async () => {
 
 
   const listAllNft1Handler = async () => {
-    const cacheKey = "listAllNft1_page1_limit10";
+    const cacheKey = "item-page-all-list";
 
     // Check sessionStorage
     const sessionData = sessionStorage.getItem(cacheKey);
@@ -291,6 +291,30 @@ const auctionNftListHandler = async () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+
+    useEffect(() => {
+    const handleRefreshList = () => {
+      listAllNft1Handler(); // Re-fetch fresh data
+    };
+  
+    window.addEventListener('refreshItemList', handleRefreshList);
+    
+    return () => {
+      window.removeEventListener('refreshItemList', handleRefreshList);
+    };
+  }, []);
+
+   useEffect(() => {
+      const handleRefreshList = () => {
+        listAllNftHandler(); // Re-fetch fresh data
+      };
+    
+      window.addEventListener('refreshBundleList', handleRefreshList);
+      
+      return () => {
+        window.removeEventListener('refreshBundleList', handleRefreshList);
+      };
+    }, []);
 
  const Categories = [
   {name:t("Art"),

@@ -81,6 +81,7 @@ export const VerifyOtp = ({
             user.updatetoken(res.data.result.token);
             await user.updateUserData();
             setEmailVerified(true);
+            console.log("tokenV",res.data.result.token)
             handleClose();
           } else {
             toast.error(res.data.responseMessage);

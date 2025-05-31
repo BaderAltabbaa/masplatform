@@ -188,6 +188,19 @@ export default function Bundles() {
     getBundleListHandler().catch(console.error);
   }, [page]);
 
+
+  useEffect(() => {
+    const handleRefreshList = () => {
+      getBundleListHandler(); // Re-fetch fresh data
+    };
+  
+    window.addEventListener('refreshBundleList', handleRefreshList);
+    
+    return () => {
+      window.removeEventListener('refreshBundleList', handleRefreshList);
+    };
+  }, []);
+
   return (<>
         <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Bundles</ButtonwithAnimation></Box>
     
@@ -275,7 +288,7 @@ export default function Bundles() {
   );
 
  async function getBundleListHandler() {
-  const cacheKey = `page-${page}`;
+  const cacheKey = `bundle-page-${page}`;
 
   // Use cached data if available
   const cachedData = sessionStorage.getItem(cacheKey);

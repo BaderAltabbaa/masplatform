@@ -258,7 +258,7 @@ const Chat = () => {
                 flexDirection: 'column',
                 height: '100%',
                 boxShadow:"2px 4px 8px black",
-                backgroundImage: 'url(/assets/Images/.png)',
+                backgroundImage: 'url(/assets/Images/doodle3.webp)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',

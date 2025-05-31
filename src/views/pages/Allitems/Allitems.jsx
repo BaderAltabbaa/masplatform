@@ -50,6 +50,8 @@ const AllItemsPage = () => {
   const [serverSearchSupported, setServerSearchSupported] = useState(true);
   const [isClientSideMode, setIsClientSideMode] = useState(false);
   const cacheRef = useRef({});
+  const FULL_LIST_CACHE_KEY = "item-page-full";
+const PAGINATED_CACHE_PREFIX = "item-page-";
 
   const { t } = useTranslation();
   const { ref: ref2, inView: inView2 } = useInView({ threshold: 0.2, triggerOnce: true });
@@ -71,7 +73,7 @@ const AllItemsPage = () => {
 
   // Fetch all items for client-side fallback
 const fetchAllItems = async () => {
-  const cacheKey = "allItems_full";
+  const cacheKey = FULL_LIST_CACHE_KEY;
 
   // Check sessionStorage
   const cachedSession = sessionStorage.getItem(cacheKey);
@@ -130,7 +132,7 @@ const fetchAllItems = async () => {
   // Main data fetching function
 const listAllItemsHandler = async () => {
   setIsLoading(true);
-  const cacheKey = JSON.stringify({ page, search: debouncedSearchTerm.trim() });
+  const cacheKey = `${PAGINATED_CACHE_PREFIX}${page}-${debouncedSearchTerm.trim()}`;
 
   // Check sessionStorage
   const cachedSession = sessionStorage.getItem(cacheKey);
@@ -214,6 +216,19 @@ const listAllItemsHandler = async () => {
       }
     }
   }, [auth.userLoggedIn, auth.userData, page, debouncedSearchTerm, isClientSideMode]);
+
+   useEffect(() => {
+      const handleRefreshList = () => {
+        fetchAllItems(); // Re-fetch fresh data
+        listAllItemsHandler();
+      };
+    
+      window.addEventListener('refreshItemList', handleRefreshList);
+      
+      return () => {
+        window.removeEventListener('refreshItemList', handleRefreshList);
+      };
+    }, []);
 
 
 

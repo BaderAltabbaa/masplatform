@@ -193,6 +193,18 @@ export default function MyEducation() {
     getCourseListHandler().catch(console.error);
   }, [page]);
 
+  useEffect(() => {
+      const handleRefreshList = () => {
+       getCourseListHandler(); // Re-fetch fresh data
+      };
+    
+      window.addEventListener('refreshCourseList', handleRefreshList);
+      
+      return () => {
+        window.removeEventListener('refreshCourseList', handleRefreshList);
+      };
+    }, []);
+
   return (<>
         <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center"}} mb={2} mt={10}><ButtonwithAnimation>My Education</ButtonwithAnimation></Box>
     

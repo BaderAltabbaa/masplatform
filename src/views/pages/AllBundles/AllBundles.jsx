@@ -87,7 +87,9 @@ const [filteredBundles, setFilteredBundles] = useState([]); // What actually get
 const [serverSearchSupported, setServerSearchSupported] = useState(true);
 const [isClientSideMode, setIsClientSideMode] = useState(false); // Track if we're in client-side mode
 const inMemoryCache = useRef({});
-const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
+const CACHE_PREFIX = "bundle-page-";
+const CACHE_KEY = `${CACHE_PREFIX}all-cache`; // Main cache key
+const FULL_LIST_CACHE_KEY = `${CACHE_PREFIX}full-list`; // For full bundle list
 
 
 
@@ -121,19 +123,18 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
   
 
      const fetchAllBundles = async () => {
-  const fullCacheKey = "full_bundle_list";
 
-  if (inMemoryCache.current[fullCacheKey]) {
+  if (inMemoryCache.current[FULL_LIST_CACHE_KEY]) {
     console.log("[CACHE] Loaded full bundles from in-memory cache");
-    filterClientSide(inMemoryCache.current[fullCacheKey], debouncedSearchTerm);
+    filterClientSide(inMemoryCache.current[FULL_LIST_CACHE_KEY], debouncedSearchTerm);
     return;
   }
 
   const storedCache = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "{}");
-  if (storedCache[fullCacheKey]) {
+  if (storedCache[FULL_LIST_CACHE_KEY]) {
     console.log("[CACHE] Loaded full bundles from sessionStorage");
-    inMemoryCache.current[fullCacheKey] = storedCache[fullCacheKey];
-    filterClientSide(storedCache[fullCacheKey], debouncedSearchTerm);
+    inMemoryCache.current[FULL_LIST_CACHE_KEY] = storedCache[FULL_LIST_CACHE_KEY];
+    filterClientSide(storedCache[FULL_LIST_CACHE_KEY], debouncedSearchTerm);
     return;
   }
 
@@ -151,12 +152,12 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
       filterClientSide(bundles, debouncedSearchTerm);
 
       // Cache it
-      inMemoryCache.current[fullCacheKey] = bundles;
+      inMemoryCache.current[FULL_LIST_CACHE_KEY] = bundles;
       sessionStorage.setItem(
         CACHE_KEY,
         JSON.stringify({
           ...storedCache,
-          [fullCacheKey]: bundles,
+          [FULL_LIST_CACHE_KEY]: bundles,
         })
       );
     }
@@ -185,7 +186,7 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
  const listAllNftHandler = async () => {
   setIsLoading(true);
 
-  const cacheKey = `${page}_${debouncedSearchTerm.trim() || "all"}`;
+  const cacheKey = `${CACHE_PREFIX}${page}_${debouncedSearchTerm.trim() || "all"}`;
   
   // Check sessionStorage
   const storedCache = JSON.parse(sessionStorage.getItem(CACHE_KEY) || "{}");
@@ -274,6 +275,27 @@ const CACHE_KEY = "allBundlesCache"; // Key for sessionStorage
       }
     }
   }, [auth.userLoggedIn, auth.userData, page, debouncedSearchTerm, isClientSideMode]);
+
+  useEffect(() => {
+  const handleRefreshBundles = () => {
+    // Clear all bundle caches
+    inMemoryCache.current = {}; // Clear in-memory cache
+    sessionStorage.removeItem(CACHE_KEY); // Clear session storage
+    
+    // Re-fetch data based on current mode
+    if (isClientSideMode) {
+      fetchAllBundles();
+    } else {
+      listAllNftHandler();
+    }
+  };
+
+  window.addEventListener('refreshBundleList', handleRefreshBundles);
+  
+  return () => {
+    window.removeEventListener('refreshBundleList', handleRefreshBundles);
+  };
+}, [isClientSideMode]);
 
  
 

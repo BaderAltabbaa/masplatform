@@ -505,7 +505,17 @@ function FormButtons() {
 
         if (res.data.statusCode === 200) {
             toast.success("Item created successfully");
-            handleClose();
+            Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('item-page-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+
+      // Optionally, force-refresh the data
+      window.dispatchEvent(new CustomEvent('refreshItemList'));
+      
+      handleClose();
+            
         } else {
             throw new Error('Failed to create item');
         }

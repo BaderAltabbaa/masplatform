@@ -236,6 +236,10 @@ export default function Login() {
       });
 
       if (Object.entries(res.data.result).length > 0) {
+                sessionStorage.setItem("token", res.data.result.token); 
+                 await user.updatetoken(res.data.result.token);
+                  console.log("Token",res.data.result.token)
+
         if (!res.data?.result?.isNewUser) {
           toast(
             ` 👋 Welcome Back ${res.data?.result?.name || res.data?.result?.userName}`
@@ -251,8 +255,8 @@ export default function Login() {
           localStorage.removeItem('rememberedPassword');
         }
 
-        sessionStorage.setItem("AccessToken", res.data.result.token); 
-        await user.updatetoken(res.data.result.token);
+       
+       
 
         if (!res.data?.result?.isEmailVerified || !res.data?.result?.isPhoneVerified) {
           navigate("/profilesettings");

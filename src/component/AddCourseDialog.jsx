@@ -622,8 +622,21 @@ const AddcourseDialog = ({ show, handleClose, CourseData }) => {
       });
 
       if (res.data.statusCode === 200) {
-        toast.success("course created");
-        handleClose();
+        toast.success("Course created");
+             
+           
+             
+             // Clear bundle-specific caches if you have any
+              Object.keys(sessionStorage).forEach(key => {
+                if (key.startsWith('course-page-')) {
+                  sessionStorage.removeItem(key);
+                }
+              });
+       
+             // Trigger refresh event
+             window.dispatchEvent(new CustomEvent('refreshCourseList'));
+             
+             handleClose();
       }
     } catch (err) {
       console.log(err);

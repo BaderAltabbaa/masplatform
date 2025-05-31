@@ -196,6 +196,18 @@ export default function Marketplace() {
     getitemListHandler().catch(console.error);
   }, [page]);
 
+  useEffect(() => {
+  const handleRefreshList = () => {
+    getitemListHandler(); // Re-fetch fresh data
+  };
+
+  window.addEventListener('refreshItemList', handleRefreshList);
+  
+  return () => {
+    window.removeEventListener('refreshItemList', handleRefreshList);
+  };
+}, []);
+
   return (
 <>
          <Box sx={{display:"flex" ,justifyContent:"center",alignItems:"center",marginTop:"5rem"}}><ButtonwithAnimation>My Items</ButtonwithAnimation></Box>
@@ -216,7 +228,7 @@ export default function Marketplace() {
 
             onClick={() => updateState({ OpenAuction: true })}
           >
-            {t("add a item")}
+            {t("add an item")}
           </Button>
 
            <Button
@@ -290,14 +302,14 @@ export default function Marketplace() {
    
   );
 
- async function getitemListHandler() {
+async function getitemListHandler() {
   const cacheKey = `item-page-${page}`;
 
-  // Use cached data if available
+  // Use cached data if available (no expiry check)
   const cachedData = sessionStorage.getItem(cacheKey);
   if (cachedData) {
     console.log("Using cached data for", cacheKey);
-    const { docs, totalPages } = JSON.parse(cachedData); // Parse the cached data from string
+    const { docs, totalPages } = JSON.parse(cachedData);
     updateState({ itemList: docs, pages: totalPages });
     return;
   }
@@ -306,31 +318,24 @@ export default function Marketplace() {
     const res = await axios({
       method: "GET",
       url: Apiconfigs.myNft1List,
-      headers: {
-        token: sessionStorage.getItem("token"),
-      },
-      params: {
-        page,
-        limit: 4,
-      },
+      headers: { token: sessionStorage.getItem("token") },
+      params: { page, limit: 4 },
     });
 
     if (res.data.statusCode === 200) {
       const { docs, totalPages } = res.data.result;
-
-      // Cache the result in sessionStorage
-      sessionStorage.setItem(cacheKey, JSON.stringify({
-        docs,
-        totalPages,
-      }));
-
+      
+      // Cache indefinitely (until manually cleared)
+      sessionStorage.setItem(cacheKey, JSON.stringify({ docs, totalPages }));
+      
       updateState({ itemList: docs, pages: totalPages });
-      console.log("Fetched and cached data for", cacheKey);
     }
   } catch (err) {
     console.log(err.message);
   }
 }
+
+
 
 
 }
