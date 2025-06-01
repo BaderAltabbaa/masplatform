@@ -337,7 +337,7 @@ const listAllItemsHandler = async () => {
 
     
       {isLoading ? (
-        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+        <Box sx={{padding:{xs:"150px 0",md:"250px"}}}  display='flex' justifyContent='center' alignItems='center'>
           <DataLoading />
         </Box>
       ) : (
@@ -353,7 +353,39 @@ const listAllItemsHandler = async () => {
                   </Box>
                 ) : (
                   <>
-                    <Grid container className={classes.gridbox}>
+
+<Box
+  sx={{
+    display: { xs: 'block', md: 'none' }, // Show scrollable cards only on small screens
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    py: 2,
+    px: 1,
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': { display: 'none' },
+  }}
+>
+  {displayedItems.map((data, i) => (
+    <Box
+      key={i}
+      sx={{
+        display: 'inline-block',
+        minWidth: '250px',
+        mr: 2,
+      }}
+    >
+      <CardMarketplace 
+        data={data}
+        
+      />
+    </Box>
+  ))}
+</Box>
+
+
+                    <Grid container className={classes.gridbox}
+                                                sx={{ display: { xs: 'none', md: 'flex' } }}
+>
                       {displayedItems.map((data, i) => (
                         <Grid
                           container
@@ -371,7 +403,18 @@ const listAllItemsHandler = async () => {
                       ))}
                     </Grid>
 
-                    {/* Pagination - only show if not in client-side mode */}
+                    
+
+                   
+                  </>
+                )}
+              </Container>
+            </>
+          )}
+        </section>
+      )}
+
+      {/* Pagination - only show if not in client-side mode */}
                     {!isClientSideMode && pages > 1 && (
                       <Box mb={2} mt={2} display="flex" justifyContent="center" dir="ltr">
                         <Pagination
@@ -386,15 +429,6 @@ const listAllItemsHandler = async () => {
                         />
                       </Box>
                     )}
-
-                   
-                  </>
-                )}
-              </Container>
-            </>
-          )}
-        </section>
-      )}
     </Box>
   );
 };

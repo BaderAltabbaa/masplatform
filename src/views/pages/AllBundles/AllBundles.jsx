@@ -423,7 +423,7 @@ const FULL_LIST_CACHE_KEY = `${CACHE_PREFIX}full-list`; // For full bundle list
 </Container>
 
       {isLoading ? (
-        <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
+        <Box sx={{padding:{xs:"150px 0",md:"250px"}}} display='flex' justifyContent='center' alignItems='center'>
                <DataLoading />
                </Box>
       ) : (
@@ -451,10 +451,42 @@ const FULL_LIST_CACHE_KEY = `${CACHE_PREFIX}full-list`; // For full bundle list
                 ) : (
                   ""
                 )}
+
+
+<Box
+  sx={{
+    display: { xs: 'block', md: 'none' }, // Show scrollable cards only on small screens
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    py: 2,
+    px: 1,
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': { display: 'none' },
+  }}
+>
+  {filteredBundles.map((data, i) => (
+    <Box
+      key={i}
+      sx={{
+        display: 'inline-block',
+        minWidth: '250px',
+        mr: 2,
+      }}
+    >
+      <Cardbundle 
+        data={data}
+        
+      />
+    </Box>
+  ))}
+</Box>
+
+
                 <Grid 
                 container 
                 
-                
+                            sx={{ display: { xs: 'none', md: 'flex' } }}
+
                 className={classes.gridContainer}>
                   {filteredBundles.map((data, i) => {
                     return (
@@ -474,28 +506,23 @@ const FULL_LIST_CACHE_KEY = `${CACHE_PREFIX}full-list`; // For full bundle list
                     </Grid>
 
                      
-                    //   <Grid
-                    //     item
-                    //     key={i}
-                    //     xs={12}
-                    //     sm={6}
-                    //     md={4}
-                    //     lg={3}
-                    //     className={classes.gridbox}
-                    //     //onMouseEnter={() => setHoveredIndex(i)}
-                    //   //onMouseLeave={() => setHoveredIndex(null)}
-                    //  // style={hoveredIndex === i ? { border: '10px solid red' } : null}
-                    //   >
-                    //     <Bundlecard
-                    //       data={data}
-                    //       index={i}
-                    //       callbackFn={listAllNftHandler}
-                    //     />
-                    //   </Grid>
+                   
                     );
                   })}
                 </Grid>
-              {/* </Container> */}
+            
+
+
+
+
+            </>
+          )}
+        </Container>
+
+        // </section>
+      )}
+
+        {/* </Container> */}
               {!isClientSideMode && pages > 1 && (
                 <Box mb={2} mt={2} display="flex" justifyContent="center" dir="ltr">
                   <Pagination
@@ -510,16 +537,6 @@ const FULL_LIST_CACHE_KEY = `${CACHE_PREFIX}full-list`; // For full bundle list
                   />
                 </Box>
               )}
-
-
-
-
-            </>
-          )}
-        </Container>
-
-        // </section>
-      )}
     </Box>
   );
 };

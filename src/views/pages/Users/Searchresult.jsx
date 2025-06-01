@@ -198,15 +198,8 @@ const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSe
      
     }}
     >
-       
 
-    
-      {isLoading ? (
-       <Box padding='250px' display='flex' justifyContent='center' alignItems='center'>
-              <DataLoading />
-              </Box>
-      ) : (
-        <Container maxWidth="xl">
+       <Container maxWidth="xl">
   
 
           <div style={{
@@ -325,7 +318,17 @@ const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSe
            
            
           </Box>
-     
+          </Container>
+       
+
+    
+      {isLoading ? (
+       <Box sx={{padding:{xs:"150px 0",md:"250px"}}} display='flex' justifyContent='center' alignItems='center'>
+              <DataLoading />
+              </Box>
+      ) : (
+       
+     <Container maxWidth="xl">
                       
           {userListToDisplay.length === 0 ? (
             <Box align="center" mt={4} mb={5}>
@@ -334,10 +337,46 @@ const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSe
           ) : (
             ""
           )}
+
+
+<Box
+  sx={{
+    display: { xs: 'block', md: 'none' }, // Show scrollable cards only on small screens
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    py: 2,
+    px: 1,
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': { display: 'none' },
+  }}
+>
+  {userListToDisplay.map((data, i) => (
+    <Box
+      key={i}
+      sx={{
+        display: 'inline-block',
+        minWidth: '250px',
+        mr: 2,
+      }}
+    >
+      <CardCreators 
+        data={data}
+        chat={chat}
+        subscrib={subscrib}
+        CardpersonalInfo={CardpersonalInfo}
+        Subscribe={Subscribe}
+      />
+    </Box>
+  ))}
+</Box>
+
+
+
           <Grid 
            container
            
-          
+            sx={{ display: { xs: 'none', md: 'flex' } }}
+
           className={classes.userGridContainer}>
             
         

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('md')]: {
       minHeight: '100%',
-      padding: theme.spacing(8, 0, 4),
+      padding: theme.spacing(8, 0, 0),
     },
     [theme.breakpoints.down('sm')]: {
       minHeight: '100%',
@@ -223,7 +223,7 @@ export default function CryptoBannerCarousel( {bannerData , subtitleStyle , butt
               <Grid container className={classes.gridContainer} alignItems="center" >
                 <Grid item xs={12} md={5} lg={5}>
                   <Box className={classes.leftSection}>
-                    <Typography  color="white" sx={{fontSize:"3rem",fontWeight:"800"}}>
+                    <Typography  color="white" sx={{fontSize:{xs:"2rem",md:"3rem"},fontWeight:"800"}}>
                       {item.title}
                     </Typography>
                     <Typography variant="h3" color="white" sx={{ ...(item.subtitleStyle || subtitleStyle),}}>
