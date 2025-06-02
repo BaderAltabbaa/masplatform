@@ -157,10 +157,10 @@ const FundDetails = () => {
                 "&:hover": {
                   background:(theme) => theme.custom.hoverGradientButton
                 },
-                px: 4,
+                px: 2,
                 py: 1,
                 borderRadius: "50px",
-                fontSize: "1.1rem"
+                fontSize: "1rem"
               }}
             >
               Donate Now

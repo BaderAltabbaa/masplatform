@@ -2,11 +2,8 @@ import React from "react";
 import { Typography, Box, Container, useTheme, useMediaQuery ,Grid,styled} from '@mui/material';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
-import BoltIcon from '@mui/icons-material/Bolt';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import GroupIcon from '@mui/icons-material/Group';
-import PublicIcon from '@mui/icons-material/Public';
 import { Favorite } from "@mui/icons-material";
 import { CurrencyExchange } from "@mui/icons-material";
 
@@ -17,9 +14,6 @@ import { CurrencyExchange } from "@mui/icons-material";
 
 const Services = () => {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('xl'));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'xl'));
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 

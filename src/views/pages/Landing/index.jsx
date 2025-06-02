@@ -1,4 +1,3 @@
-import NavBar from "./pages/Navbar"
 import Landing from "./pages/Landing"
 import Services from "./pages/Services"
 import BusinessModel from "./pages/BusinessModel"
@@ -6,26 +5,25 @@ import 'src/App.css'
 import FAQ from "./pages/FAQ"
 import IeoSpecifics from "./pages/IeoSpecifics"
 import VestingChart from "./pages/VestingChart"
-import Footer from "./pages/Footer"
+import { Box } from "@mui/material"
+
 
 
 const MainLayout = () => {
 
     return <>
-    <div className='overflow-x-hidden'>
-    <NavBar/>
+    <div >
     <Landing/>
-    <div style={{background:"linear-gradient(to right,#3F066D,#0B0691)"}}>
+    <Box sx={{background:(theme) => theme.custom.PageBackGround}}>
     <Services/>
-    </div>
+    </Box>
     <BusinessModel/>
-    <div style={{background:"linear-gradient(to right,#3F066D,#0B0691)"}}>
+    <Box sx={{background:(theme) => theme.custom.PageBackGround}}>
     <FAQ/>
-    </div>
+    </Box>
     <IeoSpecifics/>
     <VestingChart/>
-    <div style={{background:"linear-gradient(to left,#3F066D,#0B0691)"}}>
-    <Footer/></div>
+    
     
 
     </div>

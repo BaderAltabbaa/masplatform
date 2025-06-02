@@ -25,12 +25,12 @@ const FAQ = () => {
   ];
 
   return (
-    <div className={`min-h-screen bg-gideient-rotate p-8 text-white flex justify-center items-center flex-col ${styles.paddingX}`}>
+    <div className={` bg-gideient-rotate p-8 text-white flex justify-center items-center flex-col ${styles.paddingX}`}>
          <motion.div 
         initial="hidden"
       whileInView="show"
       viewport={{once:true,amount:0.25}}
-       variants={textVariant(.3)} className=' flex flex-col items-center  md:mt-10   h-full  mt- z-10 '>
+       variants={textVariant(.3)} className=' flex flex-col items-center'>
  <Typography variant={"h2"} className=" text-center mb-6 text-white" sx={{fontSize:"55px"}}>FAQ</Typography>
         <motion.p  variants={fadeIn("","",0.1,1)}className="text-lg text-gray-400 text-center text-gray-300 mb-8">
           Frequently Asked Questions

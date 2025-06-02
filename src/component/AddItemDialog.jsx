@@ -80,6 +80,44 @@ const AdditemDialog = ({ show, handleClose, itemData }) => {
     setMediaUrl(isEdit ? itemData.mediaUrl : "");
   }, [show]);
 
+  // Utility function to convert image to WebP
+const convertImageToWebP = (file) => {
+  return new Promise((resolve, reject) => {
+    if (!file.type.match('image.*')) {
+      resolve(file); // Return original if not an image
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            resolve(file); // Fallback to original if conversion fails
+            return;
+          }
+          
+          const webpFile = new File([blob], file.name.replace(/\.[^/.]+$/, '.webp'), {
+            type: 'image/webp',
+            lastModified: Date.now()
+          });
+          resolve(webpFile);
+        }, 'image/webp', 0.8); // 0.8 is quality (0 to 1)
+      };
+      img.src = event.target.result;
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsDataURL(file);
+  });
+};
+
   /* Main Return */
 
   return (
@@ -274,13 +312,33 @@ function FormButtons() {
     });
 
     const { onChange, ref, name } = field;
-    const handleFileChange = (files) => {
-      if (files.length > 0) {
-          const file = files[0]; // Get the single file
-          const newUrl = URL.createObjectURL(file); // Create a URL for this single file
-          setMediaUrls([...mediaUrls, newUrl]); // Append new URL to existing URLs
-      }
-  };
+
+   const handleFileChange = async (files) => {
+  if (files.length > 0) {
+    try {
+      const file = files[0];
+      
+      // Convert to WebP if it's an image
+      const processedFile = await convertImageToWebP(file);
+      
+      // Create URL for preview (works with both original and converted files)
+      const newUrl = URL.createObjectURL(
+        processedFile.type === 'image/webp' ? processedFile : file
+      );
+
+      console.log("oldweb",file);
+      console.log("newweb",processedFile);
+      
+      setMediaUrls([...mediaUrls, newUrl]);
+      
+      // Update form field with the processed file
+      setValue("file", processedFile, { shouldValidate: true });
+    } catch (error) {
+      console.error("Error processing image:", error);
+      toast.error("Error processing image");
+    }
+  }
+};
   
 
     return (

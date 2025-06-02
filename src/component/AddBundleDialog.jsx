@@ -151,6 +151,33 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
     handleCloseCategoryDialog(); // Close the dialog
   };
 
+const convertImageToWebP = (file) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Image conversion to WebP failed"));
+          }
+        },
+        "image/webp",
+        0.8 // quality (0.0 to 1.0)
+      );
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+};
 
   
 
@@ -354,10 +381,30 @@ const AddBundleDialog = ({ show, handleClose, bundleData }) => {
           className={classes.input}
           id="contained-button-file-add-bun"
           multiple
-          onChange={(e) => {
-            onChange(e.target.files[0]);
-            setMediaUrl(URL.createObjectURL(e.target.files[0]));
-          }}
+         onChange={async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const isImage = file.type.startsWith("image/");
+  if (isImage) {
+    const convertedWebPBlob = await convertImageToWebP(file);
+    const webpFile = new File([convertedWebPBlob], file.name.replace(/\.\w+$/, ".webp"), {
+      type: "image/webp",
+    });
+
+     // 🔍 Log details
+    console.log("Original file:", file);
+    console.log("Converted WebP file:", webpFile);
+    console.log("WebP Name:", webpFile.name);
+    console.log("WebP Size (KB):", (webpFile.size / 1024).toFixed(2));
+    console.log("WebP Type:", webpFile.type);
+    onChange(webpFile);
+    setMediaUrl(URL.createObjectURL(webpFile));
+  } else {
+    onChange(file); // Keep video files as-is
+    setMediaUrl(URL.createObjectURL(file));
+  }
+}}
           ref={ref}
           name={name}
           type="file"

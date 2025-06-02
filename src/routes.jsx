@@ -413,7 +413,8 @@ export const routes = [
   },
 {
   path: "/corporate/company",
-  
+      layout: HomeLayout,
+
   element: lazy(() => import("src/views/pages/Landing")),
 },
 {

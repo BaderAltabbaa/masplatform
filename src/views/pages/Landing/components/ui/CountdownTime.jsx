@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const CountUpTimer = () => {
   const [timeElapsed, setTimeElapsed] = useState({
@@ -14,7 +14,7 @@ const CountUpTimer = () => {
       setTimeElapsed((prevTime) => calculateNewTime(prevTime));
     }, 1000);
 
-    return () => clearInterval(timer); // تنظيف المؤقت عند إلغاء تثبيت المكون
+    return () => clearInterval(timer); 
   }, []);
 
   function calculateNewTime(prevTime) {
@@ -38,24 +38,24 @@ const CountUpTimer = () => {
   }
 
   return (
-    <div className="flex flex-wrap gap-5 my-2 mb-10">
-      <div className="text-white bg-[#17023C] py-1 shadow-md px-10 rounded-md my-2 flex flex-col items-center justify-center">
+    <Box sx={{display:{xs:"grid",md:"flex"},gridTemplateColumns:"1fr 1fr" ,gap:3,m:2}}>
+      <Box sx={{background: (theme) => theme.custom.gradientButton, px:5,py:0.5,borderRadius:2,display:"flex",flexDirection:"column",alignItems:"center"}}>
         <Typography  variant="h5" className="text-white text-xl">{timeElapsed.days}</Typography>
         <Typography className="text-white">Days</Typography>
-      </div>
-      <div className="text-white bg-[#17023C] shadow-md px-10 rounded-md my-2 flex flex-col items-center justify-center">
+      </Box>
+      <Box sx={{background: (theme) => theme.custom.gradientButton, px:5,py:0.5,borderRadius:2,display:"flex",flexDirection:"column",alignItems:"center"}}>
         <Typography  variant="h5" className="text-white text-xl">{timeElapsed.hours}</Typography>
         <Typography className="text-white">Hours</Typography>
-      </div>
-      <div className="text-white bg-[#17023C] shadow-md px-10 rounded-md my-2 flex flex-col items-center justify-center">
+      </Box>
+      <Box sx={{background: (theme) => theme.custom.gradientButton, px:5,py:0.5,borderRadius:2,display:"flex",flexDirection:"column",alignItems:"center"}}>
         <Typography  variant="h5" className="text-white text-xl">{timeElapsed.minutes}</Typography>
         <Typography className="text-white">Minutes</Typography>
-      </div>
-      <div className="text-white bg-[#17023C] shadow-md px-10 rounded-md my-2 flex flex-col items-center justify-center">
+      </Box>
+      <Box sx={{background: (theme) => theme.custom.gradientButton, px:5,py:0.5,borderRadius:2,display:"flex",flexDirection:"column",alignItems:"center"}}>
         <Typography variant="h5" className="text-white text-xl">{timeElapsed.seconds}</Typography>
         <Typography className="text-white">Seconds</Typography>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

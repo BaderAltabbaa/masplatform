@@ -17,7 +17,7 @@ const Table = ({className}) => {
             <th className="px-6 py-4 border-b border-purple-600">Level</th>
             <th className="px-6 py-4 border-b border-purple-600">Amount</th>
             <th className="px-6 py-4 border-b border-purple-600">Icon</th>
-            <th className="px-6 py-4 border-b border-purple-600 bg-[#7E28C0] text-center rounded-t-md">
+            <th className="px-6 py-4 border-b border-purple-600 bg-[#8033a1] text-center rounded-t-md">
               Percent
             </th>
             <th className="px-6 py-4 border-b border-purple-600">Cashback</th>
@@ -38,7 +38,7 @@ const Table = ({className}) => {
                   {level.icon}
                 </div>
               </td>
-              <td className="px-6 py-4 border-b border-purple-600 bg-[#7E28C0] font-bold">
+              <td className="px-6 py-4 border-b border-purple-600 bg-[#8033a1] font-bold">
                 {level.percent}
               </td>
               <td className="px-6 py-4 border-b border-purple-600">{level.cashback}</td>

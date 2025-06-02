@@ -1187,7 +1187,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 70%)',
+          top: 'calc(100% + 65%)',
             left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1263,7 +1263,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 70%)',
+          top: 'calc(100% + 65%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1338,7 +1338,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 70%)',
+          top: 'calc(100% + 65%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1419,7 +1419,7 @@ const scrollToTop = () => {
         }}
         style={{
           position: isMobileView ? 'static' : 'absolute',
-          top: 'calc(100% + 70%)',
+          top: 'calc(100% + 65%)',
           left: 0,
           width: "100%",
           borderRadius: '8px',
@@ -1512,7 +1512,7 @@ const scrollToTop = () => {
                 {isDropdownOpen && (
                   <Box   sx={{
           position: 'absolute',
-          top: 'calc(100% + 1%)',
+          top: 'calc(100%)',
             left: 0,
           width: "100%",
           zIndex: 1000,

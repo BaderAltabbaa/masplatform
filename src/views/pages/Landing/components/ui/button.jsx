@@ -1,11 +1,15 @@
+import { Button } from "@mui/material"
 
-
-const Button=({children}) => {
+const ButtonL=({children}) => {
 return(
 
-    <button style={{background:"linear-gradient(to right,#7430A1,#CE5BEC)", padding:"10px" ,borderRadius:"10px",color:"white"}}>{children}</button>
+    <Button sx={{background:(theme) => theme.custom.gradientButton, padding:"10px" ,borderRadius:"10px",color:"white"
+        ,"&:hover":{
+background:(theme) => theme.custom.hoverGradientButton
+        }
+    }}>{children}</Button>
 )
     
 }
 
-export default Button
+export default ButtonL
