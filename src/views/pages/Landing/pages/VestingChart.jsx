@@ -7,7 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { slideIn,fadeIn,textVariant } from "../utils/Motion.js"
 import { motion } from "framer-motion";
 
@@ -25,7 +25,7 @@ const data = [
 
 const VestingChart = () => {
   return (
-    <div className="min-h-screen bg-black  flex justify-center items-center">
+    <Box className="flex justify-center items-center" sx={{background:(theme) => theme.custom.PageBackGround}}>
       <div className="w-full max-w-5xl flex-col gap-16 flex p-6 rounded-lg ">
       <motion.div 
         initial="hidden"
@@ -35,7 +35,7 @@ const VestingChart = () => {
 
        
  
-        <Typography variant={"h2"} className="text-center text-white font-bold mb-4  gradient-text pb-10" sx={{fontSize:"60px"}}>
+        <Typography variant={"h2"} className="text-center text-white font-bold mb-4" sx={{fontSize:{xs:"2rem",md:"3.5rem"}}}>
           Detailed Vesting Percentages
         </Typography>
         </motion.div >
@@ -72,7 +72,7 @@ const VestingChart = () => {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </Box>
   );
 };
 

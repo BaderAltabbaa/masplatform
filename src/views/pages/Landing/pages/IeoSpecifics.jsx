@@ -1,18 +1,18 @@
 import React from 'react'
-import { Typography } from '@mui/material';
+import { Typography ,Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { slideIn } from "../utils/Motion.js"
-import {SectionWrapper} from '../hoc'
 const IeoSpecifics = () => {
   return (
    
   
-    <div className={` min-h-screen  flex justify-between items-center  flex-wrap `}>
+    <Box className={`flex justify-between items-center  flex-wrap `} sx={{background:(theme) => theme.custom.PageBackGround,
+     py:2,px:{xs:2,md:10}}}>
     
 
 
 <motion.div   variants={slideIn('left', 'tween', 0.2, 1)} className='md:w-[45%] w-full text-center md:text-left'>
-    <Typography variant="h3" className=" font-bold gradient-text mb-4" sx={{fontSize:"50px"}}>IEO Specifics</Typography>
+    <Typography variant="h3" className=" font-bold  mb-4" sx={{fontSize:"50px",color:"white"}}>IEO Specifics</Typography>
          <Typography className="text-gray-300  mb-6">
            The token will be issued instantly to the buyer wallet address after the IEO sale.
            Staking rewards will be distributed quarterly.
@@ -80,12 +80,12 @@ const IeoSpecifics = () => {
        
  </motion.div>
      
-     </div>
+     </Box>
    
 
   
   )
 }
-export default SectionWrapper(IeoSpecifics,"IeoSpecifics"," bg-black   ") 
+export default IeoSpecifics 
 
 

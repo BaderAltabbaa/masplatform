@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography } from "@mui/material";
+import { Typography,Box } from "@mui/material";
 import { styles } from '../Styles'
 import { slideIn,fadeIn,textVariant } from "../utils/Motion.js"
 import { motion } from "framer-motion";
@@ -32,7 +32,7 @@ const FAQ = () => {
       viewport={{once:true,amount:0.25}}
        variants={textVariant(.3)} className=' flex flex-col items-center'>
  <Typography variant={"h2"} className=" text-center mb-6 text-white" sx={{fontSize:"55px"}}>FAQ</Typography>
-        <motion.p  variants={fadeIn("","",0.1,1)}className="text-lg text-gray-400 text-center text-gray-300 mb-8">
+        <motion.p  variants={fadeIn("","",0.1,1)}className="text-lg text-white text-center text-gray-300 mb-8">
           Frequently Asked Questions
         </motion.p>
        
@@ -43,15 +43,16 @@ const FAQ = () => {
 
         <div className="flex flex-wrap gap-4">
   {faqs.map((question, index) => (
-    <div
+    <Box
       key={index}
-      className="bg-black shadow-md p-4 rounded-lg md:w-[48%] w-full transition-all outline-none relative"
+      className=" shadow-md p-4 rounded-lg md:w-[48%] w-full transition-all outline-none relative"
+      sx={{background: (theme) => theme.custom.CarBackGround,}}
     >
       <button
         onClick={() => toggleAnswer(index)}
         className="flex justify-between items-center w-full text-left font-medium text-lg"
       >
-        <span className="gradient-text">{question}</span>
+        <span>{question}</span>
         <span>{activeIndex === index ? "−" : "+"}</span>
       </button>
       <div
@@ -64,7 +65,7 @@ const FAQ = () => {
           here.)
         </div>
       </div>
-    </div>
+    </Box>
   ))}
 </div>
 
