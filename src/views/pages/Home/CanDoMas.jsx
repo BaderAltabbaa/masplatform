@@ -40,6 +40,9 @@ const AnimatedCard = ({ children, index }) => {
 };
 
 const CanDoMas = () => {
+
+  const [logoRef, inView] = useInView({  threshold: 0.5 });
+
   const features = [
     {
       icon: <EducatorsIcon fontSize="large"  />,
@@ -109,13 +112,18 @@ const CanDoMas = () => {
         }}>
           A Full Ecosystem for Digital Creativity & Giving
          </Typography>
-         <Box my={4}>
-         <img
-      src="\assets\Images\masfooter-logo1.svg"
-      alt="Logo"
-      width="300px"
-    />
+
+         <Box my={4} ref={logoRef}>
+        <motion.img
+    src="\assets\Images\masfooter-logo1.svg"
+    alt="Logo"
+    width="300px"
+    initial={{ rotate: 0 }}
+    animate={inView ? { rotate: 360 } : { rotate: 0 }}
+    transition={{ duration: 1 }}
+  />
         </Box>
+        
         <Box sx={{
           width: '100px',
           height: '4px',

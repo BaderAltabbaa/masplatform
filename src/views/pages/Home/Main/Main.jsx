@@ -15,6 +15,7 @@ import DataLoading from "../../../../component/DataLoading";
 import CookieConsent from "../../../../cookies/CookieConsent";
 import RoadMap from "../RoadMap";
 import CanDoMas from "../CanDoMas";
+import FloatingLogo from "../FloatingLogo";
 
 
 
@@ -223,6 +224,10 @@ console.log("mm",landingSections)*/}
 
   <Box>
     <CookieConsent/>
+
+<Box sx={{display:{xs:"none",lg:"flex"}}}>
+<FloatingLogo/>
+</Box>
 
 <BannerSection bannerData={cryptoBannerData} subtitleStyle={{
   fontSize:"1.5rem" ,fontWeight:"700"

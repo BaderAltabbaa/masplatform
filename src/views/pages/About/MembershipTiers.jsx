@@ -18,11 +18,11 @@ import { Info as InfoIcon } from '@mui/icons-material';
 import "src/views/pages/Users/UsersList.css"
 
 const membershipTiers = [
-  { name: "Basic", masBalance: "0", withdrawalFee: "3%" },
-  { name: "Silver", masBalance: "100", withdrawalFee: "2.5%" },
-  { name: "Gold", masBalance: "250", withdrawalFee: "2%" },
-  { name: "Diamond", masBalance: "1,500", withdrawalFee: "1.5%" },
-  { name: "MAS+", masBalance: "10,000", withdrawalFee: "1%" }
+  { name: "Basic 🌑", masBalance: "0", withdrawalFee: "3%" },
+  { name: "Silver 🌕", masBalance: "100", withdrawalFee: "2.5%" },
+  { name: "Gold 🌟", masBalance: "250", withdrawalFee: "2%" },
+  { name: "Diamond 💎", masBalance: "1,500", withdrawalFee: "1.5%" },
+  { name: "MAS+ 🔴", masBalance: "10,000", withdrawalFee: "1%" }
 ];
 
 const rowVariants = {
@@ -121,16 +121,16 @@ const MembershipTiers = () => {
                   <Chip 
                     label={tier.name} 
                     color={
-                      tier.name === "MAS+" ? "secondary" : 
-                      tier.name === "Diamond" ? "info" : 
-                      tier.name === "Gold" ? "warning" : 
-                      tier.name === "Silver" ? "success" : "default"
+                      tier.name === "MAS+ 🔴" ? "secondary" : 
+                      tier.name === "Diamond 💎" ? "info" : 
+                      tier.name === "Gold 🌟" ? "warning" : 
+                      tier.name === "Silver 🌕" ? "success" : "default"
                     }
                     sx={{ 
                       fontWeight: 700,
                       px: 1,
                       fontSize: '0.9rem',
-                      width:"120px"
+                      width:"140px"
                     }} 
                   />
                 </TableCell>

@@ -251,7 +251,10 @@ const Services = () => {
   return (
     <>
     
-<Box px={4} sx={{ pt: { xs: 2, md: 2 } }} display={"flex"} justifyContent={"space-evenly"} alignItems={"center"}>
+<Box px={4} sx={{ pt: { xs: 2, md: 2 } }} display={"flex"} justifyContent={"space-evenly"} alignItems={"center"} >
+   <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "end", alignItems: "center" }}>
+          <AnimatedRotatedGrid />
+        </Box>
         <Box sx={{ ml: { xs: 0, md: 5 } }}>
           <Grid item xs={12} md={6}>
             <TitleWithDecorations isMobile={isMobile}>How MAS Platform Works</TitleWithDecorations>
@@ -261,37 +264,35 @@ const Services = () => {
                 icon={<MonetizationOnIcon sx={{ color: 'white' }} />}
                 title="Create Your Wallet-Linked Account"
                 desc="Seamless sign-up with MetaMask or Trust Wallet."
-                ml={0}
+                ml={12}
                 index={0}
               />
               <FeatureItem
                 icon={<GroupIcon sx={{ color: 'white' }} />}
                 title="Choose a Role"
                 desc="Creator, Supporter, or Both."
-                ml={4}
+                ml={8}
                 index={1}
               />
               <FeatureItem
                 icon={<Favorite sx={{ color: 'white' }} />}
                 title="Donate, Sell, or Subscribe"
                 desc="Support creators through bundles, donations, or purchases."
-                ml={8}
+                ml={4}
                 index={2}
               />
               <FeatureItem
                 icon={<CurrencyExchange sx={{ color: 'white' }} />}
                 title="Earn and Track Everything Transparently"
                 desc="Every action is logged through Proof of Donation."
-                ml={12}
+                ml={0}
                 index={3}
               />
             </Box>
           </Grid>
         </Box>
 
-        <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "end", alignItems: "center" }}>
-          <AnimatedRotatedGrid />
-        </Box>
+       
       </Box>
 
 

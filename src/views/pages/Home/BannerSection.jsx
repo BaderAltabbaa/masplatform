@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
     height: 300,
     display: 'flex',
+    zIndex:10,
     justifyContent: 'center',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
