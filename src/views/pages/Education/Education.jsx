@@ -169,9 +169,9 @@ const Education = () => {
     </div>
 
     <div className="who-we-are-sec"  id="who-sec">
-      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
+      <Box className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2} sx={{pr:{xs:0,md:10}}}>
         <span className="who-text1" style={{textShadow:"1px 1px 14px rgb(255, 0, 242)"}}>Become A Mas Instructor</span>
-        <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl</span>
+        <span className="who-text2">We aim to make the teaching experience smooth and professional, providing all the tools you need to manage your content and organize your schedule with ease.</span>
      
         <Button 
       component={motion.button}
@@ -189,7 +189,8 @@ const Education = () => {
         background: "#581454",
         '& span': {
           fontSize: "17px"
-        }
+        },
+        my:2
       }}
     >
       <span>
@@ -197,7 +198,7 @@ const Education = () => {
         </span>
         </Button>
      
-      </div>
+      </Box>
       
       <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>
         <img 

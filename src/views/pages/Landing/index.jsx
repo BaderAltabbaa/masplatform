@@ -20,7 +20,6 @@ const MainLayout = () => {
                 <ServicesSection />
             </Box>
 
-
             <BusinessModel />
             <Box sx={{ background: (theme) => theme.custom.PageBackGround }}>
                 <FAQ />

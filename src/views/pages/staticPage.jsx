@@ -192,10 +192,10 @@ export default function StaticPage() {
     </div>
 
     <div className="who-we-are-sec">
-      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-      <span className="who-text1">Discover Mas Metaverse</span>
-      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
-        </div>
+      <Box className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2} sx={{pr:{xs:0,md:10}}}>
+      <span className="who-text1">Discover Mas Platform Metaverse</span>
+      <span className="who-text2">Step into a limitless virtual world where innovation meets opportunity.</span>
+        </Box>
         
         <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
           <img style={{

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import CountdownTimer from '../components/ui/CountdownTime.jsx'
 import ButtonL from "../components/ui/button.jsx";
 import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
 
 
 
@@ -103,7 +104,7 @@ const Landing = () => {
 
 
           <Typography variant="h1" mb={2} sx={{ fontSize: { xs: "2rem", md: "3rem", color: "white" }, textAlign: "center", zIndex: 2 }}>
-            Mas Platform is a digital  platform that aims to help creators
+            Mas Platform Is A Digital  Platform That Aims To Help Creators
 
           </Typography>
 
@@ -112,7 +113,7 @@ const Landing = () => {
 
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: { xs: 0, md: 4 } }}>
             <CountdownTimer />
-            <ButtonL >GET STARTED</ButtonL>
+          <Link to={"/profile"}> <ButtonL >GET STARTED</ButtonL></Link> 
           </Box>
 
         </motion.div>

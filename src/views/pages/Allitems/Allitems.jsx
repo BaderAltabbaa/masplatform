@@ -255,10 +255,12 @@ const listAllItemsHandler = async () => {
           </div>
 
           <div className="who-we-are-sec">
-            <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-              <span className="who-text1">Buy And Sell Whatever Comes To Your Mind</span>
-              <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
-            </div>
+            <Box className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2} sx={{pr:{xs:0,md:10}}}>
+              <span className="who-text1">Buy And Sell Your Products</span>
+              <span className="who-text2">Physical products are tangible goods that require shipping to reach the buyer, such as clothing, jewelry, and electronic devices,Payments on the platform are made using the following digital currencies:
+
+MAS, USDC, and USDT.</span>
+            </Box>
             <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>
               <img style={{ display: "inline", width: "100%", borderRadius: "20px" }} 
                 src="/assets/Images/marketCrop.webp" alt="" />

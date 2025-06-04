@@ -235,10 +235,10 @@ const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSe
 
 
                       <div className="who-we-are-sec">
-      <div className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2}>
-      <span className="who-text1">Here Are The Most Passionate and Ambitious Creators</span>
-      <span className="who-text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,</span>
-        </div>
+      <Box className={`who-top-sec ${inView2 ? 'animate' : ''}`} ref={ref2} sx={{pr:{xs:0,md:10}}}>
+      <span className="who-text1">Find The Most Passionate and Ambitious Creators</span>
+      <span className="who-text2">Content creators of all types (including educators, charities, etc.) have aimed at the same core purpose: that is, to engage people through a meaningful experience.</span>
+        </Box>
         
         <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3} >
           <img style={{

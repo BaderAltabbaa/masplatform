@@ -45,7 +45,7 @@ const FAQmodel = () => {
             {faqData.map((item) => (
                 <Box key={item.id} className="faq-item">
                     <Box
-                    sx={{background: (theme) => theme.custom.CarBackGround,}}
+                    sx={{background: (theme) => theme.custom.CarBackGround}}
                         className="faq-question"
                         onClick={() => toggleAnswer(item.id)}
                     >
