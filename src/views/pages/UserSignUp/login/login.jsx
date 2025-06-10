@@ -318,7 +318,7 @@ useEffect(() => {
                 width: "300px",
                 '& input:-webkit-autofill': {
                   '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
-                  '-webkit-text-fill-color': '#000 !important',
+                  '-webkit-text-fill-color': '#ffffff !important',
                   transition: 'background-color 5000s ease-in-out 0s',
                 },
                 '& .MuiFormHelperText-root': {
@@ -351,7 +351,7 @@ useEffect(() => {
                 width: "300px",
                 '& input:-webkit-autofill': {
                   '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
-                  '-webkit-text-fill-color': '#000 !important',
+                  '-webkit-text-fill-color': '#ffffff !important',
                   transition: 'background-color 5000s ease-in-out 0s',
                 },
                 '& .MuiFormHelperText-root': {
