@@ -312,75 +312,83 @@ useEffect(() => {
        <span className="Logintitle">{t("LOGIN")}</span>
        <div className="">
           
-           <TextField
-           className="auth-input"
-           sx={{width:"300px",
-            '& input:-webkit-autofill': {
-              '-webkit-box-shadow': '0 0 0 30px white inset !important', // Change 'white' to your desired background color
-              backgroundColor: 'transparent !important',
-            },
-            '& .MuiFormHelperText-root':{
-              color:"red"
-            }
-            }}
-           label={t("Email")}
-                error={!emailvalid}
-                // placeholder={email}  
-                variant="standard"
-                autoComplete="off"
-               
-                type="email"
-                helperText={!emailvalid && t("Incorrect Email.")}
-                value={email}
-                onBlur={(e) => setemailvalid(isValidEmail(e.target.value))}
-                onChange={(e) => {
-                  setemail(e.target.value);
-                  setemailvalid(isValidEmail(e.target.value));
-                }}
-                />
+            <TextField
+              className="auth-input"
+              sx={{
+                width: "300px",
+                '& input:-webkit-autofill': {
+                  '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
+                  '-webkit-text-fill-color': '#000 !important',
+                  transition: 'background-color 5000s ease-in-out 0s',
+                },
+                '& .MuiFormHelperText-root': {
+                  color: "red"
+                }
+              }}
+              label={t("Email")}
+              error={!emailvalid}
+              // placeholder={email}  
+              variant="standard"
+              autoComplete="off"
+
+              type="email"
+              helperText={!emailvalid && t("Incorrect Email.")}
+              value={email}
+              onBlur={(e) => setemailvalid(isValidEmail(e.target.value))}
+              onChange={(e) => {
+                setemail(e.target.value);
+                setemailvalid(isValidEmail(e.target.value));
+              }}
+            />
        
            
        </div>
        <div className="" style={{marginTop:"50px" }}>
            
-           <TextField
-           className="auth-input"
-           sx={{width:"300px",
-            '& .MuiFormHelperText-root':{
-              color:"red"
-            }
-            }}
-             fullWidth
-             label={t("Password")}
-             variant="standard"
-                type={showpass ? "text" : "password"}
-                error={!passvalid}
-                helperText={
-                  !passvalid && t("Password must contain at least 8 characters, one uppercase, one number and one special case character")
+            <TextField
+              className="auth-input"
+              sx={{
+                width: "300px",
+                '& input:-webkit-autofill': {
+                  '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
+                  '-webkit-text-fill-color': '#000 !important',
+                  transition: 'background-color 5000s ease-in-out 0s',
+                },
+                '& .MuiFormHelperText-root': {
+                  color: "red"
                 }
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setshowpass(!showpass)}
-                        sx={{
-                          color: "white", 
-                        }}
-                      >
-                        {showpass ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                value={pass}
-                onChange={(e) => {
-                  setpass(e.target.value);
-                  setpassvalid(isValidPassword(e.target.value));
-                }}
-                onBlur={(e) => setpassvalid(isValidPassword(e.target.value))}
-                // className={classes.inputText}
-              />
+              }}
+              fullWidth
+              label={t("Password")}
+              variant="standard"
+              type={showpass ? "text" : "password"}
+              error={!passvalid}
+              helperText={
+                !passvalid && t("Password must contain at least 8 characters, one uppercase, one number and one special case character")
+              }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setshowpass(!showpass)}
+                      sx={{
+                        color: "white",
+                      }}
+                    >
+                      {showpass ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              value={pass}
+              onChange={(e) => {
+                setpass(e.target.value);
+                setpassvalid(isValidPassword(e.target.value));
+              }}
+              onBlur={(e) => setpassvalid(isValidPassword(e.target.value))}
+            // className={classes.inputText}
+            />
       
        </div>
       <div className="forget" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

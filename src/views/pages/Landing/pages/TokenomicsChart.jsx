@@ -11,23 +11,21 @@ import { Box, Typography } from "@mui/material";
 
 // Example data
 const data = [
-  { name: "Seed round", value: 5.5 },
-  { name: "Private round", value: 20 },
-  { name: "Public round", value: 7.5 },
-  { name: "Team", value: 5 },
-  { name: "Advisors", value: 9 },
+  { name: "Presale", value: 13.16667 },
+  { name: "Team", value: 20 },
+  { name: "Advisors", value: 5 },
+  { name: "Community/marketing", value: 25 },
   { name: "Liquidity", value: 20 },
-  { name: "Ecosystem", value: 25 },
-  { name: "Reserve", value: 8 },
+  { name: "Ecosystem", value: 7.833 },
+  { name: "Reserve", value: 9 },
 ];
 
 // Custom colors
 const COLORS = [
-  "#f8ac59", // Seed round
-  "#f77b55", // Private round
-  "#d74e82", // Public round
-  "#b455aa", // Team
+  "#f8ac59", // Presale
+  "#f77b55", // Team
   "#8a3c8f", // Advisors
+  "#d74e82", // Community / marketing
   "#6c2b8b", // Liquidity
   "#a23c7e", // Ecosystem
   "#e87e8f", // Reserve

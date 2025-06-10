@@ -3,6 +3,7 @@ import Table from '../components/ui/Table'
 import { motion } from "framer-motion";
 import TokenSection from './TokenSection';
 import BusinessModelSection from "./BusinessModelSection";
+import MASInfoDisplay from "./MASInfoDisplay";
 
 
 const BusinessModel = () => {
@@ -41,7 +42,9 @@ const BusinessModel = () => {
        
 
       </Box>
+    
       <TokenSection/>
+        <MASInfoDisplay/>
       <Table/>
       <BusinessModelSection/>
      
