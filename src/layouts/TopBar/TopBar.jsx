@@ -1,6 +1,30 @@
+/**
+ * @file Header.jsx
+ * @description Main application header/navigation component
+ * @module Header
+ * 
+ * Features:
+ * - Responsive design for all screen sizes
+ * - User authentication management
+ * - Dynamic dropdown menus
+ * - Search functionality with caching
+ * - Notification system
+ * - Support chat interface
+ * - Language switching
+ * - Scroll-to-top button
+ */
+
+// React and Framework Imports
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { io } from 'socket.io-client';
+import { motion, AnimatePresence } from 'framer-motion';
+
+
+// Material-UI Components
 import {
   AppBar,
-  Toolbar,
   Button,
   Tooltip,
   Avatar,
@@ -12,72 +36,43 @@ import {
   Typography,
   useMediaQuery,
   Zoom,
-  TextField, List, ListItem, ListItemText,
+  TextField,
+  List,
+  ListItem,
+  ListItemText,
+  Dialog,
+  DialogContent
 
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import NotificationsIcon from "@mui/icons-material/Notifications";
+
+//ICONS
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsChat } from "react-icons/bs";
-import SearchIcon from "@mui/icons-material/Search";
-import { UserContext } from "src/context/User";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import React, { useContext, useState, useEffect, useRef } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import Logo from "src/component/Logo";
+import { FaSearch, FaBars, FaTimes, FaUser, FaDollarSign, FaArrowUp , FaChevronDown } from "react-icons/fa";
+
+// Application Components
 import User from "src/component/User";
 import NotificationCard from "src/component/NotificationCard";
-import Dialog from "@mui/material//Dialog";
-import DialogContent from "@mui/material//DialogContent";
+import LanguageSwitcher from '../../component/LangugeSwitcher';
 import NoDataFound from "src/component/NoDataFound";
+
+// Context and Utilities
+import { UserContext } from "src/context/User";
 import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import InputAdornment from "@mui/material/InputAdornment";
-import './TopBar.css'
-import StaticPage from '../../views/pages/staticPage';
-import LanguageSwitcher from '../../component/LangugeSwitcher';
-import { FaSearch, FaBars, FaTimes, FaUser, FaDollarSign, FaArrowUp } from "react-icons/fa";
-import { useTranslation } from 'react-i18next';
-import { io } from 'socket.io-client';
 import { hideSupportIcon } from '../../utils';
-import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-import { motion, AnimatePresence } from 'framer-motion';
+
+//STYLES
+import './TopBar.css'
+import StaticPage from "../../views/pages/staticPage";
 
 
-
-
-
-const menuLinks = [
-  {
-    label: "Explore",
-    href: "/bundles",
-    isLink: true,
-  },
-  {
-    label: "Marketplace",
-    href: "/items",
-    isLink: true,
-  },
-  {
-    label: "Creators",
-    href: "/creators",
-    isLink: true,
-  },
-  {
-    label: "Transfer`s",
-    href: "/user-list",
-    isLink: true,
-  },
-];
-
+/**
+ * Custom styles using makeStyles
+ */
 const useStyles = makeStyles((theme) => ({
-
-
-
-
-
-
-
 
   flexButton: {
     display: "flex",
@@ -128,73 +123,107 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
+/**
+ * Main Header Component
+ * @component
+ */
 export default function Header() {
-  // 
-  const isMeduimScreen = useMediaQuery('(max-width: 1250px)');
+    // State management
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-  const { t } = useTranslation();
   const [openSupport, setOpenSupport] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
-  const socketRef = useRef(null);
-  const messagesEndRef = useRef(null);
-  const isMobileView = useMediaQuery('(max-width: 1250px)');
-  const readNotificationCache = useRef({});
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isAboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+  const [isServiceDropdownOpen, setServiceDropdownOpen] = useState(false);
+  const [isEducationDropdownOpen, setEducationDropdownOpen] = useState(false);
+  const [isGameDropdownOpen, setGameDropdownOpen] = useState(false);
+  const [showScroll, setShowScroll] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading1, setIsLoading1] = useState(false);
+  const [isLogOutOpen, setIsLogoutOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [userList, setUserList] = useState();
+  const [notify, setNotify] = useState([]);
+  const [openNotifications, setOpenNotifications] = useState(false);
 
+  // Refs
+  const menuRef = useRef(null);
+  const dropdownRef = useRef(null);
+  const aboutDropdownRef = useRef(null);
+  const servicesDropdownRef = useRef(null);
+  const educationDropdownRef = useRef(null);
+  const gameDropdownRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  const readNotificationCache = useRef({});
+  const searchCache = useRef({});
+  const socketRef = useRef(null);
+
+
+  // Context and hooks
+  const { t } = useTranslation();
+  const auth = useContext(UserContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const classes = useStyles();
+  const search = auth?.search;
+  const setsearch = auth?.setsearch;
+  
+  // Media queries
+  const isMeduimScreen = useMediaQuery('(max-width: 1250px)');
+  const isMobileView = useMediaQuery('(max-width: 1250px)');
+  const relativeBar = ['/', '/login', '/Forget', '/About_us'];
+
+  
+  //Support Chat
   const handleOpenSupport = () => {
     setOpenSupport(true);
-    socketRef.current.emit('join_chat', { userId: 'user123' }); // Replace with actual user ID
+    socketRef.current.emit('join_chat', { userId: 'user123' });
   }
 
   const handleCloseSupport = () => {
     setOpenSupport(false);
   }
 
+  //Search Bar
   const toggleSearch = () => {
     setSearchVisible(!isSearchVisible);
   };
 
+  //Burger Menu
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+  //Profile Picture Dropdown
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const [isAboutDropdownOpen, setAboutDropdownOpen] = useState(false);
-
+  //About Dropdown
   const toggleAboutDropdown = () => {
     setAboutDropdownOpen(!isAboutDropdownOpen)
   }
 
-  const [isServiceDropdownOpen, setServiceDropdownOpen] = useState(false);
-
-
+  //Sevices DropDown
   const toggleServicetDropdown = () => {
     setServiceDropdownOpen(!isServiceDropdownOpen)
   }
 
-
-  const [isEducationDropdownOpen, setEducationDropdownOpen] = useState(false);
-
+  //Eductaion Dropdown
   const toggleEducationDropdown = () => {
     setEducationDropdownOpen(!isEducationDropdownOpen);
   };
 
-
-  const [isGameDropdownOpen, setGameDropdownOpen] = useState(false);
-
+  //Metaverse Dropdown
   const toggleGameDropdown = () => {
     setGameDropdownOpen(!isGameDropdownOpen);
   };
 
-
+  //Event Listener To Close The Burger Menu When Clicking OutSide
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -208,6 +237,7 @@ export default function Header() {
     };
   }, []);
 
+  // Close the burger menu whenever the window is resized 
   useEffect(() => {
     const handleResize = () => {
       setMenuOpen(false); // Close the menu whenever the window is resized
@@ -219,7 +249,7 @@ export default function Header() {
     };
   }, []); // No dependencies, runs only once on mount and cleans up on unmount
 
-
+  //Support Chat Initiliaztion
   useEffect(() => {
     // Initialize socket connection
     socketRef.current = io(Apiconfigs.baseUrl); // Replace with your server URL
@@ -242,6 +272,7 @@ export default function Header() {
     };
   }, []);
 
+  //Scroll to the bottom message
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -250,6 +281,7 @@ export default function Header() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  //Message Send Method
   const handleSendMessage = () => {
     if (message.trim()) {
       const newMessage = {
@@ -274,32 +306,7 @@ export default function Header() {
     }
   };
 
-
-
-
-  const classes = useStyles();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoading1, setIsLoading1] = useState(false);
-  const [isLogOutOpen, setIsLogoutOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const [userList, setUserList] = useState();
-  const auth = useContext(UserContext);
-  const search = auth?.search;
-  const setsearch = auth?.setsearch;
-  const [notify, setNotify] = useState([]);
-  const [openNotifications, setOpenNotifications] = useState(false);
-  const dropdownRef = useRef(null);
-  const aboutDropdownRef = useRef(null);
-  const servicesDropdownRef = useRef(null);
-  const educationDropdownRef = useRef(null);
-  const gameDropdownRef = useRef(null);
-
-  const relativeBar = ['/', '/login', '/Forget', '/About_us'] //Where the bar has a background
-
-
-
+  // User data fetching
   useEffect(() => {
     const fetchUserAsyncInsideHook = async () => {
       if (auth.isLogin && !auth.userData) {
@@ -309,10 +316,16 @@ export default function Header() {
     fetchUserAsyncInsideHook();
   }, []);
 
+
+  // Notification data handling
   useEffect(() => {
     setNotify(auth?.notifyData);
   }, [auth?.notifyData]);
 
+
+    /**
+   * Marks all notifications as read with caching
+   */
   const readNotificationhandler = async () => {
     const cacheKey = "readNotifications";
     const sessionKey = "readNotifications";
@@ -320,7 +333,7 @@ export default function Header() {
     // Check cache
     if (readNotificationCache.current[cacheKey]) {
       console.log("Using in-memory cache for read notifications.");
-      return;
+      return; // Already marked as read
     }
 
     // Check sessionStorage
@@ -353,9 +366,10 @@ export default function Header() {
     }
   };
 
-  const searchCache = useRef({});
 
-
+    /**
+   * Handles search functionality with caching
+   */
   const getSearchResult = async (cancelTokenSource) => {
     const cacheKey = `search-${search}-page-${page}`;
     const sessionKey = `search-${search}-page-${page}`;
@@ -378,6 +392,8 @@ export default function Header() {
     // 3. Fetch from API
     setIsLoading(true);
 
+
+    // API call if no cache
     try {
       const res = await axios({
         method: "GET",
@@ -414,7 +430,6 @@ export default function Header() {
   };
 
   const {
-
     flexButton,
     inputInput,
     inputRoot,
@@ -428,7 +443,7 @@ export default function Header() {
 
 
 
-
+  //Mobile View Responsiveness
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 1084
@@ -441,7 +456,7 @@ export default function Header() {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-
+  //Cancel Search Token
   useEffect(() => {
     const cancelTokenSource = axios.CancelToken.source();
     if (search !== "") {
@@ -455,12 +470,15 @@ export default function Header() {
     };
   }, [search, page]);
 
-  const ProfileId = auth?.userData?._id;
-
   window.addEventListener("click", function (event) {
     setsearch("");
   });
 
+  //user Profile form user context
+  const ProfileId = auth?.userData?._id;
+
+
+  // Sub-components
 
   const ProfileDropdown = ({ onClose, unreadChats, unReadNotification }) => {
 
@@ -695,79 +713,6 @@ export default function Header() {
     )
   }
 
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target)) {
-        setAboutDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target)) {
-        setServiceDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (educationDropdownRef.current && !educationDropdownRef.current.contains(event.target)) {
-        setEducationDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (gameDropdownRef.current && !gameDropdownRef.current.contains(event.target)) {
-        setGameDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-
-
-
   const GamesDropDown = ({ onClose, isMobile }) => {
     return (
       <Box
@@ -833,9 +778,6 @@ export default function Header() {
     )
   }
 
-
-
-
   const EducationDropDown = ({ onClose, isMobile }) => {
     return (
       <Box
@@ -893,11 +835,6 @@ export default function Header() {
               {t("Plans")}
             </Button>
           </Box>
-
-
-
-
-
         </Box>
       </Box>
     )
@@ -1047,7 +984,75 @@ export default function Header() {
     )
   }
 
+  //Close the list when the mouse hovers out the list
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  //Close the list when the mouse hovers out the list
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target)) {
+        setAboutDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  //Close the list when the mouse hovers out the list
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target)) {
+        setServiceDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  //Close the list when the mouse hovers out the list
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (educationDropdownRef.current && !educationDropdownRef.current.contains(event.target)) {
+        setEducationDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  //Close the list when the mouse hovers out the list
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (gameDropdownRef.current && !gameDropdownRef.current.contains(event.target)) {
+        setGameDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
 
   // start Search result
@@ -1091,11 +1096,11 @@ export default function Header() {
     )
   }
 
+
+  //hide the support icon in /chat
   const hideicon = hideSupportIcon(location.pathname)
 
-
-  const [showScroll, setShowScroll] = useState(false);
-
+  //show the scroll up icon after scrolling down
   useEffect(() => {
     const checkScroll = () => {
       if (window.scrollY > 100) {
@@ -1109,6 +1114,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', checkScroll);
   }, []);
 
+
+  //scroll to top function
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -1116,6 +1123,7 @@ export default function Header() {
     });
   };
 
+  //main return
   return (
     <>
       <AppBar
@@ -1126,12 +1134,16 @@ export default function Header() {
 
 
         <header style={{ display: "flex", backgroundColor: "rgba(55, 0, 53, 0.70)", padding: "0 10px" }}>
+          
+          {/* ///////////////////////////////Logo section//////////////////// */}
+
           <div className='logo1_contanier '>
             <Link to={"/"}>
               <img className="logo1" src="\assets\Images\masfooter-logo1.svg" alt="Logo11" />
             </Link>
           </div>
-
+            
+           {/* Right section with search and menu toggle */}
           <div className='right'>
             <div className="search-container1">
               {isSearchVisible && (
@@ -1168,7 +1180,7 @@ export default function Header() {
           </div>
 
 
-
+                     {/* Main navigation */}
           <nav className={` nav-links1 ${isMenuOpen ? 'active' : ''}`} ref={menuRef}>
             <ul style={{ display: "flex", alignItems: "center", marginBottom: "10px", padding: "0" }}>
               <li><Link to="/">{t("Home")}</Link></li>
