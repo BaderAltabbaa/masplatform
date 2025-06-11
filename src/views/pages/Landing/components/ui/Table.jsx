@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = ({className}) => {
+const Table = ({ className }) => {
   const levels = [
     { name: "Basic", amount: "0", icon: "🌑", percent: "3%", cashback: "0%" },
     { name: "Silver", amount: "100", icon: "🌕", percent: "2.5%", cashback: "0%" },
@@ -10,45 +10,78 @@ const Table = ({className}) => {
   ];
 
   return (
-    <div className={`${className ? className :""} flex items-center justify-center w-full md:overflow-hidden overflow-scroll`} style={{padding:"40px"}}>
-      <table className="table-auto border-collapse w-full max-w-4xl text-white">
-        <thead>
-          <tr className=" ">
-            <th className="px-4 py-4 border-b" style={{borderColor:"#1d0033"}}>Level</th>
-            <th className="px-4 py-4 border-b" style={{borderColor:"#1d0033"}}>Amount</th>
-            <th className="px-4 py-4 border-b" style={{borderColor:"#1d0033"}}>Icon</th>
-            <th className="px-4 py-4 border-b  bg-[#1d0033] text-center rounded-t-md" style={{borderColor:"#1d0033"}}>
-              Percent
-            </th>
-            <th className="px-6 py-4 border-b" style={{borderColor:"#1d0033"}}>Cashback</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div 
+      className={`${className || ""} w-full overflow-x-auto py-6 md:py-10 px-4`}
+     
+    >
+      <div className="mx-auto max-w-4xl">
+        {/* Mobile Cards View */}
+        <div className="md:hidden space-y-4">
           {levels.map((level, index) => (
-            <tr
+            <div 
               key={index}
-              className={`${
-                index % 2 === 0 ? "b" : ""
-              } text-center`}
+              className="bg-[#1a052e] rounded-lg p-4 shadow-lg border border-[#2d0a4d]"
             >
-              <td className="px-6 py-4 border-b" style={{borderColor:"#1d0033"}}>{level.name}</td>
-              <td className="px-6 py-4 border-b" style={{borderColor:"#1d0033"}}>{level.amount}</td>
-              <td className="px-6 py-4 border-b" style={{borderColor:"#1d0033"}}>
-                <div className="w-8 h-8 bg-white text-center flex items-center justify-center rounded-full mx-auto">
-                  {level.icon}
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-white text-black flex items-center justify-center rounded-full">
+                    {level.icon}
+                  </div>
+                  <h3 className="font-bold text-lg text-white">{level.name}</h3>
                 </div>
-              </td>
-              <td className="px-6 py-4 border-b  bg-[#1d0033] font-bold" style={{borderColor:"#1d0033"}}>
-                {level.percent}
-              </td>
-              <td className="px-6 py-4 border-b" style={{borderColor:"#1d0033"}}>{level.cashback}</td>
-            </tr>
+                <span className="text-sm opacity-80 text-white">Min: {level.amount}</span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-[#3f016e] p-3 rounded text-center">
+                  <p className="text-sm opacity-80 text-white">Percent</p>
+                  <p className="font-bold text-white">{level.percent}</p>
+                </div>
+                <div className="bg-[#1a052e] p-3 rounded text-center border border-[#3f016e]">
+                  <p className="text-sm opacity-80 text-white">Cashback</p>
+                  <p className="font-bold text-white">{level.cashback}</p>
+                </div>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+
+        {/* Desktop Table View */}
+        <table className="hidden md:table w-full border-collapse">
+          <thead>
+            <tr>
+              <th className="px-2 py-3 text-left border-b border-[#2d0a4d] text-sm font-medium opacity-80 text-white">Level</th>
+              <th className="px-2 py-3 text-left border-b border-[#2d0a4d] text-sm font-medium opacity-80 text-white">Amount</th>
+              <th className="px-2 py-3 text-center border-b border-[#2d0a4d] text-sm font-medium opacity-80 text-white">Icon</th>
+              <th className="px-2 py-3 text-center border-b border-[#2d0a4d] bg-[#1d0033] text-sm font-medium rounded-t-md text-white">Percent</th>
+              <th className="px-2 py-3 text-center border-b border-[#2d0a4d] text-sm font-medium opacity-80 text-white">Cashback</th>
+            </tr>
+          </thead>
+          <tbody>
+            {levels.map((level, index) => (
+              <tr 
+                key={index}
+              >
+                <td className="px-2 py-4 border-b border-[#2d0a4d] font-medium text-white">{level.name}</td>
+                <td className="px-2 py-4 border-b border-[#2d0a4d] text-white">{level.amount}</td>
+                <td className="px-2 py-4 border-b border-[#2d0a4d] text-center ">
+                  <div className="w-8 h-8 bg-white text-black flex items-center justify-center rounded-full mx-auto">
+                    {level.icon}
+                  </div>
+                </td>
+                <td className="px-2 py-4 border-b border-[#2d0a4d] bg-[#1d0033] font-bold text-center text-white">
+                  {level.percent}
+                </td>
+                <td className="px-2 py-4 border-b border-[#2d0a4d] text-center text-white">
+                  {level.cashback}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
 export default Table;
-
