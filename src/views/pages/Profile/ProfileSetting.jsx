@@ -110,6 +110,7 @@ const ProfileSettings = () => {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  console.log("usss",user.userData)
 
   // State management
   const [isLoading, setIsLoading] = useState(false);

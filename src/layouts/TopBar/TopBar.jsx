@@ -20,6 +20,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import { motion, AnimatePresence } from 'framer-motion';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 
 // Material-UI Components
@@ -41,7 +42,11 @@ import {
   ListItem,
   ListItemText,
   Dialog,
-  DialogContent
+  DialogContent,
+  DialogContentText,
+  Container,
+  Input,
+  InputAdornment
 
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -119,6 +124,82 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "29px",
     backgroundColor: "#eee"
   },
+  input_fild2: {
+        width: "100%",
+        "& input": {
+            height: "45px",
+        },
+    },
+  dilogBody: {
+          paddingBottom: "20px",
+          position: "relative",
+          zIndex: 1,
+          "& small": {
+              position: "absolute",
+              bottom: "13px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              fontSize: "13px",
+              width: "100%",
+              textAlign: "center",
+          },
+      },
+
+   mobileDialog: {
+    '& .MuiDialog-paper': {
+      margin: theme.spacing(2),
+      width: 'calc(100% - 32px)',
+      maxHeight: 'calc(100% - 64px)',
+    },
+  },
+
+  dialogWrapper: {
+          position: "relative",
+          overflow: "hidden",
+          borderRadius: "20px",
+          background: " #30003c",
+          padding: "5px",
+          zIndex:"1"
+        },
+
+  dialogAnimatedBackground: {
+          content: '""',
+          background: "conic-gradient(transparent 270deg, rgb(196, 1, 218), transparent)",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          aspectRatio: "1 / 1",
+          width: "100%",
+          animation: "$rotate 3s linear infinite",
+          zIndex: 0, // Ensure the background is behind the content
+        },
+        dialogInnerBlurEffect: {
+          content: '""',
+          background: " #30003c",
+          borderRadius: "inherit",
+          position: "absolute",
+          inset: "var(--offset)",
+          height: "calc(100% - 2 * var(--offset))",
+          width: "calc(100% - 2 * var(--offset))",
+          backdropFilter: "blur(40px)",
+          zIndex: 0, // Ensure the blur effect is behind the content
+        },
+        "@keyframes rotate": {
+          from: {
+            transform: "translate(-50%, -50%) scale(2.5) rotate(0turn)",
+          },
+          to: {
+            transform: "translate(-50%, -50%) scale(2.5) rotate(1turn)",
+          },
+        },
+  
+         dialogContent: {
+      padding: theme.spacing(2),
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1.5),
+      },
+    },
 
 
 }));
@@ -149,6 +230,7 @@ export default function Header() {
   const [userList, setUserList] = useState();
   const [notify, setNotify] = useState([]);
   const [openNotifications, setOpenNotifications] = useState(false);
+  const [openDeposit, setOpenDeposit] = useState(false);
 
   // Refs
   const menuRef = useRef(null);
@@ -176,6 +258,11 @@ export default function Header() {
   const isMeduimScreen = useMediaQuery('(max-width: 1250px)');
   const isMobileView = useMediaQuery('(max-width: 1250px)');
   const relativeBar = ['/', '/login', '/Forget', '/About_us'];
+
+//close deposit dialog
+  const handleCloseDepositModal = () => {
+          setOpenDeposit(false);
+        };
 
   
   //Support Chat
@@ -566,7 +653,7 @@ export default function Header() {
               {t("Notifications")}
             </Button>
           </Box>
-          <Box>
+          {/*<Box>
             <Button
               onClick={() => {
                 navigate("/buymas");
@@ -587,7 +674,7 @@ export default function Header() {
             >
               {t("Buy A Mas")}
             </Button>
-          </Box>
+          </Box>*/}
         </Box>
       </Box>
     );
@@ -611,6 +698,25 @@ export default function Header() {
         }}
       >
         <Box dir="ltr" sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+           <Box>
+            <Button
+              onClick={() => {
+                navigate("/corporate/company");
+                onClose();
+              }}
+              sx={{
+                color: "#dadada",
+                "&:hover": {
+                  background: "none",
+                  color: (theme) => theme.custom.miniUserCard
+                }
+              }}
+
+            >
+
+              {t("Company")}
+            </Button>
+          </Box>
           <Box>
             <Button
               onClick={() => {
@@ -650,25 +756,7 @@ export default function Header() {
               {t("Blogs")}
             </Button>
           </Box>
-          <Box>
-            <Button
-              onClick={() => {
-                navigate("/corporate/company");
-                onClose();
-              }}
-              sx={{
-                color: "#dadada",
-                "&:hover": {
-                  background: "none",
-                  color: (theme) => theme.custom.miniUserCard
-                }
-              }}
-
-            >
-
-              {t("Company")}
-            </Button>
-          </Box>
+         
           <Box>
             <Button
               onClick={() => {
@@ -1493,7 +1581,12 @@ export default function Header() {
                 </AnimatePresence>
               </li>
 
-              <li className='test'><Link to="/buymas">{t("Buy A Mas")}</Link></li>
+              <li ><Link to="/buymas">{t("Buy Mas")}</Link></li>
+              <li >
+              <Box 
+              onClick={auth.userLoggedIn ? () => setOpenDeposit(true) : () => {navigate("/create-account")}}
+              ><Link>{t("Deposit")}</Link></Box></li>
+
               <li className='test'><Link to="/connectWallet">{t("Connect Wallet")}</Link></li>
 
               {auth.userLoggedIn ? <></> :
@@ -1717,11 +1810,7 @@ export default function Header() {
                       >{t("Login")}</Button>
 
                     </Link>
-                    <Link style={{ color: "white" }} to="/buymas" className="primaryButton "
-
-                      variant="contained"><Button className="primaryButton"
-
-                        variant="contained">{t("Buy A Mas")}</Button></Link>
+                  
                     <Link style={{ color: "white" }} to="/connectWallet" className='ConnectWallet'> <Button className="primaryButton"
 
                       variant="contained">{t("Connect Wallet")}</Button></Link>
@@ -2027,6 +2116,85 @@ export default function Header() {
           </Box>
         </DialogContent>
       </Dialog>
+
+      <Dialog
+            open={openDeposit}
+            disableScrollLock
+            fullWidth
+            maxWidth="sm"
+            onClose={handleCloseDepositModal}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        className={classes.mobileDialog}
+            PaperProps={{
+              sx: {
+                borderRadius: "20px",
+                overflow: "hidden",
+                position: "relative",
+                backgroundColor: "transparent", // Remove default background
+                maxHeight: '90vh', // Ensure it doesn't exceed screen height
+      
+              },
+            }}
+          >
+            <div className={classes.dialogWrapper}>
+              <div className={classes.dialogAnimatedBackground}></div>
+              <div className={classes.dialogInnerBlurEffect}></div>
+              <DialogContent className={classes.dilogBody}>
+                <DialogContentText id="alert-dialog-description">
+                  <Typography
+                    variant="h3"
+                    align="center"
+                    sx={{ color: "white", marginBottom: "20px" }}
+                  >
+                    {t("Deposit")}
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    style={{ color: "white", marginBottom: "10px" }}
+                  >
+                    {t("Please make sure you use BSC (BNB Smart Chain) and send only supported tokens (MAS, USDT, BUSD)")}
+                  </Typography>
+                  <Container maxWidth="md">
+                    <Box mt={4}>
+                      <Input
+                        value={auth.userData?.ethAccount?.address}
+                        placeholder="Wallet Address"
+                        className={classes.input_fild2}
+                        sx={{
+                          color: "white", // Change the text color here
+                          "& .MuiInput-input": {
+                            color: "white", // Ensure the input text color is white
+                          },
+                        }}
+                        startAdornment={
+                          <InputAdornment position="end">
+                            <CopyToClipboard text={auth.userData?.ethAccount?.address}>
+                              <Button onClick={() => toast.info("Copied")} sx={{ color: "white" }}>
+                                {t("Copy")}
+                              </Button>
+                            </CopyToClipboard>
+                          </InputAdornment>
+                        }
+                      />
+                    </Box>
+                    <Box mt={2} mb={4}>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        color="secondary"
+                        onClick={handleCloseDepositModal}
+                        style={{ fontSize: "15px", background: "#8c0087", color: "white" }}
+                      >
+                        {t("Close")}
+                      </Button>
+                    </Box>
+                  </Container>
+                </DialogContentText>
+              </DialogContent>
+            </div>
+          </Dialog>
     </>
   );
 }

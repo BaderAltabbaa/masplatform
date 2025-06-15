@@ -54,7 +54,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                 src={
                   user.userData && user.userData?.profilePic
                     ? user.userData?.profilePic
-                    : `/assets/Images/profile.jpg`
+                    : `/images/users/dprofile.avif`
                 }
                 style={{
                   width: "50px",

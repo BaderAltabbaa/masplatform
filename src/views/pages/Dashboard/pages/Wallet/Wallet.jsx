@@ -369,6 +369,7 @@ const Wallet = () => {
 
         <Dialog
       open={openDeposit}
+      disableScrollLock
       fullWidth
       maxWidth="sm"
       onClose={handleCloseDepositModal}
@@ -464,6 +465,7 @@ const Wallet = () => {
 
 <Dialog
   open={openWihdraw}
+  disableScrollLock
   fullWidth
   maxWidth="sm"
   onClose={handleCloseWithdrawModal}

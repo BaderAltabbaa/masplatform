@@ -173,6 +173,12 @@ export default function BundleCard({ data }) {
           setActiveSubscribe(true);
           setOpen2(false);
           toast.success("Subscribe Successfully");
+            Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('bundle-page-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+            window.dispatchEvent(new CustomEvent('refreshBundles'));
           navigate("/bundles-details?" + BundleData?._id);
         } else {
           toast.error(res.data.responseMessage);
@@ -219,6 +225,12 @@ export default function BundleCard({ data }) {
         if (res.data.statusCode === 200) {
           setisLike((liked) => !liked);
           setnbLike((nb) => (isLike ? nb - 1 : nb + 1));
+            Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('bundle-page-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+            window.dispatchEvent(new CustomEvent('refreshBundles'));
         } else {
           setisLike(false);
           toast.error(res.data.responseMessage);
@@ -590,148 +602,261 @@ export default function BundleCard({ data }) {
       </Dialog>
       {/* Subscribe now */}
         <Dialog
-             fullWidth="sm"
-             maxWidth="sm"
-             open={open2}
-             onClose={handleClose2}
-             aria-labelledby="max-width-dialog-title"
-             disableBackdropClick={isLoading}
-             disableEscapeKeyDown={isLoading}
-           >
-             <DialogContent>
-               <Box className={classes.PhotoBox}>
-                 {isVideo ? (
-                   <div>
-                     <ReactPlayer
-                       url={BundleData.mediaUrl}
-                       muted
-                       controls
-                       playing
-                       width="100%"
-                       height="auto"
-                     />
-                     {auth.userData &&
-                       auth.userLoggedIn &&
-                       auth.userData._id !== userId &&
-                       isSubscribed && (
-                         <Box>
-                           <Grid
-                             lg={12}
-                             style={{
-                               display: "flex",
-                               alignItems: "center",
-                               justifyContent: "center",
-                             }}
-                           >
-                             <Button
-                               className={classes.downloadButton}
-                               fullWidth
-                               onClick={downLoadFile}
-                             >
-                               {t("Download")}
-                             </Button>
-                           </Grid>
-                         </Box>
-                       )}
-                   </div>
-                 ) : (
-                   <div style={{width:"100%" ,height:"300px"}}>
-                   <img
-                     src={BundleData.mediaUrl}
-                     alt=""
-                     style={{ width: "100%", height: "300px", objectFit:"fill" }}
-                   /></div>
-                 )}
-               </Box>
-               <Box mt={3} className={classes.bundleText} textAlign="center">
-                 <Typography variant="h4">{BundleData.bundleTitle}</Typography>
-               </Box>
-     
-               <Box mt={2} className={classes.deskiText}>
-                 <Typography variant="h4" align="left" color="textSecondary">
-                   {t("Donation amount")}:
-                   <span>
-                     {BundleData.donationAmount} {BundleData.coinName}
-                   </span>
-                 </Typography>
-                 <Typography variant="h4" align="left" color="textSecondary">
-                   {t("Duration")}: <span> {BundleData.duration}</span>
-                 </Typography>
-                 <Grid container spacing={2}>
-                   <Grid item xs={12} md={3} lg={2}>
-                     <Typography variant="h4" align="left" color="textSecondary">
-                       {t("Details")}:
-                     </Typography>
-                   </Grid>
-                   <Grid item xs={12} md={9} lg={10}>
-                     <Typography variant="body2" align="left" color="textSecondary">
-                       {BundleData?.details}
-                     </Typography>
-                   </Grid>
-                 </Grid>
-               </Box>
-               {!auth.userLoggedIn && (
-                 <Box mt={3} mb={3} textAlign="center">
-                   <Button 
-                   className={classes.LoginButton} 
-                   onClick={handleClose2}
-                   style={{background:"#2f0032",color:"white" }}
-     
-                   >
-                     {t("Cancel")}
-                   </Button>
-                   &nbsp;&nbsp;
-                   <Button
-                     className={classes.LoginButton}
-                     onClick={() => {
-                       navigate("/login");
-                     }}
-                     style={{background:"#2f0032",color:"white" }}
-     
-                   >
-                     {t("Login")}
-                   </Button>
-                 </Box>
-               )}
-               {auth.userData &&
-                 auth.userLoggedIn &&
-                 auth.userData._id !== data.userId && (
-                   <Box mt={3} mb={3} textAlign="center">
-                     <Button
-                       variant="contained"
-                       color="secondary"
-                       size="large"
-                       style={{ background:"#2f0032",color:'white'}}
-     
-                       onClick={() => {
-                         handleClose2();
-                       }}
-                       disabled={isLoading}
-                     >
-                     {t("Cancel")}
-     
-                     </Button>
-                     &nbsp;&nbsp;&nbsp;
-                     {auth.userData &&
-                       auth.userLoggedIn &&
-                       auth.userData._id !== userId && (
-                         <Button
-                           variant="contained"
-                           color="secondary"
-                           size="large"
-                           style={{ background:"#2f0032",color:'white'}}
-     
-                           onClick={subscribeToBundleHandler}
-                           disabled={isLoading}
-                         >
-                           {isLoading ? t("pending...") : t("Subscribe now")}
-                           {isLoading && <ButtonCircularProgress />}
-                         </Button>
-                       )}
-                   </Box>
-                 )}
-             </DialogContent>
-           </Dialog>
+          fullWidth
+          maxWidth="lg"
+          open={open2}
+          disableScrollLock
+          onClose={handleClose2}
+          aria-labelledby="responsive-dialog-title"
+          disableBackdropClick={isLoading}
+          disableEscapeKeyDown={isLoading}
+          sx={{
+            '& .MuiDialog-paper': {
+              backgroundImage: 'url(/assets/Images/doodle2.webp)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              maxHeight: '90vh'
+            }
+          }}
+        >
+          <DialogContent sx={{ p: 0 }}>
+            <Box sx={{
+              background: "rgba(255, 255, 255, 0.85)",
+              backdropFilter: "blur(8px)",
+              p:2,
+              display: 'flex',
+              flexDirection: 'column',
+              gap:2,
+              borderRadius:2
+            }}>
+              {/* Media Section - Smaller on desktop */}
+              <Box sx={{
+                borderRadius: '12px',
+                overflow: 'hidden',
+                position: 'relative',
+                aspectRatio: '16/9',
+                width: '100%',
+                maxHeight: { xs: 'auto', md: '250px' } // Fixed height on desktop
+              }}>
+                {isVideo ? (
+                  <ReactPlayer
+                    url={BundleData.mediaUrl}
+                    muted
+                    controls
+                    playing
+                    width="100%"
+                    height="100%"
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                  />
+                ) : (
+                  <img
+                    src={BundleData.mediaUrl}
+                    alt=""
+                    style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0
+                    }}
+                  />
+                )}
+              </Box>
+        
+              {/* Download Button */}
+              {isVideo && auth.userData && auth.userLoggedIn && auth.userData._id !== userId && isSubscribed && (
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={downLoadFile}
+                  sx={{
+                    bgcolor: (theme) => theme.custom.mainButton,
+                    color: 'white',
+                    '&:hover': { bgcolor: (theme) => theme.custom.hoverMainButton },
+                    maxWidth: { md: '300px' }, // Narrower button on desktop
+                    alignSelf: 'center' // Center on desktop
+                  }}
+                >
+                  {t("Download")}
+                </Button>
+              )}
+        
+              {/* Details Section - Compact layout */}
+               <Box sx={{
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent:"center",
+                        gap: 1,
+                        backgroundColor: (theme) => theme.palette.background.paper,
+                        borderRadius: "16px",
+                        p: 1,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                        overflow: 'hidden'
+                      }}>
+        
+                        <Box  sx={{
+                                      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                                      borderRadius: "12px",
+                                      p: 1,
+                                    }}>
+                                      <Typography variant="subtitle1" sx={{ 
+                                        fontWeight: "bold",
+                                        color: 'text.primary',
+                                        display: 'flex',
+                                        gap: 1,
+                                        fontSize:{xs:"0.8rem",md:"1rem"},
+                                      }}>
+                                        <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                           {t("Bundle Tile")}:
+                                        </Box>
+                                        <Box component="span">
+                                        {BundleData.bundleTitle}
+                                        </Box>
+                                      </Typography>
+                                    </Box>
+        
+                         <Box  sx={{
+                                      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                                      borderRadius: "12px",
+                                      p: 1,
+                                    }}>
+                                      <Typography variant="subtitle1" sx={{ 
+                                        fontWeight: "bold",
+                                        color: 'text.primary',
+                                        display: 'flex',
+                                        gap: 1,
+                                        fontSize:{xs:"0.8rem",md:"1rem"},
+                                      }}>
+                                        <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                           {t("Donation amount")}:
+                                        </Box>
+                                        <Box component="span">
+                                        {BundleData.donationAmount} {BundleData.coinName}
+                                        </Box>
+                                      </Typography>
+                                    </Box>
+        
+                                     <Box  sx={{
+                                      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                                      borderRadius: "12px",
+                                      p: 1,
+                                    }}>
+                                      <Typography variant="subtitle1" sx={{ 
+                                        fontWeight: "bold",
+                                        color: 'text.primary',
+                                        display: 'flex',
+                                        gap: 1,
+                                        fontSize:{xs:"0.8rem",md:"1rem"},
+                                      }}>
+                                        <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                           {t("Duration")}:
+                                        </Box>
+                                        <Box component="span">
+                                       {BundleData.duration}
+                                        </Box>
+                                      </Typography>
+                                    </Box>
+                                       <Box  sx={{
+                                      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+                                      borderRadius: "12px",
+                                      p: 1,
+                                    }}>
+                                      <Typography variant="subtitle1" sx={{ 
+                                        fontWeight: "bold",
+                                        color: 'text.primary',
+                                        display: 'flex',
+                                        gap: 1,
+                                        fontSize:{xs:"0.8rem",md:"1rem"},
+                                      }}>
+                                        <Box component="span" sx={{ color: 'black' ,fontWeight:"bold" }}>
+                                             {t("Details")}:
+                                      </Box>
+                                        <Box component="span">
+                                    {BundleData?.details}
+                                        </Box>
+                                      </Typography>
+                                    </Box>
+        
+              </Box>
+              {/* Action Buttons - Optimized spacing */}
+              <Box sx={{ 
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: 2,
+                justifyContent: 'center',
+                pt: 2
+              }}>
+                {!auth.userLoggedIn ? (
+                  <>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        color: (theme) => theme.custom.mainButton,
+                        borderColor: (theme) => theme.custom.mainButton,
+                        '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+                        flex: { xs: 1, md: 0.5 } // Half width on desktop
+                      }}
+                      onClick={handleClose2}
+                    >
+                      {t("Cancel")}
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        bgcolor: (theme) => theme.custom.mainButton,
+                        color: 'white',
+                        '&:hover': { bgcolor: (theme) => theme.custom.hoverMainButton},
+                        flex: { xs: 1, md: 0.5 } // Half width on desktop
+                      }}
+                      onClick={() => navigate("/login")}
+                    >
+                      {t("Login")}
+                    </Button>
+                  </>
+                ) : auth.userData._id !== data.userId && (
+                  <>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        color: (theme) => theme.custom.mainButton,
+                        borderColor: (theme) => theme.custom.mainButton,
+                        '&:hover': { borderColor: (theme) => theme.custom.hoverMainButton },
+                        flex: { xs: 1, md: 0.5 }
+                      }}
+                      onClick={handleClose2}
+                      disabled={isLoading}
+                    >
+                      {t("Cancel")}
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        bgcolor: (theme) => theme.custom.mainButton,
+                        color: 'white',
+                        '&:hover': { bgcolor: (theme) => theme.custom.hoverMainButton },
+                        flex: { xs: 1, md: 0.5 }
+                      }}
+                      onClick={subscribeToBundleHandler}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <>
+                          {t("pending...")}
+                          <ButtonCircularProgress />
+                        </>
+                      ) : t("Subscribe now")}
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </Box>
+          </DialogContent>
+        </Dialog>
 
       <Dialog
         open={open3}

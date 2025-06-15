@@ -108,7 +108,7 @@ useEffect(() => {
     console.log("Search:", search);
     console.log("Cancel Token:", cancelTokenSource && cancelTokenSource.token);
 
-const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSearch}`;
+const cacheKey = `users-latestUserList_Creator_limit10_page${page}_search${debouncedSearch}`;
     // Check sessionStorage
     const sessionData = sessionStorage.getItem(cacheKey);
     if (sessionData) {
@@ -189,6 +189,18 @@ const cacheKey = `latestUserList_Creator_limit10_page${page}_search${debouncedSe
     setsearch(event.target.value);
     setPage(1); // Reset to first page when searching
   };
+
+   useEffect(() => {
+        const handleRefreshList = () => {
+         getuser();
+        };
+      
+        window.addEventListener('refreshUsers', handleRefreshList);
+        
+        return () => {
+          window.removeEventListener('refreshUsers', handleRefreshList);
+        };
+      }, []);
 
   return (
     <Box className={classes.container}

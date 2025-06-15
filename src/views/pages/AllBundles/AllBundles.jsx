@@ -349,7 +349,7 @@ const AllBundlesPage = () => {
               width: "100%",
               borderRadius: "20px"
             }}
-              src="/assets/Images/bundleIconCropped.webp" alt="" />
+              src="/assets/Images/bundleIconCropped.jpg" alt="" />
           </div>
         </div>
 

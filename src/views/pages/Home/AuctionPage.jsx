@@ -212,7 +212,7 @@ const auctionNftListHandler = async () => {
   };
 
     const getuser = async () => {
-    const cacheKey = "latestUserList_Creator_limit10";
+    const cacheKey = "users-latestUserList_Creator_limit10";
 
     // Check sessionStorage
     const sessionData = sessionStorage.getItem(cacheKey);
@@ -305,6 +305,20 @@ const auctionNftListHandler = async () => {
     };
   }, []);
 
+  
+
+  useEffect(() => {
+        const handleRefreshList = () => {
+          listAllNft1Handler(); // Re-fetch fresh data
+        };
+      
+        window.addEventListener('refreshAfterPurchase', handleRefreshList);
+        
+        return () => {
+          window.removeEventListener('refreshAfterPurchase', handleRefreshList);
+        };
+      }, []);
+
    useEffect(() => {
       const handleRefreshList = () => {
         listAllNftHandler(); // Re-fetch fresh data
@@ -316,6 +330,31 @@ const auctionNftListHandler = async () => {
         window.removeEventListener('refreshBundleList', handleRefreshList);
       };
     }, []);
+
+
+    useEffect(() => {
+      const handleRefreshList = () => {
+        listAllNftHandler(); // Re-fetch fresh data
+      };
+    
+      window.addEventListener('refreshBundles', handleRefreshList);
+      
+      return () => {
+        window.removeEventListener('refreshBundles', handleRefreshList);
+      };
+    }, []);
+
+     useEffect(() => {
+            const handleRefreshList = () => {
+             getuser();
+            };
+          
+            window.addEventListener('refreshUsers', handleRefreshList);
+            
+            return () => {
+              window.removeEventListener('refreshUsers', handleRefreshList);
+            };
+          }, []);
 
  const Categories = [
   {name:t("Art"),

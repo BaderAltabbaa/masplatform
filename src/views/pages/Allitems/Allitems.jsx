@@ -231,6 +231,20 @@ const listAllItemsHandler = async () => {
     }, []);
 
 
+    useEffect(() => {
+      const handleRefreshList = () => {
+        fetchAllItems(); // Re-fetch fresh data
+        listAllItemsHandler();
+      };
+    
+      window.addEventListener('refreshAfterPurchase', handleRefreshList);
+      
+      return () => {
+        window.removeEventListener('refreshAfterPurchase', handleRefreshList);
+      };
+    }, []);
+
+
 
   return (
     <Box className={classes.container} sx={{ background: (theme) => theme.custom.PageBackGround }}>
@@ -263,7 +277,7 @@ MAS, USDC, and USDT.</span>
             </Box>
             <div className={`who-bottom-sec ${inView3 ? 'animate' : ''}`} ref={ref3}>
               <img style={{ display: "inline", width: "100%", borderRadius: "20px" }} 
-                src="/assets/Images/marketCrop.webp" alt="" />
+                src="/assets/Images/marketCrop.jpg" alt="" />
             </div>
           </div>
 

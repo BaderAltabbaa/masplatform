@@ -1,19 +1,19 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect ,useRef } from "react";
 import {
   Box,
   Container,
   Button,
   TextField,
-
+  DialogTitle,
   Typography,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-
+import { AiOutlineClose } from "react-icons/ai"; // Close icon from Ant Design
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { MuiTelInput } from 'mui-tel-input'
 import IconButton from "@mui/material/IconButton";
 import { Link, useNavigate } from "react-router-dom";
-
+import useSWR from 'swr';
 import axios from "axios";
 import { isValidPassword, isValidEmail } from "src/CommanFunction/Validation";
 import Dialog from "@mui/material/Dialog";
@@ -31,6 +31,7 @@ import ButtonCircularProgress from "src/component/ButtonCircularProgress";
 import { VerifyOtp } from "src/component/Modals/VerifyOtp";
 import './register.css'
 import { useTranslation } from 'react-i18next';
+import NoDataFound from "src/component/NoDataFound";
 
 
 
@@ -189,6 +190,55 @@ export default function SignUp() {
   };
   const { termsCond, privacyPolicy, riskStatment, kycProgram, all } = state;
 
+    const cacheRef = useRef({});
+  
+
+    const wrappedFetcher = async (url) => {
+    const cacheKey = `cache-${url}`;
+    const sessionData = sessionStorage.getItem(cacheKey);
+
+    // 1. Check in-memory cache
+    if (cacheRef.current[cacheKey]) {
+      console.log("✅ Using in-memory cache for", cacheKey);
+      return cacheRef.current[cacheKey];
+    }
+
+    // 2. Check sessionStorage
+    if (sessionData) {
+      console.log("✅ Using sessionStorage cache for", cacheKey);
+      const parsed = JSON.parse(sessionData);
+      cacheRef.current[cacheKey] = parsed; // sync to memory
+      return parsed;
+    }
+
+    // 3. Fetch from API
+    console.log("⏬ Fetching fresh data for", cacheKey);
+    const res = await axios.get(url, {
+      headers: {
+        token: sessionStorage.getItem("token"),
+      },
+    });
+
+    const result = res.data.result;
+
+    // Store in memory and sessionStorage
+    cacheRef.current[cacheKey] = result;
+    sessionStorage.setItem(cacheKey, JSON.stringify(result));
+
+    return result;
+  };
+
+  const { data: staticContent } = useSWR(Apiconfigs.staticContentList, wrappedFetcher, { suspense: true });
+
+  console.log("regggg", staticContent);
+
+  const [selectedItem ,setSelectedItem] = useState(null);
+  const [open , setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedItem(null);
+  };
 
 
   return (
@@ -393,12 +443,11 @@ export default function SignUp() {
                   }
                 />
                 <label>
-                  I have read and agree to
-                  <Link target="_blank" to="/terms-conditions">
-                    Terms and Conditions
-                  </Link>
-                  .
+                  I have read and agree to. 
                 </label>
+                 <Box onClick={() => {setSelectedItem(staticContent[0]),setOpen(true)}} sx={{cursor:"pointer"}}>
+                    {staticContent[0].title}
+                  </Box>
               </Box>
               <Box className={classes.paper}>
                 <FormControlLabel
@@ -417,12 +466,11 @@ export default function SignUp() {
                   }
                 />
                 <label>
-                  I have read and agree to
-                  <Link target="_blank" to="/privacy-policy">
-                    Privacy Policy
-                  </Link>
-                  .
+                  I have read and agree to. 
                 </label>
+                <Box onClick={() => {setSelectedItem(staticContent[1]),setOpen(true)}} sx={{cursor:"pointer"}}>
+                    {staticContent[1].title}
+                  </Box>
               </Box>
               <Box className={classes.paper}>
                 <FormControlLabel
@@ -441,12 +489,11 @@ export default function SignUp() {
                   }
                 />
                 <label>
-                  I have read and agree to
-                  <Link target="_blank" to="/risk-statment">
-                    Risk disclosure statement
-                  </Link>
-                  .
+                  I have read and agree to. 
                 </label>
+                <Box onClick={() => {setSelectedItem(staticContent[6]),setOpen(true)}} sx={{cursor:"pointer"}}>
+                    {staticContent[6].title}
+                  </Box>
               </Box>
               <Box className={classes.paper}>
                 <FormControlLabel
@@ -465,12 +512,11 @@ export default function SignUp() {
                   }
                 />
                 <label>
-                  I have read and agree to
-                  <Link target="_blank" to="/kyc-program">
-                    KYC program
-                  </Link>
-                  .
+                  I have read and agree to. 
                 </label>
+                 <Box onClick={() => {setSelectedItem(staticContent[7]),setOpen(true)}} sx={{cursor:"pointer"}}>
+                    {staticContent[7].title}
+                  </Box>
               </Box>
               <Box className={classes.btBox} mt={1}>
                 <FormControlLabel
@@ -552,6 +598,25 @@ export default function SignUp() {
           </DialogContent>
         </Dialog>
 
+
+        <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth disableScrollLock={true}
+                  >
+                    <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: (theme) => theme.custom.mainButton }}>
+                      <span style={{
+                        fontSize: "24px"
+                      }}>{selectedItem?.title}</span>
+                      <div style={{ fontSize: "20px", cursor: "pointer" }} onClick={handleClose}><AiOutlineClose /></div>
+                    </DialogTitle>
+                    <DialogContent>
+        
+                      {selectedItem?.description ? ( // Check if description exists
+                        <DialogContentText>{selectedItem.description}</DialogContentText>
+                      ) : (
+                        <div style={{ padding: "20px 60px" }}> <NoDataFound /> </div>// Render NoDataFound if no description
+                      )}
+                    </DialogContent>
+                  </Dialog>
+
           <VerifyOtp
         keepMounted
         open={verifyOTPOpen}
@@ -571,346 +636,6 @@ export default function SignUp() {
     
       </section>
     </div>
-    // <Box className={classes.root}>
-
-    // <Box className={classes.loginBox}>
-
-    //   <Container maxWidth="sm" style={{backgroundColor: "#e5e5f7f8",padding:'20px'}}>
-    //     <Typography variant="h2"  align='center'>
-    //       Create your account
-    //     </Typography>
-
-    //         <Box>
-    //           <label className={classes.labelText}>Username</label>
-    //           <TextField
-    //             variant="outlined"
-    //             required
-    //             value={username}
-    //             error={!uservalid}
-    //             helperText={!uservalid && "Please enter username" }
-    //             className={classes.inputText}
-    //             onChange={(e) => {
-    //               setusername(e.target.value);
-    //               setuservalid(e.target.value.length > 2);
-    //             }}
-    //             onBlur={(e)=>setuservalid(e.target.value.length > 2)}
-    //           />
-    //         </Box>
-    //         <Box>
-    //           <label className={classes.labelText}>
-    //             Email
-    //           </label>
-    //           <TextField
-    //             variant="outlined"
-    //             required
-    //             error={!emailvalid}
-    //             helperText={!emailvalid && "Please enter valid email address"}
-    //             value={email}
-    //             className={classes.inputText}
-    //             type="email"
-    //             onChange={(e) => {
-    //               setemail(e.target.value);
-    //               setemailvalid(isValidEmail(e.target.value));
-    //             }}
-    //             onBlur={(e)=>setemailvalid(isValidEmail(e.target.value))}
-    //           />
-    //         </Box>
-    //          <Box>
-    //           <label className={classes.labelText}>
-    //             Phone number
-    //           </label>
-    //           <MuiTelInput
-    //           defaultCountry="US"
-    //           disableFormatting
-    //           required
-    //           error={!phonevalid}
-    //           helperText={!phonevalid && "Please enter valid phone number"}
-    //           value={phone}
-    //           className={classes.inputText}
-    //           variant="outlined"
-    //           type="tel"
-    //           onChange={(e) => {
-    //             setphone(e);
-    //             setphonevalid(phone =="" || isValidPhoneNumber(e));
-    //           }}
-    //           onBlur={()=>setphonevalid(phone =="" || isValidPhoneNumber(phone))}
-    //           />
-    //         </Box>
-    //        <Box>
-    //           <label className={classes.labelText}>Password</label>
-    //           <TextField
-    //             variant="outlined"
-    //             type={show ? "text" : "password"}
-    //             error={!passvalid}
-    //             helperText={
-    //               !passvalid && "Password must contain at least 8 characters, one uppercase, one number and one special case character"
-    //             }
-    //             InputProps={{
-    //               endAdornment: (
-    //                 <InputAdornment position="end">
-    //                   <IconButton
-    //                     aria-label="toggle password visibility"
-    //                     onClick={() => setshow(!show)}
-    //                   >
-    //                     {show ? <Visibility /> : <VisibilityOff />}
-    //                   </IconButton>
-    //                 </InputAdornment>
-    //               ),
-    //             }}
-    //             onChange={(e) => {
-    //               setpass(e.target.value);
-    //               setpassvalid(isValidPassword(e.target.value));
-    //             }}
-    //             onBlur={()=>setpassvalid(isValidPassword(pass))}
-    //             className={classes.inputText}
-    //           />
-    //         </Box>
-
-    //         <Box>
-    //           <label className={classes.labelText}>Referral Code</label>
-    //           <TextField
-    //             variant="outlined"
-    //             placeholder="Referral Code (optional)"
-    //             className={classes.inputText}
-    //             name="Referral"
-    //             onChange={(e) => setReferralCode(e.target.value)}
-    //           />
-    //         </Box>
-    //         <Box display='flex' justifyContent="space-around" mt={5}>
-    //           <Box align="center">
-    //           <Typography variant="body2" >
-    //             Already have an account ?
-    //           </Typography>
-    //           <Button
-    //             variant="contained"
-    //             size="large"
-    //             color="primary"
-    //             onClick={() => navigate("/login")}
-    //           >
-    //             Sign in here
-    //           </Button>
-    //           </Box>
-    //           <Box align="center">
-    //           <Typography variant="body2" >
-    //             Continue
-    //           </Typography>
-    //           <Button
-    //             variant="contained"
-    //             size="large"
-    //             color="secondary"
-    //             onClick={() => {
-    //               if (validateAll()) setTermsPopUp(true);
-    //             }}
-    //             disabled={loader || !uservalid || !emailvalid || !phonevalid || !passvalid}
-    //           >
-    //             Sign up {loader && <ButtonCircularProgress/>}
-    //           </Button>
-    //           </Box>
-    //         </Box>
-
-    //     <Dialog
-    //       open={termsPopUp}
-    //       keepMounted
-    //       maxWidth="sm"
-    //       onClose={() => setTermsPopUp(false)}
-    //       aria-labelledby="alert-dialog-slide-title"
-    //       aria-describedby="alert-dialog-slide-description"
-    //     >
-    //       <DialogContent>
-    //         <DialogContentText id="alert-dialog-slide-description">
-    //           <Box>
-    //             <Typography
-    //               variant="h4"
-    //               style={{ color: "#792034", marginBottom: "10px", textAlign: 'center' }}
-    //             >
-    //               Last step to create your account
-    //             </Typography>
-    //             <Typography
-    //               variant="body"
-    //               component="p"
-    //               align="center"
-    //               style={{ fontSize: "14px" }}
-    //             >
-    //               Before creating your account, you should agree to our terms
-    //               and conditions, privacy policy and risk disclosure statements.
-    //             </Typography>
-    //           </Box>
-    //           <Box className={classes.paper} mt={4}>
-    //             <FormControlLabel
-    //               control={
-    //                 <Checkbox
-    //                   checked={termsCond}
-    //                   onChange={handleChange}
-    //                   name="termsCond"
-    //                 />
-    //               }
-    //             />
-    //             <label>
-    //               I have read and agree to
-    //               <Link target="_blank" to="/terms-conditions">
-    //                 Terms and Conditions
-    //               </Link>
-    //               .
-    //             </label>
-    //           </Box>
-    //           <Box className={classes.paper}>
-    //             <FormControlLabel
-    //               control={
-    //                 <Checkbox
-    //                   checked={privacyPolicy}
-    //                   onChange={handleChange}
-    //                   name="privacyPolicy"
-    //                 />
-    //               }
-    //             />
-    //             <label>
-    //               I have read and agree to
-    //               <Link target="_blank" to="/privacy-policy">
-    //                 Privacy Policy
-    //               </Link>
-    //               .
-    //             </label>
-    //           </Box>
-    //           <Box className={classes.paper}>
-    //             <FormControlLabel
-    //               control={
-    //                 <Checkbox
-    //                   checked={riskStatment}
-    //                   onChange={handleChange}
-    //                   name="riskStatment"
-    //                 />
-    //               }
-    //             />
-    //             <label>
-    //               I have read and agree to
-    //               <Link target="_blank" to="/risk-statment">
-    //                 Risk disclosure statement
-    //               </Link>
-    //               .
-    //             </label>
-    //           </Box>
-    //           <Box className={classes.paper}>
-    //             <FormControlLabel
-    //               control={
-    //                 <Checkbox
-    //                   checked={kycProgram}
-    //                   onChange={handleChange}
-    //                   name="kycProgram"
-    //                 />
-    //               }
-    //             />
-    //             <label>
-    //               I have read and agree to
-    //               <Link target="_blank" to="/kyc-program">
-    //                 KYC program
-    //               </Link>
-    //               .
-    //             </label>
-    //           </Box>
-    //           <Box className={classes.paper} mt={1}>
-    //             <FormControlLabel
-    //               control={
-    //                 <Checkbox
-    //                   checked={all}
-    //                   onChange={() => {
-    //                     if (state.all) {
-    //                       setState({
-    //                         ...state,
-    //                         all: false,
-    //                         termsCond: false,
-    //                         privacyPolicy: false,
-    //                         riskStatment: false,
-    //                         kycProgram: false,
-    //                       });
-    //                     } else {
-    //                       setState({
-    //                         ...state,
-    //                         all: true,
-    //                         termsCond: true,
-    //                         privacyPolicy: true,
-    //                         riskStatment: true,
-    //                         kycProgram: true,
-    //                       });
-    //                     }
-    //                   }}
-    //                   name="all"
-    //                 />
-    //               }
-    //             />
-    //             <label>Read and agree to all.</label>
-    //           </Box>
-
-    //           <Box mt={2} mb={5} pb={3} className={classes.btnBox}>
-    //             <Button
-    //               variant="contained"
-    //               size="large"
-    //               color="secondary"
-    //               disabled={
-    //                 loader ||
-    //                 !state.termsCond ||
-    //                 !state.privacyPolicy ||
-    //                 !state.riskStatment ||
-    //                 !state.kycProgram
-    //               }
-    //               onClick={() => {
-    //                 if (
-    //                   state.termsCond &&
-    //                   state.privacyPolicy &&
-    //                   state.riskStatment &&
-    //                   state.kycProgram
-    //                 ) {
-    //                   sendOtpRegister();
-    //                   setVerifyOTPOpen(true);
-    //                   setTermsPopUp(false);
-    //                 }
-    //               }}
-    //             >
-    //               Continue
-    //             </Button>
-    //           </Box>
-    //         </DialogContentText>
-    //       </DialogContent>
-    //     </Dialog>
-    //   <VerifyOtp
-    //     keepMounted
-    //     open={verifyOTPOpen}
-    //     handleClose={()=> setVerifyOTPOpen(false)}
-    //     channels={['email']}
-    //     context={'register'}
-    //     emailVerificationSent={emailVerificationSent}
-    //     smsVerificationSent={smsVerificationSent}
-    //     successCallback={async ()=> {
-    //       setVerifyOTPOpen(false);
-    //       await user.updateUserData();
-    //       navigate('/profilesettings')
-    //     }}
-    //     signUpData={{username: username, password: pass, email: email, phone: phone, referralCode: referralCode}}
-    //   />
-    //   </Container>
-
-    // </Box>
-
-    // <Box className={classes.splash}
-    //     style={{
-    //       padding:"20px",
-    //       display: 'flex',
-    //       flexDirection: 'column',
-    //       justifyContent: 'center',
-    //       flex: 1,
-    //       backgroundSize: 'cover',
-    //       backgroundImage: `url(${splash})`
-    //     }}
-    //   >
-    //     <Link to='/'>
-    //       <img src="/images/footer-logo.svg" alt="home page" width="200" />
-    //     </Link>
-    //     <Typography variant="h1" style={{ color: "#fffc", fontSize: '5rem', fontWeight: 'bold' }}>
-    //       Unleash your creativity
-    //     </Typography>
-
-
-    //   </Box>
-
-    // </Box>
+   
   );
 }

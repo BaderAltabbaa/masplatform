@@ -9,6 +9,8 @@ import axios from "axios";
 import Apiconfigs from "src/Apiconfig/Apiconfigs";
 import { useTranslation } from 'react-i18next';
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { toast } from 'react-toastify'; // Add this import
+
 
 
 
@@ -59,49 +61,57 @@ function CardCreators({
 const userID = auth?.userData?._id ;
 console.log("bra",userID)
 
- const subscribeToUserHandler = async () => {
-  console.log('Starting subscribeToUserHandler');
-  
-  if (auth.userData?._id) {
-    console.log('User ID found:', auth.userData._id);
-    console.log('Preparing API request to:', Apiconfigs.followProfile + userCardData._id);
-    
-    try {
-      const response = await axios({
-        method: "GET",
-        url: Apiconfigs.followProfile + userCardData._id,
+const subscribeToUserHandler = async () => {
+  if (!auth.userData?._id) {
+    toast.warning('Please login to follow users');
+    return;
+  }
+
+  try {
+    const response = await axios.get(
+      `${Apiconfigs.followProfile}${userCardData._id}`,
+      {
         headers: {
           token: sessionStorage.getItem("token"),
-        },
-      });
-
-      console.log('API response received:', response);
-      
-      if (response.data.statusCode === 200) {
-        console.log('Successful response with status 200');
-        console.log('Response data:', response.data);
-        console.log('Setting subscription status:', response.data.result.subscribed == "yes");
-        console.log('Setting subscription count:', response.data.result.nb);
-        
-        setisSubscribed(response.data.result.subscribed == "yes");
-        
-        setnbSubscribed(response.data.result.nb);
-      } else {
-        console.log('Non-200 status code received:', response.data.statusCode);
-        console.log('Error message:', response.data.result);
+        }
       }
-    } catch (err) {
-      console.error('Error in API request:', err);
-      console.log('Error response:', err?.response);
-      console.log('Error message:', err?.response?.data?.responseMessage);
+    );
+
+    // Handle both possible response formats
+    const success = response.data.statusCode === 200 || response.data.success;
+    const result = response.data.result || response.data.data;
+
+    if (success) {
+      setisSubscribed(result.subscribed === "yes");
+      setnbSubscribed(result.nb);
+      toast.success(response.data.responseMessage || 
+                   (result.subscribed === "yes" ? "Subscribed" : "Unsubscribed"));
       
+      // Clear cache
+      Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('users-')) sessionStorage.removeItem(key);
+      });
+      window.dispatchEvent(new CustomEvent('refreshUsers'));
+    } else {
+      toast.error(response.data.responseMessage || 'Operation failed');
     }
-  } else {
-    console.log('No user ID found - user not logged in');
+
+  } catch (err) {
+    console.error('API Error:', {
+      status: err.response?.status,
+      data: err.response?.data,
+      config: err.config
+    });
+
+    if (err.response?.status === 500) {
+      toast.error('Server error: Please try again later');
+    } else if (err.response?.status === 404) {
+      toast.error('User not found');
+    } else {
+      toast.error(err.message || 'Network error');
+    }
   }
-  
-  console.log('Finished subscribeToUserHandler execution');
-}
+};
   // End Handle subscribe function
 
   
@@ -117,6 +127,12 @@ console.log("bra",userID)
         if (res.data.statusCode === 200) {
           setisLike((liked) => !liked);
           setnbLike((nb) => isLike ? nb - 1 : nb + 1)
+           Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('users-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+            window.dispatchEvent(new CustomEvent('refreshUsers'));
         } else {
           setisLike(false);
           toast.error(res.data.responseMessage);

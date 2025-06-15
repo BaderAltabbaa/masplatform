@@ -129,7 +129,7 @@ function Cardcourse({
     let profilePic =
       CourseData?.userId?.profilePic ||
       CourseData?.userDetail?.profilePic ||
-"/assets/Images/profile.jpg"    
+"/images/users/dprofile.avif"    
       useEffect(() => {
         const videoExtensions = ["mp4", "avi", "wmv", "mov", "mkv", "flv", "webm", "mpeg", "3gp", "ogv"];
       

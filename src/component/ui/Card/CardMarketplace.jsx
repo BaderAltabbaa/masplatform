@@ -223,6 +223,14 @@ const CardMarketplace = ({data}) => {
               if (res.data.statusCode === 200) {
                 setisLike((liked) => !liked);
                 setnbLike((nb) => (isLike ? nb - 1 : nb + 1));
+                 Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('item-page-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+
+      // Optionally, force-refresh the data
+      window.dispatchEvent(new CustomEvent('refreshAfterPurchase'));
               } else {
                 setisLike(false);
                 toast.error(res.data.responseMessage);
@@ -246,140 +254,161 @@ useEffect(() => {
           }
         }, []);      
 
-function BillingDialog({ open, onClose }) {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: '',
-      surname: '',
-      phoneNumber: '',
-      email: '',
-      postcode: '',
-      address1: '',
-      address2: '',
-      serialNumber: '',
-    },
-        shouldUnregister: false
+ function BillingDialog({ open, onClose }) {
+          const [formData, setFormData] = useState({
+              name: '',
+              surname: '',
+              phoneNumber: '',
+              email: '',
+              postcode: '',
+              address1: '',
+              address2: '',
+              serialNumber: '',
+          });
+          const [error, setError] = useState('');
+          const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+          const isMounted = useRef(true);
+          const [showBillDialog, setShowBillDialog] = useState(false);
+          const [showPurchaseDialog, setshowPurchaseDialog] = useState(false);
+          const [billPdfUrl, setBillPdfUrl] = useState(null);
+      
 
-  });
-
-    // Rehydrate form state on mount
-  useEffect(() => {
-    const savedForm = sessionStorage.getItem("cardMarketplaceForm");
-    if (savedForm) {
-      reset(JSON.parse(savedForm));
+          
+      
+          useEffect(() => {
+            // Function to generate the serial number
+            const generateSerialNumber = () => {
+                const now = new Date();
+                return 'SN' + now.getFullYear().toString() + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0') + now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(3, '0') + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            };
+        
+            if (open) {
+                const newSerialNumber = generateSerialNumber();
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    serialNumber: newSerialNumber  // Set the new serial number
+                }));
+            }
+        
+            // Cleanup function
+            return () => {
+                isMounted.current = false;
+            };
+        }, [open]);  // Dependency array includes `open` to trigger the effect when it changes
+        
+     useEffect(() => {
+  if (open) {
+    const savedFormData = sessionStorage.getItem('billingForm');
+    if (savedFormData) {
+      setFormData(JSON.parse(savedFormData));
     }
-  }, [reset]);
+  }
+}, [open]);
+
+const clearFormCache = () => {
+  sessionStorage.removeItem('billingForm'); // Clear saved data
+};
 
 
-   useEffect(() => {
-    const subscription = watch((value) => {
-      sessionStorage.setItem("cardMarketplaceForm", JSON.stringify(value));
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
 
-  const [error, setError] = useState('');
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  const isMounted = useRef(true);
-  const [showBillDialog, setShowBillDialog] = useState(false);
-  const [showPurchaseDialog, setshowPurchaseDialog] = useState(false);
-  const [billPdfUrl, setBillPdfUrl] = useState(null);
-
-  useEffect(() => {
-    const generateSerialNumber = () => {
-      const now = new Date();
-      return 'SN' + now.getFullYear().toString() + 
-        (now.getMonth() + 1).toString().padStart(2, '0') + 
-        now.getDate().toString().padStart(2, '0') + 
-        now.getHours().toString().padStart(2, '0') + 
-        now.getMinutes().toString().padStart(3, '0') + 
-        Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    };
-
-    if (open) {
-      const newSerialNumber = generateSerialNumber();
-      setValue('serialNumber', newSerialNumber);
-    }
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [open, setValue]);
-
-  const onSubmit = async (data) => {
-    try {
-      console.log("Form data:", data);
-      const res = await axios({
-        method: "PUT",
-        url: Apiconfigs.bill,
-        data: data,
-        headers: {
-          token: sessionStorage.getItem("token") || "default-token",
-        },
+       const handleChange = (e) => {
+  const { name, value } = e.target;
+  const updatedFormData = {
+    ...formData,
+    [name]: value,
+  };
+  setFormData(updatedFormData);
+  sessionStorage.setItem('billingForm', JSON.stringify(updatedFormData)); // Auto-save
+};
+      
+          const handleSubmit = async () => {
+              try {
+                  console.log("data:", formData);
+                  const res = await axios({
+                      method: "PUT",
+                      url: Apiconfigs.bill,
+                      data: formData,
+                      headers: {
+                          token: sessionStorage.getItem("token") || "default-token",
+                      },
+                  });
+      
+                  console.log("Response from server:", res.data);
+                  if (res.status !== 200) {
+                      throw new Error('Form submission failed with status: ' + res.status);
+                  }
+              } catch (error) {
+                  console.error("Error submitting form:", error);
+                  if (isMounted.current) {
+                      setError("Failed to submit form: " + error.message);
+                  }
+              }
+          };
+      
+          const buyNow = async () => {
+              try {
+                  console.log("Initiating purchase:");
+                  console.log("Data needed:", itemData.details, itemData.coinName, itemData.donationAmount,userName);
+                  console.log("sellerId", userId);
+                  console.log("ItemId", itemData._id);
+                  console.log("buyerId",auth.userData._id );
+                  const response = await axios({
+                      method: "PUT",
+                      url: Apiconfigs.order ,
+                      data: {
+                          //sellerId:userId, 
+                          userBuyer:auth.userData._id,
+                          nft1Id: itemData._id,
+                          //mediaUrl: itemData.mediaUrl1,
+                          //details: itemData.details,
+                          //tokenName: itemData.coinName,
+                          //Price: itemData.donationAmount,
+                          
+                      },
+                      headers: {
+                        token: sessionStorage.getItem("token"),
+                      },
+                  });
+      
+                  console.log("Order response:", response.data);
+                  if (response.status !== 200) {
+                    throw new Error('Order placement failed with status: ' + response.status);
+                }
+                if (isMounted.current) {
+                    //setShowConfirmationDialog(true);
+                    //setShowBillDialog(true);
+                    setshowPurchaseDialog(true);
+                     Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('item-page-')) {
+          sessionStorage.removeItem(key);
+        }
       });
 
-      console.log("Response from server:", res.data);
-      if (res.status !== 200) {
-        throw new Error('Form submission failed with status: ' + res.status);
-      }
-      return true;
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setError("Failed to submit form: " + error.message);
-      return false;
-    }
-  };
+      // Optionally, force-refresh the data
+      window.dispatchEvent(new CustomEvent('refreshAfterPurchase'));
+                }
+            } catch (error) {
+                console.error("Order placement error:", error);
+                if (isMounted.current) {
+                    if (axios.isAxiosError(error) && error.response && error.response.status === 400) {
+                        setError("Failed to place order: your balance is low");
+                    } else {
+                        setError("Failed to place order: " + error.message);
+                    }
+                }
+            }
+        };
+      
+          const handleBuy = async () => {
+            try {
+                await handleSubmit();
+                await buyNow();
+                  clearFormCache(); // Clear cache on cancel
 
-  const buyNow = async (formData) => {
-    try {
-      console.log("Initiating purchase with:", formData);
-      const response = await axios({
-        method: "PUT",
-        url: Apiconfigs.order,
-        data: {
-          userBuyer: auth.userData._id,
-          nft1Id: itemData._id,
-        },
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
-      });
-
-      console.log("Order response:", response.data);
-      if (response.status !== 200) {
-        throw new Error('Order placement failed with status: ' + response.status);
-      }
-      setshowPurchaseDialog(true);
-          sessionStorage.removeItem("cardMarketplaceForm"); // Optional clear
-
-    } catch (error) {
-      console.error("Order placement error:", error);
-      if (axios.isAxiosError(error) && error.response?.status === 400) {
-        setError("Failed to place order: your balance is low");
-      } else {
-        setError("Failed to place order: " + error.message);
-      }
-    }
-  };
-
-  const handleBuy = async (data) => {
-    const submitSuccess = await onSubmit(data);
-    if (!submitSuccess) return;
-    
-    try {
-      await buyNow(data);
-    } catch (error) {
-      console.error("Unable to complete purchase:", error.message);
-      setError(error.message);
-    }
-  };
+            } catch (error) {
+                console.error("Unable to complete purchase:", error.message);
+            }
+          };
         
         const generatePDF = async (formData, itemData) => {
           const doc = new jsPDF();
@@ -471,125 +500,89 @@ function BillingDialog({ open, onClose }) {
           await generatePDF(formData, itemData); // Generate PDF and set URL
       };
         const handleCancel = () => {
+            clearFormCache(); // Clear cache on cancel
           setShowConfirmationDialog(false);  // Close dialog on cancel
           setShowBillDialog(false);
           onClose();  // Also close the main dialog
           setOpen2(false);
-                    sessionStorage.removeItem("cardMarketplaceForm"); // Optional clear
-
+           window.location.reload()
           };
+
+          const handleCancelForm = () => {
+                        clearFormCache(); // Clear cache on cancel
+setOpenBillingDialog(false);
+          }
         
         
           return (
             <>
-           <Dialog
-        disableScrollLock={true}
-        open={open}
-        onClose={onClose}
-        aria-labelledby="billing-dialog-title"
-        maxWidth="sm"
-        fullWidth={true}
-      >
-        <form onSubmit={handleSubmit(handleBuy)}>
-          <DialogTitle id="billing-dialog-title">{t("Billing Information")}</DialogTitle>
-          <DialogContent>
-            <Typography variant="body1" sx={{color: (theme) => theme.custom.mainButton}}>
-              {t("Please enter your billing information below:")}
-            </Typography>
-            {error && <Typography color="error">{error}</Typography>}
-            
-            {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2", "serialNumber"].map((field) => (
-              <TextField
-                key={field}
-                autoComplete="off"
-                margin="dense"
-                label={`${field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1').trim()}`}
-                type={field === "phoneNumber" ? "number" : "text"}
-                fullWidth
-                {...register(field, { 
-                  required: !["address2"].includes(field) && "This field is required",
-                  pattern: field === "phoneNumber" ? {
-                    value: /^[0-9]*$/,
-                    message: "Please enter a valid phone number"
-                  } : undefined
-                })}
-                error={!!errors[field]}
-                helperText={errors[field]?.message}
-                InputProps={{
-                  inputProps: field === "phoneNumber" ? {
-                    min: 0,
-                    style: {
-                      MozAppearance: 'textfield',
-                      WebkitAppearance: 'none',
-                      appearance: 'none',
-                      margin: 0
-                    }
-                  } : {}
-                }}
-                sx={field === "phoneNumber" ? {
-                  '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
-                    WebkitAppearance: 'none',
-                    margin: 0
-                  },
-                  '& input[type=number]': {
-                    MozAppearance: 'textfield'
-                  }
-                } : undefined}
-              />
-            ))}
-          </DialogContent>
-          <br />
-          <Box textAlign="center" justifyContent="space-around" display="flex" width="100%">
-            <Button type="button" onClick={handleCancel} sx={{color: (theme) => theme.custom.mainButton}}>
-              {t("Cancel")}
-            </Button>
-            <Button 
-              type="submit"
-              color="secondary" 
-              variant="contained" 
-              sx={{background: (theme) => theme.custom.mainButton, color: "white",
-                "&:hover":{
-                        background: (theme) => theme.custom.hoverMainButton
-              }}}
-            >
-              {t("Buy Now")}
-            </Button>
-          </Box>
-          <br />
-        </form>
-      </Dialog>
-              
-              <Dialog disableScrollLock={true} open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
-                  <DialogTitle id="successed-dialog-title" align="center" sx={{fontSize:"20px" ,color:(theme) => theme.custom.mainButton}}>{t("successed Purchase")}</DialogTitle>
+              <Dialog
+                  open={open}
+                  onClose={onClose}
+                  aria-labelledby="billing-dialog-title"
+                  maxWidth="sm"
+                  fullWidth={true}
+              >
+                  <DialogTitle id="billing-dialog-title">Billing Information</DialogTitle>
                   <DialogContent>
-                      <Typography variant="body1"> {t("Your purchase was successful. You can download your bill now.")}</Typography>
+                      <Typography variant="body1">Please enter your billing information below:</Typography>
+                      {error && <Typography color="error">{error}</Typography>}  
+                      {["name", "surname", "phoneNumber", "email", "postcode", "address1", "address2","serialNumber"].map((item) => (
+                          <TextField
+                              key={item}
+                              margin="dense"
+                              autoComplete="off"
+                              label={item.charAt(0).toUpperCase() + item.slice(1).replace(/([A-Z])/g, ' $1').trim()}
+                              type="text"
+                              fullWidth
+                              name={item}
+                              value={formData[item]}
+                              onChange={handleChange}
+                          />
+                      ))}
+                  </DialogContent>
+                  <br />
+                  <Box textAlign="center" width="100%">
+                      <Button onClick={handleCancelForm} sx={{color:(theme) => theme.custom.mainButton,"&:hover":{color:(theme) => theme.custom.mainButton}}}>Cancel</Button>
+                      <Button onClick={handleBuy} sx={{color:"white" ,background:(theme) => theme.custom.mainButton,
+                        "&:hover":{color:"white" ,background:(theme) => theme.custom.hoverMainButton}
+                      }} variant="contained">Buy Now</Button>
+                  </Box>
+                  <br />
+              </Dialog>
+              
+              <Dialog open={showConfirmationDialog} onClose={() => {}} aria-labelledby="successed-dialog-title" maxWidth="sm" fullWidth={true}>
+                  <DialogTitle id="successed-dialog-title">successed Purchase</DialogTitle>
+                  <DialogContent>
+                      <Typography variant="body1"> your purchase successed.... You can dawnload your bill now.</Typography>
                       <Box textAlign="center" mt={2}>
-                          <Button onClick={downloadPDF} color="secondary" variant="contained" sx={{background:(theme) => theme.custom.mainButton,color:"white" }}>{t("Download Bill")}</Button>
-                          <Button onClick={handleCancel} sx={{color:(theme) => theme.custom.mainButton}}>{t("Cancel")}</Button>
+                          <Button onClick={downloadPDF} sx={{color:"white" ,background:(theme) => theme.custom.mainButton,
+                        "&:hover":{color:"white" ,background:(theme) => theme.custom.hoverMainButton}
+                      }} variant="contained">Download Bill</Button>
+                          <Button onClick={handleCancel} sx={{color:(theme) => theme.custom.mainButton,"&:hover":{color:(theme) => theme.custom.mainButton}}}>Cancel</Button>
                       </Box>
                   </DialogContent>
               </Dialog>
       
               <Dialog open={showPurchaseDialog} onClose={() => {}} aria-labelledby="bill-dialog-title" maxWidth="sm" fullWidth={true}>
-            <DialogTitle id="bill-dialog-title">{t("Bill Preview")}</DialogTitle>
+            <DialogTitle id="bill-dialog-title">Your Bill Preview</DialogTitle>
             <DialogContent>
-            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom align="center" sx={{fontSize:"20px" ,color:(theme) => theme.custom.mainButton}}> 
-            {t("Successful Purchase")}
+            <Typography variant="h6" component="h2" id="successed-dialog-title" gutterBottom>
+            Successful Purchase
             </Typography>
-            <Typography variant="body1" gutterBottom align="center">
-            {t("Your purchase was successful. You can view your bill below:")}
+            <Typography variant="body1" gutterBottom>
+            Your purchase was successful. You can view your bill below:
             </Typography>
             <Box textAlign="center" mt={2}>
-            <Button onClick={handlePreviewBill}  variant="contained" sx={{backgroundColor:(theme) => theme.custom.mainButton,color:"white" ,"&:hover":{
-              backgroundColor:"rgb(99, 0, 96)"
-            } }}>{t("View Bill now")}</Button>
+            <Button onClick={handlePreviewBill} sx={{color:"white" ,background:(theme) => theme.custom.mainButton,
+                        "&:hover":{color:"white" ,background:(theme) => theme.custom.hoverMainButton}
+                      }} variant="contained">show your Bill now</Button>
             </Box>
             </DialogContent>
             </Dialog>
 
             <Dialog 
         open={showBillDialog} 
-        disableScrollLock={true}
         onClose={() => {}}
         aria-labelledby="bill-dialog-title" 
         maxWidth="sm" 
@@ -600,7 +593,9 @@ function BillingDialog({ open, onClose }) {
             </DialogContent>
             <br />
             <Box textAlign="center" mt={2}>
-                <Button onClick={handleCancel} sx={{background:(theme) => theme.custom.mainButton,color:"white`"}}>{t("Close")}</Button>
+                <Button onClick={handleCancel} sx={{color:"white" ,background:(theme) => theme.custom.mainButton,
+                        "&:hover":{color:"white" ,background:(theme) => theme.custom.hoverMainButton}
+                      }} variant="contained">Close</Button>
                 </Box>
                 <br />
                 

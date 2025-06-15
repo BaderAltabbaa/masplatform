@@ -189,7 +189,7 @@ return(
                                onClick={() => {
                                 navigate("/user-profile/" + user.userName);
                               }} 
-                               src={user.profilePic? user.profilePic : "/assets/Images/profile.jpg"} 
+                               src={user.profilePic? user.profilePic : "/images/users/dprofile.avif"} 
                                style={{width:"80px", height:"80px" ,borderRadius:"50%",cursor:"pointer"}} 
                                alt="profile">
                                 </img> 

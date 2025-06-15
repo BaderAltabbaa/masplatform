@@ -133,7 +133,7 @@ function Cardbundle({
     let profilePic =
       BundleData?.userId?.profilePic ||
       BundleData?.userDetail?.profilePic ||
-"/assets/Images/profile.jpg"    
+"/images/users/dprofile.avif"    
       useEffect(() => {
         const videoExtensions = ["mp4", "avi", "wmv", "mov", "mkv", "flv", "webm", "mpeg", "3gp", "ogv"];
       
@@ -149,34 +149,50 @@ function Cardbundle({
       
 
   
-    const subscribeToBundleHandler = async () => {
-      setIsloading(true);
-      await axios({
-        method: "GET",
-        url: Apiconfigs.subscribeNow + BundleData._id,
-        headers: {
-          token: sessionStorage.getItem("token"),
-        },
-      })
-        .then(async (res) => {
-          setIsloading(false);
-          if (res.data.statusCode === 200) {
-            setisSubscribed(res.data.result.subscribed === "yes");
-            setnbSubscribed(res.data.result.nb);
-            setActiveSubscribe(true);
-            setOpen2(false);
-            toast.success("Subscribe Successfully");
-            navigate("/bundles-details?" + BundleData?._id);
-          } else {
-            toast.error(res.data.responseMessage);
-          }
-        })
-        .catch((err) => {
-          setIsloading(false);
-          console.log(err.message);
-          toast.error(err?.response?.data?.responseMessage);
-        });
-    };
+const subscribeToBundleHandler = async () => {
+  console.log("[DEBUG] 1. Subscription initiated");
+  setIsloading(true);
+  
+  // Debug auth state
+  console.log("[DEBUG] 2. Auth check:", {
+    isLoggedIn: auth.userLoggedIn,
+    userId: auth.userData?._id,
+    hasToken: !!sessionStorage.getItem("token"),
+    bundleId: BundleData._id
+  });
+
+  try {
+    const subscriptionUrl = Apiconfigs.subscribeNow + BundleData._id;
+    console.log("[DEBUG] 3. Calling API:", subscriptionUrl);
+
+    const res = await axios({
+      method: "GET",
+      url: subscriptionUrl,
+      headers: {
+        token: sessionStorage.getItem("token"),
+      },
+    });
+
+    console.log("[DEBUG] 4. API Response:", res.data);
+
+    if (res.data.statusCode === 200) {
+      console.log("[DEBUG] 5. Subscription successful");
+      // ... rest of success logic
+    } else {
+      console.warn("[DEBUG] 6. API returned non-200 status:", res.data);
+      toast.error(res.data.responseMessage);
+    }
+  } catch (err) {
+    console.error("[DEBUG] 7. Subscription failed:", {
+      error: err.message,
+      response: err.response?.data,
+      config: err.config
+    });
+    toast.error(err?.response?.data?.responseMessage || "Subscription failed");
+  } finally {
+    setIsloading(false);
+  }
+};
     const unSubscribeToBundleHandler = async () => {
       setIsloading(true);
       await axios({
@@ -212,6 +228,12 @@ function Cardbundle({
           if (res.data.statusCode === 200) {
             setisLike((liked) => !liked);
             setnbLike((nb) => (isLike ? nb - 1 : nb + 1));
+             Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('bundle-page-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+            window.dispatchEvent(new CustomEvent('refreshBundles'));
           } else {
             setisLike(false);
             toast.error(res.data.responseMessage);

@@ -11,9 +11,14 @@ const RoadMap = () => {
   const theme = useTheme();
   const milestones = [
     {
-      period: "Q1–Q2 2026",
+      period: "Q1 2026",
       title: "Beta Launch",
       description: "Token presale and platform beta release"
+    },
+     {
+      period: "Q2 2026",
+      title: "Analyze Performance",
+      description: "Improve The Platforms Performance"
     },
     {
       period: "Q3 2026",
@@ -25,11 +30,6 @@ const RoadMap = () => {
       title: "Social Features",
       description: "Networking and matchmaking tools"
     },
-    {
-      period: "2027",
-      title: "DAO Launch",
-      description: "Governance and regional expansion"
-    }
   ];
 
   return (

@@ -82,6 +82,12 @@ export const VerifyOtp = ({
             await user.updateUserData();
             setEmailVerified(true);
             console.log("tokenV",res.data.result.token)
+              Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('users-')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+            window.dispatchEvent(new CustomEvent('refreshUsers'));
             handleClose();
           } else {
             toast.error(res.data.responseMessage);

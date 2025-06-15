@@ -275,7 +275,7 @@ export default function Profile({ data, isabout }) {
                   })
                 }
                 src={data?.profilePic ? data.profilePic
-                  : "/assets/Images/profile.jpg"
+                  : "/images/users/dprofile.avif"
                 }
                 className={classes.avatar}
               />

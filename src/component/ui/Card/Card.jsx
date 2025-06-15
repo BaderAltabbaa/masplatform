@@ -20,7 +20,7 @@ const Card = ({  imgsrc, titel, text,AvatarClick }) => {
       >
         
           <img
-            src={imgsrc? imgsrc : "/assets/Images/profile.jpg"}
+            src={imgsrc? imgsrc : "/images/users/dprofile.avif"}
             alt="profile"
     
             className="profile-imgx"

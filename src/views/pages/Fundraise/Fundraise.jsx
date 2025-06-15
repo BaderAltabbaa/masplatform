@@ -107,7 +107,7 @@ const Fundraise = () => {
             width: "100%",
             borderRadius: "20px"
           }}
-            src="/assets/Images/fundCrop.webp" alt="" />
+            src="/assets/Images/fundCrop.jpg" alt="" />
         </div>
       </div>
       </Container>

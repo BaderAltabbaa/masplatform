@@ -113,7 +113,7 @@ const Education = () => {
     },
     {
       _id: "creator4",
-      profilePic: "/assets/Images/profile.jpg", // This will use the fallback image
+      profilePic: "/images/users/dprofile.avif", // This will use the fallback image
       userName: "alex_arts",
       name: "Alex Taylor",
       speciality: "Graphic Designer",

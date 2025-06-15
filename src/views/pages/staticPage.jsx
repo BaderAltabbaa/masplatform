@@ -203,7 +203,7 @@ export default function StaticPage() {
             width:"100%",
             borderRadius:"20px"
           }} 
-          src="/assets/Images/metaCrop.webp" alt="" />
+          src="/assets/Images/metaCrop.jpg" alt="" />
         </div>
       </div>
 
