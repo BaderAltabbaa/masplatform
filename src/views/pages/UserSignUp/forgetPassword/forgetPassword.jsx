@@ -41,40 +41,37 @@ function ForgetPassword() {
     }, []);
 
     const forgotPasswordHandler = () => {
-        setresetloader(true);
-        setemailvalid(isValidEmail(email));
-        if (emailvalid) {
-            axios({
-                method: "POST",
-                url: Apiconfigs.forgotPassword,
-                data: {
-                    email: email
-                },
-            })
-                .then(async (res) => {
-                    if (res.data.statusCode === 200) {
-                        toast.success("Email send successfuly!");
-                        setresetloader(false);
-                        setVerificationSent(true);
-                        setresendTimer(60);
-                    } else {
-                        toast.error(res.data.responseMessage);
-                        setresetloader(false);
-                    }
-                })
-                .catch((err) => {
-                    if (err.response) {
-                        toast.error(err.response.data.responseMessage);
-                    } else {
-                        toast.error(err.message);
-                    }
-                    console.log(err.message);
-                    setresetloader(false);
-                });
-        } else {
-            setresetloader(false);
-        }
-    };
+  const isEmailValid = isValidEmail(email);
+  setemailvalid(isEmailValid);
+
+  if (!isEmailValid) {
+    setresetloader(false);
+    return;
+  }
+
+  setresetloader(true);
+  axios({
+    method: "POST",
+    url: Apiconfigs.forgotPassword,
+    data: { email }
+  })
+    .then((res) => {
+      if (res.data.statusCode === 200) {
+        toast.success("Instructions sent to your email if it exists in our system.");
+        setVerificationSent(true);
+        setresendTimer(60);
+      } else {
+        toast.error(res.data.responseMessage || "Request failed");
+      }
+    })
+    .catch((err) => {
+      toast.error(
+        err.response?.data?.responseMessage || 
+        "Failed to send reset instructions. Please try later."
+      );
+    })
+    .finally(() => setresetloader(false));
+};
     const resetPaswordHandler = async () => {
         setresetloader(true);
         setemailvalid(isValidEmail(email));
@@ -174,7 +171,7 @@ function ForgetPassword() {
                             value={email}
                             onChange={(e) => {
                                 setemail(e.target.value);
-                                setemailvalid(isValidEmail(email));
+                                setemailvalid(isValidEmail(e.target.value));
                             }}
                         />
                      

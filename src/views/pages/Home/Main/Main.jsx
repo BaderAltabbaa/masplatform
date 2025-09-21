@@ -225,9 +225,9 @@ console.log("mm",landingSections)*/}
   <Box>
     <CookieConsent/>
 
-<Box sx={{display:{xs:"none",lg:"flex"}}}>
+{/*<Box sx={{display:{xs:"none",lg:"flex"}}}>
 <FloatingLogo/>
-</Box>
+</Box>*/}
 
 <BannerSection bannerData={cryptoBannerData} subtitleStyle={{
   fontSize:"1.5rem" ,fontWeight:"700"

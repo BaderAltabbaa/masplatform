@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect,useContext } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -25,6 +25,7 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 
+
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -37,12 +38,16 @@ import UpgradePlanCard from './UpgradePlanCard';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
 
+//context
+import { UserContext } from "src/context/User";
+
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
+  const auth = useContext(UserContext);
 
   const [sdm, setSdm] = useState(true);
   const [value, setValue] = useState('');
@@ -87,6 +92,10 @@ const ProfileSection = () => {
 
   return (
     <>
+    <Box sx={{display:"flex"}}>
+      <Box sx={{ backgroundColor: ' #8c0087', display:"flex",justifyContent:"center",alignItems:"center",px:1,borderRadius:"27px",whiteSpace:"nowrap",mx:1}}>
+       <Typography color='white' fontWeight="bold">Plan: {auth?.userData?.planType}</Typography>
+      </Box>
       <Chip
         sx={{
           height: '48px',
@@ -119,6 +128,7 @@ const ProfileSection = () => {
         onClick={handleToggle}
         color="primary"
       />
+      </Box>
       <Popper
         placement="bottom-end"
         open={open}

@@ -59,7 +59,7 @@ function CardCreators({
 
 
 const userID = auth?.userData?._id ;
-console.log("bra",userID)
+console.log("bra",auth)
 
 const subscribeToUserHandler = async () => {
   if (!auth.userData?._id) {

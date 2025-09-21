@@ -1,29 +1,11 @@
 import React, { useState, useEffect ,useRef } from "react";
-import { Container, Box, Typography ,useTheme, useMediaQuery} from '@mui/material'
-import { makeStyles } from '@mui/styles';
-import axios from "axios";
-import Apiconfigs from "src/Apiconfig/Apiconfigs";
-import { useNavigate ,Link } from "react-router-dom";
+import { Box, Typography ,useTheme, useMediaQuery} from '@mui/material'
+import { Link } from "react-router-dom";
 import "./style.css";
-import SectionCard from "../../../component/ui/sectionCard/SectionCard";
-import { ButtonwithAnimation } from "../../../component/ui/Button/button";
-import NFTSection from './NFT/NFTSection'
-import { create } from "lodash";
-import MostPopular from "./MostPopular";
-import { useTranslation } from 'react-i18next';
-import Cardbundle from "../../../component/ui/Card/Cardbundle";
-import Services from "./Services";
-import HowWorks from "./HowWorks/HowWorks";
-import Solutions from "./Solutions/Solutions";
-import FAQmodel from "../../../component/FAQmodel";
 import { useInView } from "react-intersection-observer";
 import "src/views/pages/About/FAQ.css"
 import { motion } from 'framer-motion';
-import CanDoMas from "./CanDoMas";
-import Features from "./Features";
-import TokenUtility from "./TokenUtility";
-import RoadMap from "./RoadMap";
-import FinalCTA from "./FinalCTA";
+
  
 
 
@@ -33,7 +15,6 @@ import FinalCTA from "./FinalCTA";
       const theme = useTheme();
       const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
       const isMedium = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
-      const isLarge = useMediaQuery(theme.breakpoints.up('lg'));
 
       const AnimatedItem = ({ children, index }) => {
         const [ref, inView] = useInView({
@@ -142,11 +123,9 @@ import FinalCTA from "./FinalCTA";
                     />
                     <Box className="service-overlay" sx={{
                       position: 'absolute',
-                      top: 0,
+                      top: "80%",
                       left: 0,
                       right: 0,
-                      bottom: 0,
-                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(58,1,61,0.8))',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
